@@ -8,12 +8,20 @@
     <lastBuildDate>Sun, 06 Sep 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://chengguruchun.github.io/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
+      <title>Kubernetes × Agent：从容器编排到目标收敛</title>
+      <link>https://chengguruchun.github.io/articles/k8s-to-agent-control-plane.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/articles/k8s-to-agent-control-plane.html</guid>
+      <pubDate>Sun, 06 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Articles</category>
+      <description>K8s 管服务如何稳定运行；Agent Control Plane 管智能任务如何被分解、执行、验证并完成。核心是 Desired State 与 Actual Outcome 的持续拟合。</description>
+    </item>
+    <item>
       <title>大模型：用科学实验的方式使用</title>
       <link>https://chengguruchun.github.io/diverse/llm-scientific-experiment.html</link>
       <guid isPermaLink="true">https://chengguruchun.github.io/diverse/llm-scientific-experiment.html</guid>
       <pubDate>Sun, 06 Sep 2026 00:00:00 +0000</pubDate>
       <category>Diverse Lab</category>
-      <description>大模型不是确定性函数。用假设、对照、评测与反馈闭环来使用它，Prompt Engineering 才会长成 Experiment Engineering，并通向 Loop Engineering。</description>
+      <description>大模型调用更接近条件分布上的采样。用假设、对照、评测与反馈闭环，把 Prompt Engineering 做成可陈述的 Experiment Engineering。</description>
     </item>
     <item>
       <title>物理学 × 生态学：对复杂系统的一个思考</title>
@@ -22,30 +30,6 @@
       <pubDate>Sun, 06 Sep 2026 00:00:00 +0000</pubDate>
       <category>Diverse Lab</category>
       <description>物理学看规律，生态学看关系与反馈；综合二者，才能理解 LLM 与多 Agent 如何逼近 Complex System Engineering。</description>
-    </item>
-    <item>
-      <title>Agent Registry：能力发现、版本契约与信任边界</title>
-      <link>https://chengguruchun.github.io/articles/agent-registry.html</link>
-      <guid isPermaLink="true">https://chengguruchun.github.io/articles/agent-registry.html</guid>
-      <pubDate>Wed, 02 Sep 2026 00:00:00 +0000</pubDate>
-      <category>Articles</category>
-      <description>当 Agent 开始互相调用，注册中心不再只是名字服务——它是能力目录、契约面与安全边界的交汇点。</description>
-    </item>
-    <item>
-      <title>Agent Runtime 与 Kubernetes：相似的外壳，不同的内核</title>
-      <link>https://chengguruchun.github.io/articles/agent-runtime-vs-k8s.html</link>
-      <guid isPermaLink="true">https://chengguruchun.github.io/articles/agent-runtime-vs-k8s.html</guid>
-      <pubDate>Fri, 28 Aug 2026 00:00:00 +0000</pubDate>
-      <category>Articles</category>
-      <description>K8s 调度的是确定性容器；Agent Runtime 调度的是带目标、工具与记忆的不确定执行。对照二者，才能设计对的抽象。</description>
-    </item>
-    <item>
-      <title>Agent Control Plane：把智能体当成可治理的运行时</title>
-      <link>https://chengguruchun.github.io/articles/agent-control-plane.html</link>
-      <guid isPermaLink="true">https://chengguruchun.github.io/articles/agent-control-plane.html</guid>
-      <pubDate>Thu, 20 Aug 2026 00:00:00 +0000</pubDate>
-      <category>Articles</category>
-      <description>从分布式控制面视角拆解 Agent 的调度、策略、观测与生命周期——不是聊天机器人，而是可运维的智能工作负载。</description>
     </item>
   </channel>
 </rss>

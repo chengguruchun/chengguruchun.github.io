@@ -7,48 +7,6 @@
   "base_url": "https://chengguruchun.github.io",
   "items": [
     {
-      "id": "agent-control-plane",
-      "type": "Articles",
-      "title": "Agent Control Plane：把智能体当成可治理的运行时",
-      "excerpt": "从分布式控制面视角拆解 Agent 的调度、策略、观测与生命周期——不是聊天机器人，而是可运维的智能工作负载。",
-      "url": "/articles/agent-control-plane.html",
-      "date": "2026-08-20",
-      "tags": [
-        "Agent",
-        "Control Plane",
-        "分布式系统",
-        "可观测性"
-      ]
-    },
-    {
-      "id": "agent-runtime-vs-k8s",
-      "type": "Articles",
-      "title": "Agent Runtime 与 Kubernetes：相似的外壳，不同的内核",
-      "excerpt": "K8s 调度的是确定性容器；Agent Runtime 调度的是带目标、工具与记忆的不确定执行。对照二者，才能设计对的抽象。",
-      "url": "/articles/agent-runtime-vs-k8s.html",
-      "date": "2026-08-28",
-      "tags": [
-        "Agent",
-        "Kubernetes",
-        "Runtime",
-        "系统抽象"
-      ]
-    },
-    {
-      "id": "agent-registry",
-      "type": "Articles",
-      "title": "Agent Registry：能力发现、版本契约与信任边界",
-      "excerpt": "当 Agent 开始互相调用，注册中心不再只是名字服务——它是能力目录、契约面与安全边界的交汇点。",
-      "url": "/articles/agent-registry.html",
-      "date": "2026-09-02",
-      "tags": [
-        "Agent",
-        "Registry",
-        "契约",
-        "基础设施"
-      ]
-    },
-    {
       "id": "proj-concurrency",
       "type": "Projects",
       "title": "concurrency：高并发实验台",
@@ -117,10 +75,28 @@
       ]
     },
     {
+      "id": "k8s-to-agent-control-plane",
+      "type": "Articles",
+      "title": "Kubernetes × Agent：从容器编排到目标收敛",
+      "excerpt": "K8s 管服务如何稳定运行；Agent Control Plane 管智能任务如何被分解、执行、验证并完成。核心是 Desired State 与 Actual Outcome 的持续拟合。",
+      "url": "/articles/k8s-to-agent-control-plane.html",
+      "date": "2026-09-06",
+      "tags": [
+        "Agent",
+        "Kubernetes",
+        "Control Plane",
+        "Runtime",
+        "Loop Engineering"
+      ],
+      "thought_date": "2026-08-28",
+      "published_date": "2026-09-06",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/k8s-to-agent-control-plane.md"
+    },
+    {
       "id": "llm-scientific-experiment",
       "type": "Diverse Lab",
       "title": "大模型：用科学实验的方式使用",
-      "excerpt": "大模型不是确定性函数。用假设、对照、评测与反馈闭环来使用它，Prompt Engineering 才会长成 Experiment Engineering，并通向 Loop Engineering。",
+      "excerpt": "大模型调用更接近条件分布上的采样。用假设、对照、评测与反馈闭环，把 Prompt Engineering 做成可陈述的 Experiment Engineering。",
       "url": "/diverse/llm-scientific-experiment.html",
       "date": "2026-09-06",
       "tags": [

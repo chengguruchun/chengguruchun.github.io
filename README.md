@@ -29,9 +29,7 @@
 
 **Articles**
 
-- [Agent Control Plane：把智能体当成可治理的运行时](articles/agent-control-plane.html)
-- [Agent Runtime 与 Kubernetes：相似的外壳，不同的内核](articles/agent-runtime-vs-k8s.html)
-- [Agent Registry：能力发现、版本契约与信任边界](articles/agent-registry.html)
+- [Kubernetes × Agent：从容器编排到目标收敛](articles/k8s-to-agent-control-plane.html)
 
 **Diverse Lab**
 

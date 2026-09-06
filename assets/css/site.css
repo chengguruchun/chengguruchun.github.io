@@ -1279,3 +1279,29 @@ a.entry-card:hover {
 .article-meta__rev:hover {
   text-decoration: underline;
 }
+
+.prose-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+  margin: 1.25rem 0 1.75rem;
+  overflow-x: auto;
+  display: block;
+}
+.prose-wrap th,
+.prose-wrap td {
+  border: 1px solid rgba(40, 36, 28, 0.14);
+  padding: 0.55rem 0.7rem;
+  text-align: left;
+  vertical-align: top;
+}
+.prose-wrap thead th {
+  background: rgba(40, 36, 28, 0.04);
+  font-weight: 600;
+}
+
+.article-body .lede {
+  font-size: 1.05rem;
+  color: var(--text);
+  line-height: 1.7;
+}

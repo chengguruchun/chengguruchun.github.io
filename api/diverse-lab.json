@@ -5,7 +5,7 @@
       "id": "llm-scientific-experiment",
       "type": "Diverse Lab",
       "title": "大模型：用科学实验的方式使用",
-      "excerpt": "大模型不是确定性函数。用假设、对照、评测与反馈闭环来使用它，Prompt Engineering 才会长成 Experiment Engineering，并通向 Loop Engineering。",
+      "excerpt": "大模型调用更接近条件分布上的采样。用假设、对照、评测与反馈闭环，把 Prompt Engineering 做成可陈述的 Experiment Engineering。",
       "url": "/diverse/llm-scientific-experiment.html",
       "date": "2026-09-06",
       "tags": [

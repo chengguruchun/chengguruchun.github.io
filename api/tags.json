@@ -2,9 +2,7 @@
   "updated": "2026-09-06",
   "tags": {
     "Agent": [
-      "agent-control-plane",
-      "agent-registry",
-      "agent-runtime-vs-k8s",
+      "k8s-to-agent-control-plane",
       "llm-scientific-experiment",
       "physics-ecology-llm",
       "vid-control-plane"
@@ -14,7 +12,7 @@
       "physics-ecology-llm"
     ],
     "Control Plane": [
-      "agent-control-plane"
+      "k8s-to-agent-control-plane"
     ],
     "Diverse": [
       "llm-scientific-experiment",
@@ -30,7 +28,7 @@
       "proj-concurrency"
     ],
     "Kubernetes": [
-      "agent-runtime-vs-k8s",
+      "k8s-to-agent-control-plane",
       "vid-runtime"
     ],
     "LLM": [
@@ -38,6 +36,7 @@
       "physics-ecology-llm"
     ],
     "Loop Engineering": [
+      "k8s-to-agent-control-plane",
       "llm-scientific-experiment"
     ],
     "Physics": [
@@ -51,11 +50,8 @@
     "Redis": [
       "proj-redpacket"
     ],
-    "Registry": [
-      "agent-registry"
-    ],
     "Runtime": [
-      "agent-runtime-vs-k8s",
+      "k8s-to-agent-control-plane",
       "vid-runtime"
     ],
     "Videos": [
@@ -64,18 +60,6 @@
     ],
     "一致性": [
       "proj-redpacket"
-    ],
-    "分布式系统": [
-      "agent-control-plane"
-    ],
-    "可观测性": [
-      "agent-control-plane"
-    ],
-    "基础设施": [
-      "agent-registry"
-    ],
-    "契约": [
-      "agent-registry"
     ],
     "实验": [
       "proj-concurrency"
@@ -91,9 +75,6 @@
     ],
     "秒杀": [
       "proj-miaoshao"
-    ],
-    "系统抽象": [
-      "agent-runtime-vs-k8s"
     ],
     "讲解": [
       "vid-control-plane"

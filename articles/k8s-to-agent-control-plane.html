@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kubernetes × Agent：从容器编排到目标收敛 · Articles</title>
+  <meta name="description" content="K8s 管服务如何稳定运行；Agent Control Plane 管智能任务如何被分解、执行、验证并完成。核心是 Desired State 与 Actual Outcome 的持续拟合。">
+  <meta name="theme-color" content="#f7f5f0">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap site-header__inner">
+      <a class="brand" href="../index.html">
+        <span class="brand__name">AI Knowledge Lab</span>
+        <span class="brand__tag" data-brand-rotate aria-label="Independent Thinker · AI Agents · Complex Systems · Diverse Thinking"><span class="brand__rotate"><span class="brand__item is-active">Independent Thinker</span><span class="brand__item">AI Agents</span><span class="brand__item">Complex Systems</span><span class="brand__item">Diverse Thinking</span></span></span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">菜单</button>
+      <nav class="nav" id="site-nav" aria-label="主导航"><a href="../index.html">Home</a><a href="../diverse/">Diverse Lab</a><a href="../articles/" aria-current="page">Articles</a><a href="../projects/">Projects</a><a href="../videos/">Videos</a><a href="../times/">Hot Words</a><a href="../about/">About Me</a><a class="nav__search" href="../tags/">Tags / Search</a></nav>
+    </div>
+  </header>
+  <main>
+    <article class="article-body">
+      <header class="page-hero">
+        <div class="prose-wrap">
+          <p class="page-hero__kicker">Articles · From K8s to Agent Control Plane · 第 1 篇</p>
+          <h1>Kubernetes × Agent：从容器编排到目标收敛</h1>
+          <p class="page-hero__desc">K8s 管服务如何稳定运行；Agent Control Plane 管智能任务如何被分解、执行、验证并完成。</p>
+          <p class="article-meta"><span title="思路时间">思路 2026-08-28</span><span title="发表时间">发表 2026-09-06</span><span title="作者">作者 chengguruchun</span><a class="tag" href="../tags/?tag=Agent">Agent</a><a class="tag" href="../tags/?tag=Kubernetes">Kubernetes</a><a class="tag" href="../tags/?tag=Control%20Plane">Control Plane</a><a class="tag" href="../tags/?tag=Runtime">Runtime</a><a class="tag" href="../tags/?tag=Loop%20Engineering">Loop Engineering</a></p>
+        </div>
+      </header>
+      <div class="prose-wrap">
+        <p class="lede">把 Agent 想成可调度单元，直觉来自同一类工程压力：生命周期、配额、失败重试、策略边界、可观测性。Kubernetes 已经把「声明期望 → 持续收敛」做成了基础设施常识。于是人们自然把 Pod、Job、Controller 的语言借过来，试图给智能任务同样的治理感。</p>
+        <p>共享的是 <strong>reconcile 心智</strong>：系统不断比较期望与现实，并采取行动缩小差距。失效的是把「健康检查通过」误当成「任务语义完成」。容器重启可以抹掉进程态；工具调用一旦对外部世界产生不可逆副作用，重启本身并不是修复。类比是操作脚手架，不是身份等同。</p>
+        <blockquote>
+          <p>K8s 管理的是「服务如何稳定运行」；Agent Control Plane 管理的是「智能任务如何被分解、执行、验证并最终完成」。</p>
+        </blockquote>
+        <p>这两句话可以并排放着读。一边管的是可用性、副本、滚动发布；另一边管的是目标分解、工具轨迹、证据化完成。基础设施层仍然可以是 K8s；任务语义层需要另一套对象与闭环。</p>
+        <p>并非每个 Agent 都需要完整 Control Plane。脚本式单次调用、人工紧盯的探索任务，常常用更轻的 runtime 就够。Control Plane 在任务可复用、要多人协作、要审批、要评测与回放、要跨会话收敛时才真正划算。</p>
+
+        <h2>核心：目标与过程不断拟合</h2>
+        <p>整篇的中心不是对象清单，而是一条拟合链：</p>
+        <pre>Desired State → Actual → Gap → Reconcile</pre>
+        <p>映射到 <a href="../diverse/llm-scientific-experiment.html">Loop Engineering</a> 的运行时闭环：</p>
+        <pre>Goal → Action → Observation → Gap → Adjustment</pre>
+        <p>K8s 的 Desired State 通常是可检查的：副本数、就绪探针、配置版本。Agent 的 Desired State 往往是语义目标：「把账单对平」「生成可合并的修复」「在预算内完成调研」。Actual 因此不能只停在进程绿、步骤绿；它必须携带可核对的 Outcome 证据。Gap 不是耻辱，而是下一轮调度与策略调整的输入。</p>
+        <p>把「过程跑完」当成「目标达成」，会系统性地奖励看起来像完成的轨迹——这与 Diverse Lab 里 <strong>Proxy Metric ≠ Real Outcome</strong> 是同一条警告。</p>
+
+        <h2>选择性对象映射（脚手架，不是身份）</h2>
+        <table>
+          <thead>
+            <tr><th>K8s 侧直觉</th><th>Agent Control Plane 侧</th><th>共享什么</th><th>何处断裂</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Pod</td><td>Runtime / Session</td><td>生命周期、资源边界</td><td>Agent 会话携带目标与记忆，不是纯容器进程</td></tr>
+            <tr><td>Job</td><td>AgentTask</td><td>有始有终的工作单元</td><td>成功判定是语义 Outcome，不是 exit code</td></tr>
+            <tr><td>Scheduler</td><td>Task / Runtime Scheduler</td><td>排队、配额、亲和</td><td>还要考虑工具能力、审批门、评测成本</td></tr>
+            <tr><td>ConfigMap</td><td>Policy / Prompt Pack</td><td>可变配置</td><td>Policy 约束的是行为与权限，不只是环境变量</td></tr>
+            <tr><td>Secret</td><td>Credential / Tool Token</td><td>敏感材料</td><td>常与工具网关、最小权限、审计绑定</td></tr>
+            <tr><td>Namespace / RBAC</td><td>Tenant / Capability Scope</td><td>隔离与授权</td><td>还要覆盖工具面与数据面</td></tr>
+            <tr><td>Admission</td><td>Approval Gate</td><td>变更前闸门</td><td>高风险工具调用需要人工或策略审批</td></tr>
+            <tr><td>Controller</td><td>Task Controller</td><td>持续 reconcile</td><td>拉取的是 Outcome / Eval，而不只是 Ready</td></tr>
+            <tr><td>Trace / Event</td><td>Trace / Replay</td><td>事后可叙述</td><td>需要可回放轨迹与证据包</td></tr>
+            <tr><td>Rollout</td><td>Policy / Prompt Rollout</td><td>渐进发布</td><td>发布对象是策略与评测门，而不只是镜像</td></tr>
+          </tbody>
+        </table>
+        <p>这些映射的价值是让分布式系统工程师快速进入问题；危险是把「重启 Pod」的肌肉记忆搬到「重跑带副作用的工具链」上。对不可逆外部效应，正确动作往往是补偿、审批升级或停机，而不是盲目 reconcile 再试一次。</p>
+
+        <h2>Agent Control Plane 的一等对象</h2>
+        <p>最小有用集合可以写成：</p>
+        <ul>
+          <li><strong>AgentTask</strong>：目标、约束、预算、成功判定</li>
+          <li><strong>Runtime</strong>：执行会话、上下文、工具绑定</li>
+          <li><strong>Policy</strong>：允许/拒绝、速率、审批门槛</li>
+          <li><strong>ToolCapability</strong>：可调用能力与契约</li>
+          <li><strong>Approval</strong>：高风险动作的显式门</li>
+          <li><strong>EvalRun</strong>：对照评测与门禁</li>
+          <li><strong>Replay</strong>：轨迹回放与复盘</li>
+          <li><strong>Outcome</strong>：带证据的完成声明</li>
+        </ul>
+        <p>控制器的工作是把 <code>status</code> 拉向 <code>spec</code>——但这里的「拉近」必须以 Outcome 为准。示意：</p>
+        <pre>apiVersion: agent.lab/v1
+kind: AgentTask
+metadata:
+  name: reconcile-invoice-gap
+spec:
+  goal: "对平 Q3 发票与收款差额，输出可审计说明"
+  successCriteria:
+    - type: evidence
+      require: ["diff_report", "source_refs"]
+  budget:
+    maxSteps: 40
+    maxCostUSD: 8
+  policyRef: finance-tools-strict
+  runtimeClass: tool-augmented
+status:
+  phase: Running
+  steps: 12
+  lastObservation: "3 笔差额候选待核验"
+  outcome:
+    complete: false
+    evidenceRefs: []
+  conditions:
+    - type: ProxyChecksPassed
+      status: "True"
+    - type: RealOutcomeVerified
+      status: "False"</pre>
+        <p><code>ProxyChecksPassed=True</code> 而 <code>RealOutcomeVerified=False</code>，正是 Control Plane 必须显式表达的状态：过程健康 ≠ 语义完成。完成需要证据，不是只需要过程绿灯。</p>
+
+        <h2>本质差异：可检查健康 vs 语义结果</h2>
+        <p>K8s 擅长把世界压成可探针的信号：存活、就绪、资源压力。Agent 系统的关键失败常常发生在探针全绿之后——答案格式正确、工具调用成功、自评很高，但任务并未在真实世界上完成。</p>
+        <p>因此：</p>
+        <ul>
+          <li><strong>Health / Proxy</strong>：步骤执行、schema 校验、单元断言、模型自评</li>
+          <li><strong>Real Outcome</strong>：外部可核对事实、业务状态变更、held-out 评测、人类验收</li>
+        </ul>
+        <p>Proxy 可用，但必须登记 gap。否则优化器会学会 Reward Hacking：把轨迹修得像成功。这与 <a href="../diverse/llm-scientific-experiment.html">用科学实验的方式使用大模型</a> 中的评测纪律一致；也与 <a href="../diverse/physics-ecology-llm.html">物理学 × 生态学</a> 中「条件提高概率，而不是一次性保证结果」的复杂系统直觉一致。</p>
+
+        <h2>分层：谁拥有什么职责</h2>
+        <pre>Control Plane
+  → Runtime
+    → Provider / Tool Gateway
+      → Sandbox
+  → Evaluator / Trace / Replay
+  → Policy Optimizer</pre>
+        <p>角色分工：</p>
+        <ul>
+          <li><strong>Policy Optimizer</strong>：在约束下选择路径与策略（何时检索、调用、停止、升级审批）</li>
+          <li><strong>Runtime</strong>：执行选定动作，维护会话态</li>
+          <li><strong>Gateway</strong>：强制工具契约、鉴权、配额与审计</li>
+          <li><strong>Sandbox</strong>：隔离副作用面</li>
+          <li><strong>Evaluator</strong>：判断 Proxy 与（尽可能）Real Outcome</li>
+          <li><strong>Controller</strong>：根据 Gap 重调度、重试策略或停机</li>
+        </ul>
+        <p>K8s 可以继续承载 Runtime / Sandbox 的进程与网络；Agent Control Plane 拥有任务语义、策略门与完成判定。Agent 并不替代微服务：既有服务应通过 Tool Gateway 被调用，而不是被「再实现一遍成 Agent」。</p>
+
+        <h2>三条环：Execute / Eval / Learn</h2>
+        <ol>
+          <li><strong>Execute Loop</strong>：Goal → Action → Observation → Gap → Adjustment（在线收敛）</li>
+          <li><strong>Eval Loop</strong>：轨迹与 Outcome → 评测门禁 → 通过/阻断发布（对照与防回归）</li>
+          <li><strong>Learn Loop</strong>：失败模式与成功证据 → 策略/提示/路由更新 → 小流量验证（离线或准在线改进）</li>
+        </ol>
+        <p>三条环转速不同。把 Learn 偷塞进每一次 Execute，容易过拟合当前任务；把 Eval 省掉，Execute 会在虚假成功上空转。</p>
+
+        <h2>落地判断</h2>
+        <ul>
+          <li><strong>K8s 保管基础设施</strong>：节点、网络、配额、容器生命周期</li>
+          <li><strong>Agent Control Plane 保管任务语义</strong>：目标、分解、审批、证据化完成</li>
+          <li><strong>微服务仍是能力提供者</strong>：经 Tool Gateway 接入，保留清晰契约</li>
+          <li><strong>类比用于沟通，证据用于完成</strong>：重启不是万能药；不可逆工具效应需要补偿与门禁</li>
+        </ul>
+        <p>这是 Articles 系列 <em>From K8s to Agent Control Plane</em> 的第 1 篇：先把「为何需要另一套控制面」与「拟合什么」立住。</p>
+        <blockquote>
+          <p>容器编排回答「如何让服务按期望运行」；Agent 控制面回答「如何让智能任务按期望收敛到可验证的完成」。二者叠合，而不是互相取代。</p>
+        </blockquote>
+
+        <h2>开放问题</h2>
+        <ul>
+          <li>哪些 Outcome 可以机器核对，哪些必须保留人类验收，才能避免 Proxy 垄断成功定义？</li>
+          <li>对不可逆工具效应，默认的补偿、熔断与审批升级协议应写成怎样的一等对象？</li>
+          <li>Eval Loop 与 Execute Loop 如何隔离，才能降低执行器与评测器合谋？</li>
+          <li>多租户下，ToolCapability 与数据面权限如何像 RBAC 一样可审计，却不把每次调用都拖成工单？</li>
+          <li>何时该上完整 Agent Control Plane，何时一条强约束的 Runtime 会话就足够？</li>
+        </ul>
+
+        
+
+        <p>源码笔记：<a href="../content/articles/k8s-to-agent-control-plane.md"><code>content/articles/k8s-to-agent-control-plane.md</code></a></p>
+        <p><a href="https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/k8s-to-agent-control-plane.md" rel="noopener">Revisions</a></p>
+        <p><a href="./">← 返回 Articles</a></p>
+
+        <section class="comments" data-comments data-repo="chengguruchun/chengguruchun.github.io" data-page-id="k8s-to-agent-control-plane" data-page-url="https://chengguruchun.github.io/articles/k8s-to-agent-control-plane.html" aria-label="Comments">
+          <h2 class="comments__title">Comments</h2>
+          <p class="comments__status" data-comments-status></p>
+          <div class="comments__list" data-comments-list></div>
+          <form class="comments__form" data-comments-form>
+            <label>Name
+              <input name="name" type="text" maxlength="80" placeholder="your name" autocomplete="nickname">
+            </label>
+            <label>Comment
+              <textarea name="body" maxlength="4000" placeholder="写下你的想法" required></textarea>
+            </label>
+            <button class="comments__submit" type="submit">Leave a comment</button>
+          </form>
+        </section>
+
+      </div>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap site-footer__inner">
+      <div>
+        <p>© <span id="year"></span> chengguruchun · Hangzhou</p>
+        <p>面向 AI Agent 的开放知识系统</p>
+      </div>
+    </div>
+  </footer>
+  <script src="../assets/js/site.js"></script>
+  <script src="../assets/js/comments.js"></script>
+</body>
+</html>

@@ -98,7 +98,7 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "Entry id from catalog, e.g. agent-control-plane"
+            "description": "Entry id from catalog, e.g. k8s-to-agent-control-plane"
           }
         },
         "required": [
