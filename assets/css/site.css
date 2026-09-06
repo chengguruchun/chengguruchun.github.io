@@ -1524,3 +1524,35 @@ a.entry-card:hover {
 }
 .search-card__main:hover { color: inherit; }
 .search-card__main:hover .card__title { color: var(--accent); }
+
+
+/* Projects · GitHub cards */
+.project-card {
+  gap: 0.55rem;
+}
+.project-card__stars {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  align-self: flex-start;
+  padding: 0.28rem 0.65rem;
+  border-radius: 999px;
+  border: 1px solid rgba(196,163,90,0.35);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+.project-card__star {
+  font-size: 0.95rem;
+  line-height: 1;
+}
+.project-card__star-count {
+  font-weight: 500;
+  color: var(--text);
+}
+a.project-card:hover .project-card__stars {
+  border-color: var(--accent);
+}
