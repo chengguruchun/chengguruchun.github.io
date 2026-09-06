@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Projects · AI Knowledge Lab</title>
+  <meta name="description" content="高并发遗产与可论证的系统设计：concurrency、RedPacket、miaoshao_test。">
+  <meta name="theme-color" content="#f7f5f0">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap site-header__inner">
+      <a class="brand" href="../index.html">
+        <span class="brand__name">AI Knowledge Lab</span>
+        <span class="brand__tag">Independent Thinker · Complex Systems · AI Agents</span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">菜单</button>
+      <nav class="nav" id="site-nav" aria-label="主导航">
+        <a href="../index.html">Home</a><a href="../articles/">Articles</a><a href="../thinking/">Thinking Lab</a><a href="../projects/" aria-current="page">Projects</a><a href="../videos/">Videos</a><a href="../about/">About</a><a class="nav__search" href="../tags/">Tags / Search</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <header class="page-hero">
+      <div class="wrap">
+        <p class="page-hero__kicker">Projects</p>
+        <h1>项目档案</h1>
+        <p class="page-hero__desc">每个项目按 Problem → Architecture → Design → Implementation → Demo → GitHub → Lessons 展开。它们是分布式/高并发训练场，也是理解 Agent 副作用与一致性的直觉来源。</p>
+      </div>
+    </header>
+    <section class="section" style="padding-top:0">
+      <div class="wrap grid grid--2">
+        <a class="card" href="concurrency.html">
+          <div class="card__meta"><span>Java</span><span>实验台</span></div>
+          <h2 class="card__title">concurrency</h2>
+          <p class="card__excerpt">锁、队列、背压与正确性——可复现的并发实验。</p>
+          <div class="card__tags"><span class="tag">并发</span><span class="tag">Java</span></div>
+        </a>
+        <a class="card" href="redpacket.html">
+          <div class="card__meta"><span>Redis</span><span>热点账户</span></div>
+          <h2 class="card__title">RedPacket</h2>
+          <p class="card__excerpt">抢红包场景下的扣减、公平性与一致性解剖。</p>
+          <div class="card__tags"><span class="tag">高并发</span><span class="tag">一致性</span></div>
+        </a>
+        <a class="card" href="miaoshao.html">
+          <div class="card__meta"><span>Spring Boot</span><span>MQ</span></div>
+          <h2 class="card__title">miaoshao_test</h2>
+          <p class="card__excerpt">秒杀链路：限流、异步化与库存一致性取舍。</p>
+          <div class="card__tags"><span class="tag">秒杀</span><span class="tag">性能</span></div>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap site-footer__inner">
+      <div>
+        <p>© <span id="year"></span> chengguruchun · Hangzhou</p>
+        <p>AI Knowledge Lab — 面向人类与 AI Agent 的开放知识系统</p>
+      </div>
+      <div>
+        <p><a href="mailto:chengguruchun@163.com">chengguruchun@163.com</a></p>
+        <p><a href="https://github.com/chengguruchun" rel="noopener">GitHub</a> · <a href="../PRODUCT.md">PRODUCT.md</a></p>
+      </div>
+    </div>
+  </footer>
+  <script src="../assets/js/site.js"></script>
+
+</body>
+</html>

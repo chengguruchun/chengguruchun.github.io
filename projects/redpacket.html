@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RedPacket：抢红包的并发解剖 · Projects</title>
+  <meta name="description" content="热点账户、库存扣减与公平性——把热闹场景拆成可论证的系统设计。">
+  <meta name="theme-color" content="#f7f5f0">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap site-header__inner">
+      <a class="brand" href="../index.html">
+        <span class="brand__name">AI Knowledge Lab</span>
+        <span class="brand__tag">Independent Thinker · Complex Systems · AI Agents</span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">菜单</button>
+      <nav class="nav" id="site-nav" aria-label="主导航">
+        <a href="../index.html">Home</a><a href="../articles/">Articles</a><a href="../thinking/">Thinking Lab</a><a href="../projects/" aria-current="page">Projects</a><a href="../videos/">Videos</a><a href="../about/">About</a><a class="nav__search" href="../tags/">Tags / Search</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <article class="article-body">
+      <header class="page-hero">
+        <div class="prose-wrap">
+          <p class="page-hero__kicker">Projects · Case Study</p>
+          <h1>RedPacket：抢红包的并发解剖</h1>
+          <p class="page-hero__desc">热点账户、库存扣减与公平性——把热闹场景拆成可论证的系统设计。</p>
+          <p class="article-meta"><span>chengguruchun</span><a href="https://github.com/chengguruchun/RedPacket" rel="noopener">GitHub 仓库</a><a class="tag" href="../tags/?tag=%E9%AB%98%E5%B9%B6%E5%8F%91">高并发</a><a class="tag" href="../tags/?tag=Redis">Redis</a></p>
+        </div>
+      </header>
+      <div class="prose-wrap">
+        <section class="project-section">
+          <h2>Problem</h2>
+          <p>抢红包是经典热点：瞬时高并发写同一资金池，还要尽量公平、防超发、可审计。表面是「随机金额」，内核是<strong>高竞争下的一致性与体验折中</strong>。</p>
+        </section>
+        <section class="project-section">
+          <h2>Architecture</h2>
+          <div class="arch-grid">
+            <div class="arch-cell"><strong>Edge</strong><span>接入与限流，保护核心账户</span></div>
+            <div class="arch-cell"><strong>Ledger</strong><span>红包池与扣减真相源</span></div>
+            <div class="arch-cell"><strong>Cache</strong><span>Redis 加速与原子操作</span></div>
+            <div class="arch-cell"><strong>Async</strong><span>账单落库与对账</span></div>
+          </div>
+          <div class="diagram"><span class="diagram__label">Hot Path</span>
+Client → Rate Limit → Atomic Debit (Redis/DB) → Receipt
+                           │
+                           └──▶ Async Persist / Reconcile
+</div>
+        </section>
+        <section class="project-section">
+          <h2>Design</h2>
+          <p>关键设计点：扣减必须原子；超发不可接受；随机策略要在「剩余次数/剩余金额」约束下可证明不穿透。对账链路允许最终一致，但预扣/预减必须有明确生命周期。</p>
+        </section>
+        <section class="project-section">
+          <h2>Implementation</h2>
+          <p>仓库聚焦抢红包路径的拆解与实现实验，强调并发下的正确性论证，而不是 UI。可与秒杀项目对照：二者都是热点写，但公平性与金额分布约束不同。</p>
+        </section>
+        <section class="project-section">
+          <h2>Demo</h2>
+          <p>通过压测观察：单 key 热点、锁粒度、Lua/事务方案的差异。记录超发是否为零、尾延迟如何随并发上升。</p>
+        </section>
+        <section class="project-section">
+          <h2>GitHub</h2>
+          <p><a href="https://github.com/chengguruchun/RedPacket" rel="noopener">https://github.com/chengguruchun/RedPacket</a></p>
+        </section>
+        <section class="project-section">
+          <h2>Lessons Learned</h2>
+          <ul>
+            <li>热点写的第一敌人是「先查后改」的侥幸。</li>
+            <li>公平性是算法问题，也是事务边界问题。</li>
+            <li>对 Agent：任何「先推理再写外部状态」都要有同样的原子闸门。</li>
+          </ul>
+        </section>
+        <p><a href="./">← 返回 Projects</a></p>
+      </div>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap site-footer__inner">
+      <div>
+        <p>© <span id="year"></span> chengguruchun · Hangzhou</p>
+        <p>AI Knowledge Lab — 面向人类与 AI Agent 的开放知识系统</p>
+      </div>
+      <div>
+        <p><a href="mailto:chengguruchun@163.com">chengguruchun@163.com</a></p>
+        <p><a href="https://github.com/chengguruchun" rel="noopener">GitHub</a> · <a href="../PRODUCT.md">PRODUCT.md</a></p>
+      </div>
+    </div>
+  </footer>
+  <script src="../assets/js/site.js"></script>
+
+</body>
+</html>

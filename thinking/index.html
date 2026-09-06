@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Thinking Lab · AI Knowledge Lab</title>
+  <meta name="description" content="未闭合问题的实验室：Question / My Thinking / Open Questions。">
+  <meta name="theme-color" content="#f7f5f0">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap site-header__inner">
+      <a class="brand" href="../index.html">
+        <span class="brand__name">AI Knowledge Lab</span>
+        <span class="brand__tag">Independent Thinker · Complex Systems · AI Agents</span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">菜单</button>
+      <nav class="nav" id="site-nav" aria-label="主导航">
+        <a href="../index.html">Home</a><a href="../articles/">Articles</a><a href="../thinking/" aria-current="page">Thinking Lab</a><a href="../projects/">Projects</a><a href="../videos/">Videos</a><a href="../about/">About</a><a class="nav__search" href="../tags/">Tags / Search</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <header class="page-hero">
+      <div class="wrap">
+        <p class="page-hero__kicker">Thinking Lab</p>
+        <h1>思考实验室</h1>
+        <p class="page-hero__desc">这里不追求闭环结论。每条记录固定结构：Question → My Thinking → Open Questions。用于训练判断力，也方便 Agent 引用未决假设。</p>
+      </div>
+    </header>
+    <section class="section" style="padding-top:0">
+      <div class="wrap grid grid--2">
+        <a class="card" href="determinism-sla.html">
+          <div class="card__meta"><span>2026-08-15</span><span>Reliability</span></div>
+          <h2 class="card__title">不确定执行能否被「像服务一样」SLA 化？</h2>
+          <p class="card__excerpt">模型非确定性与业务承诺如何共存。</p>
+          <div class="card__tags"><span class="tag">SLA</span><span class="tag">Agent</span></div>
+        </a>
+        <a class="card" href="agent-memory.html">
+          <div class="card__meta"><span>2026-08-22</span><span>State</span></div>
+          <h2 class="card__title">Agent 记忆：状态、知识，还是日志？</h2>
+          <p class="card__excerpt">分层之后，一致性责任落在哪一层。</p>
+          <div class="card__tags"><span class="tag">Memory</span><span class="tag">状态管理</span></div>
+        </a>
+        <a class="card" href="multi-agent-failure.html">
+          <div class="card__meta"><span>2026-09-01</span><span>Distributed</span></div>
+          <h2 class="card__title">多 Agent 协作的失败模式更像分布式事务</h2>
+          <p class="card__excerpt">重试、补偿、脑裂与真相源。</p>
+          <div class="card__tags"><span class="tag">Multi-Agent</span><span class="tag">分布式系统</span></div>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap site-footer__inner">
+      <div>
+        <p>© <span id="year"></span> chengguruchun · Hangzhou</p>
+        <p>AI Knowledge Lab — 面向人类与 AI Agent 的开放知识系统</p>
+      </div>
+      <div>
+        <p><a href="mailto:chengguruchun@163.com">chengguruchun@163.com</a></p>
+        <p><a href="https://github.com/chengguruchun" rel="noopener">GitHub</a> · <a href="../PRODUCT.md">PRODUCT.md</a></p>
+      </div>
+    </div>
+  </footer>
+  <script src="../assets/js/site.js"></script>
+
+</body>
+</html>

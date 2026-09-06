@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agent Runtime vs Kubernetes · AI Knowledge Lab</title>
+  <meta name="description" content="相似的声明式外壳，不同的成功标准与失败语义。">
+  <meta name="theme-color" content="#f7f5f0">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap site-header__inner">
+      <a class="brand" href="../index.html">
+        <span class="brand__name">AI Knowledge Lab</span>
+        <span class="brand__tag">Independent Thinker · Complex Systems · AI Agents</span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">菜单</button>
+      <nav class="nav" id="site-nav" aria-label="主导航">
+        <a href="../index.html">Home</a><a href="../articles/" aria-current="page">Articles</a><a href="../thinking/">Thinking Lab</a><a href="../projects/">Projects</a><a href="../videos/">Videos</a><a href="../about/">About</a><a class="nav__search" href="../tags/">Tags / Search</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <article class="article-body">
+      <header class="page-hero">
+        <div class="prose-wrap">
+          <p class="page-hero__kicker">Articles · Systems Abstraction</p>
+          <h1>Agent Runtime 与 Kubernetes：相似的外壳，不同的内核</h1>
+          <p class="page-hero__desc">团队容易把 Agent 当 Pod、把工具当 Sidecar。外壳能借，内核不能假装一样。</p>
+          <p class="article-meta">
+            <span>2026-08-28</span>
+            <span>chengguruchun</span>
+            <a class="tag" href="../tags/?tag=Agent">Agent</a>
+            <a class="tag" href="../tags/?tag=Kubernetes">Kubernetes</a>
+            <a class="tag" href="../tags/?tag=Runtime">Runtime</a>
+          </p>
+        </div>
+      </header>
+      <div class="prose-wrap">
+        <p>Kubernetes 成功，是因为它把「期望状态 → 实际状态」变成了可运维的循环。Agent 平台如果只抄 YAML 和调度器外形，却忽略执行语义，会得到一个<strong>看起来很云原生、实际上无法问责</strong>的系统。</p>
+
+        <h2>对照表</h2>
+        <div class="diagram">
+          <span class="diagram__label">Comparison · Kernel Differences</span>
+维度          │ Kubernetes              │ Agent Runtime
+──────────────┼─────────────────────────┼──────────────────────────
+调度对象      │ 容器副本 / Pod          │ 目标驱动的执行会话
+成功标准      │ Ready / 健康检查        │ 约束下的任务完成度
+状态          │ 无状态或外置存储        │ 记忆、轨迹、工具副作用
+失败语义      │ 重启、重调度            │ 改计划、补偿、人工接管
+幂等假设      │ 多数控制器可重入        │ 工具副作用常常不可重入
+确定性        │ 期望高                  │ 模型输出本质非确定
+        </div>
+
+        <h2>可迁移的部分</h2>
+        <ul>
+          <li><strong>声明式期望：</strong>把「允许做什么」写成数据，而不是藏在对话里。</li>
+          <li><strong>控制器循环：</strong>持续调和：预算、策略、进度、风险。</li>
+          <li><strong>可观测标准：</strong>统一日志、指标、追踪——对 Agent 还要加轨迹与成本。</li>
+          <li><strong>隔离：</strong>命名空间、配额、网络策略的思想，映射到工具与数据平面。</li>
+        </ul>
+
+        <h2>危险的迁移</h2>
+        <p>假设执行可幂等；假设输出可字节级复现；假设「重启 Pod」能修好错误的外部写入。Agent Runtime 需要<strong>效应管理</strong>：哪些调用可重试、哪些必须 saga 补偿、哪些必须停下来等人。</p>
+
+        <div class="callout">
+          <div class="callout__title">设计启发式</div>
+          <p>先问：这次失败重放是否安全？如果答案是否，就不要用 K8s 的重启心智去覆盖它。</p>
+        </div>
+
+        <h2>Desired State 还是 Desired Policy？</h2>
+        <p>开放世界任务很难收敛到单一终态。更稳的抽象或许是：在策略与预算边界内最大化进展，并显式保留「不确定区间」。这时控制面管的是政策与风险，而不是副本数。</p>
+
+        <h2>开放问题</h2>
+        <ul>
+          <li>Goal 对象的 API 应该长成什么样？能否像 CRD 一样演进？</li>
+          <li>工具会话（Tool Session）是否需要独立生命周期，像 ephemeral container？</li>
+          <li>多集群/多模型路由，是否会重演 federation 的复杂性？</li>
+        </ul>
+        <p>源码笔记：<a href="../content/articles/agent-runtime-vs-k8s.md"><code>content/articles/agent-runtime-vs-k8s.md</code></a></p>
+        <p><a href="./">← 返回 Articles</a></p>
+      </div>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap site-footer__inner">
+      <div>
+        <p>© <span id="year"></span> chengguruchun · Hangzhou</p>
+        <p>AI Knowledge Lab — 面向人类与 AI Agent 的开放知识系统</p>
+      </div>
+      <div>
+        <p><a href="mailto:chengguruchun@163.com">chengguruchun@163.com</a></p>
+        <p><a href="https://github.com/chengguruchun" rel="noopener">GitHub</a> · <a href="../PRODUCT.md">PRODUCT.md</a></p>
+      </div>
+    </div>
+  </footer>
+  <script src="../assets/js/site.js"></script>
+
+</body>
+</html>

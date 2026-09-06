@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Articles · AI Knowledge Lab</title>
+  <meta name="description" content="Agent 基础设施长文：Control Plane、Runtime、Registry。">
+  <meta name="theme-color" content="#f7f5f0">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap site-header__inner">
+      <a class="brand" href="../index.html">
+        <span class="brand__name">AI Knowledge Lab</span>
+        <span class="brand__tag">Independent Thinker · Complex Systems · AI Agents</span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">菜单</button>
+      <nav class="nav" id="site-nav" aria-label="主导航">
+        <a href="../index.html">Home</a><a href="../articles/" aria-current="page">Articles</a><a href="../thinking/">Thinking Lab</a><a href="../projects/">Projects</a><a href="../videos/">Videos</a><a href="../about/">About</a><a class="nav__search" href="../tags/">Tags / Search</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <header class="page-hero">
+      <div class="wrap">
+        <p class="page-hero__kicker">Articles</p>
+        <h1>长文档案</h1>
+        <p class="page-hero__desc">不是教程合集，而是可被引用的系统论述：问题定义、架构取舍、失败模式与开放问题。</p>
+      </div>
+    </header>
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="filters" role="toolbar" aria-label="标签筛选">
+          <button class="filter-btn is-active" type="button" data-filter="all">全部</button>
+          <button class="filter-btn" type="button" data-filter="Agent">Agent</button>
+          <button class="filter-btn" type="button" data-filter="Control-Plane">Control Plane</button>
+          <button class="filter-btn" type="button" data-filter="Runtime">Runtime</button>
+          <button class="filter-btn" type="button" data-filter="Registry">Registry</button>
+        </div>
+        <div class="grid grid--2">
+          <a class="card" href="agent-control-plane.html" data-tags="Agent Control-Plane 分布式系统">
+            <div class="card__meta"><span>2026-08-20</span><span>12 min</span></div>
+            <h2 class="card__title">Agent Control Plane：把智能体当成可治理的运行时</h2>
+            <p class="card__excerpt">从分布式控制面视角拆解调度、策略、观测与生命周期。</p>
+            <div class="card__tags"><span class="tag">Agent</span><span class="tag">Control Plane</span></div>
+          </a>
+          <a class="card" href="agent-runtime-vs-k8s.html" data-tags="Agent Runtime Kubernetes">
+            <div class="card__meta"><span>2026-08-28</span><span>11 min</span></div>
+            <h2 class="card__title">Agent Runtime 与 Kubernetes：相似的外壳，不同的内核</h2>
+            <p class="card__excerpt">对照确定性容器调度与目标驱动的不确定执行。</p>
+            <div class="card__tags"><span class="tag">Runtime</span><span class="tag">Kubernetes</span></div>
+          </a>
+          <a class="card" href="agent-registry.html" data-tags="Agent Registry 契约">
+            <div class="card__meta"><span>2026-09-02</span><span>10 min</span></div>
+            <h2 class="card__title">Agent Registry：能力发现、版本契约与信任边界</h2>
+            <p class="card__excerpt">多 Agent 互相调用时，注册中心成为能力目录与安全边界。</p>
+            <div class="card__tags"><span class="tag">Registry</span><span class="tag">契约</span></div>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap site-footer__inner">
+      <div>
+        <p>© <span id="year"></span> chengguruchun · Hangzhou</p>
+        <p>AI Knowledge Lab — 面向人类与 AI Agent 的开放知识系统</p>
+      </div>
+      <div>
+        <p><a href="mailto:chengguruchun@163.com">chengguruchun@163.com</a></p>
+        <p><a href="https://github.com/chengguruchun" rel="noopener">GitHub</a> · <a href="../PRODUCT.md">PRODUCT.md</a></p>
+      </div>
+    </div>
+  </footer>
+  <script src="../assets/js/site.js"></script>
+<script src="../assets/js/filter.js"></script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>miaoshao_test：秒杀链路压测与优化 · Projects</title>
+  <meta name="description" content="Spring Boot + Redis + RabbitMQ：限流、异步化与库存一致性的工程取舍。">
+  <meta name="theme-color" content="#f7f5f0">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap site-header__inner">
+      <a class="brand" href="../index.html">
+        <span class="brand__name">AI Knowledge Lab</span>
+        <span class="brand__tag">Independent Thinker · Complex Systems · AI Agents</span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">菜单</button>
+      <nav class="nav" id="site-nav" aria-label="主导航">
+        <a href="../index.html">Home</a><a href="../articles/">Articles</a><a href="../thinking/">Thinking Lab</a><a href="../projects/" aria-current="page">Projects</a><a href="../videos/">Videos</a><a href="../about/">About</a><a class="nav__search" href="../tags/">Tags / Search</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <article class="article-body">
+      <header class="page-hero">
+        <div class="prose-wrap">
+          <p class="page-hero__kicker">Projects · Case Study</p>
+          <h1>miaoshao_test：秒杀链路压测与优化</h1>
+          <p class="page-hero__desc">Spring Boot + Redis + RabbitMQ：限流、异步化与库存一致性的工程取舍。</p>
+          <p class="article-meta"><span>chengguruchun</span><a href="https://github.com/chengguruchun/miaoshao_test" rel="noopener">GitHub 仓库</a><a class="tag" href="../tags/?tag=%E7%A7%92%E6%9D%80">秒杀</a><a class="tag" href="../tags/?tag=%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97">消息队列</a></p>
+        </div>
+      </header>
+      <div class="prose-wrap">
+        <section class="project-section">
+          <h2>Problem</h2>
+          <p>秒杀把流量尖峰、库存约束与用户体验压进同一条链路。目标不是「绝对公平的完美系统」，而是在可接受的一致性模型下活下来，并让失败可解释。</p>
+        </section>
+        <section class="project-section">
+          <h2>Architecture</h2>
+          <div class="arch-grid">
+            <div class="arch-cell"><strong>API</strong><span>Spring Boot 接入与校验</span></div>
+            <div class="arch-cell"><strong>Redis</strong><span>预减库存 / 缓存热点</span></div>
+            <div class="arch-cell"><strong>MQ</strong><span>RabbitMQ 异步下单</span></div>
+            <div class="arch-cell"><strong>DB</strong><span>订单与库存最终落盘</span></div>
+          </div>
+          <div class="diagram"><span class="diagram__label">Seckill Path</span>
+Request → Limit/Cache Pre-decrement → MQ → Order Worker → DB
+                │                        │
+                └── reject early         └── retry / DLQ
+</div>
+        </section>
+        <section class="project-section">
+          <h2>Design</h2>
+          <p>取舍清晰化：同步链路越短越好；能在 Redis 拒绝的绝不打到 DB；MQ 负责削峰，但也引入重复消费与乱序，必须幂等。售罄语义要在缓存层先闭合。</p>
+        </section>
+        <section class="project-section">
+          <h2>Implementation</h2>
+          <p>实现组合常见互联网栈：Spring Boot、Redis、RabbitMQ。重点在压测驱动优化——每次改动对应可观测指标：成功率、超卖次数、P99、队列堆积。</p>
+        </section>
+        <section class="project-section">
+          <h2>Demo</h2>
+          <p>按仓库说明启动依赖后压测下单路径。建议场景：库存 100 / 并发 1k+；观察预减与消息消费是否对齐，DLQ 是否可解释。</p>
+        </section>
+        <section class="project-section">
+          <h2>GitHub</h2>
+          <p><a href="https://github.com/chengguruchun/miaoshao_test" rel="noopener">https://github.com/chengguruchun/miaoshao_test</a></p>
+        </section>
+        <section class="project-section">
+          <h2>Lessons Learned</h2>
+          <ul>
+            <li>削峰不是消除矛盾，是转移矛盾——要有人负责消化。</li>
+            <li>幂等键是秒杀与 Agent 工具调用的共同基础设施。</li>
+            <li>优化顺序：正确性 → 可拒绝 → 可异步 → 再谈极致吞吐。</li>
+          </ul>
+        </section>
+        <p><a href="./">← 返回 Projects</a></p>
+      </div>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap site-footer__inner">
+      <div>
+        <p>© <span id="year"></span> chengguruchun · Hangzhou</p>
+        <p>AI Knowledge Lab — 面向人类与 AI Agent 的开放知识系统</p>
+      </div>
+      <div>
+        <p><a href="mailto:chengguruchun@163.com">chengguruchun@163.com</a></p>
+        <p><a href="https://github.com/chengguruchun" rel="noopener">GitHub</a> · <a href="../PRODUCT.md">PRODUCT.md</a></p>
+      </div>
+    </div>
+  </footer>
+  <script src="../assets/js/site.js"></script>
+
+</body>
+</html>

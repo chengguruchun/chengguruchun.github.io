@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agent Control Plane · AI Knowledge Lab</title>
+  <meta name="description" content="把智能体当成可治理的运行时：调度、策略、观测与生命周期。">
+  <meta name="theme-color" content="#f7f5f0">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap site-header__inner">
+      <a class="brand" href="../index.html">
+        <span class="brand__name">AI Knowledge Lab</span>
+        <span class="brand__tag">Independent Thinker · Complex Systems · AI Agents</span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">菜单</button>
+      <nav class="nav" id="site-nav" aria-label="主导航">
+        <a href="../index.html">Home</a><a href="../articles/" aria-current="page">Articles</a><a href="../thinking/">Thinking Lab</a><a href="../projects/">Projects</a><a href="../videos/">Videos</a><a href="../about/">About</a><a class="nav__search" href="../tags/">Tags / Search</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <article class="article-body">
+      <header class="page-hero">
+        <div class="prose-wrap">
+          <p class="page-hero__kicker">Articles · Agent Infrastructure</p>
+          <h1>Agent Control Plane：把智能体当成可治理的运行时</h1>
+          <p class="page-hero__desc">多数 Agent 应用停在提示词与工具调用。进入生产后，缺少的不是更聪明的模型，而是控制面。</p>
+          <p class="article-meta">
+            <span>2026-08-20</span>
+            <span>chengguruchun</span>
+            <span>Hangzhou</span>
+            <a class="tag" href="../tags/?tag=Agent">Agent</a>
+            <a class="tag" href="../tags/?tag=Control%20Plane">Control Plane</a>
+            <a class="tag" href="../tags/?tag=%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F">分布式系统</a>
+          </p>
+        </div>
+      </header>
+
+      <div class="prose-wrap">
+        <p>后端与分布式训练给我的第一反应很直接：任何会在生产里长时间运行、会调用外部世界、会产生副作用的东西，都不能只靠「一次推理」。它需要<strong>准入、编排、策略、观测、终止</strong>。对微服务，我们叫它控制面；对 Agent，名字可以换，结构不能省。</p>
+
+        <h2>1. 问题定义：聊天机器人不是工作负载</h2>
+        <p>演示里的 Agent 像对话。生产里的 Agent 更像带目标的工作负载：它有预算（token / 钱 / 时间），有工具权限，有可能陷入循环，有可能对外部系统造成不可逆写入。如果团队只优化提示词，系统债会堆在运行时之外——直到某次工具调用打穿了库存或票据。</p>
+        <div class="callout">
+          <div class="callout__title">判断标准</div>
+          <p>如果一个 Agent 不能被安全地暂停、审计、限流与回放，它就不该碰生产副作用。</p>
+        </div>
+
+        <h2>2. 控制面五件套</h2>
+        <div class="arch-grid">
+          <div class="arch-cell"><strong>意图准入</strong><span>目标合法性、租户、预算、数据分级</span></div>
+          <div class="arch-cell"><strong>执行编排</strong><span>单/多 Agent、同步异步、队列化</span></div>
+          <div class="arch-cell"><strong>策略护栏</strong><span>工具白名单、人机回环、写入闸门</span></div>
+          <div class="arch-cell"><strong>观测审计</strong><span>轨迹、成本、失败分类、证据链</span></div>
+          <div class="arch-cell"><strong>生命周期</strong><span>挂起、恢复、终止、重放、归档</span></div>
+        </div>
+        <p>这五件套不是「平台团队的附加功能」，而是 Agent 作为运行时的最小完备集。缺观测，你无法改进；缺终止，你无法止损；缺准入，你无法多租户。</p>
+
+        <div class="diagram" role="img" aria-label="Control Plane 结构示意">
+          <span class="diagram__label">Diagram · Control Plane Sketch</span>
+┌──────────────┐    policy     ┌──────────────────┐
+│  API / Chat  │──────────────▶│  Admission / IAM │
+└──────────────┘               └────────┬─────────┘
+                                        │ goal + budget
+                                        ▼
+                               ┌──────────────────┐
+                               │  Orchestrator    │
+                               │  (plans/queue)   │
+                               └────────┬─────────┘
+                     ┌──────────────────┼──────────────────┐
+                     ▼                  ▼                  ▼
+              ┌────────────┐    ┌────────────┐    ┌────────────┐
+              │  Runtime   │    │  Tool GW   │    │  Memory    │
+              └─────┬──────┘    └─────┬──────┘    └─────┬──────┘
+                    └────────────┬────┴─────────────────┘
+                                 ▼
+                        ┌────────────────┐
+                        │ Telemetry/Audit│
+                        └────────────────┘
+        </div>
+
+        <h2>3. 与服务控制面的同构与异质</h2>
+        <p><strong>同构：</strong>都需要声明期望、调节实际、暴露信号。控制器循环（reconcile）仍然好用——只不过「期望」不再是副本数，而是「在约束下推进目标」。</p>
+        <p><strong>异质：</strong>Agent 的成功不是 Ready 探针为真，而是约束满足与任务完成度；失败也不是简单重启能治愈——可能需要改计划、换工具、升级给人。</p>
+
+        <h2>4. 工程落地的最小路径</h2>
+        <ol>
+          <li>先做 <strong>Tool Gateway</strong>：所有副作用走网关，带鉴权、配额、审计。</li>
+          <li>再做 <strong>Run Record</strong>：每次执行有不可篡改的轨迹与成本账本。</li>
+          <li>然后做 <strong>Policy-as-data</strong>：谁能用哪些工具，写在数据里，而不是散落在提示词。</li>
+          <li>最后才考虑复杂多 Agent 编排——否则是在放大失控面。</li>
+        </ol>
+
+        <h2>5. 开放问题</h2>
+        <ul>
+          <li>控制面该嵌入模型运行时，还是像服务网格一样旁路？</li>
+          <li>策略语言要多强？DSL、Rego，还是「可执行测试即策略」？</li>
+          <li>跨厂商模型时，统一的 Run Record schema 如何演进而不碎？</li>
+        </ul>
+        <p>源码笔记：<a href="../content/articles/agent-control-plane.md"><code>content/articles/agent-control-plane.md</code></a></p>
+        <p><a href="./">← 返回 Articles</a></p>
+      </div>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap site-footer__inner">
+      <div>
+        <p>© <span id="year"></span> chengguruchun · Hangzhou</p>
+        <p>AI Knowledge Lab — 面向人类与 AI Agent 的开放知识系统</p>
+      </div>
+      <div>
+        <p><a href="mailto:chengguruchun@163.com">chengguruchun@163.com</a></p>
+        <p><a href="https://github.com/chengguruchun" rel="noopener">GitHub</a> · <a href="../PRODUCT.md">PRODUCT.md</a></p>
+      </div>
+    </div>
+  </footer>
+  <script src="../assets/js/site.js"></script>
+
+</body>
+</html>

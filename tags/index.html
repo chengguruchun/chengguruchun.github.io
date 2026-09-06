@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tags & Search · AI Knowledge Lab</title>
+  <meta name="description" content="按标签浏览并搜索 AI Knowledge Lab 知识条目。">
+  <meta name="theme-color" content="#f7f5f0">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap site-header__inner">
+      <a class="brand" href="../index.html">
+        <span class="brand__name">AI Knowledge Lab</span>
+        <span class="brand__tag">Independent Thinker · Complex Systems · AI Agents</span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">菜单</button>
+      <nav class="nav" id="site-nav" aria-label="主导航">
+        <a href="../index.html">Home</a><a href="../articles/">Articles</a><a href="../thinking/">Thinking Lab</a><a href="../projects/">Projects</a><a href="../videos/">Videos</a><a href="../about/">About</a><a class="nav__search" href="../tags/">Tags / Search</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <header class="page-hero">
+      <div class="wrap">
+        <p class="page-hero__kicker">Tags / Search</p>
+        <h1>标签与检索</h1>
+        <p class="page-hero__desc">客户端检索 <code>content/index.json</code>。支持关键词与标签过滤，便于人类浏览与 Agent 定向拉取。</p>
+      </div>
+    </header>
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="search-box">
+          <input id="search-input" type="search" placeholder="搜索：Agent、控制面、秒杀、记忆…" aria-label="搜索知识条目" autocomplete="off">
+        </div>
+        <p class="search-hint" id="search-hint">加载索引中…</p>
+        <div class="filters" role="toolbar" aria-label="快捷标签">
+          <button class="filter-btn is-active" type="button" data-tag-filter="all">全部</button>
+          <button class="filter-btn" type="button" data-tag-filter="Agent">Agent</button>
+          <button class="filter-btn" type="button" data-tag-filter="Control Plane">Control Plane</button>
+          <button class="filter-btn" type="button" data-tag-filter="Thinking">Thinking</button>
+          <button class="filter-btn" type="button" data-tag-filter="Projects">Projects</button>
+          <button class="filter-btn" type="button" data-tag-filter="Kubernetes">Kubernetes</button>
+          <button class="filter-btn" type="button" data-tag-filter="高并发">高并发</button>
+        </div>
+        <div class="grid grid--2" id="search-results"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap site-footer__inner">
+      <div>
+        <p>© <span id="year"></span> chengguruchun · Hangzhou</p>
+        <p>AI Knowledge Lab — 面向人类与 AI Agent 的开放知识系统</p>
+      </div>
+      <div>
+        <p><a href="mailto:chengguruchun@163.com">chengguruchun@163.com</a></p>
+        <p><a href="https://github.com/chengguruchun" rel="noopener">GitHub</a> · <a href="../PRODUCT.md">PRODUCT.md</a></p>
+      </div>
+    </div>
+  </footer>
+  <script src="../assets/js/site.js"></script>
+<script>
+  document.body.setAttribute("data-base", "..");
+</script>
+<script src="../assets/js/search.js"></script>
+</body>
+</html>

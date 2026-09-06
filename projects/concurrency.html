@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>concurrency：高并发实验台 · Projects</title>
+  <meta name="description" content="用可复现实验理解并发正确性与吞吐的边界——锁、无锁结构、队列与背压。">
+  <meta name="theme-color" content="#f7f5f0">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap site-header__inner">
+      <a class="brand" href="../index.html">
+        <span class="brand__name">AI Knowledge Lab</span>
+        <span class="brand__tag">Independent Thinker · Complex Systems · AI Agents</span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">菜单</button>
+      <nav class="nav" id="site-nav" aria-label="主导航">
+        <a href="../index.html">Home</a><a href="../articles/">Articles</a><a href="../thinking/">Thinking Lab</a><a href="../projects/" aria-current="page">Projects</a><a href="../videos/">Videos</a><a href="../about/">About</a><a class="nav__search" href="../tags/">Tags / Search</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <article class="article-body">
+      <header class="page-hero">
+        <div class="prose-wrap">
+          <p class="page-hero__kicker">Projects · Case Study</p>
+          <h1>concurrency：高并发实验台</h1>
+          <p class="page-hero__desc">用可复现实验理解并发正确性与吞吐的边界——锁、无锁结构、队列与背压。</p>
+          <p class="article-meta"><span>chengguruchun</span><a href="https://github.com/chengguruchun/concurrency" rel="noopener">GitHub 仓库</a><a class="tag" href="../tags/?tag=%E5%B9%B6%E5%8F%91">并发</a><a class="tag" href="../tags/?tag=Java">Java</a></p>
+        </div>
+      </header>
+      <div class="prose-wrap">
+        <section class="project-section">
+          <h2>Problem</h2>
+          <p>并发bug 很难靠「感觉」学会。需要一个能反复跑、能对照不同策略、能量化等待与吞吐的实验台：在可控压力下观察数据竞争、活锁、伪共享与队列堆积。</p>
+        </section>
+        <section class="project-section">
+          <h2>Architecture</h2>
+          <div class="arch-grid">
+            <div class="arch-cell"><strong>Workload</strong><span>可配置生产者/消费者与共享状态</span></div>
+            <div class="arch-cell"><strong>Sync Layer</strong><span>内置锁 / 显式锁 / 无锁路径对照</span></div>
+            <div class="arch-cell"><strong>Metrics</strong><span>吞吐、延迟分布、错误与重试</span></div>
+            <div class="arch-cell"><strong>Harness</strong><span>可重复种子与场景脚本</span></div>
+          </div>
+          <div class="diagram"><span class="diagram__label">Architecture Sketch</span>
+Producers ──▶ Shared Structure / Queue ──▶ Consumers
+                 │                │
+                 └──── Metrics ←──┘
+</div>
+        </section>
+        <section class="project-section">
+          <h2>Design</h2>
+          <p>设计原则：<strong>对照优于堆砌</strong>。同一业务语义用多种同步策略实现；默认暴露失败，而不是只展示 happy path。背压必须可见——否则高吞吐只是把崩溃推迟到下游。</p>
+        </section>
+        <section class="project-section">
+          <h2>Implementation</h2>
+          <p>以 Java 并发工具为主（线程池、队列、锁与原子类），配合场景化测试。重点不在框架炫技，而在把「正确性条件」写清楚：不变量是什么、哪些操作需要原子、哪些可以最终一致。</p>
+        </section>
+        <section class="project-section">
+          <h2>Demo</h2>
+          <p>本地运行仓库中的示例与压测入口，对比不同实现在相同负载下的吞吐与错误率。建议记录：线程数拐点、队列长度与尾延迟的关系。</p>
+        </section>
+        <section class="project-section">
+          <h2>GitHub</h2>
+          <p><a href="https://github.com/chengguruchun/concurrency" rel="noopener">https://github.com/chengguruchun/concurrency</a></p>
+        </section>
+        <section class="project-section">
+          <h2>Lessons Learned</h2>
+          <ul>
+            <li>没有不变量的并发优化是表演。</li>
+            <li>背压是特性，不是耻辱；它保护的是系统整体。</li>
+            <li>这些直觉可迁移到 Agent Tool Gateway：限流、排队、拒绝策略同一套。</li>
+          </ul>
+        </section>
+        <p><a href="./">← 返回 Projects</a></p>
+      </div>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap site-footer__inner">
+      <div>
+        <p>© <span id="year"></span> chengguruchun · Hangzhou</p>
+        <p>AI Knowledge Lab — 面向人类与 AI Agent 的开放知识系统</p>
+      </div>
+      <div>
+        <p><a href="mailto:chengguruchun@163.com">chengguruchun@163.com</a></p>
+        <p><a href="https://github.com/chengguruchun" rel="noopener">GitHub</a> · <a href="../PRODUCT.md">PRODUCT.md</a></p>
+      </div>
+    </div>
+  </footer>
+  <script src="../assets/js/site.js"></script>
+
+</body>
+</html>
