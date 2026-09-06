@@ -1,13 +1,13 @@
 /* AI Knowledge Lab — editorial dark */
 :root {
-  --bg: #0c0d0b;
-  --bg-elev: #141612;
-  --bg-soft: #1a1c17;
-  --line: #2a2d24;
-  --line-soft: #22251e;
-  --text: #e8e6dc;
-  --text-dim: #9a9788;
-  --text-faint: #6b685c;
+  --bg: #23262b;
+  --bg-elev: #2c3038;
+  --bg-soft: #333842;
+  --line: #3d434d;
+  --line-soft: #353a44;
+  --text: #eceae4;
+  --text-dim: #b0aea3;
+  --text-faint: #8a877c;
   --accent: #c4a35a;
   --accent-soft: rgba(196, 163, 90, 0.14);
   --teal: #6a9e8a;
@@ -41,7 +41,7 @@ body::before {
   inset: 0;
   pointer-events: none;
   z-index: 1000;
-  opacity: 0.035;
+  opacity: 0.012;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 a { color: var(--accent); text-decoration: none; transition: color 0.2s var(--ease); }
@@ -105,7 +105,7 @@ hr {
   top: 0;
   z-index: 50;
   backdrop-filter: blur(12px);
-  background: rgba(12, 13, 11, 0.85);
+  background: rgba(35, 38, 43, 0.88);
   border-bottom: 1px solid var(--line-soft);
 }
 .site-header__inner {
@@ -311,7 +311,7 @@ a.tag:hover { color: #8fbfab; border-color: rgba(106,158,138,0.5); }
 .article-body {
   padding-bottom: 3rem;
 }
-.article-body p, .article-body li { color: #d5d2c6; }
+.article-body p, .article-body li { color: #dddace; }
 .article-body h2 {
   padding-top: 0.5rem;
   border-top: 1px solid var(--line-soft);
@@ -406,7 +406,7 @@ a.tag:hover { color: #8fbfab; border-color: rgba(106,158,138,0.5); }
 }
 .video-frame {
   aspect-ratio: 16 / 9;
-  background: linear-gradient(135deg, #1a1c17, #10120e);
+  background: linear-gradient(135deg, #333842, #272b31);
   border: 1px solid var(--line);
   display: grid;
   place-items: center;
@@ -424,7 +424,7 @@ a.tag:hover { color: #8fbfab; border-color: rgba(106,158,138,0.5); }
   border-radius: 50%;
   display: grid;
   place-items: center;
-  background: rgba(12,13,11,0.7);
+  background: rgba(35, 38, 43, 0.75);
   color: var(--accent);
 }
 
@@ -520,7 +520,7 @@ a.tag:hover { color: #8fbfab; border-color: rgba(106,158,138,0.5); }
     flex-direction: column;
     align-items: stretch;
     gap: 0;
-    background: rgba(12,13,11,0.97);
+    background: rgba(35, 38, 43, 0.97);
     border-bottom: 1px solid var(--line);
     padding: 0.75rem 1rem 1rem;
   }
@@ -531,4 +531,61 @@ a.tag:hover { color: #8fbfab; border-color: rgba(106,158,138,0.5); }
   }
   .site-header__inner { position: relative; }
   .brand__tag { display: none; }
+}
+
+
+/* Concise home landing */
+.entry-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+  margin-top: 1.75rem;
+}
+.entry-card {
+  display: block;
+  padding: 1.15rem 1.2rem;
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: inherit;
+  transition: border-color 0.2s var(--ease), transform 0.2s var(--ease);
+}
+a.entry-card:hover {
+  border-color: rgba(196,163,90,0.45);
+  transform: translateY(-1px);
+  color: inherit;
+}
+.entry-card__label {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.45rem;
+}
+.entry-card__title {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  margin: 0 0 0.35rem;
+}
+.entry-card__desc {
+  margin: 0;
+  color: var(--text-dim);
+  font-size: 0.9rem;
+}
+.highlight-row {
+  margin-top: 2.25rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line-soft);
+}
+.highlight-row__label {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 0.85rem;
+}
+@media (max-width: 860px) {
+  .entry-grid { grid-template-columns: 1fr; }
 }

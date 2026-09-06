@@ -5,13 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AI Knowledge Lab · chengguruchun</title>
   <meta name="description" content="独立思考者的知识实验室：复杂系统、AI Agents 与可演进的基础设施直觉。">
-  <meta name="theme-color" content="#0c0d0b">
+  <meta name="theme-color" content="#23262b">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/site.css">
-  
 </head>
 <body>
   <header class="site-header">
@@ -29,163 +28,59 @@
   <main>
     <section class="hero">
       <div class="wrap">
-        <p class="hero__kicker">Open Knowledge System · P0 MVP</p>
+        <p class="hero__kicker">Open Knowledge System</p>
         <h1 class="hero__title">把工程直觉，接到 Agent 基础设施上。</h1>
         <p class="hero__lead">
-          AI Knowledge Lab 不是博客。它是一个面向人类与 AI Agent 共同阅读的开放知识系统：
-          记录问题、架构取舍、失败模式与仍未闭合的思考。品牌坐标：
-          <strong>Independent Thinker · Complex Systems · AI Agents</strong>。
+          这不是个人博客。它是面向人类与 AI Agent 的开放知识系统——记录问题、架构取舍与未闭合思考。
+          <strong>Independent Thinker · Complex Systems · AI Agents</strong>
         </p>
         <div class="hero__meta">
-          <span>Owner: chengguruchun</span>
-          <span>Hangzhou</span>
-          <span>Backend / Distributed → AI Agents / Infrastructure</span>
+          <span>chengguruchun · Hangzhou</span>
+          <span>Backend / Distributed → AI Agents</span>
         </div>
         <div class="pill-row">
           <span class="pill pill--accent">Control Plane</span>
           <span class="pill">Agent Runtime</span>
           <span class="pill">Registry</span>
           <span class="pill">高并发遗产</span>
-          <span class="pill">可观测性</span>
         </div>
-      </div>
-    </section>
 
-    <section class="section">
-      <div class="wrap">
-        <div class="section__head">
-          <div>
-            <div class="section__index">01 / ARTICLES</div>
-            <h2>长文：把 Agent 当作可治理运行时</h2>
-          </div>
-          <a href="articles/">全部文章 →</a>
-        </div>
-        <div class="grid grid--3">
-          <a class="card" href="articles/agent-control-plane.html">
-            <div class="card__meta"><span>Articles</span><span>2026-08-20</span></div>
-            <h3 class="card__title">Agent Control Plane</h3>
-            <p class="card__excerpt">调度、策略、观测与生命周期——从分布式控制面视角治理智能工作负载。</p>
-            <div class="card__tags"><span class="tag">Agent</span><span class="tag">Control Plane</span></div>
+        <div class="entry-grid" aria-label="栏目入口">
+          <a class="entry-card" href="articles/">
+            <div class="entry-card__label">Articles</div>
+            <h2 class="entry-card__title">长文档案</h2>
+            <p class="entry-card__desc">可引用的系统论述：问题、架构与开放问题。</p>
           </a>
-          <a class="card" href="articles/agent-runtime-vs-k8s.html">
-            <div class="card__meta"><span>Articles</span><span>2026-08-28</span></div>
-            <h3 class="card__title">Agent Runtime vs Kubernetes</h3>
-            <p class="card__excerpt">相似的声明式外壳，不同的成功标准与失败语义。对照才能选对抽象。</p>
-            <div class="card__tags"><span class="tag">Runtime</span><span class="tag">K8s</span></div>
+          <a class="entry-card" href="thinking/">
+            <div class="entry-card__label">Thinking Lab</div>
+            <h2 class="entry-card__title">思考实验室</h2>
+            <p class="entry-card__desc">Question / My Thinking / Open Questions。</p>
           </a>
-          <a class="card" href="articles/agent-registry.html">
-            <div class="card__meta"><span>Articles</span><span>2026-09-02</span></div>
-            <h3 class="card__title">Agent Registry</h3>
-            <p class="card__excerpt">能力发现、版本契约与信任边界——多 Agent 世界的名字服务升级版。</p>
-            <div class="card__tags"><span class="tag">Registry</span><span class="tag">契约</span></div>
+          <a class="entry-card" href="projects/">
+            <div class="entry-card__label">Projects</div>
+            <h2 class="entry-card__title">项目档案</h2>
+            <p class="entry-card__desc">高并发遗产 → 可论证的工程取舍与仓库。</p>
+          </a>
+          <a class="entry-card" href="about/">
+            <div class="entry-card__label">About</div>
+            <h2 class="entry-card__title">关于实验室</h2>
+            <p class="entry-card__desc">作者、定位，以及给 Agent 的阅读入口。</p>
           </a>
         </div>
-      </div>
-    </section>
 
-    <section class="section" style="padding-top:0">
-      <div class="wrap">
-        <div class="section__head">
-          <div>
-            <div class="section__index">02 / THINKING LAB</div>
-            <h2>未闭合的问题，比答案更重要</h2>
-          </div>
-          <a href="thinking/">进入实验室 →</a>
-        </div>
-        <div class="grid grid--3">
-          <a class="card" href="thinking/determinism-sla.html">
-            <div class="card__meta"><span>Thinking</span></div>
-            <h3 class="card__title">不确定执行的 SLA</h3>
-            <p class="card__excerpt">模型非确定性与业务承诺如何共存？管概率，还是管边界？</p>
-          </a>
-          <a class="card" href="thinking/agent-memory.html">
-            <div class="card__meta"><span>Thinking</span></div>
-            <h3 class="card__title">记忆是状态还是日志</h3>
-            <p class="card__excerpt">工作记忆 / 情景 / 长期知识分层后，一致性责任落在谁身上？</p>
-          </a>
-          <a class="card" href="thinking/multi-agent-failure.html">
-            <div class="card__meta"><span>Thinking</span></div>
-            <h3 class="card__title">多 Agent 失败模式</h3>
-            <p class="card__excerpt">协作崩坏更像分布式事务：重试、补偿、脑裂与真相源。</p>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" style="padding-top:0">
-      <div class="wrap">
-        <div class="section__head">
-          <div>
-            <div class="section__index">03 / PROJECTS</div>
-            <h2>从高并发遗产到 Agent 基础设施</h2>
-          </div>
-          <a href="projects/">项目档案 →</a>
-        </div>
-        <div class="grid grid--3">
-          <a class="card" href="projects/concurrency.html">
-            <div class="card__meta"><span>Projects</span><span>GitHub</span></div>
-            <h3 class="card__title">concurrency</h3>
-            <p class="card__excerpt">锁、队列、背压——可复现的并发正确性实验台。</p>
-          </a>
-          <a class="card" href="projects/redpacket.html">
-            <div class="card__meta"><span>Projects</span><span>GitHub</span></div>
-            <h3 class="card__title">RedPacket</h3>
-            <p class="card__excerpt">热点扣减与公平性：把抢红包拆成可论证的系统设计。</p>
-          </a>
-          <a class="card" href="projects/miaoshao.html">
-            <div class="card__meta"><span>Projects</span><span>GitHub</span></div>
-            <h3 class="card__title">miaoshao_test</h3>
-            <p class="card__excerpt">秒杀链路：限流、异步化、库存一致性的工程取舍。</p>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" style="padding-top:0">
-      <div class="wrap">
-        <div class="section__head">
-          <div>
-    <section class="section" style="padding-top:0">
-      <div class="wrap">
-        <div class="section__head">
-          <div>
-            <div class="section__index">04 / VIDEOS</div>
-            <h2>口述与白板（占位可替换）</h2>
-          </div>
-          <a href="videos/">全部影像 →</a>
-        </div>
-        <div class="grid grid--3">
-          <a class="card" href="videos/#vid-control-plane">
-            <div class="card__meta"><span>Videos</span><span>即将上线</span></div>
-            <h3 class="card__title">为什么 Agent 需要 Control Plane</h3>
-            <p class="card__excerpt">从服务网格到 Agent 治理的迁移直觉，对应长文 Control Plane。</p>
-          </a>
-          <a class="card" href="videos/#vid-runtime">
-            <div class="card__meta"><span>Videos</span><span>即将上线</span></div>
-            <h3 class="card__title">K8s 抽象 vs Agent Runtime</h3>
-            <p class="card__excerpt">白板推演 Pod / Goal / Tool Session 的生命周期与失败语义。</p>
-          </a>
-          <a class="card" href="videos/#vid-registry">
-            <div class="card__meta"><span>Videos</span><span>规划中</span></div>
-            <h3 class="card__title">Registry：能力、契约与信任</h3>
-            <p class="card__excerpt">为什么 DNS 式发现不够，契约如何进入注册流程。</p>
-          </a>
-        </div>
-      </div>
-    </section>
-
-            <div class="section__index">05 / LAB NOTE</div>
-            <h2>这个站点如何被阅读</h2>
-          </div>
-        </div>
-        <div class="grid grid--2">
-          <div class="card">
-            <h3 class="card__title">给人类</h3>
-            <p class="card__excerpt">按 Articles → Thinking → Projects 阅读。先看问题与架构，再看实现与仓库。标签与搜索用于横向穿越主题。</p>
-          </div>
-          <div class="card">
-            <h3 class="card__title">给 AI Agent</h3>
-            <p class="card__excerpt">优先读取 <code>PRODUCT.md</code>、<code>content/index.json</code> 与 <code>content/**/*.md</code>。HTML 是渲染层；Markdown 是可引用的知识源。</p>
+        <div class="highlight-row">
+          <div class="highlight-row__label">Latest</div>
+          <div class="grid grid--2">
+            <a class="card" href="articles/agent-registry.html">
+              <div class="card__meta"><span>Articles</span><span>2026-09-02</span></div>
+              <h3 class="card__title">Agent Registry</h3>
+              <p class="card__excerpt">能力发现、版本契约与信任边界。</p>
+            </a>
+            <a class="card" href="thinking/multi-agent-failure.html">
+              <div class="card__meta"><span>Thinking</span><span>2026-09-01</span></div>
+              <h3 class="card__title">多 Agent 失败模式</h3>
+              <p class="card__excerpt">协作崩坏更像分布式事务：重试、补偿与真相源。</p>
+            </a>
           </div>
         </div>
       </div>
@@ -200,11 +95,10 @@
       </div>
       <div>
         <p><a href="mailto:chengguruchun@163.com">chengguruchun@163.com</a></p>
-        <p><a href="https://github.com/chengguruchun" rel="noopener">GitHub</a> · <a href="PRODUCT.md">PRODUCT.md</a></p>
+        <p><a href="https://github.com/chengguruchun" rel="noopener">GitHub</a> · <a href="PRODUCT.md">PRODUCT.md</a> · <a href="videos/">Videos</a> · <a href="tags/">Search</a></p>
       </div>
     </div>
   </footer>
   <script src="assets/js/site.js"></script>
-
 </body>
 </html>
