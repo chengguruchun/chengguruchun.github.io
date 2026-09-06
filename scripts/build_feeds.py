@@ -94,7 +94,7 @@ def build_rss(items: list[dict]) -> str:
   <channel>
     <title>AI Knowledge Lab</title>
     <link>{BASE}/</link>
-    <description>chengguruchun · 面向 AI Agent 的个人知识博客（文章 / Diverse Lab 等有日期条目）</description>
+    <description>chengguruchun · Blog for Agents · 个人知识博客（文章 / Diverse Lab 等有日期条目）</description>
     <language>zh-cn</language>
     <lastBuildDate>{rfc822(channel_updated)}</lastBuildDate>
     <atom:link href=\"{BASE}/feed.xml\" rel=\"self\" type=\"application/rss+xml\"/>
