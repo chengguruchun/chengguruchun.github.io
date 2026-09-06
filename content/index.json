@@ -1,6 +1,44 @@
 {
-  "generated": "2026-09-06T07:21:19Z",
+  "generated": "2026-09-06T07:22:27Z",
   "items": [
+    {
+      "id": "vid-control-plane",
+      "type": "Videos",
+      "title": "讲解：为什么 Agent 需要 Control Plane",
+      "excerpt": "15 分钟口述：从服务网格到 Agent 治理的迁移路径。",
+      "url": "/videos/#vid-control-plane",
+      "date": "",
+      "tags": [
+        "Videos",
+        "Agent",
+        "讲解"
+      ]
+    },
+    {
+      "id": "vid-runtime",
+      "type": "Videos",
+      "title": "对照阅读：K8s 抽象 vs Agent Runtime",
+      "excerpt": "白板推演 Pod / Goal / Tool Session 三类生命周期。",
+      "url": "/videos/#vid-runtime",
+      "date": "",
+      "tags": [
+        "Videos",
+        "Kubernetes",
+        "Runtime"
+      ]
+    },
+    {
+      "id": "vid-registry",
+      "type": "Videos",
+      "title": "Registry：能力、契约与信任",
+      "excerpt": "短述：为什么 DNS 式发现不够，以及契约测试如何进入注册流程。",
+      "url": "/videos/#vid-registry",
+      "date": "",
+      "tags": [
+        "Videos",
+        "Registry"
+      ]
+    },
     {
       "id": "k8s-to-agent-control-plane",
       "type": "Articles",
