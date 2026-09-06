@@ -1,0 +1,187 @@
+{
+  "name": "ai-knowledge-lab",
+  "version": "0.1.0",
+  "description": "Read-only Knowledge Lab tools. Agents: lab_discover then lab_invoke. Add domain tools here without editing SKILL.md.",
+  "transport_today": "static-http",
+  "transport_next": "mcp-stdio-or-http",
+  "skill": "/SKILL.md",
+  "tools": [
+    {
+      "name": "lab_discover",
+      "description": "Discover available Knowledge Lab capabilities. Returns tool names, short descriptions, and invoke hints. Call this before lab_invoke. Catalog grows without changing SKILL.md.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "Optional keyword to filter tools (e.g. article, project, tag)"
+          }
+        },
+        "additionalProperties": false
+      },
+      "static": {
+        "method": "GET",
+        "path": "/api/discover.json"
+      }
+    },
+    {
+      "name": "lab_invoke",
+      "description": "Invoke a discovered tool by name. Resolve the tool from /api/discover.json or /mcp/tools.json, then GET its static path (or path_template with args).",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "tool": {
+            "type": "string",
+            "description": "Exact tool name from lab_discover"
+          },
+          "args": {
+            "type": "object",
+            "description": "Tool arguments (e.g. {\"id\": \"agent-control-plane\"})"
+          }
+        },
+        "required": [
+          "tool"
+        ],
+        "additionalProperties": false
+      },
+      "static": {
+        "method": "RESOLVE",
+        "registry": "/mcp/tools.json",
+        "note": "Look up tool.static.path or tool.static.path_template; substitute args; HTTP GET."
+      }
+    },
+    {
+      "name": "lab_get_skill",
+      "description": "Read the Knowledge Lab SKILL.md — required first step for any agent using this site.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "static": {
+        "method": "GET",
+        "path": "/SKILL.md"
+      }
+    },
+    {
+      "name": "lab_get_product",
+      "description": "Read PRODUCT.md vision, P0 scope, and P1–P3 roadmap.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "static": {
+        "method": "GET",
+        "path": "/PRODUCT.md"
+      }
+    },
+    {
+      "name": "lab_list_entries",
+      "description": "List all knowledge entries (articles, thinking, projects, videos) with id, title, tags, urls.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "Optional filter: Articles | Diverse Lab | Projects | Videos"
+          }
+        }
+      },
+      "static": {
+        "method": "GET",
+        "path": "/api/catalog.json",
+        "alt_by_type": "/api/{type-slug}.json"
+      }
+    },
+    {
+      "name": "lab_search_entries",
+      "description": "Search entries by keyword against title, excerpt, and tags using the catalog index.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string"
+          },
+          "tag": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "query"
+        ]
+      },
+      "static": {
+        "method": "GET",
+        "path": "/api/catalog.json",
+        "client_filter": true
+      }
+    },
+    {
+      "name": "lab_get_entry",
+      "description": "Fetch one entry's canonical Markdown by id (preferred over HTML).",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Entry id from catalog, e.g. agent-control-plane"
+          }
+        },
+        "required": [
+          "id"
+        ]
+      },
+      "static": {
+        "method": "GET",
+        "path_template": "/content/{collection}/{id}.md",
+        "collections": {
+          "Articles": "articles",
+          "Diverse Lab": "thinking",
+          "Projects": "projects"
+        }
+      }
+    },
+    {
+      "name": "lab_list_tags",
+      "description": "List tags and the entry ids under each tag.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "static": {
+        "method": "GET",
+        "path": "/api/tags.json"
+      }
+    },
+    {
+      "name": "lab_get_project_writeup",
+      "description": "Get a project writeup (Problem→Lessons Learned) by project id: concurrency | redpacket | miaoshao.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "enum": [
+              "concurrency",
+              "redpacket",
+              "miaoshao"
+            ]
+          }
+        },
+        "required": [
+          "id"
+        ]
+      },
+      "static": {
+        "method": "GET",
+        "path_template": "/content/projects/{id}.md"
+      }
+    }
+  ],
+  "meta_tools": [
+    "lab_discover",
+    "lab_invoke"
+  ]
+}

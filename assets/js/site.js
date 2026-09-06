@@ -20,6 +20,22 @@
     }
   });
 
+
+  var brand = document.querySelector("[data-brand-rotate]");
+  if (brand && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    var items = Array.prototype.slice.call(brand.querySelectorAll(".brand__item"));
+    var i = 0;
+    setInterval(function () {
+      var cur = items[i];
+      var next = items[(i + 1) % items.length];
+      cur.classList.remove("is-active");
+      cur.classList.add("is-exit");
+      next.classList.add("is-active");
+      setTimeout(function () { cur.classList.remove("is-exit"); }, 450);
+      i = (i + 1) % items.length;
+    }, 2400);
+  }
+
   var y = document.getElementById("year");
   if (y) y.textContent = String(new Date().getFullYear());
 })();

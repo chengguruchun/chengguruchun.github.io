@@ -2,3 +2,6 @@
 *.log
 .idea/
 .vscode/
+
+# Local-only publish helpers. Do not ship to the public repo.
+.local/

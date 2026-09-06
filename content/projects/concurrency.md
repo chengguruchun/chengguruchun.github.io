@@ -33,4 +33,4 @@ https://github.com/chengguruchun/concurrency
 
 - 没有不变量的并发优化是表演。
 - 背压是特性，不是耻辱；它保护的是系统整体。
-- 这些直觉可迁移到 Agent Tool Gateway：限流、排队、拒绝策略同一套。
+- 这些经验可迁移到 Agent Tool Gateway：限流、排队、拒绝策略同一套。

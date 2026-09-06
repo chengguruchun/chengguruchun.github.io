@@ -1,0 +1,47 @@
+{
+  "type": "Projects",
+  "items": [
+    {
+      "id": "proj-concurrency",
+      "type": "Projects",
+      "title": "concurrency：高并发实验台",
+      "excerpt": "从锁、队列到背压——用可复现实验理解并发正确性与吞吐的边界。",
+      "url": "/projects/concurrency.html",
+      "date": "2024–2026",
+      "tags": [
+        "Projects",
+        "并发",
+        "Java",
+        "实验"
+      ]
+    },
+    {
+      "id": "proj-redpacket",
+      "type": "Projects",
+      "title": "RedPacket：抢红包的并发解剖",
+      "excerpt": "热点账户、库存扣减与公平性——把「热闹场景」拆成可论证的系统设计。",
+      "url": "/projects/redpacket.html",
+      "date": "2024–2025",
+      "tags": [
+        "Projects",
+        "高并发",
+        "Redis",
+        "一致性"
+      ]
+    },
+    {
+      "id": "proj-miaoshao",
+      "type": "Projects",
+      "title": "miaoshao_test：秒杀链路压测与优化",
+      "excerpt": "Spring Boot + Redis + RabbitMQ 的秒杀路径：限流、异步化与库存一致性的取舍。",
+      "url": "/projects/miaoshao.html",
+      "date": "2024–2025",
+      "tags": [
+        "Projects",
+        "秒杀",
+        "消息队列",
+        "性能"
+      ]
+    }
+  ]
+}

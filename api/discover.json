@@ -1,0 +1,93 @@
+{
+  "name": "ai-knowledge-lab",
+  "protocol": "discover-then-invoke",
+  "skill": "/SKILL.md",
+  "registry": "/mcp/tools.json",
+  "updated": "2026-09-06",
+  "meta": [
+    "lab_discover",
+    "lab_invoke"
+  ],
+  "tools": [
+    {
+      "name": "lab_discover",
+      "description": "Discover available Knowledge Lab capabilities. Returns tool names, short descriptions, and invoke hints. Call this before lab_invoke. Catalog grows without changing SKILL.md.",
+      "invoke": {
+        "method": "GET",
+        "path": "/api/discover.json"
+      }
+    },
+    {
+      "name": "lab_invoke",
+      "description": "Invoke a discovered tool by name. Resolve the tool from /api/discover.json or /mcp/tools.json, then GET its static path (or path_template with args).",
+      "invoke": {
+        "method": "RESOLVE",
+        "registry": "/mcp/tools.json",
+        "note": "Look up tool.static.path or tool.static.path_template; substitute args; HTTP GET."
+      }
+    },
+    {
+      "name": "lab_get_skill",
+      "description": "Read the Knowledge Lab SKILL.md — required first step for any agent using this site.",
+      "invoke": {
+        "method": "GET",
+        "path": "/SKILL.md"
+      }
+    },
+    {
+      "name": "lab_get_product",
+      "description": "Read PRODUCT.md vision, P0 scope, and P1–P3 roadmap.",
+      "invoke": {
+        "method": "GET",
+        "path": "/PRODUCT.md"
+      }
+    },
+    {
+      "name": "lab_list_entries",
+      "description": "List all knowledge entries (articles, thinking, projects, videos) with id, title, tags, urls.",
+      "invoke": {
+        "method": "GET",
+        "path": "/api/catalog.json",
+        "alt_by_type": "/api/{type-slug}.json"
+      }
+    },
+    {
+      "name": "lab_search_entries",
+      "description": "Search entries by keyword against title, excerpt, and tags using the catalog index.",
+      "invoke": {
+        "method": "GET",
+        "path": "/api/catalog.json",
+        "client_filter": true
+      }
+    },
+    {
+      "name": "lab_get_entry",
+      "description": "Fetch one entry's canonical Markdown by id (preferred over HTML).",
+      "invoke": {
+        "method": "GET",
+        "path_template": "/content/{collection}/{id}.md",
+        "collections": {
+          "Articles": "articles",
+          "Diverse Lab": "thinking",
+          "Projects": "projects"
+        }
+      }
+    },
+    {
+      "name": "lab_list_tags",
+      "description": "List tags and the entry ids under each tag.",
+      "invoke": {
+        "method": "GET",
+        "path": "/api/tags.json"
+      }
+    },
+    {
+      "name": "lab_get_project_writeup",
+      "description": "Get a project writeup (Problem→Lessons Learned) by project id: concurrency | redpacket | miaoshao.",
+      "invoke": {
+        "method": "GET",
+        "path_template": "/content/projects/{id}.md"
+      }
+    }
+  ]
+}

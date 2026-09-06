@@ -1,0 +1,45 @@
+{
+  "type": "Diverse Lab",
+  "items": [
+    {
+      "id": "think-determinism",
+      "type": "Diverse Lab",
+      "title": "不确定执行能否被「像服务一样」SLA 化？",
+      "excerpt": "模型输出非确定性，但业务仍要承诺。控制面该管概率，还是管边界？",
+      "url": "/diverse/determinism-sla.html",
+      "date": "2026-08-15",
+      "tags": [
+        "Diverse",
+        "SLA",
+        "Agent",
+        "可靠性"
+      ]
+    },
+    {
+      "id": "think-memory",
+      "type": "Diverse Lab",
+      "title": "Agent 记忆：状态、知识，还是日志？",
+      "excerpt": "把记忆当数据库会漏掉时间性；当向量库会漏掉一致性。需要分层。",
+      "url": "/diverse/agent-memory.html",
+      "date": "2026-08-22",
+      "tags": [
+        "Diverse",
+        "Memory",
+        "状态管理"
+      ]
+    },
+    {
+      "id": "think-multi-agent",
+      "type": "Diverse Lab",
+      "title": "多 Agent 协作的失败模式更像分布式事务",
+      "excerpt": "分工、重试、补偿、脑裂——多 Agent 系统正在重演我们熟悉的分布式难题。",
+      "url": "/diverse/multi-agent-failure.html",
+      "date": "2026-09-01",
+      "tags": [
+        "Diverse",
+        "Multi-Agent",
+        "分布式系统"
+      ]
+    }
+  ]
+}

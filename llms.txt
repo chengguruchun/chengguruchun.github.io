@@ -1,0 +1,8 @@
+# AI Knowledge Lab
+> Discover → invoke. Skill stays thin; tools grow.
+
+- [SKILL.md](/SKILL.md)
+- [Discover](/api/discover.json)
+- [Tool schemas](/mcp/tools.json)
+- [Catalog](/api/catalog.json)
+- [Markdown](/content/)

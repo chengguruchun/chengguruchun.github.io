@@ -1,5 +1,10 @@
 {
+  "name": "AI Knowledge Lab",
+  "skill": "/SKILL.md",
+  "product": "/PRODUCT.md",
+  "llms": "/llms.txt",
   "generated": "2026-09-06",
+  "base_url": "https://chengguruchun.github.io",
   "items": [
     {
       "id": "agent-control-plane",
@@ -8,7 +13,12 @@
       "excerpt": "从分布式控制面视角拆解 Agent 的调度、策略、观测与生命周期——不是聊天机器人，而是可运维的智能工作负载。",
       "url": "/articles/agent-control-plane.html",
       "date": "2026-08-20",
-      "tags": ["Agent", "Control Plane", "分布式系统", "可观测性"]
+      "tags": [
+        "Agent",
+        "Control Plane",
+        "分布式系统",
+        "可观测性"
+      ]
     },
     {
       "id": "agent-runtime-vs-k8s",
@@ -17,7 +27,12 @@
       "excerpt": "K8s 调度的是确定性容器；Agent Runtime 调度的是带目标、工具与记忆的不确定执行。对照二者，才能设计对的抽象。",
       "url": "/articles/agent-runtime-vs-k8s.html",
       "date": "2026-08-28",
-      "tags": ["Agent", "Kubernetes", "Runtime", "系统抽象"]
+      "tags": [
+        "Agent",
+        "Kubernetes",
+        "Runtime",
+        "系统抽象"
+      ]
     },
     {
       "id": "agent-registry",
@@ -26,7 +41,12 @@
       "excerpt": "当 Agent 开始互相调用，注册中心不再只是名字服务——它是能力目录、契约面与安全边界的交汇点。",
       "url": "/articles/agent-registry.html",
       "date": "2026-09-02",
-      "tags": ["Agent", "Registry", "契约", "基础设施"]
+      "tags": [
+        "Agent",
+        "Registry",
+        "契约",
+        "基础设施"
+      ]
     },
     {
       "id": "think-determinism",
@@ -35,7 +55,12 @@
       "excerpt": "模型输出非确定性，但业务仍要承诺。控制面该管概率，还是管边界？",
       "url": "/diverse/determinism-sla.html",
       "date": "2026-08-15",
-      "tags": ["Diverse", "SLA", "Agent", "可靠性"]
+      "tags": [
+        "Diverse",
+        "SLA",
+        "Agent",
+        "可靠性"
+      ]
     },
     {
       "id": "think-memory",
@@ -44,7 +69,11 @@
       "excerpt": "把记忆当数据库会漏掉时间性；当向量库会漏掉一致性。需要分层。",
       "url": "/diverse/agent-memory.html",
       "date": "2026-08-22",
-      "tags": ["Diverse", "Memory", "状态管理"]
+      "tags": [
+        "Diverse",
+        "Memory",
+        "状态管理"
+      ]
     },
     {
       "id": "think-multi-agent",
@@ -53,7 +82,11 @@
       "excerpt": "分工、重试、补偿、脑裂——多 Agent 系统正在重演我们熟悉的分布式难题。",
       "url": "/diverse/multi-agent-failure.html",
       "date": "2026-09-01",
-      "tags": ["Diverse", "Multi-Agent", "分布式系统"]
+      "tags": [
+        "Diverse",
+        "Multi-Agent",
+        "分布式系统"
+      ]
     },
     {
       "id": "proj-concurrency",
@@ -62,7 +95,12 @@
       "excerpt": "从锁、队列到背压——用可复现实验理解并发正确性与吞吐的边界。",
       "url": "/projects/concurrency.html",
       "date": "2024–2026",
-      "tags": ["Projects", "并发", "Java", "实验"]
+      "tags": [
+        "Projects",
+        "并发",
+        "Java",
+        "实验"
+      ]
     },
     {
       "id": "proj-redpacket",
@@ -71,7 +109,12 @@
       "excerpt": "热点账户、库存扣减与公平性——把「热闹场景」拆成可论证的系统设计。",
       "url": "/projects/redpacket.html",
       "date": "2024–2025",
-      "tags": ["Projects", "高并发", "Redis", "一致性"]
+      "tags": [
+        "Projects",
+        "高并发",
+        "Redis",
+        "一致性"
+      ]
     },
     {
       "id": "proj-miaoshao",
@@ -80,7 +123,12 @@
       "excerpt": "Spring Boot + Redis + RabbitMQ 的秒杀路径：限流、异步化与库存一致性的取舍。",
       "url": "/projects/miaoshao.html",
       "date": "2024–2025",
-      "tags": ["Projects", "秒杀", "消息队列", "性能"]
+      "tags": [
+        "Projects",
+        "秒杀",
+        "消息队列",
+        "性能"
+      ]
     },
     {
       "id": "vid-control-plane",
@@ -89,7 +137,11 @@
       "excerpt": "15 分钟口述：从服务网格到 Agent 治理的迁移路径。",
       "url": "/videos/#vid-control-plane",
       "date": "即将上线",
-      "tags": ["Videos", "Agent", "讲解"]
+      "tags": [
+        "Videos",
+        "Agent",
+        "讲解"
+      ]
     },
     {
       "id": "vid-runtime",
@@ -98,7 +150,11 @@
       "excerpt": "白板推演 Pod / Goal / Tool Session 三类生命周期。",
       "url": "/videos/#vid-runtime",
       "date": "即将上线",
-      "tags": ["Videos", "Kubernetes", "Runtime"]
+      "tags": [
+        "Videos",
+        "Kubernetes",
+        "Runtime"
+      ]
     }
   ]
 }

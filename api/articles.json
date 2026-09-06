@@ -1,0 +1,47 @@
+{
+  "type": "Articles",
+  "items": [
+    {
+      "id": "agent-control-plane",
+      "type": "Articles",
+      "title": "Agent Control Plane：把智能体当成可治理的运行时",
+      "excerpt": "从分布式控制面视角拆解 Agent 的调度、策略、观测与生命周期——不是聊天机器人，而是可运维的智能工作负载。",
+      "url": "/articles/agent-control-plane.html",
+      "date": "2026-08-20",
+      "tags": [
+        "Agent",
+        "Control Plane",
+        "分布式系统",
+        "可观测性"
+      ]
+    },
+    {
+      "id": "agent-runtime-vs-k8s",
+      "type": "Articles",
+      "title": "Agent Runtime 与 Kubernetes：相似的外壳，不同的内核",
+      "excerpt": "K8s 调度的是确定性容器；Agent Runtime 调度的是带目标、工具与记忆的不确定执行。对照二者，才能设计对的抽象。",
+      "url": "/articles/agent-runtime-vs-k8s.html",
+      "date": "2026-08-28",
+      "tags": [
+        "Agent",
+        "Kubernetes",
+        "Runtime",
+        "系统抽象"
+      ]
+    },
+    {
+      "id": "agent-registry",
+      "type": "Articles",
+      "title": "Agent Registry：能力发现、版本契约与信任边界",
+      "excerpt": "当 Agent 开始互相调用，注册中心不再只是名字服务——它是能力目录、契约面与安全边界的交汇点。",
+      "url": "/articles/agent-registry.html",
+      "date": "2026-09-02",
+      "tags": [
+        "Agent",
+        "Registry",
+        "契约",
+        "基础设施"
+      ]
+    }
+  ]
+}
