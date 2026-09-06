@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agent Registry · AI Knowledge Lab</title>
+  <meta name="description" content="能力发现、版本契约与信任边界。">
+  <meta name="theme-color" content="#0c0d0b">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap site-header__inner">
+      <a class="brand" href="../index.html">
+        <span class="brand__name">AI Knowledge Lab</span>
+        <span class="brand__tag">Independent Thinker · Complex Systems · AI Agents</span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">菜单</button>
+      <nav class="nav" id="site-nav" aria-label="主导航">
+        <a href="../index.html">Home</a><a href="../articles/" aria-current="page">Articles</a><a href="../thinking/">Thinking Lab</a><a href="../projects/">Projects</a><a href="../videos/">Videos</a><a href="../about/">About</a><a class="nav__search" href="../tags/">Tags / Search</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <article class="article-body">
+      <header class="page-hero">
+        <div class="prose-wrap">
+          <p class="page-hero__kicker">Articles · Infrastructure</p>
+          <h1>Agent Registry：能力发现、版本契约与信任边界</h1>
+          <p class="page-hero__desc">当 Agent 开始互相调用，硬编码终点会迅速腐烂。注册中心必须升级为能力目录。</p>
+          <p class="article-meta">
+            <span>2026-09-02</span>
+            <span>chengguruchun</span>
+            <a class="tag" href="../tags/?tag=Agent">Agent</a>
+            <a class="tag" href="../tags/?tag=Registry">Registry</a>
+            <a class="tag" href="../tags/?tag=%E5%A5%91%E7%BA%A6">契约</a>
+          </p>
+        </div>
+      </header>
+      <div class="prose-wrap">
+        <p>服务发现解决「谁在哪里」。Agent Registry 还要解决「谁能做什么、以什么契约、被谁信任」。它是<strong>名字服务 × 模型目录 × 安全策略</strong>的交叉点。</p>
+
+        <h2>最小数据模型</h2>
+        <div class="arch-grid">
+          <div class="arch-cell"><strong>Identity</strong><span>agent id、所有者、环境、区域</span></div>
+          <div class="arch-cell"><strong>Capabilities</strong><span>输入输出 schema、工具集、模态</span></div>
+          <div class="arch-cell"><strong>Contract</strong><span>版本、兼容策略、弃用窗口</span></div>
+          <div class="arch-cell"><strong>Trust</strong><span>可见性、调用权限、签名/认证</span></div>
+          <div class="arch-cell"><strong>Hints</strong><span>延迟、成本、成功率、限额</span></div>
+        </div>
+
+        <div class="diagram">
+          <span class="diagram__label">Flow · Discovery to Invoke</span>
+Caller Agent
+    │  query(capability, constraints)
+    ▼
+Registry ──▶ candidates + contracts + trust decision
+    │
+    ▼
+Policy check (caller ∩ callee ∩ data class)
+    │
+    ▼
+Invoke via Tool/Agent Gateway ──▶ Audit log
+        </div>
+
+        <h2>契约比 endpoint 更重要</h2>
+        <p>静默改变工具参数或输出结构，会让上游 Agent 的计划器在「看起来成功」的情况下做错事。Registry 应支持：版本并行、兼容矩阵、以及用<strong>可执行示例/契约测试</strong>作为回归闸门。</p>
+
+        <h2>信任边界</h2>
+        <p>不是所有可发现的 Agent 都可以调用。企业内部还要区分：只读分析 Agent、可写业务 Agent、可触达资金/库存的高危 Agent。发现与授权必须拆开——和微服务的「DNS ≠ IAM」同一道理。</p>
+
+        <h2>开放问题</h2>
+        <ul>
+          <li>能力描述用自然语言、JSON Schema，还是「测试即契约」？</li>
+          <li>跨组织 Registry 是否需要像包管理一样的签名与供应链审计？</li>
+          <li>运行时提示（成本/成功率）如何避免变成被刷的广告牌？</li>
+        </ul>
+        <p>源码笔记：<a href="../content/articles/agent-registry.md"><code>content/articles/agent-registry.md</code></a></p>
+        <p><a href="./">← 返回 Articles</a></p>
+      </div>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap site-footer__inner">
+      <div>
+        <p>© <span id="year"></span> chengguruchun · Hangzhou</p>
+        <p>AI Knowledge Lab — 面向人类与 AI Agent 的开放知识系统</p>
+      </div>
+      <div>
+        <p><a href="mailto:chengguruchun@163.com">chengguruchun@163.com</a></p>
+        <p><a href="https://github.com/chengguruchun" rel="noopener">GitHub</a> · <a href="../PRODUCT.md">PRODUCT.md</a></p>
+      </div>
+    </div>
+  </footer>
+  <script src="../assets/js/site.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>多 Agent 协作的失败模式更像分布式事务 · Thinking Lab</title>
+  <meta name="description" content="<p>多 Agent demo 往往「看起来能跑」：角色分工、互相调用、汇总答案。一旦引入共享资源与外部写入，失败模式迅速接近分布式事务——部分成功、重复执行、脑裂决策。</p>">
+  <meta name="theme-color" content="#0c0d0b">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap site-header__inner">
+      <a class="brand" href="../index.html">
+        <span class="brand__name">AI Knowledge Lab</span>
+        <span class="brand__tag">Independent Thinker · Complex Systems · AI Agents</span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">菜单</button>
+      <nav class="nav" id="site-nav" aria-label="主导航">
+        <a href="../index.html">Home</a><a href="../articles/">Articles</a><a href="../thinking/" aria-current="page">Thinking Lab</a><a href="../projects/">Projects</a><a href="../videos/">Videos</a><a href="../about/">About</a><a class="nav__search" href="../tags/">Tags / Search</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <article class="article-body">
+      <header class="page-hero">
+        <div class="prose-wrap">
+          <p class="page-hero__kicker">Thinking Lab</p>
+          <h1>多 Agent 协作的失败模式更像分布式事务</h1>
+          <p class="article-meta"><span>2026-09-01</span><span>chengguruchun</span><a class="tag" href="../tags/?tag=Multi-Agent">Multi-Agent</a><a class="tag" href="../tags/?tag=%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F">分布式系统</a></p>
+        </div>
+      </header>
+      <div class="prose-wrap">
+        <div class="think-block think-block--q">
+          <div class="think-block__label">Question</div>
+          <p>多 Agent demo 往往「看起来能跑」：角色分工、互相调用、汇总答案。一旦引入共享资源与外部写入，失败模式迅速接近分布式事务——部分成功、重复执行、脑裂决策。</p>
+        </div>
+        <div class="think-block think-block--a">
+          <div class="think-block__label">My Thinking</div>
+          <p>高频失败模式：</p>
+          <ul>
+            <li><strong>无权威真相源：</strong>两个 Agent 各自「以为」库存充足。</li>
+            <li><strong>重试放大器：</strong>计划器重试导致工具侧重复下单。</li>
+            <li><strong>补偿缺失：</strong>前方已写入，后方失败却无法回滚。</li>
+            <li><strong>对话式协调：</strong>用自然语言协商替代协议，无法机械验证。</li>
+          </ul>
+          <p>可用的工程对策来自旧世界：幂等键、saga/补偿、租约与锁、单写者原则、显式状态机。多 Agent 编排器首先应是工作流引擎，其次才是「智能」。</p>
+        </div>
+        <div class="think-block think-block--o">
+          <div class="think-block__label">Open Questions</div>
+          <ul>
+            <li>什么场景真正需要两阶段提交，而不是 saga？</li>
+            <li>Agent 之间的「协议」能否用 schema + 状态机生成，而不是提示词约定？</li>
+            <li>如何在 UX 上暴露「部分完成」而不假装端到端成功？</li>
+          </ul>
+        </div>
+        <p>源码笔记：<a href="../content/thinking/multi-agent-failure.md"><code>content/thinking/multi-agent-failure.md</code></a></p>
+        <p><a href="./">← 返回 Thinking Lab</a></p>
+      </div>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap site-footer__inner">
+      <div>
+        <p>© <span id="year"></span> chengguruchun · Hangzhou</p>
+        <p>AI Knowledge Lab — 面向人类与 AI Agent 的开放知识系统</p>
+      </div>
+      <div>
+        <p><a href="mailto:chengguruchun@163.com">chengguruchun@163.com</a></p>
+        <p><a href="https://github.com/chengguruchun" rel="noopener">GitHub</a> · <a href="../PRODUCT.md">PRODUCT.md</a></p>
+      </div>
+    </div>
+  </footer>
+  <script src="../assets/js/site.js"></script>
+
+</body>
+</html>

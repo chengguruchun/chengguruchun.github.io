@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About · AI Knowledge Lab</title>
+  <meta name="description" content="chengguruchun · Hangzhou · Independent Thinker · Complex Systems · AI Agents">
+  <meta name="theme-color" content="#0c0d0b">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap site-header__inner">
+      <a class="brand" href="../index.html">
+        <span class="brand__name">AI Knowledge Lab</span>
+        <span class="brand__tag">Independent Thinker · Complex Systems · AI Agents</span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">菜单</button>
+      <nav class="nav" id="site-nav" aria-label="主导航">
+        <a href="../index.html">Home</a><a href="../articles/">Articles</a><a href="../thinking/">Thinking Lab</a><a href="../projects/">Projects</a><a href="../videos/">Videos</a><a href="../about/" aria-current="page">About</a><a class="nav__search" href="../tags/">Tags / Search</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <header class="page-hero">
+      <div class="wrap">
+        <p class="page-hero__kicker">About</p>
+        <h1>关于实验室与作者</h1>
+        <p class="page-hero__desc">AI Knowledge Lab 是 chengguruchun 的开放知识系统：用独立思考面对复杂系统，把后端与分布式经验接到 AI Agents 与基础设施上。</p>
+      </div>
+    </header>
+    <section class="section" style="padding-top:0">
+      <div class="wrap about-grid">
+        <div>
+          <h2>定位</h2>
+          <p>这不是个人名片站，也不是传统博客。它是一个可演进的知识实验室：Articles 承载可引用论述，Thinking Lab 保留未闭合问题，Projects 记录可论证的工程档案，Videos 补充口述与图示。</p>
+          <h2>路径</h2>
+          <p>过去几年主要做后端与分布式：并发、消息、协调、高并发交易场景。仓库里留下秒杀、抢红包、心跳检测等问题——它们训练的是压力下的正确性直觉。现在关注如何把这些能力变成 Agent 运行时、控制面与注册治理的一部分。</p>
+          <h2>联系</h2>
+          <ul class="stat-list">
+            <li><span>Email</span><strong><a href="mailto:chengguruchun@163.com">chengguruchun@163.com</a></strong></li>
+            <li><span>GitHub</span><strong><a href="https://github.com/chengguruchun" rel="noopener">github.com/chengguruchun</a></strong></li>
+            <li><span>Location</span><strong>Hangzhou · 杭州</strong></li>
+          </ul>
+        </div>
+        <aside>
+          <div class="card">
+            <h3 class="card__title">Brand</h3>
+            <p class="card__excerpt">Independent Thinker<br>Complex Systems<br>AI Agents</p>
+          </div>
+          <div class="card" style="margin-top:1rem">
+            <h3 class="card__title">Focus</h3>
+            <ul style="margin:0;padding-left:1.1rem;color:var(--text-dim);font-size:0.92rem">
+              <li>Agent Control Plane</li>
+              <li>Runtime &amp; 效应管理</li>
+              <li>Registry / 契约</li>
+              <li>高并发与一致性遗产</li>
+            </ul>
+          </div>
+          <div class="card" style="margin-top:1rem">
+            <h3 class="card__title">For Agents</h3>
+            <p class="card__excerpt">先读 <a href="../PRODUCT.md">PRODUCT.md</a> 与 <a href="../content/index.json">content/index.json</a>，再按需抓取 <code>content/**/*.md</code>。</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap site-footer__inner">
+      <div>
+        <p>© <span id="year"></span> chengguruchun · Hangzhou</p>
+        <p>AI Knowledge Lab — 面向人类与 AI Agent 的开放知识系统</p>
+      </div>
+      <div>
+        <p><a href="mailto:chengguruchun@163.com">chengguruchun@163.com</a></p>
+        <p><a href="https://github.com/chengguruchun" rel="noopener">GitHub</a> · <a href="../PRODUCT.md">PRODUCT.md</a></p>
+      </div>
+    </div>
+  </footer>
+  <script src="../assets/js/site.js"></script>
+
+</body>
+</html>
