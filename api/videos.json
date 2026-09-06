@@ -7,7 +7,7 @@
       "title": "讲解：为什么 Agent 需要 Control Plane",
       "excerpt": "15 分钟口述：从服务网格到 Agent 治理的迁移路径。",
       "url": "/videos/#vid-control-plane",
-      "date": "即将上线",
+      "date": "",
       "tags": [
         "Videos",
         "Agent",
@@ -20,7 +20,7 @@
       "title": "对照阅读：K8s 抽象 vs Agent Runtime",
       "excerpt": "白板推演 Pod / Goal / Tool Session 三类生命周期。",
       "url": "/videos/#vid-runtime",
-      "date": "即将上线",
+      "date": "",
       "tags": [
         "Videos",
         "Kubernetes",

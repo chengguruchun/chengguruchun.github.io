@@ -8,7 +8,7 @@
 - 仓库：https://github.com/chengguruchun/chengguruchun.github.io
 - 作者：chengguruchun（杭州）· chengguruchun@163.com
 
-这不是个人博客。首页只做一件事：告诉 Agent 如何 **Discover → execute**。Skill 保持极薄，能力在 catalog 里生长。
+这不是个人博客。首页面向 Agent：**Discover → execute**。
 
 ## 人类阅读
 
@@ -18,9 +18,10 @@
 | Diverse Lab | [`/diverse/`](https://chengguruchun.github.io/diverse/) | 开放问题与未闭合思考 |
 | Articles | [`/articles/`](https://chengguruchun.github.io/articles/) | 可引用长文 |
 | Projects | [`/projects/`](https://chengguruchun.github.io/projects/) | 真实仓库的问题 → 架构 → 教训 |
-| Videos | [`/videos/`](https://chengguruchun.github.io/videos/) | 讲解与白板（部分占位） |
+| Videos | [`/videos/`](https://chengguruchun.github.io/videos/) | 讲解与白板 |
+| Hot Words | [`/times/`](https://chengguruchun.github.io/times/) | 热词 |
 | About Me | [`/about/`](https://chengguruchun.github.io/about/) | 作者与 The Road Here |
-| Tags / Search | [`/tags/`](https://chengguruchun.github.io/tags/) | 标签穿越 + 客户端检索 |
+| Tags / Search | [`/tags/`](https://chengguruchun.github.io/tags/) | 标签与检索 |
 
 ## 当前知识条目
 
@@ -34,9 +35,8 @@
 
 **Diverse Lab**
 
-- [不确定执行能否被「像服务一样」SLA 化？](diverse/determinism-sla.html)
-- [Agent 记忆：状态、知识，还是日志？](diverse/agent-memory.html)
-- [多 Agent 协作的失败模式更像分布式事务](diverse/multi-agent-failure.html)
+- [大模型：用科学实验的方式使用](diverse/llm-scientific-experiment.html)
+- [物理学 × 生态学：对复杂系统的一个思考](diverse/physics-ecology-llm.html)
 
 **Projects**
 
@@ -44,28 +44,32 @@
 - [RedPacket：抢红包的并发解剖](projects/redpacket.html)
 - [miaoshao_test：秒杀链路压测与优化](projects/miaoshao.html)
 
-**Videos**（即将上线）
+**Videos**
 
 - 讲解：为什么 Agent 需要 Control Plane
 - 对照阅读：K8s 抽象 vs Agent Runtime
+
+**Hot Words**
+
+- [`/times/`](times/)：热词周记（源：`content/times/`）
 
 正文以 `content/**/*.md` 为权威源，HTML 是渲染层。
 
 ## For Agents
 
 1. 读 [`SKILL.md`](./SKILL.md)（只定义 discover → execute）
-2. `GET` [`/api/discover.json`](./api/discover.json)（能力会增长，勿写死）
+2. `GET` [`/api/discover.json`](./api/discover.json)
 3. schema 在 [`/mcp/tools.json`](./mcp/tools.json)，再 `lab_execute`
 4. 知识索引 [`/api/catalog.json`](./api/catalog.json) → `/content/**/*.md`
 5. 站点地图 [`llms.txt`](./llms.txt)
 
-稳定元工具：`lab_discover`、`lab_execute`。新能力只加 discover / tools，不改 SKILL。
+元工具：`lab_discover`、`lab_execute`。
 
 ## 目录
 
 ```
 index.html                 首页（Agent 接入）
-diverse/ articles/ projects/ videos/ about/ tags/
+diverse/ articles/ projects/ videos/ times/ about/ tags/
 content/                   Markdown 源 + index.json
 api/                       catalog / discover / 分栏 JSON / feeds.json
 mcp/tools.json             工具 schema

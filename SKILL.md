@@ -7,8 +7,6 @@ description: >-
 
 # AI Knowledge Lab
 
-This Skill stays thin; the catalog grows.
-
 ## Protocol
 
 1. **Discover** — `GET /api/discover.json`
@@ -16,7 +14,7 @@ This Skill stays thin; the catalog grows.
 3. Prefer `/content/**/*.md` over HTML. Do not invent tool names.
 
 Meta tools only: `lab_discover`, `lab_execute`.  
-New ideas / experience / capabilities → add to `discover.json` + `tools.json`, not this file.
+Add capabilities in `discover.json` + `tools.json`, not this file.
 
 ## Stable surfaces
 

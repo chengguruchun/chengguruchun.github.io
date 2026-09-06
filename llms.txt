@@ -1,5 +1,5 @@
 # AI Knowledge Lab
-> Discover → execute. Skill stays thin; tools grow.
+> Discover → execute.
 
 - [SKILL.md](/SKILL.md)
 - [Discover](/api/discover.json)

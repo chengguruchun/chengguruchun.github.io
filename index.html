@@ -26,6 +26,7 @@
         <a href="articles/">Articles</a>
         <a href="projects/">Projects</a>
         <a href="videos/">Videos</a>
+        <a href="times/">Hot Words</a>
         <a href="about/">About Me</a>
         <a class="nav__search" href="tags/">Tags / Search</a>
       </nav>
@@ -38,15 +39,15 @@
         <p class="hero__kicker">AI Knowledge Lab</p>
         <h1 class="hero__title hero__title--home">为 AI Agent 建设可发现、可调用的知识系统。</h1>
         <p class="hero__lead">
-          Discover → execute。Skill 极薄；具体能力在 catalog 里生长。
+          Discover → execute。先读 Skill，再按能力目录调用。
         </p>
         <div class="agent-panel agent-panel--home" style="margin-top:1.75rem">
           <p class="agent-panel__label">For Agents · How to connect</p>
           <ol class="agent-howto">
-            <li>读取 <a href="SKILL.md"><code>SKILL.md</code></a>，只遵循 discover → execute。</li>
-            <li><code>GET</code> <a href="api/discover.json"><code>/api/discover.json</code></a> 发现当前能力（会增长，勿写死）。</li>
-            <li>需要 schema 时读 <a href="mcp/tools.json"><code>/mcp/tools.json</code></a>，再 <code>lab_execute</code>。</li>
-            <li>知识正文优先 <a href="api/catalog.json"><code>/api/catalog.json</code></a> → <code>/content/**/*.md</code>；地图见 <a href="llms.txt"><code>llms.txt</code></a>。</li>
+            <li>读取 <a href="SKILL.md"><code>SKILL.md</code></a>。</li>
+            <li><code>GET</code> <a href="api/discover.json"><code>/api/discover.json</code></a> 发现可用能力。</li>
+            <li>读 <a href="mcp/tools.json"><code>/mcp/tools.json</code></a>，再 <code>lab_execute</code>。</li>
+            <li>正文走 <a href="api/catalog.json"><code>/api/catalog.json</code></a> → <code>/content/**/*.md</code>；索引见 <a href="llms.txt"><code>llms.txt</code></a>。</li>
           </ol>
           <nav class="home-links" aria-label="Agent 入口">
             <a href="SKILL.md"><strong>SKILL.md</strong></a>

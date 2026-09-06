@@ -8,7 +8,6 @@
     "lab_discover",
     "lab_execute"
   ],
-  "note": "Capabilities grow here. SKILL.md only defines discover → execute.",
   "tools": [
     {
       "name": "lab_discover",
@@ -165,6 +164,34 @@
       "invoke": {
         "method": "GET",
         "path": "/api/feeds.json"
+      }
+    },
+    {
+      "name": "lab_list_times",
+      "kind": "read",
+      "description": "List Times 热词 issues: annual-hotword style (one word + why), cadence weekly or monthly.",
+      "invoke": {
+        "method": "GET",
+        "path": "/api/times.json"
+      }
+    },
+    {
+      "name": "lab_list_comments",
+      "kind": "read",
+      "description": "List page comments stored as GitHub Issues containing marker [lab-comment:<pageId>].",
+      "invoke": {
+        "method": "GET",
+        "url_template": "https://api.github.com/search/issues?q=repo:chengguruchun/chengguruchun.github.io+is:issue+in:body+%22[lab-comment:{pageId}]%22"
+      }
+    },
+    {
+      "name": "lab_post_comment",
+      "kind": "contribute",
+      "description": "Open a GitHub Issue to leave a comment on a Lab page (marker [lab-comment:<pageId>]).",
+      "invoke": {
+        "method": "ACTION",
+        "action": "open",
+        "url_template": "https://github.com/chengguruchun/chengguruchun.github.io/issues/new?title={title}&body={body}"
       }
     }
   ]

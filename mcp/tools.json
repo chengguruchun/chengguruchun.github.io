@@ -304,6 +304,73 @@
         "method": "GET",
         "path": "/api/feeds.json"
       }
+    },
+    {
+      "name": "lab_list_times",
+      "kind": "read",
+      "description": "List Times 热词 issues: annual-hotword style (one word + why), cadence weekly or monthly.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "static": {
+        "method": "GET",
+        "path": "/api/times.json"
+      }
+    },
+    {
+      "name": "lab_list_comments",
+      "kind": "read",
+      "description": "List page comments stored as GitHub Issues containing marker [lab-comment:<pageId>].",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "pageId": {
+            "type": "string",
+            "description": "e.g. physics-ecology-llm"
+          }
+        },
+        "required": [
+          "pageId"
+        ]
+      },
+      "static": {
+        "method": "GET",
+        "url_template": "https://api.github.com/search/issues?q=repo:chengguruchun/chengguruchun.github.io+is:issue+in:body+%22[lab-comment:{pageId}]%22"
+      }
+    },
+    {
+      "name": "lab_post_comment",
+      "kind": "contribute",
+      "description": "Open a GitHub Issue to leave a comment on a Lab page (marker [lab-comment:<pageId>]).",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "pageId": {
+            "type": "string"
+          },
+          "author": {
+            "type": "string"
+          },
+          "body": {
+            "type": "string"
+          },
+          "pageUrl": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "pageId",
+          "body"
+        ]
+      },
+      "static": {
+        "method": "ACTION",
+        "action": "open",
+        "url_template": "https://github.com/chengguruchun/chengguruchun.github.io/issues/new?title={title}&body={body}",
+        "body_template": "[lab-comment:{pageId}]\\nPage: {pageUrl}\\nAuthor: {author}\\n\\n{body}"
+      }
     }
   ]
 }

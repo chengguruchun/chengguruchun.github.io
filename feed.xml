@@ -5,8 +5,24 @@
     <link>https://chengguruchun.github.io/</link>
     <description>chengguruchun · 面向 AI Agent 的开放知识系统（文章 / Diverse Lab 等有日期条目）</description>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 02 Sep 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 06 Sep 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://chengguruchun.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>大模型：用科学实验的方式使用</title>
+      <link>https://chengguruchun.github.io/diverse/llm-scientific-experiment.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/diverse/llm-scientific-experiment.html</guid>
+      <pubDate>Sun, 06 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Diverse Lab</category>
+      <description>大模型不是确定性函数。用假设、对照、评测与反馈闭环来使用它，Prompt Engineering 才会长成 Experiment Engineering，并通向 Loop Engineering。</description>
+    </item>
+    <item>
+      <title>物理学 × 生态学：对复杂系统的一个思考</title>
+      <link>https://chengguruchun.github.io/diverse/physics-ecology-llm.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/diverse/physics-ecology-llm.html</guid>
+      <pubDate>Sun, 06 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Diverse Lab</category>
+      <description>物理学看规律，生态学看关系与反馈；综合二者，才能理解 LLM 与多 Agent 如何逼近 Complex System Engineering。</description>
+    </item>
     <item>
       <title>Agent Registry：能力发现、版本契约与信任边界</title>
       <link>https://chengguruchun.github.io/articles/agent-registry.html</link>
@@ -14,14 +30,6 @@
       <pubDate>Wed, 02 Sep 2026 00:00:00 +0000</pubDate>
       <category>Articles</category>
       <description>当 Agent 开始互相调用，注册中心不再只是名字服务——它是能力目录、契约面与安全边界的交汇点。</description>
-    </item>
-    <item>
-      <title>多 Agent 协作的失败模式更像分布式事务</title>
-      <link>https://chengguruchun.github.io/diverse/multi-agent-failure.html</link>
-      <guid isPermaLink="true">https://chengguruchun.github.io/diverse/multi-agent-failure.html</guid>
-      <pubDate>Tue, 01 Sep 2026 00:00:00 +0000</pubDate>
-      <category>Diverse Lab</category>
-      <description>分工、重试、补偿、脑裂——多 Agent 系统正在重演我们熟悉的分布式难题。</description>
     </item>
     <item>
       <title>Agent Runtime 与 Kubernetes：相似的外壳，不同的内核</title>
@@ -32,28 +40,12 @@
       <description>K8s 调度的是确定性容器；Agent Runtime 调度的是带目标、工具与记忆的不确定执行。对照二者，才能设计对的抽象。</description>
     </item>
     <item>
-      <title>Agent 记忆：状态、知识，还是日志？</title>
-      <link>https://chengguruchun.github.io/diverse/agent-memory.html</link>
-      <guid isPermaLink="true">https://chengguruchun.github.io/diverse/agent-memory.html</guid>
-      <pubDate>Sat, 22 Aug 2026 00:00:00 +0000</pubDate>
-      <category>Diverse Lab</category>
-      <description>把记忆当数据库会漏掉时间性；当向量库会漏掉一致性。需要分层。</description>
-    </item>
-    <item>
       <title>Agent Control Plane：把智能体当成可治理的运行时</title>
       <link>https://chengguruchun.github.io/articles/agent-control-plane.html</link>
       <guid isPermaLink="true">https://chengguruchun.github.io/articles/agent-control-plane.html</guid>
       <pubDate>Thu, 20 Aug 2026 00:00:00 +0000</pubDate>
       <category>Articles</category>
       <description>从分布式控制面视角拆解 Agent 的调度、策略、观测与生命周期——不是聊天机器人，而是可运维的智能工作负载。</description>
-    </item>
-    <item>
-      <title>不确定执行能否被「像服务一样」SLA 化？</title>
-      <link>https://chengguruchun.github.io/diverse/determinism-sla.html</link>
-      <guid isPermaLink="true">https://chengguruchun.github.io/diverse/determinism-sla.html</guid>
-      <pubDate>Sat, 15 Aug 2026 00:00:00 +0000</pubDate>
-      <category>Diverse Lab</category>
-      <description>模型输出非确定性，但业务仍要承诺。控制面该管概率，还是管边界？</description>
     </item>
   </channel>
 </rss>

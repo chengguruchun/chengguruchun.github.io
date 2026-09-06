@@ -8,7 +8,12 @@
       "excerpt": "从分布式控制面视角拆解 Agent 的调度、策略、观测与生命周期——不是聊天机器人，而是可运维的智能工作负载。",
       "url": "/articles/agent-control-plane.html",
       "date": "2026-08-20",
-      "tags": ["Agent", "Control Plane", "分布式系统", "可观测性"]
+      "tags": [
+        "Agent",
+        "Control Plane",
+        "分布式系统",
+        "可观测性"
+      ]
     },
     {
       "id": "agent-runtime-vs-k8s",
@@ -17,7 +22,12 @@
       "excerpt": "K8s 调度的是确定性容器；Agent Runtime 调度的是带目标、工具与记忆的不确定执行。对照二者，才能设计对的抽象。",
       "url": "/articles/agent-runtime-vs-k8s.html",
       "date": "2026-08-28",
-      "tags": ["Agent", "Kubernetes", "Runtime", "系统抽象"]
+      "tags": [
+        "Agent",
+        "Kubernetes",
+        "Runtime",
+        "系统抽象"
+      ]
     },
     {
       "id": "agent-registry",
@@ -26,34 +36,12 @@
       "excerpt": "当 Agent 开始互相调用，注册中心不再只是名字服务——它是能力目录、契约面与安全边界的交汇点。",
       "url": "/articles/agent-registry.html",
       "date": "2026-09-02",
-      "tags": ["Agent", "Registry", "契约", "基础设施"]
-    },
-    {
-      "id": "think-determinism",
-      "type": "Diverse Lab",
-      "title": "不确定执行能否被「像服务一样」SLA 化？",
-      "excerpt": "模型输出非确定性，但业务仍要承诺。控制面该管概率，还是管边界？",
-      "url": "/diverse/determinism-sla.html",
-      "date": "2026-08-15",
-      "tags": ["Diverse", "SLA", "Agent", "可靠性"]
-    },
-    {
-      "id": "think-memory",
-      "type": "Diverse Lab",
-      "title": "Agent 记忆：状态、知识，还是日志？",
-      "excerpt": "把记忆当数据库会漏掉时间性；当向量库会漏掉一致性。需要分层。",
-      "url": "/diverse/agent-memory.html",
-      "date": "2026-08-22",
-      "tags": ["Diverse", "Memory", "状态管理"]
-    },
-    {
-      "id": "think-multi-agent",
-      "type": "Diverse Lab",
-      "title": "多 Agent 协作的失败模式更像分布式事务",
-      "excerpt": "分工、重试、补偿、脑裂——多 Agent 系统正在重演我们熟悉的分布式难题。",
-      "url": "/diverse/multi-agent-failure.html",
-      "date": "2026-09-01",
-      "tags": ["Diverse", "Multi-Agent", "分布式系统"]
+      "tags": [
+        "Agent",
+        "Registry",
+        "契约",
+        "基础设施"
+      ]
     },
     {
       "id": "proj-concurrency",
@@ -62,7 +50,12 @@
       "excerpt": "从锁、队列到背压——用可复现实验理解并发正确性与吞吐的边界。",
       "url": "/projects/concurrency.html",
       "date": "2024–2026",
-      "tags": ["Projects", "并发", "Java", "实验"]
+      "tags": [
+        "Projects",
+        "并发",
+        "Java",
+        "实验"
+      ]
     },
     {
       "id": "proj-redpacket",
@@ -71,7 +64,12 @@
       "excerpt": "热点账户、库存扣减与公平性——把「热闹场景」拆成可论证的系统设计。",
       "url": "/projects/redpacket.html",
       "date": "2024–2025",
-      "tags": ["Projects", "高并发", "Redis", "一致性"]
+      "tags": [
+        "Projects",
+        "高并发",
+        "Redis",
+        "一致性"
+      ]
     },
     {
       "id": "proj-miaoshao",
@@ -80,7 +78,12 @@
       "excerpt": "Spring Boot + Redis + RabbitMQ 的秒杀路径：限流、异步化与库存一致性的取舍。",
       "url": "/projects/miaoshao.html",
       "date": "2024–2025",
-      "tags": ["Projects", "秒杀", "消息队列", "性能"]
+      "tags": [
+        "Projects",
+        "秒杀",
+        "消息队列",
+        "性能"
+      ]
     },
     {
       "id": "vid-control-plane",
@@ -88,8 +91,12 @@
       "title": "讲解：为什么 Agent 需要 Control Plane",
       "excerpt": "15 分钟口述：从服务网格到 Agent 治理的迁移路径。",
       "url": "/videos/#vid-control-plane",
-      "date": "即将上线",
-      "tags": ["Videos", "Agent", "讲解"]
+      "date": "",
+      "tags": [
+        "Videos",
+        "Agent",
+        "讲解"
+      ]
     },
     {
       "id": "vid-runtime",
@@ -97,8 +104,50 @@
       "title": "对照阅读：K8s 抽象 vs Agent Runtime",
       "excerpt": "白板推演 Pod / Goal / Tool Session 三类生命周期。",
       "url": "/videos/#vid-runtime",
-      "date": "即将上线",
-      "tags": ["Videos", "Kubernetes", "Runtime"]
+      "date": "",
+      "tags": [
+        "Videos",
+        "Kubernetes",
+        "Runtime"
+      ]
+    },
+    {
+      "id": "llm-scientific-experiment",
+      "type": "Diverse Lab",
+      "title": "大模型：用科学实验的方式使用",
+      "excerpt": "大模型不是确定性函数。用假设、对照、评测与反馈闭环来使用它，Prompt Engineering 才会长成 Experiment Engineering，并通向 Loop Engineering。",
+      "url": "/diverse/llm-scientific-experiment.html",
+      "date": "2026-09-06",
+      "tags": [
+        "Diverse",
+        "LLM",
+        "Experiment",
+        "Agent",
+        "Loop Engineering",
+        "Complex Systems"
+      ],
+      "thought_date": "2026-09-02",
+      "published_date": "2026-09-06",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/llm-scientific-experiment.md"
+    },
+    {
+      "id": "physics-ecology-llm",
+      "type": "Diverse Lab",
+      "title": "物理学 × 生态学：对复杂系统的一个思考",
+      "excerpt": "物理学看规律，生态学看关系与反馈；综合二者，才能理解 LLM 与多 Agent 如何逼近 Complex System Engineering。",
+      "url": "/diverse/physics-ecology-llm.html",
+      "date": "2026-09-06",
+      "tags": [
+        "Diverse",
+        "Physics",
+        "Ecology",
+        "Complex Systems",
+        "LLM",
+        "Agent"
+      ],
+      "thought_date": "2026-09-02",
+      "published_date": "2026-09-06",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/physics-ecology-llm.md"
     }
   ]
 }

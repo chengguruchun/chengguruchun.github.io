@@ -1,100 +1,105 @@
 {
+  "updated": "2026-09-06",
   "tags": {
     "Agent": [
       "agent-control-plane",
-      "agent-runtime-vs-k8s",
       "agent-registry",
-      "think-determinism",
+      "agent-runtime-vs-k8s",
+      "llm-scientific-experiment",
+      "physics-ecology-llm",
       "vid-control-plane"
+    ],
+    "Complex Systems": [
+      "llm-scientific-experiment",
+      "physics-ecology-llm"
     ],
     "Control Plane": [
       "agent-control-plane"
     ],
-    "分布式系统": [
-      "agent-control-plane",
-      "think-multi-agent"
+    "Diverse": [
+      "llm-scientific-experiment",
+      "physics-ecology-llm"
     ],
-    "可观测性": [
-      "agent-control-plane"
+    "Ecology": [
+      "physics-ecology-llm"
+    ],
+    "Experiment": [
+      "llm-scientific-experiment"
+    ],
+    "Java": [
+      "proj-concurrency"
     ],
     "Kubernetes": [
       "agent-runtime-vs-k8s",
       "vid-runtime"
     ],
-    "Runtime": [
-      "agent-runtime-vs-k8s",
-      "vid-runtime"
+    "LLM": [
+      "llm-scientific-experiment",
+      "physics-ecology-llm"
     ],
-    "系统抽象": [
-      "agent-runtime-vs-k8s"
+    "Loop Engineering": [
+      "llm-scientific-experiment"
     ],
-    "Registry": [
-      "agent-registry"
-    ],
-    "契约": [
-      "agent-registry"
-    ],
-    "基础设施": [
-      "agent-registry"
-    ],
-    "Diverse": [
-      "think-determinism",
-      "think-memory",
-      "think-multi-agent"
-    ],
-    "SLA": [
-      "think-determinism"
-    ],
-    "可靠性": [
-      "think-determinism"
-    ],
-    "Memory": [
-      "think-memory"
-    ],
-    "状态管理": [
-      "think-memory"
-    ],
-    "Multi-Agent": [
-      "think-multi-agent"
+    "Physics": [
+      "physics-ecology-llm"
     ],
     "Projects": [
       "proj-concurrency",
-      "proj-redpacket",
-      "proj-miaoshao"
-    ],
-    "并发": [
-      "proj-concurrency"
-    ],
-    "Java": [
-      "proj-concurrency"
-    ],
-    "实验": [
-      "proj-concurrency"
-    ],
-    "高并发": [
+      "proj-miaoshao",
       "proj-redpacket"
     ],
     "Redis": [
       "proj-redpacket"
     ],
-    "一致性": [
-      "proj-redpacket"
+    "Registry": [
+      "agent-registry"
     ],
-    "秒杀": [
-      "proj-miaoshao"
-    ],
-    "消息队列": [
-      "proj-miaoshao"
-    ],
-    "性能": [
-      "proj-miaoshao"
+    "Runtime": [
+      "agent-runtime-vs-k8s",
+      "vid-runtime"
     ],
     "Videos": [
       "vid-control-plane",
       "vid-runtime"
     ],
+    "一致性": [
+      "proj-redpacket"
+    ],
+    "分布式系统": [
+      "agent-control-plane"
+    ],
+    "可观测性": [
+      "agent-control-plane"
+    ],
+    "基础设施": [
+      "agent-registry"
+    ],
+    "契约": [
+      "agent-registry"
+    ],
+    "实验": [
+      "proj-concurrency"
+    ],
+    "并发": [
+      "proj-concurrency"
+    ],
+    "性能": [
+      "proj-miaoshao"
+    ],
+    "消息队列": [
+      "proj-miaoshao"
+    ],
+    "秒杀": [
+      "proj-miaoshao"
+    ],
+    "系统抽象": [
+      "agent-runtime-vs-k8s"
+    ],
     "讲解": [
       "vid-control-plane"
+    ],
+    "高并发": [
+      "proj-redpacket"
     ]
   }
 }

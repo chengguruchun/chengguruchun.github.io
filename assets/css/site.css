@@ -346,11 +346,17 @@ a.tag:hover { color: #8fbfab; border-color: rgba(106,158,138,0.5); }
 .article-meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem 1rem;
+  align-items: center;
+  gap: 0.45rem 1.1rem;
   color: var(--text-faint);
   font-size: 0.82rem;
   font-family: var(--mono);
   margin: 0.85rem 0 0;
+}
+.article-meta > span {
+  display: inline-flex;
+  align-items: baseline;
+  white-space: nowrap;
 }
 .article-body {
   padding-bottom: 3rem;
@@ -954,15 +960,7 @@ a.entry-card:hover {
     margin-top: -1.25rem;
     margin-bottom: 1.75rem;
   }
-  .route-branch::before {
-    content: "↳ 支线";
-    display: block;
-    margin-bottom: 0.45rem;
-    font-family: var(--mono);
-    font-size: 0.65rem;
-    letter-spacing: 0.08em;
-    color: var(--accent);
-  }
+  
 }
 
 .route-stop__dot--intern {
@@ -1061,4 +1059,223 @@ a.entry-card:hover {
 .agent-howto a:hover { color: var(--accent); border-color: var(--accent); }
 .agent-howto code {
   font-size: 0.84em;
+}
+
+/* Times · 年度热词 */
+.times-year {
+  max-width: 36rem;
+  margin: 0 0 2.75rem;
+  padding: 1.35rem 1.35rem 1.5rem;
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius);
+}
+.times-year__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 0.9rem;
+  margin: 0 0 0.85rem;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: var(--text-faint);
+  text-transform: uppercase;
+}
+.times-year__badge {
+  color: var(--accent);
+  font-weight: 500;
+  margin-right: 0.35rem;
+}
+.times-year__word {
+  margin: 0 0 0.85rem;
+  font-family: var(--serif);
+  font-size: clamp(1.85rem, 4vw, 2.6rem);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+.times-year__why {
+  margin: 0 0 0.85rem;
+  color: var(--text-dim);
+  font-size: 1.02rem;
+  line-height: 1.7;
+}
+.times-year__note {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--text-faint);
+}
+.times-archive__title {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+}
+.times-archive__empty {
+  margin: 0;
+  color: var(--text-faint);
+  font-size: 0.9rem;
+}
+
+.times-vote {
+  margin: 1.15rem 0 0.85rem;
+  padding-top: 0.95rem;
+  border-top: 1px solid var(--line-soft);
+}
+.times-vote__label {
+  margin: 0 0 0.55rem;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+.times-vote__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.times-vote__btn {
+  appearance: none;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 0.88rem;
+  font-weight: 500;
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: border-color 0.15s var(--ease), background 0.15s var(--ease), color 0.15s var(--ease);
+}
+.times-vote__btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.times-vote__btn.is-active[data-vote="like"] {
+  background: var(--teal-soft);
+  border-color: var(--teal);
+  color: var(--teal);
+}
+.times-vote__btn.is-active[data-vote="dislike"] {
+  background: rgba(180, 84, 69, 0.1);
+  border-color: var(--danger);
+  color: var(--danger);
+}
+.times-vote__hint {
+  margin: 0.55rem 0 0;
+  font-size: 0.8rem;
+  color: var(--text-faint);
+}
+
+.hero__lead--secondary {
+  margin-top: 0.65rem;
+  color: var(--text-dim);
+  font-size: 0.98rem;
+}
+
+/* Comments (GitHub Issues) */
+.comments {
+  margin: 2.75rem 0 1rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+}
+.comments__title {
+  margin: 0 0 0.35rem;
+  font-size: 1.15rem;
+}
+.comments__status {
+  margin: 0 0 1rem;
+  font-size: 0.82rem;
+  color: var(--text-faint);
+  min-height: 1.2em;
+}
+.comments__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin: 0 0 1.5rem;
+}
+.comments__empty {
+  margin: 0;
+  color: var(--text-faint);
+  font-size: 0.92rem;
+}
+.comments__item {
+  padding: 0.85rem 0.95rem;
+  background: var(--bg-elev);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius);
+}
+.comments__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem 0.85rem;
+  margin: 0 0 0.45rem;
+  font-size: 0.8rem;
+  color: var(--text-faint);
+}
+.comments__meta strong { color: var(--text); font-weight: 600; }
+.comments__issue { color: var(--accent); }
+.comments__body {
+  margin: 0;
+  color: var(--text-dim);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  word-break: break-word;
+}
+.comments__form {
+  display: grid;
+  gap: 0.65rem;
+  max-width: 36rem;
+}
+.comments__form label {
+  display: grid;
+  gap: 0.3rem;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+}
+.comments__form input,
+.comments__form textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--text);
+  border-radius: var(--radius);
+  padding: 0.55rem 0.7rem;
+  font: inherit;
+}
+.comments__form textarea { min-height: 6.5rem; resize: vertical; }
+.comments__submit {
+  justify-self: start;
+  appearance: none;
+  border: 1px solid var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font: inherit;
+  font-weight: 500;
+  padding: 0.45rem 0.95rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+.comments__submit:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+.article-meta__dates {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.35rem;
+  align-items: center;
+}
+.article-meta__sep {
+  opacity: 0.55;
+}
+.article-meta__rev {
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 0.85em;
+}
+.article-meta__rev:hover {
+  text-decoration: underline;
 }

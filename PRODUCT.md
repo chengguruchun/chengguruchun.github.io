@@ -25,6 +25,7 @@
 | **Diverse Lab** | Question / My Thinking / Open Questions |
 | **Projects** | Problem → Architecture → … → Lessons + 真实仓库 |
 | **Videos** | 讲解与白板（可占位） |
+| **Hot Words** | 热词（年度热词写法）：一词 + 为何成立；按周或按月更新 |
 | **About** | 作者与实验室说明 |
 | **Tags / Search** | 标签穿越 + content/index.json 客户端检索 |
 

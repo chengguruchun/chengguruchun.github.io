@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>大模型：用科学实验的方式使用 · Diverse Lab</title>
+  <meta name="description" content="大模型不是确定性函数。用假设、对照、评测与反馈闭环来使用它，Prompt Engineering 才会长成 Experiment Engineering，并通向 Loop Engineering。">
+  <meta name="theme-color" content="#f7f5f0">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap site-header__inner">
+      <a class="brand" href="../index.html">
+        <span class="brand__name">AI Knowledge Lab</span>
+        <span class="brand__tag" data-brand-rotate aria-label="Independent Thinker · AI Agents · Complex Systems · Diverse Thinking"><span class="brand__rotate"><span class="brand__item is-active">Independent Thinker</span><span class="brand__item">AI Agents</span><span class="brand__item">Complex Systems</span><span class="brand__item">Diverse Thinking</span></span></span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">菜单</button>
+      <nav class="nav" id="site-nav" aria-label="主导航"><a href="../index.html">Home</a><a href="../diverse/" aria-current="page">Diverse Lab</a><a href="../articles/">Articles</a><a href="../projects/">Projects</a><a href="../videos/">Videos</a><a href="../times/">Hot Words</a><a href="../about/">About Me</a><a class="nav__search" href="../tags/">Tags / Search</a></nav>
+    </div>
+  </header>
+  <main>
+    <article class="article-body">
+      <header class="page-hero">
+        <div class="prose-wrap">
+          <p class="page-hero__kicker">Diverse Lab</p>
+          <h1>大模型：用科学实验的方式使用</h1>
+          <p class="article-meta"><span title="思路时间">思路 2026-09-02</span><span title="发表时间">发表 2026-09-06</span><span title="作者">作者 chengguruchun</span><a class="tag" href="../tags/?tag=LLM">LLM</a><a class="tag" href="../tags/?tag=Experiment">Experiment</a><a class="tag" href="../tags/?tag=Agent">Agent</a></p>
+        </div>
+      </header>
+      <div class="prose-wrap">
+        <div class="think-block think-block--q">
+          <div class="think-block__label">Question</div>
+          <p>为什么同一条规则，写在 Prompt 开头、中间或末尾，结果会差一截？为什么「上下文结构」经常比「措辞本身」更决定成败？大模型究竟更像一段可调用的程序，还是一套需要假设、对照与评测的实验系统？</p>
+        </div>
+        <div class="think-block think-block--a">
+          <div class="think-block__label">My Thinking</div>
+          <p>很多人把大模型当成确定性函数：输入 Prompt，输出 Answer。现实不是这样。真正进入推理的，往往是 Prompt、Context、Model、History、Sampling 叠在一起，再经过概率采样，才落到一次输出。</p>
+          <p>传统软件：</p>
+          <pre>Input → Deterministic Logic → Output</pre>
+          <p>大模型使用：</p>
+          <pre>Prompt + Context + Model + History + Sampling
+        → Probability
+        → Output</pre>
+          <p>因此，关键问题要从「为什么错了」换成「在什么条件下更容易正确」。不是在调试一条公式，而是在标定一套条件分布。</p>
+
+          <h3>把使用过程做成科学实验</h3>
+          <p>一旦承认输出是概率性的，正确用法就接近实验科学：</p>
+          <ol>
+            <li>提出假设（Hypothesis）</li>
+            <li>设计实验（Design）</li>
+            <li>控制变量（Control Variables）</li>
+            <li>运行（Run）</li>
+            <li>记录结果（Record）</li>
+            <li>对照比较（Compare）</li>
+            <li>得出结论（Conclude）</li>
+            <li>迭代改进（Iterate）</li>
+          </ol>
+          <p>一个典型例子：规则放置位置。同一规则分别放在系统指令顶部、用户消息中段、输出前最后一句、以及拆成多轮约束——记为实验 A–D。每次固定模型、温度、样本集，记录：</p>
+          <ul>
+            <li>Success Rate</li>
+            <li>Error Type</li>
+            <li>Cost</li>
+            <li>Latency</li>
+            <li>Consistency（同输入多次采样的稳定度）</li>
+          </ul>
+          <p>这时你得到的不是「这条 Prompt 对不对」，而是「在哪些变量组合下，正确概率更高」。Prompt Engineering 开始长成 Experiment Engineering。</p>
+
+          <h3>桥接到复杂系统：不是 Answer B，而是 P(correct)</h3>
+          <p>这与另一篇 Diverse Lab 笔记——<a href="physics-ecology-llm.html">物理学 × 生态学</a>——是同一条弧。物理直觉喜欢「给定 A，得到 B」；生态与复杂系统更诚实：A 提高 B 出现的概率。</p>
+          <p>大模型落在概率性复杂系统这一侧。你优化的对象，不是单次 Answer B，而是在约束、成本与延迟下的 P(correct)。把一次漂亮回答当成终局，等于用单次采样冒充定律。</p>
+
+          <h3>Proxy Metric ≠ Real Outcome</h3>
+          <p>实验还有第二个陷阱：代理指标不等于真实结果。</p>
+          <p>测试集全绿，用户问题仍然没解决；格式校验通过，业务目标没有推进；自洽评分很高，Held-out 一塌糊涂。评测必须至少拉三条线：</p>
+          <ul>
+            <li>User Feedback（真实任务是否完成）</li>
+            <li>Held-out（未参与调参的样本）</li>
+            <li>Ground Truth（可核对的事实或可执行断言）</li>
+          </ul>
+          <p>否则你只是在优化「看起来像对」的分布，而不是「真正做对」的分布。</p>
+
+          <h3>从单次回答到 Loop Engineering</h3>
+          <p>当系统开始带着目标行动，单轮 Prompt→Answer 不够用了。更完整的闭环是：</p>
+          <pre>Goal → Action → Observation → Gap → Adjustment</pre>
+          <p>这就是 Loop Engineering：把反馈写进运行时，而不是写进一次性措辞。Gap 不是耻辱，而是下一轮策略的输入。</p>
+          <p>在这条路上，会出现 Agent Optimizer：不必然先训权重，而是用经验轨迹（trajectory）优化外层策略——何时检索、何时调用工具、何时停、如何改写下一轮假设。模型权重可以固定；变的是策略、记忆、评测与环境交互协议。</p>
+
+          <h3>五层方法论</h3>
+          <p>把上面压缩成可迁移的五层：</p>
+          <ol>
+            <li><strong>LLM ≠ deterministic function.</strong> 先承认概率与条件依赖。</li>
+            <li><strong>Prompt Engineering → Experiment Engineering.</strong> 假设、对照、记录、复现。</li>
+            <li><strong>Output → Evaluation → Real Outcome.</strong> 代理指标必须对齐真实结果。</li>
+            <li><strong>Execute → Feedback → Gap → Improve → Execute Again.</strong> 闭环，而不是单次调用。</li>
+            <li><strong>Model → Agent → Runtime → Multi-Agent → Environment → Feedback → Evolution.</strong> 尺度拉大后，工程对象变成复杂系统本身。</li>
+          </ol>
+
+          <h3>一份可复用的实验模板</h3>
+          <p>每次认真用大模型前，先写短模板：</p>
+          <ul>
+            <li><strong>问题</strong>：要解决什么</li>
+            <li><strong>目标</strong>：成功长什么样</li>
+            <li><strong>已知 / 未知</strong>：边界与假设前提</li>
+            <li><strong>假设</strong>：改变什么会提高正确率</li>
+            <li><strong>基线</strong>：当前最好方案</li>
+            <li><strong>实验</strong>：变量、对照、样本量</li>
+            <li><strong>工具</strong>：检索、代码、评测器、日志</li>
+            <li><strong>指标</strong>：Success / Error / Cost / Latency / Consistency + 真实结果</li>
+            <li><strong>反例</strong>：故意找会翻车的输入</li>
+            <li><strong>复现</strong>：种子、版本、温度、上下文快照</li>
+            <li><strong>沉淀</strong>：结论写回策略库，而不是散落在聊天记录里</li>
+          </ul>
+          <p>工具与角色分工往往比「再写一句更妙的 Prompt」更有效：假设提出者、评测器、反方审稿人、执行者分开，比单角色自嗨更能压住自我证明偏差。</p>
+
+          <blockquote>
+            <p>使用大模型不是在调用一个确定性的函数，而是在做一种概率性的科学实验：提出假设、控制变量、观察结果、验证反馈，然后不断迭代。</p>
+          </blockquote>
+          <blockquote>
+            <p>当 Agent 开始具备目标、行动、记忆和反馈之后，面对的就不再只是 Prompt Engineering，而是一种新的 Complex System Engineering。</p>
+          </blockquote>
+        </div>
+        <div class="think-block think-block--o">
+          <div class="think-block__label">Open Questions</div>
+          <ul>
+            <li>哪些指标真正逼近 Real Outcome，哪些只是好看的 Proxy，会系统性地奖励「看起来像对」？</li>
+            <li>闭环越强，Reward Hacking 的空间越大——如何防止评测器与 Agent 合谋？</li>
+            <li>什么规模的任务值得上完整实验开销；什么时候一条强基线 Prompt 就够？</li>
+            <li>Policy Optimizer 如何保持诚实：在优化外层策略时，怎样避免只拟合评测分布？</li>
+            <li>Experiment Engineering 与 Complex System Engineering 的分界在哪里：何时该停在对照实验，何时必须设计环境、反馈与演化？</li>
+          </ul>
+        </div>
+        <p>源码笔记：<a href="../content/diverse/llm-scientific-experiment.md"><code>content/diverse/llm-scientific-experiment.md</code></a></p>
+        <p><a href="https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/llm-scientific-experiment.md" rel="noopener">Revisions</a></p>
+        <p><a href="./">← 返回 Diverse Lab</a></p>
+
+        <section class="comments" data-comments data-repo="chengguruchun/chengguruchun.github.io" data-page-id="llm-scientific-experiment" data-page-url="https://chengguruchun.github.io/diverse/llm-scientific-experiment.html" aria-label="Comments">
+          <h2 class="comments__title">Comments</h2>
+          <p class="comments__status" data-comments-status></p>
+          <div class="comments__list" data-comments-list></div>
+          <form class="comments__form" data-comments-form>
+            <label>Name
+              <input name="name" type="text" maxlength="80" placeholder="your name" autocomplete="nickname">
+            </label>
+            <label>Comment
+              <textarea name="body" maxlength="4000" placeholder="写下你的想法" required></textarea>
+            </label>
+            <button class="comments__submit" type="submit">Leave a comment</button>
+          </form>
+        </section>
+
+      </div>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap site-footer__inner">
+      <div>
+        <p>© <span id="year"></span> chengguruchun · Hangzhou</p>
+        <p>面向 AI Agent 的开放知识系统</p>
+      </div>
+    </div>
+  </footer>
+  <script src="../assets/js/site.js"></script>
+  <script src="../assets/js/comments.js"></script>
+</body>
+</html>

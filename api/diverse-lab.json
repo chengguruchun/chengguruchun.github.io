@@ -2,44 +2,42 @@
   "type": "Diverse Lab",
   "items": [
     {
-      "id": "think-determinism",
+      "id": "llm-scientific-experiment",
       "type": "Diverse Lab",
-      "title": "不确定执行能否被「像服务一样」SLA 化？",
-      "excerpt": "模型输出非确定性，但业务仍要承诺。控制面该管概率，还是管边界？",
-      "url": "/diverse/determinism-sla.html",
-      "date": "2026-08-15",
+      "title": "大模型：用科学实验的方式使用",
+      "excerpt": "大模型不是确定性函数。用假设、对照、评测与反馈闭环来使用它，Prompt Engineering 才会长成 Experiment Engineering，并通向 Loop Engineering。",
+      "url": "/diverse/llm-scientific-experiment.html",
+      "date": "2026-09-06",
       "tags": [
         "Diverse",
-        "SLA",
+        "LLM",
+        "Experiment",
         "Agent",
-        "可靠性"
-      ]
+        "Loop Engineering",
+        "Complex Systems"
+      ],
+      "thought_date": "2026-09-02",
+      "published_date": "2026-09-06",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/llm-scientific-experiment.md"
     },
     {
-      "id": "think-memory",
+      "id": "physics-ecology-llm",
       "type": "Diverse Lab",
-      "title": "Agent 记忆：状态、知识，还是日志？",
-      "excerpt": "把记忆当数据库会漏掉时间性；当向量库会漏掉一致性。需要分层。",
-      "url": "/diverse/agent-memory.html",
-      "date": "2026-08-22",
+      "title": "物理学 × 生态学：对复杂系统的一个思考",
+      "excerpt": "物理学看规律，生态学看关系与反馈；综合二者，才能理解 LLM 与多 Agent 如何逼近 Complex System Engineering。",
+      "url": "/diverse/physics-ecology-llm.html",
+      "date": "2026-09-06",
       "tags": [
         "Diverse",
-        "Memory",
-        "状态管理"
-      ]
-    },
-    {
-      "id": "think-multi-agent",
-      "type": "Diverse Lab",
-      "title": "多 Agent 协作的失败模式更像分布式事务",
-      "excerpt": "分工、重试、补偿、脑裂——多 Agent 系统正在重演我们熟悉的分布式难题。",
-      "url": "/diverse/multi-agent-failure.html",
-      "date": "2026-09-01",
-      "tags": [
-        "Diverse",
-        "Multi-Agent",
-        "分布式系统"
-      ]
+        "Physics",
+        "Ecology",
+        "Complex Systems",
+        "LLM",
+        "Agent"
+      ],
+      "thought_date": "2026-09-02",
+      "published_date": "2026-09-06",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/physics-ecology-llm.md"
     }
   ]
 }
