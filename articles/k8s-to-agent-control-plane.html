@@ -40,13 +40,59 @@
           <p>K8s 管理的是「服务如何稳定运行」；Agent Control Plane 管理的是「智能任务如何被分解、执行、验证并最终完成」。</p>
         </blockquote>
         <p>这两句话可以并排放着读。一边管的是可用性、副本、滚动发布；另一边管的是目标分解、工具轨迹、证据化完成。基础设施层仍然可以是 K8s；任务语义层需要另一套对象与闭环。</p>
+
+        <figure class="arch" aria-label="K8s vs Agent Control Plane ownership">
+          <figcaption class="arch__label">Architecture · Ownership Split</figcaption>
+          <div class="arch-split">
+            <div class="arch-panel">
+              <p class="arch-panel__title">Kubernetes</p>
+              <ul>
+                <li>Pod / Job / Network / GPU</li>
+                <li>Secret · Namespace · HPA</li>
+                <li>服务如何稳定运行</li>
+              </ul>
+            </div>
+            <div class="arch-panel">
+              <p class="arch-panel__title">Agent Control Plane</p>
+              <ul>
+                <li>Task · Policy · Approval</li>
+                <li>Eval · Replay · Outcome</li>
+                <li>任务如何验证并完成</li>
+              </ul>
+            </div>
+          </div>
+        </figure>
+
         <p>并非每个 Agent 都需要完整 Control Plane。脚本式单次调用、人工紧盯的探索任务，常常用更轻的 runtime 就够。Control Plane 在任务可复用、要多人协作、要审批、要评测与回放、要跨会话收敛时才真正划算。</p>
 
         <h2>核心：目标与过程不断拟合</h2>
         <p>整篇的中心不是对象清单，而是一条拟合链：</p>
-        <pre>Desired State → Actual → Gap → Reconcile</pre>
-        <p>映射到 <a href="../diverse/llm-scientific-experiment.html">Loop Engineering</a> 的运行时闭环：</p>
-        <pre>Goal → Action → Observation → Gap → Adjustment</pre>
+        <figure class="arch" aria-label="Reconcile loop">
+          <figcaption class="arch__label">Loop · Desired → Actual → Gap → Reconcile</figcaption>
+          <div class="arch-flow">
+            <span class="arch-flow__node arch-flow__node--goal">Desired State</span>
+            <span class="arch-flow__arrow">→</span>
+            <span class="arch-flow__node">Actual</span>
+            <span class="arch-flow__arrow">→</span>
+            <span class="arch-flow__node">Gap</span>
+            <span class="arch-flow__arrow">→</span>
+            <span class="arch-flow__node">Reconcile</span>
+            <span class="arch-flow__arrow">↻</span>
+          </div>
+          <p style="margin:0.85rem 0 0.35rem;font-size:0.8rem;color:var(--text-faint)">映射到 Loop Engineering：</p>
+          <div class="arch-flow">
+            <span class="arch-flow__node arch-flow__node--goal">Goal</span>
+            <span class="arch-flow__arrow">→</span>
+            <span class="arch-flow__node">Action</span>
+            <span class="arch-flow__arrow">→</span>
+            <span class="arch-flow__node">Observation</span>
+            <span class="arch-flow__arrow">→</span>
+            <span class="arch-flow__node">Gap</span>
+            <span class="arch-flow__arrow">→</span>
+            <span class="arch-flow__node">Adjustment</span>
+            <span class="arch-flow__arrow">↻</span>
+          </div>
+        </figure>
         <p>K8s 的 Desired State 通常是可检查的：副本数、就绪探针、配置版本。Agent 的 Desired State 往往是语义目标：「把账单对平」「生成可合并的修复」「在预算内完成调研」。Actual 因此不能只停在进程绿、步骤绿；它必须携带可核对的 Outcome 证据。Gap 不是耻辱，而是下一轮调度与策略调整的输入。</p>
         <p>把「过程跑完」当成「目标达成」，会系统性地奖励看起来像完成的轨迹——这与 Diverse Lab 里 <strong>Proxy Metric ≠ Real Outcome</strong> 是同一条警告。</p>
 
@@ -121,12 +167,37 @@ status:
         <p>Proxy 可用，但必须登记 gap。否则优化器会学会 Reward Hacking：把轨迹修得像成功。这与 <a href="../diverse/llm-scientific-experiment.html">用科学实验的方式使用大模型</a> 中的评测纪律一致；也与 <a href="../diverse/physics-ecology-llm.html">物理学 × 生态学</a> 中「条件提高概率，而不是一次性保证结果」的复杂系统直觉一致。</p>
 
         <h2>分层：谁拥有什么职责</h2>
-        <pre>Control Plane
-  → Runtime
-    → Provider / Tool Gateway
-      → Sandbox
-  → Evaluator / Trace / Replay
-  → Policy Optimizer</pre>
+        <figure class="arch" aria-label="Agent platform layers">
+          <figcaption class="arch__label">Architecture · Agent Platform Stack</figcaption>
+          <div class="arch-stack">
+            <div class="arch-layer arch-layer--plane">
+              <span class="arch-layer__name">Agent Control Plane</span>
+              <span class="arch-layer__desc">Task API · Scheduler · Registry · Policy Optimizer · Approval · Eval · Replay · Version</span>
+            </div>
+            <div class="arch-layer arch-layer--runtime">
+              <span class="arch-layer__name">Agent Runtime / Orchestrator</span>
+              <span class="arch-layer__desc">Plan-Act-Observe · 状态 · 暂停恢复 · 子 Agent 协调</span>
+            </div>
+            <div class="arch-split">
+              <div class="arch-layer">
+                <span class="arch-layer__name">Provider Gateway</span>
+                <span class="arch-layer__desc">模型路由 · Fallback · 预算 · 限流 · Model Trace</span>
+              </div>
+              <div class="arch-layer">
+                <span class="arch-layer__name">Tool Gateway</span>
+                <span class="arch-layer__desc">鉴权 · 租户 · 凭证 · 审批 · 幂等 · 审计 · Sandbox</span>
+              </div>
+            </div>
+            <div class="arch-layer">
+              <span class="arch-layer__name">Models · Business Systems · Sandbox</span>
+              <span class="arch-layer__desc">GPT / Claude / DeepSeek · CRM / ERP / Browser / Git / DB</span>
+            </div>
+            <div class="arch-layer">
+              <span class="arch-layer__name">Evaluator · Trace · Replay · Feedback</span>
+              <span class="arch-layer__desc">结果验收 · 回放诊断 · 为 Policy Optimizer 提供证据</span>
+            </div>
+          </div>
+        </figure>
         <p>角色分工：</p>
         <ul>
           <li><strong>Policy Optimizer</strong>：在约束下选择路径与策略（何时检索、调用、停止、升级审批）</li>
@@ -139,6 +210,26 @@ status:
         <p>K8s 可以继续承载 Runtime / Sandbox 的进程与网络；Agent Control Plane 拥有任务语义、策略门与完成判定。Agent 并不替代微服务：既有服务应通过 Tool Gateway 被调用，而不是被「再实现一遍成 Agent」。</p>
 
         <h2>三条环：Execute / Eval / Learn</h2>
+        <figure class="arch" aria-label="Three control loops">
+          <figcaption class="arch__label">Loops · Execute / Eval / Learn</figcaption>
+          <div class="arch-loops">
+            <div class="arch-loop">
+              <p class="arch-loop__name">Execute</p>
+              <p class="arch-loop__flow">Goal → Action → Observe → Gap → Adjust</p>
+              <p class="arch-loop__note">把当前任务做完（秒–分钟）</p>
+            </div>
+            <div class="arch-loop">
+              <p class="arch-loop__name">Eval</p>
+              <p class="arch-loop__flow">Trajectory → Gate → Pass / Block</p>
+              <p class="arch-loop__note">哪条路径更好（小时–天）</p>
+            </div>
+            <div class="arch-loop">
+              <p class="arch-loop__name">Learn</p>
+              <p class="arch-loop__flow">Evidence → Policy / Router Update</p>
+              <p class="arch-loop__note">下次自动选更好路径（天–周）</p>
+            </div>
+          </div>
+        </figure>
         <ol>
           <li><strong>Execute Loop</strong>：Goal → Action → Observation → Gap → Adjustment（在线收敛）</li>
           <li><strong>Eval Loop</strong>：轨迹与 Outcome → 评测门禁 → 通过/阻断发布（对照与防回归）</li>
@@ -147,6 +238,33 @@ status:
         <p>三条环转速不同。把 Learn 偷塞进每一次 Execute，容易过拟合当前任务；把 Eval 省掉，Execute 会在虚假成功上空转。</p>
 
         <h2>落地判断</h2>
+        <figure class="arch" aria-label="Landing split with microservices">
+          <figcaption class="arch__label">Landing · Infra + Semantics + Services</figcaption>
+          <div class="arch-stack">
+            <div class="arch-layer">
+              <span class="arch-layer__name">K8s</span>
+              <span class="arch-layer__desc">运行基础设施：Pod · Job · 网络 · GPU · Secret · 扩缩容</span>
+            </div>
+            <div class="arch-layer arch-layer--plane">
+              <span class="arch-layer__name">Agent Control Plane</span>
+              <span class="arch-layer__desc">Task · Policy · Tool · Approval · Replay · Eval · Outcome</span>
+            </div>
+            <div class="arch-layer arch-layer--runtime">
+              <span class="arch-layer__name">Agent Runtime</span>
+              <span class="arch-layer__desc">Plan-Act-Observe Loop</span>
+            </div>
+            <div class="arch-split">
+              <div class="arch-layer">
+                <span class="arch-layer__name">确定性微服务</span>
+                <span class="arch-layer__desc">订单 · 库存 · 支付 · 权限（经 Tool Gateway 调用）</span>
+              </div>
+              <div class="arch-layer">
+                <span class="arch-layer__name">概率性 Agent 服务</span>
+                <span class="arch-layer__desc">理解 · 拆解 · 诊断 · 跨系统协调</span>
+              </div>
+            </div>
+          </div>
+        </figure>
         <ul>
           <li><strong>K8s 保管基础设施</strong>：节点、网络、配额、容器生命周期</li>
           <li><strong>Agent Control Plane 保管任务语义</strong>：目标、分解、审批、证据化完成</li>

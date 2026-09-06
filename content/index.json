@@ -85,7 +85,8 @@
       ],
       "thought_date": "2026-08-28",
       "published_date": "2026-09-06",
-      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/k8s-to-agent-control-plane.md"
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/k8s-to-agent-control-plane.md",
+      "content": "/content/articles/k8s-to-agent-control-plane.md"
     },
     {
       "id": "llm-scientific-experiment",
@@ -104,7 +105,8 @@
       ],
       "thought_date": "2026-09-02",
       "published_date": "2026-09-06",
-      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/llm-scientific-experiment.md"
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/llm-scientific-experiment.md",
+      "content": "/content/diverse/llm-scientific-experiment.md"
     },
     {
       "id": "physics-ecology-llm",
@@ -123,7 +125,8 @@
       ],
       "thought_date": "2026-09-02",
       "published_date": "2026-09-06",
-      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/physics-ecology-llm.md"
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/physics-ecology-llm.md",
+      "content": "/content/diverse/physics-ecology-llm.md"
     }
   ]
 }

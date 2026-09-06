@@ -20,21 +20,29 @@ history_url: https://github.com/chengguruchun/chengguruchun.github.io/commits/ma
 
 这两句话可以并排放着读。一边管的是可用性、副本、滚动发布；另一边管的是目标分解、工具轨迹、证据化完成。基础设施层仍然可以是 K8s；任务语义层需要另一套对象与闭环。
 
+```text
+┌─────────────────────┐   ┌──────────────────────────┐
+│ Kubernetes          │   │ Agent Control Plane      │
+│ Pod/Job/Net/GPU     │   │ Task/Policy/Approval     │
+│ Secret/NS/HPA       │   │ Eval/Replay/Outcome      │
+│ 服务如何稳定运行     │   │ 任务如何验证并完成         │
+└─────────────────────┘   └──────────────────────────┘
+```
+
 并非每个 Agent 都需要完整 Control Plane。脚本式单次调用、人工紧盯的探索任务，常常用更轻的 runtime 就够。Control Plane 在任务可复用、要多人协作、要审批、要评测与回放、要跨会话收敛时才真正划算。
 
 ## 核心：目标与过程不断拟合
 
 整篇的中心不是对象清单，而是一条拟合链：
 
-```
-Desired State → Actual → Gap → Reconcile
+```text
+Desired State → Actual → Gap → Reconcile ↻
+                │
+                └─ 对应 Loop Engineering：
+                   Goal → Action → Observation → Gap → Adjustment ↻
 ```
 
-映射到 [Loop Engineering](../diverse/llm-scientific-experiment.html) 的运行时闭环：
-
-```
-Goal → Action → Observation → Gap → Adjustment
-```
+映射到 [Loop Engineering](../diverse/llm-scientific-experiment.md) 的运行时闭环。
 
 K8s 的 Desired State 通常是可检查的：副本数、就绪探针、配置版本。Agent 的 Desired State 往往是语义目标：「把账单对平」「生成可合并的修复」「在预算内完成调研」。Actual 因此不能只停在进程绿、步骤绿；它必须携带可核对的 Outcome 证据。Gap 不是耻辱，而是下一轮调度与策略调整的输入。
 
@@ -112,17 +120,30 @@ K8s 擅长把世界压成可探针的信号：存活、就绪、资源压力。A
 - **Health / Proxy**：步骤执行、schema 校验、单元断言、模型自评
 - **Real Outcome**：外部可核对事实、业务状态变更、held-out 评测、人类验收
 
-Proxy 可用，但必须登记 gap。否则优化器会学会 Reward Hacking：把轨迹修得像成功。这与 [用科学实验的方式使用大模型](../diverse/llm-scientific-experiment.html) 中的评测纪律一致；也与 [物理学 × 生态学](../diverse/physics-ecology-llm.html) 中「条件提高概率，而不是一次性保证结果」的复杂系统直觉一致。
+Proxy 可用，但必须登记 gap。否则优化器会学会 Reward Hacking：把轨迹修得像成功。这与 [用科学实验的方式使用大模型](../diverse/llm-scientific-experiment.md) 中的评测纪律一致；也与 [物理学 × 生态学](../diverse/physics-ecology-llm.md) 中「条件提高概率，而不是一次性保证结果」的复杂系统直觉一致。
 
 ## 分层：谁拥有什么职责
 
-```
-Control Plane
-  → Runtime
-    → Provider / Tool Gateway
-      → Sandbox
-  → Evaluator / Trace / Replay
-  → Policy Optimizer
+```text
+┌─────────────────────────────────────────────┐
+│ Agent Control Plane                         │
+│ Task · Scheduler · Registry · Policy · Eval │
+└──────────────────────┬──────────────────────┘
+                       ↓
+┌─────────────────────────────────────────────┐
+│ Agent Runtime / Orchestrator                │
+│ Plan-Act-Observe · 状态 · 子 Agent 协调      │
+└──────────────┬───────────────┬──────────────┘
+               ↓               ↓
+┌──────────────────────┐ ┌────────────────────┐
+│ Provider Gateway     │ │ Tool Gateway       │
+│ 模型路由/预算/限流    │ │ 鉴权/审批/审计/沙箱 │
+└──────────┬───────────┘ └─────────┬──────────┘
+           └───────────┬───────────┘
+                       ↓
+              Models · Biz Systems
+                       ↓
+         Evaluator · Trace · Replay · Feedback
 ```
 
 角色分工：
@@ -138,6 +159,12 @@ K8s 可以继续承载 Runtime / Sandbox 的进程与网络；Agent Control Plan
 
 ## 三条环：Execute / Eval / Learn
 
+```text
+Execute (秒–分钟)   Eval (小时–天)        Learn (天–周)
+Goal→Act→Obs→Gap    Trajectory→Gate       Evidence→Policy
+把当前任务做完       哪条路径更好           下次自动选更好路径
+```
+
 1. **Execute Loop**：Goal → Action → Observation → Gap → Adjustment（在线收敛）
 2. **Eval Loop**：轨迹与 Outcome → 评测门禁 → 通过/阻断发布（对照与防回归）
 3. **Learn Loop**：失败模式与成功证据 → 策略/提示/路由更新 → 小流量验证（离线或准在线改进）
@@ -145,6 +172,16 @@ K8s 可以继续承载 Runtime / Sandbox 的进程与网络；Agent Control Plan
 三条环转速不同。把 Learn 偷塞进每一次 Execute，容易过拟合当前任务；把 Eval 省掉，Execute 会在虚假成功上空转。
 
 ## 落地判断
+
+```text
+K8s（基础设施）
+   ↓
+Agent Control Plane（任务语义）
+   ↓
+Agent Runtime（执行闭环）
+   ↓
+确定性微服务 ←Tool Gateway→ 概率性 Agent 服务
+```
 
 - **K8s 保管基础设施**：节点、网络、配额、容器生命周期
 - **Agent Control Plane 保管任务语义**：目标、分解、审批、证据化完成
