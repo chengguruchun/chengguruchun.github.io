@@ -90,7 +90,6 @@ jobs:
           PERIOD: ${{ steps.meta.outputs.period }}
 
       - name: Optional DeepSeek draft comment
-        if: ${{ secrets.DEEPSEEK_API_KEY != '' }}
         env:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
           PERIOD: ${{ steps.meta.outputs.period }}
@@ -98,7 +97,10 @@ jobs:
           python3 - <<'PY'
           import json, os, urllib.request
           period = os.environ["PERIOD"]
-          key = os.environ["DEEPSEEK_API_KEY"]
+          key = os.environ.get("DEEPSEEK_API_KEY", "").strip()
+          if not key:
+              print("DEEPSEEK_API_KEY not set; skip model draft")
+              raise SystemExit(0)
           prompt = (
               f"You are drafting Hot Words candidates for period {period} "
               "for an AI Agent knowledge lab. Return JSON with keys "
@@ -137,7 +139,6 @@ jobs:
           PY
 
       - name: Upload DeepSeek draft artifact
-        if: ${{ secrets.DEEPSEEK_API_KEY != '' }}
         uses: actions/upload-artifact@v4
         with:
           name: hot-words-deepseek-draft
