@@ -6,6 +6,7 @@ import argparse
 import json
 import re
 from datetime import datetime
+import html as html_lib
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
@@ -37,6 +38,10 @@ def apply(period: str, word: str, why: str, cadence: str, dry_run: bool, root: P
     period = period.strip()
     word = word.strip()
     why = why.strip()
+    if not period or not word or not why:
+        raise SystemExit("period/word/why required")
+    word_html = html_lib.escape(word, quote=True)
+    why_html = html_lib.escape(why, quote=False)
     slug = period.lower()
     date = today()
     eid = f"times-{slug}"
@@ -59,14 +64,14 @@ word: {word}
 {why}
 """
 
-    article = f"""        <article class="times-year times-period" data-period="{period}" data-cadence="{cadence}" data-word="{word}">
+    article = f"""        <article class="times-year times-period" data-period="{period}" data-cadence="{cadence}" data-word="{word_html}">
           <p class="times-year__meta">
             <span class="times-year__badge">{"Weekly" if cadence == "weekly" else cadence}</span>
             <span>{week_label(period)}</span>
             <span>更新于 {date}</span>
           </p>
-          <h2 class="times-year__word">{word}</h2>
-          <p class="times-year__why">{why}</p>
+          <h2 class="times-year__word">{word_html}</h2>
+          <p class="times-year__why">{why_html}</p>
           <div class="times-vote" data-times-vote>
             <p class="times-vote__label">你的态度</p>
             <div class="times-vote__actions" role="group" aria-label="Like or dislike this hot word">
@@ -80,7 +85,7 @@ word: {word}
     html = html_path.read_text(encoding="utf-8")
     html = re.sub(
         r'<meta name="description" content="[^"]*">',
-        f'<meta name="description" content="Hot Words · {word} · {period}">',
+        f'<meta name="description" content="Hot Words · {html_lib.escape(word, quote=True)} · {html_lib.escape(period, quote=True)}">',
         html,
         count=1,
     )

@@ -1,4 +1,4 @@
-# Weekly Hot Words loop nudge / optional DeepSeek proposal
+# Fully automatic Weekly Hot Words: DeepSeek → apply → commit/push
 name: Hot Words Weekly
 
 on:
@@ -7,15 +7,21 @@ on:
     - cron: "0 1 * * 1"
   workflow_dispatch:
 
+concurrency:
+  group: hot-words-weekly
+  cancel-in-progress: false
+
 permissions:
-  contents: read
+  contents: write
   issues: write
 
 jobs:
-  propose:
+  publish:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Compute period (Asia/Shanghai)
         id: meta
@@ -27,42 +33,172 @@ jobs:
           now = datetime.now(ZoneInfo("Asia/Shanghai"))
           week = (now.day - 1) // 7 + 1
           period = f"{now:%Y-%m}-W{week}"
-          print(period)
           with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as f:
               f.write(f"period={period}\n")
+          print(period)
           PY
 
-      - name: Open proposal issue (always)
+      - name: DeepSeek draft + apply + commit
+        id: apply
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          PERIOD: ${{ steps.meta.outputs.period }}
+        run: |
+          python3 - <<'PY'
+          import json, os, re, subprocess, urllib.request
+          from pathlib import Path
+
+          period = os.environ["PERIOD"]
+          key = os.environ.get("DEEPSEEK_API_KEY", "").strip()
+          if not key:
+              raise SystemExit("DEEPSEEK_API_KEY secret missing; cannot run fully automatic Hot Words")
+
+          current = {}
+          times_path = Path("api/times.json")
+          if times_path.exists():
+              try:
+                  current = json.loads(times_path.read_text(encoding="utf-8"))
+              except json.JSONDecodeError:
+                  current = {}
+          current_word = ""
+          issues = current.get("issues") if isinstance(current.get("issues"), list) else []
+          if issues and isinstance(issues[0], dict):
+              current_word = str(issues[0].get("word") or "")
+          hist = []
+          for it in issues[:8]:
+              if isinstance(it, dict) and it.get("word"):
+                  hist.append(f"{it.get('period')}: {it.get('word')}")
+
+          prompt = (
+              f"Period: {period}. Site: AI Agent personal knowledge blog Hot Words.\n"
+              f"Current word: {current_word or '(none)'}.\n"
+              f"Recent: {'; '.join(hist) or '(none)'}\n\n"
+              "Pick ONE new weekly hot word for AI/Agent engineering (Chinese or common English term). "
+              "Avoid duplicating the current word unless continuity is strongly justified.\n"
+              "Return JSON only with keys:\n"
+              '  "candidates": [{{"word","evidence","notes"}}, ...] (3-5),\n'
+              '  "chosen": {{"word","why"}}\n'
+              "chosen.why must be tight Chinese editorial prose (2-4 sentences), no placeholders."
+          )
+          body = {
+              "model": "deepseek-chat",
+              "messages": [
+                  {"role": "system", "content": "Return compact JSON only. No markdown fences."},
+                  {"role": "user", "content": prompt},
+              ],
+              "temperature": 0.6,
+          }
+          req = urllib.request.Request(
+              "https://api.deepseek.com/chat/completions",
+              data=json.dumps(body).encode(),
+              headers={
+                  "Authorization": f"Bearer {key}",
+                  "Content-Type": "application/json",
+              },
+              method="POST",
+          )
+          with urllib.request.urlopen(req, timeout=90) as resp:
+              data = json.loads(resp.read().decode())
+          text = data["choices"][0]["message"]["content"].strip()
+          Path("hot-words-deepseek-draft.md").write_text(
+              f"# DeepSeek draft for {period}\n\n```json\n{text}\n```\n",
+              encoding="utf-8",
+          )
+
+          m = re.search(r"\{[\s\S]*\}", text)
+          if not m:
+              raise SystemExit("DeepSeek response had no JSON object")
+          draft = json.loads(m.group(0))
+          chosen = draft.get("chosen") or {}
+          word = str(chosen.get("word") or "").strip()
+          why = str(chosen.get("why") or "").strip()
+          if not word or not why:
+              raise SystemExit(f"chosen.word/why missing: {chosen!r}")
+
+          # Skip no-op if same period+word already published
+          if (
+              str(current.get("current") or "") == period
+              and current_word == word
+          ):
+              print(f"Already published {period} · {word}; skip apply")
+              with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as f:
+                  f.write("changed=false\n")
+                  f.write(f"word={word}\n")
+              raise SystemExit(0)
+
+          subprocess.check_call(
+              [
+                  "python3",
+                  "scripts/hot_words_apply.py",
+                  "--period",
+                  period,
+                  "--word",
+                  word,
+                  "--why",
+                  why,
+                  "--cadence",
+                  "weekly",
+              ]
+          )
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as f:
+              f.write("changed=true\n")
+              f.write(f"word={word}\n")
+          print(f"Applied {period} · {word}")
+          PY
+
+      - name: Upload DeepSeek draft artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: hot-words-deepseek-draft
+          path: hot-words-deepseek-draft.md
+          if-no-files-found: ignore
+
+      - name: Commit and push Hot Words
+        if: steps.apply.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add times/index.html content/times api/times.json hot-words-deepseek-draft.md || true
+          # draft md is artifact-only; do not commit draft into site root
+          git reset HEAD -- hot-words-deepseek-draft.md 2>/dev/null || true
+          rm -f hot-words-deepseek-draft.md
+          if git diff --cached --quiet; then
+            echo "No staged changes"
+            exit 0
+          fi
+          git commit -m "chore(hot-words): publish ${{ steps.meta.outputs.period }} · ${{ steps.apply.outputs.word }}"
+          git push
+
+      - name: Record publish issue (FYI, no approval)
+        if: always() && steps.apply.outputs.word != ''
         uses: actions/github-script@v7
+        env:
+          PERIOD: ${{ steps.meta.outputs.period }}
+          WORD: ${{ steps.apply.outputs.word }}
+          CHANGED: ${{ steps.apply.outputs.changed }}
         with:
           script: |
             const period = process.env.PERIOD;
-            const title = `[hot-words] propose ${period}`;
+            const word = process.env.WORD;
+            const changed = process.env.CHANGED;
+            const title = `[hot-words] published ${period} · ${word}`;
             const body = [
-              `## Hot Words weekly loop`,
+              `## Hot Words auto-publish`,
               ``,
               `Period: **${period}**`,
+              `Word: **${word}**`,
+              `Changed: **${changed}**`,
               ``,
-              `### Protocol`,
-              `1. Read current \`/times/\` + \`content/times/\``,
-              `2. Propose 3 candidates with evidence`,
-              `3. Pick one word + why (editorial Chinese)`,
-              `4. Apply via Pi \`/hot-words\` or:`,
-              '   `python3 scripts/hot_words_apply.py --period ... --word ... --why ...`',
-              `5. Human review → commit/push`,
+              `Live: https://chengguruchun.github.io/times/`,
               ``,
-              `### DeepSeek / Pi`,
-              `Local: see \`docs/pi-deepseek/README.md\`.`,
-              `Optional repo secret: \`DEEPSEEK_API_KEY\` (not required for this issue).`,
-              ``,
-              `— automated from hot-words-weekly.yml`,
+              `Fully automatic (DeepSeek → apply → push). No human confirmation.`,
+              `— hot-words-weekly.yml`,
             ].join('\n');
             const issues = await github.rest.issues.listForRepo({
               owner: context.repo.owner,
               repo: context.repo.repo,
               state: 'open',
-              labels: 'hot-words',
-              per_page: 20,
+              per_page: 30,
             }).catch(() => ({ data: [] }));
             const exists = (issues.data || []).some(i => i.title === title);
             if (exists) {
@@ -78,7 +214,6 @@ jobs:
                 labels: ['hot-words'],
               });
             } catch (e) {
-              // label may not exist
               await github.rest.issues.create({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
@@ -86,61 +221,3 @@ jobs:
                 body,
               });
             }
-        env:
-          PERIOD: ${{ steps.meta.outputs.period }}
-
-      - name: Optional DeepSeek draft comment
-        env:
-          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
-          PERIOD: ${{ steps.meta.outputs.period }}
-        run: |
-          python3 - <<'PY'
-          import json, os, urllib.request
-          period = os.environ["PERIOD"]
-          key = os.environ.get("DEEPSEEK_API_KEY", "").strip()
-          if not key:
-              print("DEEPSEEK_API_KEY not set; skip model draft")
-              raise SystemExit(0)
-          prompt = (
-              f"You are drafting Hot Words candidates for period {period} "
-              "for an AI Agent knowledge lab. Return JSON with keys "
-              "candidates (array of {word, evidence, notes}) and "
-              "chosen ({word, why}) in Chinese editorial tone. One compound word max."
-          )
-          body = {
-              "model": "deepseek-chat",
-              "messages": [
-                  {"role": "system", "content": "Return compact JSON only."},
-                  {"role": "user", "content": prompt},
-              ],
-              "temperature": 0.7,
-          }
-          req = urllib.request.Request(
-              "https://api.deepseek.com/chat/completions",
-              data=json.dumps(body).encode(),
-              headers={
-                  "Authorization": f"Bearer {key}",
-                  "Content-Type": "application/json",
-              },
-              method="POST",
-          )
-          try:
-              with urllib.request.urlopen(req, timeout=60) as resp:
-                  data = json.loads(resp.read().decode())
-              text = data["choices"][0]["message"]["content"]
-              Path = __import__("pathlib").Path
-              Path("hot-words-deepseek-draft.md").write_text(
-                  f"# DeepSeek draft for {period}\n\n```json\n{text}\n```\n",
-                  encoding="utf-8",
-              )
-              print("wrote hot-words-deepseek-draft.md")
-          except Exception as e:
-              print("DeepSeek call skipped/failed:", e)
-          PY
-
-      - name: Upload DeepSeek draft artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: hot-words-deepseek-draft
-          path: hot-words-deepseek-draft.md
-          if-no-files-found: ignore
