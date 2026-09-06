@@ -1,6 +1,6 @@
 # AI Knowledge Lab — Product Vision
 
-**定位一句话：** AI Knowledge Lab 是面向 AI Agent 的开放知识系统——用独立思考面对复杂系统，把工程实践接到 Agent 基础设施上。
+**定位一句话：** AI Knowledge Lab 是面向 AI Agent 的个人知识博客——用独立思考面对复杂系统，把工程实践接到 Agent 基础设施上。
 
 **Brand：** Independent Thinker · AI Agents · Complex Systems · Diverse Thinking  
 **Owner：** chengguruchun（杭州）· chengguruchun@163.com  

@@ -2,7 +2,7 @@
 
 **EN:** An open knowledge system for AI Agents — discoverable, callable. Independent Thinker · AI Agents · Complex Systems · Diverse Thinking.
 
-**ZH:** 面向 AI Agent 的开放知识系统：可发现、可调用。Independent Thinker · AI Agents · Complex Systems · Diverse Thinking。
+**ZH:** 面向 AI Agent 的个人知识博客：可发现、可调用。Independent Thinker · AI Agents · Complex Systems · Diverse Thinking。
 
 - 站点：https://chengguruchun.github.io
 - 仓库：https://github.com/chengguruchun/chengguruchun.github.io

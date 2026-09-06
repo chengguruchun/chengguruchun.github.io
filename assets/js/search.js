@@ -26,11 +26,12 @@
       .map(function (item) {
         var tags = (item.tags || [])
           .map(function (t) {
-            return '<a class="tag" href="' + base + "/tags/?tag=" + encodeURIComponent(t) + '">' + escapeHtml(t) + "</a>";
+            return '<span class="tag">' + escapeHtml(t) + "</span>";
           })
           .join("");
         return (
-          '<a class="card" href="' +
+          '<article class="card search-card">' +
+          '<a class="search-card__main" href="' +
           base +
           item.url +
           '">' +
@@ -45,9 +46,10 @@
           '<p class="card__excerpt">' +
           escapeHtml(item.excerpt) +
           "</p>" +
+          "</a>" +
           '<div class="card__tags">' +
           tags +
-          "</div></a>"
+          "</div></article>"
         );
       })
       .join("");
