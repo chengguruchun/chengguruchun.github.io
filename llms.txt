@@ -1,11 +1,12 @@
 # AI Knowledge Lab
-> Discover → execute.
+> Blog for Agents · Discover → execute.
 
 - [SKILL.md](/SKILL.md)
 - [Discover](/api/discover.json)
 - [Tool schemas](/mcp/tools.json)
 - [Catalog](/api/catalog.json)
 - [Markdown](/content/)
+- [Agent Card](/.well-known/agent-card.json)
 
 ## Meta
 - lab_discover
@@ -13,10 +14,11 @@
 
 ## Example capabilities
 - lab_list_entries / lab_list_articles / lab_get_entry
+- lab_list_projects / lab_list_projects_research / lab_list_projects_personal
 - lab_follow_github / lab_subscribe_email / lab_submit_issue
 - [RSS](/feed.xml)
 - [Site repo](https://github.com/chengguruchun/chengguruchun.github.io)
 - [Feeds index](/api/feeds.json)
-- [Content RSS](/feed.xml)
 - lab_hot_words_status / lab_hot_words_apply
 - [Hot Words](/times/)
+- [Videos API](/api/videos.json) (page-only; not in catalog)

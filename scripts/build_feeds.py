@@ -3,6 +3,8 @@
 
 Run after publishing knowledge entries:
   python3 scripts/build_feeds.py
+
+Skips rewrite when the RSS item set is unchanged (avoids timestamp-only chore commits).
 """
 from __future__ import annotations
 
@@ -60,8 +62,51 @@ def abs_url(path: str) -> str:
     return BASE + path
 
 
-def build_rss(items: list[dict]) -> str:
-    # Prefer dated knowledge posts; skip vague ranges like 2024–2026 for channel ordering
+def item_fingerprint(items: list[dict]) -> str:
+    """Stable signature of feed-eligible items (ignore generated timestamps)."""
+    rows = []
+    for it in items:
+        dt = parse_date(it.get("date"))
+        if dt is None:
+            continue
+        rows.append((
+            str(it.get("id") or ""),
+            str(it.get("title") or ""),
+            str(it.get("url") or ""),
+            str(it.get("excerpt") or ""),
+            str(it.get("type") or ""),
+            dt.date().isoformat(),
+        ))
+    rows.sort()
+    return json.dumps(rows, ensure_ascii=False, separators=(",", ":"))
+
+
+def extract_items_from_rss(rss: str) -> str:
+    """Fingerprint existing feed.xml items for comparison."""
+    blocks = re.findall(r"<item>([\s\S]*?)</item>", rss)
+    rows = []
+    for b in blocks:
+        def grab(tag: str) -> str:
+            m = re.search(rf"<{tag}[^>]*>([\s\S]*?)</{tag}>", b)
+            return (m.group(1).strip() if m else "")
+        # pubDate day only
+        pub = grab("pubDate")
+        day = ""
+        m = re.search(r"(\d{4})", pub)  # weak; better parse RFC822 day
+        # Prefer GUID/link + title + description + category
+        rows.append((
+            grab("guid"),
+            grab("title"),
+            grab("link"),
+            grab("description"),
+            grab("category"),
+            pub,
+        ))
+    rows.sort()
+    return json.dumps(rows, ensure_ascii=False, separators=(",", ":"))
+
+
+def build_rss(items: list[dict], channel_updated: datetime | None = None) -> str:
     dated = []
     for it in items:
         dt = parse_date(it.get("date"))
@@ -70,7 +115,8 @@ def build_rss(items: list[dict]) -> str:
         dated.append((dt, it))
     dated.sort(key=lambda x: x[0], reverse=True)
 
-    channel_updated = dated[0][0] if dated else datetime.now(timezone.utc)
+    if channel_updated is None:
+        channel_updated = dated[0][0] if dated else datetime.now(timezone.utc)
     blocks = []
     for dt, it in dated:
         title = escape(str(it.get("title") or it.get("id") or "untitled"))
@@ -104,9 +150,9 @@ def build_rss(items: list[dict]) -> str:
 """
 
 
-def build_feeds_index() -> dict:
+def build_feeds_index(updated: str | None = None) -> dict:
     return {
-        "updated": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "updated": updated or datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "content_rss": {
             "path": "/feed.xml",
             "url": f"{BASE}/feed.xml",
@@ -127,15 +173,52 @@ def build_feeds_index() -> dict:
     }
 
 
+def rss_item_set_key(rss: str) -> str:
+    """Compare item set ignoring lastBuildDate / channel timestamps."""
+    body = re.sub(r"<lastBuildDate>[\s\S]*?</lastBuildDate>", "", rss)
+    # Normalize whitespace between items lightly
+    items = re.findall(r"<item>[\s\S]*?</item>", body)
+    return "\n".join(items)
+
+
 def main() -> None:
     items = load_items()
-    rss = build_rss(items)
-    (ROOT / "feed.xml").write_text(rss, encoding="utf-8")
-    feeds = build_feeds_index()
-    (ROOT / "api" / "feeds.json").write_text(
-        json.dumps(feeds, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
-    )
-    print(f"wrote feed.xml ({rss.count('<item>')} items) and api/feeds.json")
+    new_rss = build_rss(items)
+    feed_path = ROOT / "feed.xml"
+    feeds_path = ROOT / "api" / "feeds.json"
+
+    skip_feed = False
+    if feed_path.exists():
+        old = feed_path.read_text(encoding="utf-8")
+        if rss_item_set_key(old) == rss_item_set_key(new_rss):
+            skip_feed = True
+
+    if skip_feed:
+        print(f"feed.xml unchanged ({new_rss.count('<item>')} items); skip rewrite")
+    else:
+        feed_path.write_text(new_rss, encoding="utf-8")
+        print(f"wrote feed.xml ({new_rss.count('<item>')} items)")
+
+    # feeds.json: only rewrite if structural fields changed (ignore updated timestamp)
+    new_feeds = build_feeds_index()
+    if feeds_path.exists():
+        try:
+            old_feeds = json.loads(feeds_path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            old_feeds = {}
+        def strip_updated(d: dict) -> dict:
+            out = {k: v for k, v in d.items() if k != "updated"}
+            return out
+        if strip_updated(old_feeds) == strip_updated(new_feeds):
+            print("api/feeds.json unchanged (structure); skip rewrite")
+        else:
+            # preserve prior updated if only we're rewriting structure... always write with new updated
+            feeds_path.write_text(json.dumps(new_feeds, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+            print("wrote api/feeds.json")
+    else:
+        feeds_path.parent.mkdir(parents=True, exist_ok=True)
+        feeds_path.write_text(json.dumps(new_feeds, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        print("wrote api/feeds.json")
 
 
 if __name__ == "__main__":

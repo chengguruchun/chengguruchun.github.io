@@ -59,13 +59,13 @@
     {
       "name": "lab_list_entries",
       "kind": "read",
-      "description": "List knowledge entries (articles, Diverse Lab, projects, videos): id, title, tags, urls.",
+      "description": "List knowledge entries from catalog: Articles, Diverse Lab, Times (Hot Words), etc. Filter with type. Projects live under /api/projects.json (+ projects-research / projects-personal); Videos under /api/videos.json (page-only, not in catalog).",
       "inputSchema": {
         "type": "object",
         "properties": {
           "type": {
             "type": "string",
-            "description": "Optional: Articles | Diverse Lab | Projects | Videos"
+            "description": "Optional filter: Articles | Diverse Lab | Times (Projects/Videos use dedicated APIs)"
           }
         }
       },
@@ -90,6 +90,48 @@
       }
     },
     {
+      "name": "lab_list_projects_research",
+      "kind": "read",
+      "description": "List curated research GitHub repos (static snapshot for agents).",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "static": {
+        "method": "GET",
+        "path": "/api/projects-research.json"
+      }
+    },
+    {
+      "name": "lab_list_projects_personal",
+      "kind": "read",
+      "description": "List top personal non-fork GitHub repos excluding *.github.io (static snapshot).",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "static": {
+        "method": "GET",
+        "path": "/api/projects-personal.json"
+      }
+    },
+    {
+      "name": "lab_list_projects",
+      "kind": "read",
+      "description": "Projects overview (research + personal sections). Prefer section APIs for agents.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "static": {
+        "method": "GET",
+        "path": "/api/projects.json"
+      }
+    },
+    {
       "name": "lab_get_entry",
       "kind": "read",
       "description": "Fetch one entry's canonical Markdown by id (prefer over HTML).",
@@ -111,7 +153,7 @@
         "collections": {
           "Articles": "articles",
           "Diverse Lab": "diverse",
-          "Projects": "projects"
+          "Times": "times"
         },
         "resolve_collection_via": "/api/catalog.json"
       }
@@ -401,7 +443,7 @@
     {
       "name": "lab_hot_words_apply",
       "kind": "contribute",
-      "description": "Apply Hot Words via local script/Pi (review before push).",
+      "description": "Apply Hot Words locally via scripts/hot_words_apply.py — writes files only (no push). GitHub Actions auto-publishes Mondays (hot-words-weekly.yml).",
       "inputSchema": {
         "type": "object",
         "properties": {

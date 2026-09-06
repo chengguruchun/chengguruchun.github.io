@@ -118,16 +118,15 @@ hr {
 .brand {
   display: flex;
   flex-direction: column;
-  gap: 0.15rem;
-  min-width: 0;
+  gap: 0.2rem;
   color: inherit;
+  min-width: 0;
 }
 .brand:hover { color: inherit; }
-.brand__name {
-  font-family: var(--serif);
-  font-size: 1.05rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
+.brand__logo {
+  display: block;
+  height: 2.15rem;
+  width: 2.15rem;
 }
 
 .brand__tag {

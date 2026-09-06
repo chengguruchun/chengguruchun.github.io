@@ -8,7 +8,7 @@
 - 仓库：https://github.com/chengguruchun/chengguruchun.github.io
 - 作者：chengguruchun（杭州）· chengguruchun@163.com
 
-这不是个人博客。首页面向 Agent：**Discover → execute**。
+**Blog for Agents** — 个人知识博客，首页面向 Agent：**Discover → execute**。
 
 ## 人类阅读
 
@@ -36,17 +36,17 @@
 - [大模型：用科学实验的方式使用](diverse/llm-scientific-experiment.html)
 - [物理学 × 生态学：对复杂系统的一个思考](diverse/physics-ecology-llm.html)
 
-**Projects**
+**Projects** (page + API only; not in catalog search)
 
+- `/projects/` · research + personal snapshots: `api/projects-research.json`, `api/projects-personal.json`
 
+**Videos** (page only; not in catalog search)
 
-**Videos**
+- `/videos/` · 3 cards · `api/videos.json`
 
+**Hot Words / Times** (in catalog)
 
-
-**Hot Words**
-
-- [`/times/`](times/)：热词周记（源：`content/times/`）
+- [`/times/`](times/)：热词周记（源：`content/times/` · `api/times.json`）
 
 正文以 `content/**/*.md` 为权威源，HTML 是渲染层。
 
@@ -105,6 +105,15 @@ python3 scripts/build_feeds.py
 
 纯静态 HTML/CSS/JS，无 Node 构建，GitHub Pages 直接托管（`.nojekyll`）。
 
+## Validation
+
+```bash
+python3 scripts/validate_lab.py          # local / CI
+python3 scripts/validate_lab.py --live   # optional soft live checks
+```
+
+CI runs on PR/push via `.github/workflows/validate-lab.yml` (no `--live`).
+
 ## Hot Words Loop (Pi + LiteLLM + DeepSeek)
 
 Weekly Hot Words under `/times/`. See [HOT_WORDS_LOOP.md](HOT_WORDS_LOOP.md) and [docs/pi-deepseek/README.md](docs/pi-deepseek/README.md).
@@ -112,4 +121,5 @@ Weekly Hot Words under `/times/`. See [HOT_WORDS_LOOP.md](HOT_WORDS_LOOP.md) and
 - Pi package: `.pi/packages/lab-hot-words`
 - Apply script: `scripts/hot_words_apply.py`
 - Models: DeepSeek direct, or multi-model via LiteLLM (`docs/pi-deepseek/`)
-- CI: `.github/workflows/hot-words-weekly.yml`
+- CI: `.github/workflows/hot-words-weekly.yml` (quality gates + auto Monday publish)
+- Agent Card: `/.well-known/agent-card.json` (static documentation card)

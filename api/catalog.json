@@ -3,47 +3,9 @@
   "skill": "/SKILL.md",
   "product": "/PRODUCT.md",
   "llms": "/llms.txt",
-  "generated": "2026-09-06T07:22:27Z",
+  "generated": "2026-09-06T07:51:39Z",
   "base_url": "https://chengguruchun.github.io",
   "items": [
-    {
-      "id": "vid-control-plane",
-      "type": "Videos",
-      "title": "讲解：为什么 Agent 需要 Control Plane",
-      "excerpt": "15 分钟口述：从服务网格到 Agent 治理的迁移路径。",
-      "url": "/videos/#vid-control-plane",
-      "date": "",
-      "tags": [
-        "Videos",
-        "Agent",
-        "讲解"
-      ]
-    },
-    {
-      "id": "vid-runtime",
-      "type": "Videos",
-      "title": "对照阅读：K8s 抽象 vs Agent Runtime",
-      "excerpt": "白板推演 Pod / Goal / Tool Session 三类生命周期。",
-      "url": "/videos/#vid-runtime",
-      "date": "",
-      "tags": [
-        "Videos",
-        "Kubernetes",
-        "Runtime"
-      ]
-    },
-    {
-      "id": "vid-registry",
-      "type": "Videos",
-      "title": "Registry：能力、契约与信任",
-      "excerpt": "短述：为什么 DNS 式发现不够，以及契约测试如何进入注册流程。",
-      "url": "/videos/#vid-registry",
-      "date": "",
-      "tags": [
-        "Videos",
-        "Registry"
-      ]
-    },
     {
       "id": "k8s-to-agent-control-plane",
       "type": "Articles",
@@ -102,6 +64,22 @@
       "published_date": "2026-09-06",
       "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/physics-ecology-llm.md",
       "content": "/content/diverse/physics-ecology-llm.md"
+    },
+    {
+      "id": "times-2026-09-w1",
+      "type": "Times",
+      "title": "2026-09 Week 1 · Context Engineering",
+      "excerpt": "当可靠性成为默认要求后，真正的瓶颈转移到智能体如何理解并利用上下文。Context Engineering 将提示词、记忆检索和工具信息的设计系统化，直接降低因上下文缺失或冲突导致的失败率。它既是可靠性的前置条件，也是从“能用”迈向“可控”的关键工程实践。",
+      "url": "/times/",
+      "date": "2026-09-06",
+      "tags": [
+        "Times",
+        "Hot Words",
+        "Context Engineering"
+      ],
+      "markdown": "/content/times/2026-09-w1.md",
+      "period": "2026-09-W1",
+      "word": "Context Engineering"
     }
   ]
 }

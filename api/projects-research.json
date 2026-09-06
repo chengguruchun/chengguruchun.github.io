@@ -1,0 +1,32 @@
+{
+  "type": "ProjectsResearch",
+  "section": "research",
+  "updated": "2026-09-06",
+  "source": "static-snapshot",
+  "items": [
+    {
+      "full_name": "TencentCloud/TencentDB-Agent-Memory",
+      "description": "TencentDB Agent Memory is a team-level memory hub for AI Agents — turning conversations, docs, and code into four reusable memory assets (Chat Memory, Skill, LLM-Wiki, Code-Graph) that are governed, shared, and equipped across agents and frameworks.",
+      "html_url": "https://github.com/TencentCloud/TencentDB-Agent-Memory",
+      "stargazers_count": 25983,
+      "language": "TypeScript",
+      "updated_at": "2026-09-06T06:50:42Z"
+    },
+    {
+      "full_name": "cobusgreyling/loop-engineering",
+      "description": "Practical patterns, starters & CLI tools for loop engineering with AI coding agents. Design systems that prompt and orchestrate agents (inspired by Addy Osmani and Boris Cherny). Includes loop-audit, loop-init, loop-cost.",
+      "html_url": "https://github.com/cobusgreyling/loop-engineering",
+      "stargazers_count": 11017,
+      "language": "TypeScript",
+      "updated_at": "2026-09-06T07:39:44Z"
+    },
+    {
+      "full_name": "deepseek-ai/deepseek-harness",
+      "description": "DeepSeek Harness: Everything is a Plugin.",
+      "html_url": "https://github.com/deepseek-ai/deepseek-harness",
+      "stargazers_count": 213440,
+      "language": "TypeScript",
+      "updated_at": "2026-09-06T07:49:50Z"
+    }
+  ]
+}

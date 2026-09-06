@@ -1,0 +1,58 @@
+{
+  "name": "AI Knowledge Lab",
+  "description": "Blog for Agents — personal knowledge blog by chengguruchun. Static, read-only knowledge surfaces for discovery and fetch.",
+  "url": "https://chengguruchun.github.io",
+  "version": "0.3.0",
+  "provider": {
+    "organization": "chengguruchun",
+    "url": "https://github.com/chengguruchun"
+  },
+  "documentationUrl": "https://chengguruchun.github.io/SKILL.md",
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false,
+    "stateTransitionHistory": false,
+    "readonly": true
+  },
+  "defaultInputModes": ["text"],
+  "defaultOutputModes": ["application/json", "text/markdown", "text/html"],
+  "skills": [
+    {
+      "id": "discover",
+      "name": "Discover",
+      "description": "List Lab capabilities (discover-then-execute protocol).",
+      "tags": ["discover", "agents"],
+      "examples": ["GET /api/discover.json"],
+      "inputModes": ["text"],
+      "outputModes": ["application/json"]
+    },
+    {
+      "id": "catalog",
+      "name": "Catalog",
+      "description": "Knowledge index: Articles, Diverse Lab, Times (Hot Words).",
+      "tags": ["catalog", "knowledge"],
+      "examples": ["GET /api/catalog.json"],
+      "inputModes": ["text"],
+      "outputModes": ["application/json"]
+    },
+    {
+      "id": "skill-protocol",
+      "name": "SKILL protocol",
+      "description": "Blog for Agents protocol document.",
+      "tags": ["skill"],
+      "examples": ["GET /SKILL.md"],
+      "inputModes": ["text"],
+      "outputModes": ["text/markdown"]
+    },
+    {
+      "id": "tools",
+      "name": "Tool schemas",
+      "description": "Static tool registry (MCP-shaped schemas for HTTP GET / local actions).",
+      "tags": ["mcp", "tools"],
+      "examples": ["GET /mcp/tools.json"],
+      "inputModes": ["text"],
+      "outputModes": ["application/json"]
+    }
+  ],
+  "note": "Documentation / Agent Card only. No live A2A runtime endpoint — agents fetch static JSON/Markdown over HTTPS."
+}

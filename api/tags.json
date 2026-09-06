@@ -4,12 +4,14 @@
     "Agent": [
       "k8s-to-agent-control-plane",
       "llm-scientific-experiment",
-      "physics-ecology-llm",
-      "vid-control-plane"
+      "physics-ecology-llm"
     ],
     "Complex Systems": [
       "llm-scientific-experiment",
       "physics-ecology-llm"
+    ],
+    "Context Engineering": [
+      "times-2026-09-w1"
     ],
     "Control Plane": [
       "k8s-to-agent-control-plane"
@@ -24,12 +26,11 @@
     "Experiment": [
       "llm-scientific-experiment"
     ],
-    "Java": [
-      "proj-concurrency"
+    "Hot Words": [
+      "times-2026-09-w1"
     ],
     "Kubernetes": [
-      "k8s-to-agent-control-plane",
-      "vid-runtime"
+      "k8s-to-agent-control-plane"
     ],
     "LLM": [
       "llm-scientific-experiment",
@@ -42,45 +43,11 @@
     "Physics": [
       "physics-ecology-llm"
     ],
-    "Projects": [
-      "proj-concurrency",
-      "proj-miaoshao",
-      "proj-redpacket"
-    ],
-    "Redis": [
-      "proj-redpacket"
-    ],
     "Runtime": [
-      "k8s-to-agent-control-plane",
-      "vid-runtime"
+      "k8s-to-agent-control-plane"
     ],
-    "Videos": [
-      "vid-control-plane",
-      "vid-runtime"
-    ],
-    "一致性": [
-      "proj-redpacket"
-    ],
-    "实验": [
-      "proj-concurrency"
-    ],
-    "并发": [
-      "proj-concurrency"
-    ],
-    "性能": [
-      "proj-miaoshao"
-    ],
-    "消息队列": [
-      "proj-miaoshao"
-    ],
-    "秒杀": [
-      "proj-miaoshao"
-    ],
-    "讲解": [
-      "vid-control-plane"
-    ],
-    "高并发": [
-      "proj-redpacket"
+    "Times": [
+      "times-2026-09-w1"
     ]
   }
 }

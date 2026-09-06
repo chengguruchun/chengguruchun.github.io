@@ -5,7 +5,7 @@ from __future__ import annotations
 import argparse
 import json
 import re
-from datetime import datetime
+from datetime import datetime, timezone
 import html as html_lib
 from pathlib import Path
 from zoneinfo import ZoneInfo
@@ -32,6 +32,72 @@ def week_label(period: str) -> str:
         return period
     y, mo, w = m.group(1), m.group(2), int(m.group(3))
     return f"{y}-{mo} · Week {w}"
+
+
+def catalog_entry_from_issue(entry: dict) -> dict:
+    word = entry.get("word") or ""
+    return {
+        "id": entry["id"],
+        "type": "Times",
+        "title": entry.get("title") or f"{entry.get('period')} · {word}",
+        "excerpt": entry.get("why") or "",
+        "url": entry.get("url") or "/times/",
+        "date": entry.get("date") or today(),
+        "tags": ["Times", "Hot Words"] + ([word] if word else []),
+        "markdown": entry.get("markdown"),
+        "period": entry.get("period"),
+        "word": word,
+    }
+
+
+def upsert_times_into_indexes(root: Path, entry: dict, dry_run: bool) -> list[str]:
+    """Keep content/index.json and api/catalog.json coherent with api/times.json."""
+    changed: list[str] = []
+    cat_entry = catalog_entry_from_issue(entry)
+    generated = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+    def upsert(path: Path, wrap_catalog: bool) -> None:
+        if path.exists():
+            try:
+                data = json.loads(path.read_text(encoding="utf-8"))
+            except json.JSONDecodeError:
+                data = {}
+        else:
+            data = {}
+        if wrap_catalog:
+            data.setdefault("name", "AI Knowledge Lab")
+            data.setdefault("skill", "/SKILL.md")
+            data.setdefault("product", "/PRODUCT.md")
+            data.setdefault("llms", "/llms.txt")
+            data.setdefault("base_url", "https://chengguruchun.github.io")
+        items = data.get("items") if isinstance(data.get("items"), list) else []
+        # drop Videos from index if any linger; drop old same Times id/period
+        new_items = []
+        for it in items:
+            if not isinstance(it, dict):
+                continue
+            if it.get("type") == "Videos":
+                continue
+            if it.get("type") == "Times" and (
+                it.get("id") == cat_entry["id"] or it.get("period") == entry.get("period")
+            ):
+                continue
+            if it.get("id") == cat_entry["id"]:
+                continue
+            new_items.append(it)
+        # keep Articles + Diverse Lab first, then Times current at end (or after diverse)
+        non_times = [x for x in new_items if x.get("type") != "Times"]
+        other_times = [x for x in new_items if x.get("type") == "Times"]
+        data["items"] = non_times + [cat_entry] + other_times
+        data["generated"] = generated
+        changed.append(str(path))
+        if not dry_run:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+    upsert(root / "content" / "index.json", wrap_catalog=False)
+    upsert(root / "api" / "catalog.json", wrap_catalog=True)
+    return changed
 
 
 def apply(period: str, word: str, why: str, cadence: str, dry_run: bool, root: Path) -> dict:
@@ -144,6 +210,8 @@ word: {word}
         html_path.write_text(html, encoding="utf-8")
         api_path.parent.mkdir(parents=True, exist_ok=True)
         api_path.write_text(json.dumps(api, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+    changed.extend(upsert_times_into_indexes(root, entry, dry_run))
 
     return {
         "dryRun": dry_run,

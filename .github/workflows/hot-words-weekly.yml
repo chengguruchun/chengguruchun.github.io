@@ -1,4 +1,4 @@
-# Fully automatic Weekly Hot Words: DeepSeek → apply → commit/push
+# Fully automatic Weekly Hot Words: DeepSeek → quality gates → apply → commit/push
 name: Hot Words Weekly
 
 on:
@@ -6,6 +6,12 @@ on:
     # Monday 01:00 UTC = Monday 09:00 Asia/Shanghai
     - cron: "0 1 * * 1"
   workflow_dispatch:
+    inputs:
+      force:
+        description: "Force republish even if period already published / same word"
+        required: false
+        type: boolean
+        default: false
 
 concurrency:
   group: hot-words-weekly
@@ -33,25 +39,43 @@ jobs:
           now = datetime.now(ZoneInfo("Asia/Shanghai"))
           week = (now.day - 1) // 7 + 1
           period = f"{now:%Y-%m}-W{week}"
+          force = str(os.environ.get("FORCE_INPUT", "false")).lower() in ("1", "true", "yes")
           with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as f:
               f.write(f"period={period}\n")
-          print(period)
+              f.write(f"force={'true' if force else 'false'}\n")
+          print(period, "force=", force)
           PY
+        env:
+          FORCE_INPUT: ${{ github.event_name == 'workflow_dispatch' && inputs.force || false }}
 
-      - name: DeepSeek draft + apply + commit
+      - name: DeepSeek draft + quality gates + apply
         id: apply
         env:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
           PERIOD: ${{ steps.meta.outputs.period }}
+          FORCE: ${{ steps.meta.outputs.force }}
         run: |
           python3 - <<'PY'
-          import json, os, re, subprocess, urllib.request
+          import json, os, re, subprocess, traceback, urllib.request
           from pathlib import Path
 
           period = os.environ["PERIOD"]
+          force = str(os.environ.get("FORCE", "false")).lower() in ("1", "true", "yes")
           key = os.environ.get("DEEPSEEK_API_KEY", "").strip()
+          out_path = Path(os.environ["GITHUB_OUTPUT"])
+
+          def set_out(**kwargs):
+              with out_path.open("a", encoding="utf-8") as f:
+                  for k, v in kwargs.items():
+                      f.write(f"{k}={v}\n")
+
+          def fail(msg: str):
+              set_out(changed="false", word="", failed="true", error=msg.replace("\n", " ")[:1800])
+              print("FAIL:", msg)
+              raise SystemExit(msg)
+
           if not key:
-              raise SystemExit("DEEPSEEK_API_KEY secret missing; cannot run fully automatic Hot Words")
+              fail("DEEPSEEK_API_KEY secret missing; cannot run fully automatic Hot Words")
 
           current = {}
           times_path = Path("api/times.json")
@@ -64,6 +88,15 @@ jobs:
           issues = current.get("issues") if isinstance(current.get("issues"), list) else []
           if issues and isinstance(issues[0], dict):
               current_word = str(issues[0].get("word") or "")
+          current_period = str(current.get("current") or "")
+
+          # If period already published and not force: skip apply/push but succeed
+          if (not force) and current_period == period and current_word:
+              msg = f"Period {period} already published ({current_word}); skip apply/push (pass force=true to override)"
+              print(msg)
+              set_out(changed="false", word=current_word, failed="false", skipped="true", error="")
+              raise SystemExit(0)
+
           hist = []
           for it in issues[:8]:
               if isinstance(it, dict) and it.get("word"):
@@ -76,9 +109,9 @@ jobs:
               "Pick ONE new weekly hot word for AI/Agent engineering (Chinese or common English term). "
               "Avoid duplicating the current word unless continuity is strongly justified.\n"
               "Return JSON only with keys:\n"
-              '  "candidates": [{{"word","evidence","notes"}}, ...] (3-5),\n'
-              '  "chosen": {{"word","why"}}\n'
-              "chosen.why must be tight Chinese editorial prose (2-4 sentences), no placeholders."
+              '  "candidates": [{"word","evidence","notes"}, ...] (3-5),\n'
+              '  "chosen": {"word","why"}\n'
+              "chosen.why must be tight Chinese editorial prose (2-4 sentences, >=40 chars), no placeholders."
           )
           body = {
               "model": "deepseek-chat",
@@ -88,18 +121,22 @@ jobs:
               ],
               "temperature": 0.6,
           }
-          req = urllib.request.Request(
-              "https://api.deepseek.com/chat/completions",
-              data=json.dumps(body).encode(),
-              headers={
-                  "Authorization": f"Bearer {key}",
-                  "Content-Type": "application/json",
-              },
-              method="POST",
-          )
-          with urllib.request.urlopen(req, timeout=90) as resp:
-              data = json.loads(resp.read().decode())
-          text = data["choices"][0]["message"]["content"].strip()
+          try:
+              req = urllib.request.Request(
+                  "https://api.deepseek.com/chat/completions",
+                  data=json.dumps(body).encode(),
+                  headers={
+                      "Authorization": f"Bearer {key}",
+                      "Content-Type": "application/json",
+                  },
+                  method="POST",
+              )
+              with urllib.request.urlopen(req, timeout=90) as resp:
+                  data = json.loads(resp.read().decode())
+              text = data["choices"][0]["message"]["content"].strip()
+          except Exception as e:
+              fail(f"DeepSeek request failed: {e}")
+
           Path("hot-words-deepseek-draft.md").write_text(
               f"# DeepSeek draft for {period}\n\n```json\n{text}\n```\n",
               encoding="utf-8",
@@ -107,46 +144,58 @@ jobs:
 
           m = re.search(r"\{[\s\S]*\}", text)
           if not m:
-              raise SystemExit("DeepSeek response had no JSON object")
-          draft = json.loads(m.group(0))
+              fail("DeepSeek response had no JSON object")
+          try:
+              draft = json.loads(m.group(0))
+          except json.JSONDecodeError as e:
+              fail(f"DeepSeek JSON parse failed: {e}")
+
           chosen = draft.get("chosen") or {}
           word = str(chosen.get("word") or "").strip()
           why = str(chosen.get("why") or "").strip()
-          if not word or not why:
-              raise SystemExit(f"chosen.word/why missing: {chosen!r}")
+
+          # Quality gates
+          if not word:
+              fail(f"quality gate: chosen.word empty: {chosen!r}")
+          if len(why) < 40:
+              fail(f"quality gate: why length {len(why)} < 40: {why!r}")
+          if (not force) and current_word and word == current_word:
+              fail(f"quality gate: word equals current word {current_word!r} (pass force=true to override)")
 
           # Skip no-op if same period+word already published
           if (
-              str(current.get("current") or "") == period
+              (not force)
+              and current_period == period
               and current_word == word
           ):
               print(f"Already published {period} · {word}; skip apply")
-              with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as f:
-                  f.write("changed=false\n")
-                  f.write(f"word={word}\n")
+              set_out(changed="false", word=word, failed="false", skipped="true", error="")
               raise SystemExit(0)
 
-          subprocess.check_call(
-              [
-                  "python3",
-                  "scripts/hot_words_apply.py",
-                  "--period",
-                  period,
-                  "--word",
-                  word,
-                  "--why",
-                  why,
-                  "--cadence",
-                  "weekly",
-              ]
-          )
-          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as f:
-              f.write("changed=true\n")
-              f.write(f"word={word}\n")
+          try:
+              subprocess.check_call(
+                  [
+                      "python3",
+                      "scripts/hot_words_apply.py",
+                      "--period",
+                      period,
+                      "--word",
+                      word,
+                      "--why",
+                      why,
+                      "--cadence",
+                      "weekly",
+                  ]
+              )
+          except subprocess.CalledProcessError as e:
+              fail(f"hot_words_apply failed: {e}")
+
+          set_out(changed="true", word=word, failed="false", skipped="false", error="")
           print(f"Applied {period} · {word}")
           PY
 
       - name: Upload DeepSeek draft artifact
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: hot-words-deepseek-draft
@@ -158,7 +207,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add times/index.html content/times api/times.json hot-words-deepseek-draft.md || true
+          git add times/index.html content/times api/times.json content/index.json api/catalog.json api/tags.json || true
           # draft md is artifact-only; do not commit draft into site root
           git reset HEAD -- hot-words-deepseek-draft.md 2>/dev/null || true
           rm -f hot-words-deepseek-draft.md
@@ -166,21 +215,89 @@ jobs:
             echo "No staged changes"
             exit 0
           fi
+          # optional: rebuild tags from catalog if script exists later — catalog already updated by apply
           git commit -m "chore(hot-words): publish ${{ steps.meta.outputs.period }} · ${{ steps.apply.outputs.word }}"
           git push
 
+      - name: Open failure issue
+        if: failure() || steps.apply.outputs.failed == 'true'
+        uses: actions/github-script@v7
+        env:
+          PERIOD: ${{ steps.meta.outputs.period }}
+          ERR: ${{ steps.apply.outputs.error }}
+        with:
+          script: |
+            const period = process.env.PERIOD || 'unknown';
+            const err = process.env.ERR || 'unknown error (see workflow logs)';
+            const title = `[hot-words] failed ${period}`;
+            const body = [
+              `## Hot Words auto-publish failed`,
+              ``,
+              `Period: **${period}**`,
+              ``,
+              '```',
+              err,
+              '```',
+              ``,
+              `Workflow: hot-words-weekly.yml`,
+              `Run: ${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+            ].join('\n');
+            const issues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              per_page: 50,
+            }).catch(() => ({ data: [] }));
+            const exists = (issues.data || []).find(i => i.title === title);
+            if (exists) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: exists.number,
+                body,
+              });
+              core.info('Updated existing failure issue: ' + title);
+              return;
+            }
+            try {
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title,
+                body,
+                labels: ['hot-words'],
+              });
+            } catch (e) {
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title,
+                body,
+              });
+            }
+
       - name: Record publish issue (FYI, no approval)
-        if: always() && steps.apply.outputs.word != ''
+        if: always() && steps.apply.outputs.word != '' && steps.apply.outputs.failed != 'true'
         uses: actions/github-script@v7
         env:
           PERIOD: ${{ steps.meta.outputs.period }}
           WORD: ${{ steps.apply.outputs.word }}
           CHANGED: ${{ steps.apply.outputs.changed }}
+          SKIPPED: ${{ steps.apply.outputs.skipped }}
         with:
           script: |
             const period = process.env.PERIOD;
             const word = process.env.WORD;
             const changed = process.env.CHANGED;
+            const skipped = process.env.SKIPPED;
+            if (skipped === 'true' && changed !== 'true') {
+              core.info('Skipped republish; no FYI issue');
+              return;
+            }
+            if (changed !== 'true') {
+              core.info('No change; no FYI issue');
+              return;
+            }
             const title = `[hot-words] published ${period} · ${word}`;
             const body = [
               `## Hot Words auto-publish`,
@@ -191,7 +308,7 @@ jobs:
               ``,
               `Live: https://chengguruchun.github.io/times/`,
               ``,
-              `Fully automatic (DeepSeek → apply → push). No human confirmation.`,
+              `Fully automatic (DeepSeek → quality gates → apply → push). No human confirmation.`,
               `— hot-words-weekly.yml`,
             ].join('\n');
             const issues = await github.rest.issues.listForRepo({

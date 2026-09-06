@@ -1,11 +1,16 @@
 ---
 name: ai-knowledge-lab
 description: >-
-  Open knowledge system by chengguruchun for AI Agents. Discover capabilities,
-  then execute. Content and tools grow over time — never hardcode the tool list.
+  Blog for Agents by chengguruchun. Discover capabilities, then execute.
+  Content and tools grow over time — never hardcode the tool list.
 ---
 
 # AI Knowledge Lab
+
+## Positioning
+
+**Blog for Agents** — a personal knowledge blog that agents can discover and call.
+Not a runtime; static surfaces + local/CI apply scripts.
 
 ## Protocol
 
@@ -23,8 +28,11 @@ Add capabilities in `discover.json` + `tools.json`, not this file.
 | `/SKILL.md` | This protocol (rare changes) |
 | `/api/discover.json` | Capability index (grows) |
 | `/mcp/tools.json` | Full schemas (grows) |
-| `/api/catalog.json` | Knowledge index |
+| `/api/catalog.json` | Knowledge index (Articles, Diverse Lab, Times) |
 | `/content/**/*.md` | Canonical knowledge |
+| `/api/projects*.json` | Projects (research + personal) |
+| `/api/videos.json` | Videos (page-only; not in catalog) |
+| `/.well-known/agent-card.json` | Static Agent Card (documentation) |
 
 Owner: chengguruchun · Hangzhou  
 GitHub: https://github.com/chengguruchun · Mail: chengguruchun@163.com

@@ -1,47 +1,70 @@
 {
   "type": "Projects",
-  "items": [
-    {
-      "id": "proj-concurrency",
-      "type": "Projects",
-      "title": "concurrency：高并发实验台",
-      "excerpt": "从锁、队列到背压——用可复现实验理解并发正确性与吞吐的边界。",
-      "url": "/projects/concurrency.html",
-      "date": "2024–2026",
-      "tags": [
-        "Projects",
-        "并发",
-        "Java",
-        "实验"
+  "url": "/projects/",
+  "updated": "2026-09-06",
+  "sections": {
+    "research": {
+      "title": "研究",
+      "api": "/api/projects-research.json",
+      "items": [
+        {
+          "full_name": "TencentCloud/TencentDB-Agent-Memory",
+          "description": "TencentDB Agent Memory is a team-level memory hub for AI Agents — turning conversations, docs, and code into four reusable memory assets (Chat Memory, Skill, LLM-Wiki, Code-Graph) that are governed, shared, and equipped across agents and frameworks.",
+          "html_url": "https://github.com/TencentCloud/TencentDB-Agent-Memory",
+          "stargazers_count": 25983,
+          "language": "TypeScript",
+          "updated_at": "2026-09-06T06:50:42Z"
+        },
+        {
+          "full_name": "cobusgreyling/loop-engineering",
+          "description": "Practical patterns, starters & CLI tools for loop engineering with AI coding agents. Design systems that prompt and orchestrate agents (inspired by Addy Osmani and Boris Cherny). Includes loop-audit, loop-init, loop-cost.",
+          "html_url": "https://github.com/cobusgreyling/loop-engineering",
+          "stargazers_count": 11017,
+          "language": "TypeScript",
+          "updated_at": "2026-09-06T07:39:44Z"
+        },
+        {
+          "full_name": "deepseek-ai/deepseek-harness",
+          "description": "DeepSeek Harness: Everything is a Plugin.",
+          "html_url": "https://github.com/deepseek-ai/deepseek-harness",
+          "stargazers_count": 213440,
+          "language": "TypeScript",
+          "updated_at": "2026-09-06T07:49:50Z"
+        }
       ]
     },
-    {
-      "id": "proj-redpacket",
-      "type": "Projects",
-      "title": "RedPacket：抢红包的并发解剖",
-      "excerpt": "热点账户、库存扣减与公平性——把「热闹场景」拆成可论证的系统设计。",
-      "url": "/projects/redpacket.html",
-      "date": "2024–2025",
-      "tags": [
-        "Projects",
-        "高并发",
-        "Redis",
-        "一致性"
-      ]
-    },
-    {
-      "id": "proj-miaoshao",
-      "type": "Projects",
-      "title": "miaoshao_test：秒杀链路压测与优化",
-      "excerpt": "Spring Boot + Redis + RabbitMQ 的秒杀路径：限流、异步化与库存一致性的取舍。",
-      "url": "/projects/miaoshao.html",
-      "date": "2024–2025",
-      "tags": [
-        "Projects",
-        "秒杀",
-        "消息队列",
-        "性能"
+    "personal": {
+      "title": "个人项目",
+      "api": "/api/projects-personal.json",
+      "items": [
+        {
+          "full_name": "chengguruchun/SecondKill",
+          "name": "SecondKill",
+          "description": "慕课网-秒杀系统",
+          "html_url": "https://github.com/chengguruchun/SecondKill",
+          "stargazers_count": 0,
+          "language": "Java",
+          "updated_at": "2018-10-18T01:12:48Z"
+        },
+        {
+          "full_name": "chengguruchun/RedPacket",
+          "name": "RedPacket",
+          "description": "高并发应用场景--抢红包问题",
+          "html_url": "https://github.com/chengguruchun/RedPacket",
+          "stargazers_count": 0,
+          "language": "Java",
+          "updated_at": "2018-10-16T06:28:03Z"
+        },
+        {
+          "full_name": "chengguruchun/concurrency",
+          "name": "concurrency",
+          "description": "高并发学习",
+          "html_url": "https://github.com/chengguruchun/concurrency",
+          "stargazers_count": 0,
+          "language": "Java",
+          "updated_at": "2018-07-19T06:03:40Z"
+        }
       ]
     }
-  ]
+  }
 }
