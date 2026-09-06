@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AI Knowledge Lab · chengguruchun</title>
-  <meta name="description" content="面向 AI Agent 的开放知识系统：跨学科借鉴、Agent 思考、工程实现与影像呈现。">
+  <meta name="description" content="面向 AI Agent 的开放知识系统：可发现、可调用。">
   <meta name="theme-color" content="#f7f5f0">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -33,21 +33,21 @@
   </header>
 
   <main>
-    <section class="hero hero--compact">
+    <section class="hero hero--compact hero--home">
       <div class="wrap">
-        <p class="hero__kicker">What this lab does</p>
-        <h1 class="hero__title">为 AI Agent 建设可发现、可调用的知识系统。</h1>
+        <p class="hero__kicker">AI Knowledge Lab</p>
+        <h1 class="hero__title hero__title--home">为 AI Agent 建设可发现、可调用的知识系统。</h1>
         <p class="hero__lead">
-          把可演化的思考写成 Markdown 真源，再用 Skill / MCP tools 暴露能力：跨学科借鉴、Agent 论述、工程实现与影像呈现。
+          Discover → execute。Skill 极薄；具体能力在 catalog 里生长。
         </p>
-        <nav class="home-links" aria-label="内容入口">
-          <a href="diverse/">Diverse Lab</a>
-          <a href="articles/">Articles</a>
-          <a href="projects/">Projects</a>
-          <a href="videos/">Videos</a>
-        </nav>
-        <div class="agent-panel" style="margin-top:1.75rem">
-          <p class="agent-panel__label">For Agents</p>
+        <div class="agent-panel agent-panel--home" style="margin-top:1.75rem">
+          <p class="agent-panel__label">For Agents · How to connect</p>
+          <ol class="agent-howto">
+            <li>读取 <a href="SKILL.md"><code>SKILL.md</code></a>，只遵循 discover → execute。</li>
+            <li><code>GET</code> <a href="api/discover.json"><code>/api/discover.json</code></a> 发现当前能力（会增长，勿写死）。</li>
+            <li>需要 schema 时读 <a href="mcp/tools.json"><code>/mcp/tools.json</code></a>，再 <code>lab_execute</code>。</li>
+            <li>知识正文优先 <a href="api/catalog.json"><code>/api/catalog.json</code></a> → <code>/content/**/*.md</code>；地图见 <a href="llms.txt"><code>llms.txt</code></a>。</li>
+          </ol>
           <nav class="home-links" aria-label="Agent 入口">
             <a href="SKILL.md"><strong>SKILL.md</strong></a>
             <a href="api/discover.json">discover</a>

@@ -1,19 +1,10 @@
-# MCP / Skill surface
+# MCP / tool registry
 
-AI Knowledge Lab exposes **read-only** knowledge capabilities as tools.
+Agents load `/SKILL.md`, then:
 
-## Today (P0+)
+1. `GET /api/discover.json`
+2. `GET /mcp/tools.json` and execute via `lab_execute`
 
-- Agents follow [`/SKILL.md`](../SKILL.md).
-- Tool contract: [`tools.json`](./tools.json).
-- Each tool maps to a **static URL** under GitHub Pages (`/api/*`, `/content/**/*.md`).
-- No always-on MCP process required for basic agent access.
+Add or change domain tools **here** (and mirror short entries in `/api/discover.json`). Do not bloat `SKILL.md`.
 
-## Next
-
-Wrap the same tool names/schemas in an MCP server (`stdio` or HTTP) that:
-1. Serves `lab_*` tools from this manifest
-2. Fetches Markdown from the repo or Pages URL
-3. Optionally adds `lab_subscribe` (P2) for topic watchers
-
-Do not invent write tools (publish, merge, AI editor) until those product stages exist.
+P0 transport: static HTTP + ACTION urls (GitHub / mailto). Later: real MCP.

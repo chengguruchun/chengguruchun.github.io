@@ -1,20 +1,25 @@
 {
   "name": "ai-knowledge-lab",
-  "version": "0.1.0",
-  "description": "Read-only Knowledge Lab tools. Agents: lab_discover then lab_invoke. Add domain tools here without editing SKILL.md.",
-  "transport_today": "static-http",
+  "version": "0.3.0",
+  "description": "Knowledge Lab tools. Agents: lab_discover then lab_execute. Add domain tools here without editing SKILL.md.",
+  "transport_today": "static-http + action urls",
   "transport_next": "mcp-stdio-or-http",
   "skill": "/SKILL.md",
+  "meta_tools": [
+    "lab_discover",
+    "lab_execute"
+  ],
   "tools": [
     {
       "name": "lab_discover",
-      "description": "Discover available Knowledge Lab capabilities. Returns tool names, short descriptions, and invoke hints. Call this before lab_invoke. Catalog grows without changing SKILL.md.",
+      "kind": "meta",
+      "description": "List available Lab capabilities. Call before lab_execute. Catalog grows without changing SKILL.md.",
       "inputSchema": {
         "type": "object",
         "properties": {
           "query": {
             "type": "string",
-            "description": "Optional keyword to filter tools (e.g. article, project, tag)"
+            "description": "Optional keyword filter (article, issue, subscribe, github…)"
           }
         },
         "additionalProperties": false
@@ -25,8 +30,9 @@
       }
     },
     {
-      "name": "lab_invoke",
-      "description": "Invoke a discovered tool by name. Resolve the tool from /api/discover.json or /mcp/tools.json, then GET its static path (or path_template with args).",
+      "name": "lab_execute",
+      "kind": "meta",
+      "description": "Execute a discovered tool by name. Resolve schema from /mcp/tools.json, then hit static.path / path_template / action.",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -36,7 +42,7 @@
           },
           "args": {
             "type": "object",
-            "description": "Tool arguments (e.g. {\"id\": \"agent-control-plane\"})"
+            "description": "Arguments for path_template or action body"
           }
         },
         "required": [
@@ -47,44 +53,19 @@
       "static": {
         "method": "RESOLVE",
         "registry": "/mcp/tools.json",
-        "note": "Look up tool.static.path or tool.static.path_template; substitute args; HTTP GET."
-      }
-    },
-    {
-      "name": "lab_get_skill",
-      "description": "Read the Knowledge Lab SKILL.md — required first step for any agent using this site.",
-      "inputSchema": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": false
-      },
-      "static": {
-        "method": "GET",
-        "path": "/SKILL.md"
-      }
-    },
-    {
-      "name": "lab_get_product",
-      "description": "Read PRODUCT.md vision, P0 scope, and P1–P3 roadmap.",
-      "inputSchema": {
-        "type": "object",
-        "properties": {},
-        "additionalProperties": false
-      },
-      "static": {
-        "method": "GET",
-        "path": "/PRODUCT.md"
+        "note": "Substitute path_template args; GET for read tools; follow action.url / mailto for engage tools."
       }
     },
     {
       "name": "lab_list_entries",
-      "description": "List all knowledge entries (articles, thinking, projects, videos) with id, title, tags, urls.",
+      "kind": "read",
+      "description": "List knowledge entries (articles, Diverse Lab, projects, videos): id, title, tags, urls.",
       "inputSchema": {
         "type": "object",
         "properties": {
           "type": {
             "type": "string",
-            "description": "Optional filter: Articles | Diverse Lab | Projects | Videos"
+            "description": "Optional: Articles | Diverse Lab | Projects | Videos"
           }
         }
       },
@@ -95,8 +76,50 @@
       }
     },
     {
+      "name": "lab_list_articles",
+      "kind": "read",
+      "description": "List articles only (shorthand for catalog filter Articles).",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "static": {
+        "method": "GET",
+        "path": "/api/articles.json"
+      }
+    },
+    {
+      "name": "lab_get_entry",
+      "kind": "read",
+      "description": "Fetch one entry's canonical Markdown by id (prefer over HTML).",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Entry id from catalog, e.g. agent-control-plane"
+          }
+        },
+        "required": [
+          "id"
+        ]
+      },
+      "static": {
+        "method": "GET",
+        "path_template": "/content/{collection}/{id}.md",
+        "collections": {
+          "Articles": "articles",
+          "Diverse Lab": "diverse",
+          "Projects": "projects"
+        },
+        "resolve_collection_via": "/api/catalog.json"
+      }
+    },
+    {
       "name": "lab_search_entries",
-      "description": "Search entries by keyword against title, excerpt, and tags using the catalog index.",
+      "kind": "read",
+      "description": "Client-filter catalog by keyword against title, excerpt, tags.",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -118,33 +141,9 @@
       }
     },
     {
-      "name": "lab_get_entry",
-      "description": "Fetch one entry's canonical Markdown by id (preferred over HTML).",
-      "inputSchema": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": "Entry id from catalog, e.g. agent-control-plane"
-          }
-        },
-        "required": [
-          "id"
-        ]
-      },
-      "static": {
-        "method": "GET",
-        "path_template": "/content/{collection}/{id}.md",
-        "collections": {
-          "Articles": "articles",
-          "Diverse Lab": "thinking",
-          "Projects": "projects"
-        }
-      }
-    },
-    {
       "name": "lab_list_tags",
-      "description": "List tags and the entry ids under each tag.",
+      "kind": "read",
+      "description": "List tags and entry ids under each tag.",
       "inputSchema": {
         "type": "object",
         "properties": {},
@@ -156,32 +155,155 @@
       }
     },
     {
-      "name": "lab_get_project_writeup",
-      "description": "Get a project writeup (Problem→Lessons Learned) by project id: concurrency | redpacket | miaoshao.",
+      "name": "lab_get_about",
+      "kind": "read",
+      "description": "Owner stance and The Road Here (bio route). HTML page; no private contact beyond published footer.",
       "inputSchema": {
         "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "enum": [
-              "concurrency",
-              "redpacket",
-              "miaoshao"
-            ]
-          }
-        },
-        "required": [
-          "id"
-        ]
+        "properties": {},
+        "additionalProperties": false
       },
       "static": {
         "method": "GET",
-        "path_template": "/content/projects/{id}.md"
+        "path": "/about/"
+      }
+    },
+    {
+      "name": "lab_follow_github",
+      "kind": "engage",
+      "description": "Follow / star the owner's GitHub (chengguruchun). Opens the profile for the agent or human to complete follow.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "static": {
+        "method": "ACTION",
+        "action": "open",
+        "url": "https://github.com/chengguruchun",
+        "note": "Prefer Follow on the profile; site repo: https://github.com/chengguruchun/chengguruchun.github.io"
+      }
+    },
+    {
+      "name": "lab_subscribe_email",
+      "kind": "engage",
+      "description": "Subscribe to article updates by email. Opens a mailto draft to the owner with a Subscribe subject.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "from_name": {
+            "type": "string",
+            "description": "Optional subscriber name"
+          },
+          "note": {
+            "type": "string",
+            "description": "Optional interest note"
+          }
+        }
+      },
+      "static": {
+        "method": "ACTION",
+        "action": "mailto",
+        "to": "chengguruchun@163.com",
+        "subject_template": "Subscribe · AI Knowledge Lab",
+        "body_template": "Please add me to article updates.\\n\\nName: {from_name}\\nNote: {note}",
+        "note": "P0: mailto handshake. Future: dedicated subscribe endpoint without changing SKILL.md."
+      }
+    },
+    {
+      "name": "lab_submit_issue",
+      "kind": "contribute",
+      "description": "Propose an idea / fix / knowledge patch like a GitHub issue. Human reviews; accepted items may merge into the Lab.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "body": {
+            "type": "string",
+            "description": "Markdown proposal: context, ask, links"
+          },
+          "labels": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Optional hints: idea | fix | content | agent"
+          }
+        },
+        "required": [
+          "title",
+          "body"
+        ]
+      },
+      "static": {
+        "method": "ACTION",
+        "action": "open",
+        "url_template": "https://github.com/chengguruchun/chengguruchun.github.io/issues/new?title={title}&body={body}",
+        "note": "P0: GitHub Issues as intake. Review → merge into content/tools. Future: /api/issues without SKILL edits."
+      }
+    },
+    {
+      "name": "lab_get_llms_txt",
+      "kind": "read",
+      "description": "Machine-oriented site map (llms.txt).",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "static": {
+        "method": "GET",
+        "path": "/llms.txt"
+      }
+    },
+    {
+      "name": "lab_subscribe_rss",
+      "kind": "engage",
+      "description": "Subscribe to Lab content via real RSS at /feed.xml (auto-rebuilt by scripts/build_feeds.py + GitHub Action on content push).",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "static": {
+        "method": "GET",
+        "path": "/feed.xml"
+      }
+    },
+    {
+      "name": "lab_watch_repo",
+      "kind": "engage",
+      "description": "Open GitHub Watch settings for the site repo (real subscription). Prefer commits.atom for feed-based watching.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "static": {
+        "method": "ACTION",
+        "action": "open",
+        "url": "https://github.com/chengguruchun/chengguruchun.github.io/subscription",
+        "also": {
+          "commits_atom": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main.atom",
+          "feeds_index": "/api/feeds.json"
+        }
+      }
+    },
+    {
+      "name": "lab_list_feeds",
+      "kind": "read",
+      "description": "List all Lab subscription endpoints: content RSS, GitHub Watch URL, commits/releases Atom.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "static": {
+        "method": "GET",
+        "path": "/api/feeds.json"
       }
     }
-  ],
-  "meta_tools": [
-    "lab_discover",
-    "lab_invoke"
   ]
 }

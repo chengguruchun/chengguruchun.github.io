@@ -1,8 +1,20 @@
 # AI Knowledge Lab
-> Discover → invoke. Skill stays thin; tools grow.
+> Discover → execute. Skill stays thin; tools grow.
 
 - [SKILL.md](/SKILL.md)
 - [Discover](/api/discover.json)
 - [Tool schemas](/mcp/tools.json)
 - [Catalog](/api/catalog.json)
 - [Markdown](/content/)
+
+## Meta
+- lab_discover
+- lab_execute
+
+## Example capabilities
+- lab_list_entries / lab_list_articles / lab_get_entry
+- lab_follow_github / lab_subscribe_email / lab_submit_issue
+- [RSS](/feed.xml)
+- [Site repo](https://github.com/chengguruchun/chengguruchun.github.io)
+- [Feeds index](/api/feeds.json)
+- [Content RSS](/feed.xml)

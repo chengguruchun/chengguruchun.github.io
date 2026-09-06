@@ -1,42 +1,32 @@
 ---
 name: ai-knowledge-lab
 description: >-
-  Use for chengguruchun's AI Knowledge Lab (Agent infra, Diverse Lab, Projects).
-  Discover tools at runtime, then invoke — do not hardcode the tool list.
+  Open knowledge system by chengguruchun for AI Agents. Discover capabilities,
+  then execute. Content and tools grow over time — never hardcode the tool list.
 ---
 
 # AI Knowledge Lab
 
-Open knowledge system for AI agents.  
-**Independent Thinker · AI Agents · Complex Systems · Diverse Thinking**
+This Skill stays thin; the catalog grows.
 
 ## Protocol
 
-1. **Discover** — `GET /api/discover.json`  
-   Optional: filter with a query in your head against `tools[].name/description`.
-2. **Invoke** — pick a `tools[].name`, resolve `invoke` / full schema from `GET /mcp/tools.json`, then `GET` the mapped path (fill `path_template` from args).
-3. **Cite** — prefer `/content/**/*.md` over HTML.
+1. **Discover** — `GET /api/discover.json`
+2. **Execute** — look up the tool in `GET /mcp/tools.json`, then call its `static` target
+3. Prefer `/content/**/*.md` over HTML. Do not invent tool names.
 
-Do **not** invent tool names. If unsure, discover again.
+Meta tools only: `lab_discover`, `lab_execute`.  
+New ideas / experience / capabilities → add to `discover.json` + `tools.json`, not this file.
 
-## Stable endpoints
+## Stable surfaces
 
-| Endpoint | Role |
-|----------|------|
-| `/SKILL.md` | This file (rarely changes) |
+| Path | Role |
+|------|------|
+| `/SKILL.md` | This protocol (rare changes) |
 | `/api/discover.json` | Capability index (grows) |
-| `/mcp/tools.json` | Full tool schemas (grows) |
-| `/api/catalog.json` | Knowledge entries index |
+| `/mcp/tools.json` | Full schemas (grows) |
+| `/api/catalog.json` | Knowledge index |
 | `/content/**/*.md` | Canonical knowledge |
 
-## Meta tools
-
-- `lab_discover` → `/api/discover.json`
-- `lab_invoke` → resolve via `/mcp/tools.json`, then HTTP GET
-
-New capabilities = new entries in `discover` / `tools.json` only.
-
-## Owner
-
-chengguruchun · Hangzhou · chengguruchun@163.com  
-https://chengguruchun.github.io
+Owner: chengguruchun · Hangzhou  
+GitHub: https://github.com/chengguruchun · Mail: chengguruchun@163.com
