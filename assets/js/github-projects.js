@@ -3,7 +3,7 @@
   var statusEl = document.getElementById("github-projects-status");
   if (!root) return;
 
-  // Curated non-personal projects (starred / watching)
+  // Recently studied non-personal projects
   var REPOS = [
     "TencentCloud/TencentDB-Agent-Memory",
     "cobusgreyling/loop-engineering",
@@ -58,7 +58,7 @@
       "</p>" +
       '<div class="card__tags">' +
       lang +
-      '<span class="tag">Starred</span></div>' +
+      '<span class="tag">Research</span></div>' +
       "</a>"
     );
   }
@@ -81,7 +81,7 @@
   )
     .then(function (repos) {
       if (statusEl) {
-        statusEl.textContent = "关注的非个人项目 · " + repos.length + " 个";
+        statusEl.textContent = "最近研究的非个人项目";
       }
       render(repos);
     })
