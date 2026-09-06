@@ -3,12 +3,12 @@
   var statusEl = document.getElementById("github-projects-status");
   if (!root) return;
 
-  var USER = "chengguruchun";
-  var LIMIT = 3;
-  var url =
-    "https://api.github.com/users/" +
-    USER +
-    "/repos?per_page=100&sort=updated&type=owner";
+  // Curated non-personal projects (starred / watching)
+  var REPOS = [
+    "TencentCloud/TencentDB-Agent-Memory",
+    "cobusgreyling/loop-engineering",
+    "deepseek-ai/deepseek-harness",
+  ];
 
   function escapeHtml(s) {
     return String(s == null ? "" : s)
@@ -18,80 +18,87 @@
       .replace(/"/g, "&quot;");
   }
 
-  function isPersonalProject(repo) {
-    if (!repo || repo.fork) return false;
-    if (repo.archived) return false;
-    var name = String(repo.name || "");
-    if (/\.github\.io$/i.test(name)) return false;
-    return true;
+  function formatStars(n) {
+    n = Number(n) || 0;
+    if (n >= 1000) {
+      var k = n / 1000;
+      return (k >= 100 ? Math.round(k) : Math.round(k * 10) / 10) + "k";
+    }
+    return String(n);
+  }
+
+  function card(repo) {
+    var stars = repo.stargazers_count || 0;
+    var desc = repo.description || "";
+    var lang = repo.language
+      ? '<span class="tag">' + escapeHtml(repo.language) + "</span>"
+      : "";
+    var updated = (repo.updated_at || "").slice(0, 10);
+    var full = repo.full_name || repo.name;
+    return (
+      '<a class="card project-card" href="' +
+      escapeHtml(repo.html_url) +
+      '" rel="noopener" target="_blank">' +
+      '<div class="project-card__stars" aria-label="' +
+      stars +
+      ' stars">' +
+      '<span class="project-card__star" aria-hidden="true">★</span>' +
+      '<span class="project-card__star-count">' +
+      escapeHtml(formatStars(stars)) +
+      "</span>" +
+      "</div>" +
+      '<div class="card__meta"><span>GitHub</span><span>' +
+      escapeHtml(updated) +
+      "</span></div>" +
+      '<h2 class="card__title">' +
+      escapeHtml(full) +
+      "</h2>" +
+      '<p class="card__excerpt">' +
+      escapeHtml(desc) +
+      "</p>" +
+      '<div class="card__tags">' +
+      lang +
+      '<span class="tag">Starred</span></div>' +
+      "</a>"
+    );
   }
 
   function render(repos) {
-    if (!repos.length) {
-      root.innerHTML =
-        '<p class="search-empty">暂时没有可展示的个人仓库。</p>';
-      return;
-    }
-    root.innerHTML = repos
-      .map(function (repo) {
-        var stars = repo.stargazers_count || 0;
-        var desc = repo.description || "个人项目";
-        var lang = repo.language ? '<span class="tag">' + escapeHtml(repo.language) + "</span>" : "";
-        var updated = (repo.updated_at || "").slice(0, 10);
-        return (
-          '<a class="card project-card" href="' +
-          escapeHtml(repo.html_url) +
-          '" rel="noopener" target="_blank">' +
-          '<div class="project-card__stars" aria-label="' +
-          stars +
-          ' stars">' +
-          '<span class="project-card__star" aria-hidden="true">★</span>' +
-          '<span class="project-card__star-count">' +
-          stars +
-          "</span>" +
-          "</div>" +
-          '<div class="card__meta"><span>GitHub</span><span>' +
-          escapeHtml(updated) +
-          "</span></div>" +
-          '<h2 class="card__title">' +
-          escapeHtml(repo.name) +
-          "</h2>" +
-          '<p class="card__excerpt">' +
-          escapeHtml(desc) +
-          "</p>" +
-          '<div class="card__tags">' +
-          lang +
-          '<span class="tag">Personal</span></div>' +
-          "</a>"
-        );
-      })
-      .join("");
+    root.innerHTML = repos.map(card).join("");
   }
 
-  if (statusEl) statusEl.textContent = "加载 GitHub 个人项目…";
+  if (statusEl) statusEl.textContent = "加载 star 与仓库信息…";
 
-  fetch(url, {
-    headers: { Accept: "application/vnd.github+json" },
-  })
-    .then(function (r) {
-      if (!r.ok) throw new Error("GitHub API " + r.status);
-      return r.json();
+  Promise.all(
+    REPOS.map(function (full) {
+      return fetch("https://api.github.com/repos/" + full, {
+        headers: { Accept: "application/vnd.github+json" },
+      }).then(function (r) {
+        if (!r.ok) throw new Error(full + " " + r.status);
+        return r.json();
+      });
     })
-    .then(function (list) {
-      var repos = (list || []).filter(isPersonalProject).slice(0, LIMIT);
+  )
+    .then(function (repos) {
       if (statusEl) {
-        statusEl.textContent =
-          "按最近更新 · 个人仓库 Top " + repos.length;
+        statusEl.textContent = "关注的非个人项目 · " + repos.length + " 个";
       }
       render(repos);
     })
     .catch(function () {
-      if (statusEl) statusEl.textContent = "无法从 GitHub 加载项目列表。";
-      root.innerHTML =
-        '<p class="search-empty">GitHub API 暂时不可用。可直接打开 <a href="https://github.com/' +
-        USER +
-        '" rel="noopener">github.com/' +
-        USER +
-        "</a>。</p>";
+      // Fallback: still show links without live stars
+      var fallback = REPOS.map(function (full) {
+        return {
+          full_name: full,
+          name: full.split("/")[1],
+          html_url: "https://github.com/" + full,
+          description: "",
+          stargazers_count: 0,
+          updated_at: "",
+          language: null,
+        };
+      });
+      if (statusEl) statusEl.textContent = "GitHub API 暂不可用，已显示仓库链接。";
+      render(fallback);
     });
 })();
