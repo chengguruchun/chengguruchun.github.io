@@ -38,14 +38,11 @@
 
 **Projects**
 
-- [concurrency：高并发实验台](projects/concurrency.html)
-- [RedPacket：抢红包的并发解剖](projects/redpacket.html)
-- [miaoshao_test：秒杀链路压测与优化](projects/miaoshao.html)
+
 
 **Videos**
 
-- 讲解：为什么 Agent 需要 Control Plane
-- 对照阅读：K8s 抽象 vs Agent Runtime
+
 
 **Hot Words**
 

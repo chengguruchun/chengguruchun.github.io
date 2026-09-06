@@ -19,7 +19,7 @@
 
   function render(items) {
     if (!items.length) {
-      results.innerHTML = '<p class="search-empty">没有匹配结果。试试「Agent」「控制面」「秒杀」等关键词。</p>';
+      results.innerHTML = '<p class="search-empty">没有匹配结果。试试「Agent」「控制面」「Kubernetes」等关键词。</p>';
       return;
     }
     results.innerHTML = items
