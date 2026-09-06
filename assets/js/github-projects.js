@@ -1,14 +1,15 @@
 (function () {
-  var root = document.getElementById("github-projects");
-  var statusEl = document.getElementById("github-projects-status");
-  if (!root) return;
+  var researchRoot = document.getElementById("github-projects-research");
+  var personalRoot = document.getElementById("github-projects-personal");
+  if (!researchRoot && !personalRoot) return;
 
-  // Recently studied non-personal projects
-  var REPOS = [
+  var USER = "chengguruchun";
+  var RESEARCH = [
     "TencentCloud/TencentDB-Agent-Memory",
     "cobusgreyling/loop-engineering",
     "deepseek-ai/deepseek-harness",
   ];
+  var PERSONAL_LIMIT = 3;
 
   function escapeHtml(s) {
     return String(s == null ? "" : s)
@@ -27,14 +28,21 @@
     return String(n);
   }
 
-  function card(repo) {
+  function card(repo, kind) {
     var stars = repo.stargazers_count || 0;
     var desc = repo.description || "";
     var lang = repo.language
       ? '<span class="tag">' + escapeHtml(repo.language) + "</span>"
       : "";
     var updated = (repo.updated_at || "").slice(0, 10);
-    var full = repo.full_name || repo.name;
+    var title =
+      kind === "personal"
+        ? repo.name || repo.full_name
+        : repo.full_name || repo.name;
+    var tag =
+      kind === "personal"
+        ? '<span class="tag">Personal</span>'
+        : '<span class="tag">Research</span>';
     return (
       '<a class="card project-card" href="' +
       escapeHtml(repo.html_url) +
@@ -50,42 +58,40 @@
       '<div class="card__meta"><span>GitHub</span><span>' +
       escapeHtml(updated) +
       "</span></div>" +
-      '<h2 class="card__title">' +
-      escapeHtml(full) +
-      "</h2>" +
+      '<h3 class="card__title">' +
+      escapeHtml(title) +
+      "</h3>" +
       '<p class="card__excerpt">' +
       escapeHtml(desc) +
       "</p>" +
       '<div class="card__tags">' +
       lang +
-      '<span class="tag">Research</span></div>' +
-      "</a>"
+      tag +
+      "</div></a>"
     );
   }
 
-  function render(repos) {
-    root.innerHTML = repos.map(card).join("");
+  function render(el, repos, kind) {
+    if (!el) return;
+    if (!repos.length) {
+      el.innerHTML = "";
+      return;
+    }
+    el.innerHTML = repos.map(function (r) { return card(r, kind); }).join("");
   }
 
-  if (statusEl) statusEl.textContent = "";
+  function fetchRepo(full) {
+    return fetch("https://api.github.com/repos/" + full, {
+      headers: { Accept: "application/vnd.github+json" },
+    }).then(function (r) {
+      if (!r.ok) throw new Error(full + " " + r.status);
+      return r.json();
+    });
+  }
 
-  Promise.all(
-    REPOS.map(function (full) {
-      return fetch("https://api.github.com/repos/" + full, {
-        headers: { Accept: "application/vnd.github+json" },
-      }).then(function (r) {
-        if (!r.ok) throw new Error(full + " " + r.status);
-        return r.json();
-      });
-    })
-  )
-    .then(function (repos) {
-      if (statusEl) statusEl.textContent = "";
-      render(repos);
-    })
-    .catch(function () {
-      // Fallback: still show links without live stars
-      var fallback = REPOS.map(function (full) {
+  function loadResearch() {
+    return Promise.all(RESEARCH.map(fetchRepo)).catch(function () {
+      return RESEARCH.map(function (full) {
         return {
           full_name: full,
           name: full.split("/")[1],
@@ -96,7 +102,37 @@
           language: null,
         };
       });
-      if (statusEl) statusEl.textContent = "";
-      render(fallback);
     });
+  }
+
+  function loadPersonal() {
+    var url =
+      "https://api.github.com/users/" +
+      USER +
+      "/repos?per_page=100&sort=updated&type=owner";
+    return fetch(url, {
+      headers: { Accept: "application/vnd.github+json" },
+    })
+      .then(function (r) {
+        if (!r.ok) throw new Error("personal " + r.status);
+        return r.json();
+      })
+      .then(function (list) {
+        return (list || [])
+          .filter(function (repo) {
+            if (!repo || repo.fork || repo.archived) return false;
+            if (/\.github\.io$/i.test(String(repo.name || ""))) return false;
+            return true;
+          })
+          .slice(0, PERSONAL_LIMIT);
+      })
+      .catch(function () {
+        return [];
+      });
+  }
+
+  Promise.all([loadResearch(), loadPersonal()]).then(function (parts) {
+    render(researchRoot, parts[0], "research");
+    render(personalRoot, parts[1], "personal");
+  });
 })();

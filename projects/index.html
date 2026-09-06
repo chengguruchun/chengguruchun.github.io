@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Projects · AI Knowledge Lab</title>
-  <meta name="description" content="最近研究的非个人项目。">
+  <meta name="description" content="研究与个人项目。">
   <meta name="theme-color" content="#f7f5f0">
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,12 +27,22 @@
     <header class="page-hero">
       <div class="wrap">
         <p class="page-hero__kicker">Projects</p>
-        <h1>最近研究的非个人项目</h1>
-        <p class="search-hint" id="github-projects-status" hidden></p>
+        <h1>Projects</h1>
       </div>
     </header>
-    <section class="section" style="padding-top:0">
-      <div class="wrap grid grid--2" id="github-projects" aria-live="polite"></div>
+
+    <section class="section section--tight" aria-labelledby="projects-research">
+      <div class="wrap">
+        <h2 id="projects-research" class="projects-section__title">研究</h2>
+        <div class="grid grid--2" id="github-projects-research" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section class="section section--tight" aria-labelledby="projects-personal">
+      <div class="wrap">
+        <h2 id="projects-personal" class="projects-section__title">个人项目</h2>
+        <div class="grid grid--2" id="github-projects-personal" aria-live="polite"></div>
+      </div>
     </section>
   </main>
 

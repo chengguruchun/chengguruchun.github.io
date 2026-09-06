@@ -1556,3 +1556,17 @@ a.entry-card:hover {
 a.project-card:hover .project-card__stars {
   border-color: var(--accent);
 }
+
+
+/* Projects sections */
+.projects-section__title {
+  margin: 0 0 1rem;
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--text);
+}
+.section--tight + .section--tight {
+  padding-top: 0.5rem;
+}
