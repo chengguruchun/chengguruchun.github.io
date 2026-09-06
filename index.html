@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AI Knowledge Lab · chengguruchun</title>
-  <meta name="description" content="面向人类与 AI Agent 的开放知识系统：独立思考 · 复杂系统 · AI Agents。">
+  <meta name="description" content="面向 AI Agent 的开放知识系统：可发现、可调用。">
   <meta name="theme-color" content="#f7f5f0">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,55 +17,46 @@
     <div class="wrap site-header__inner">
       <a class="brand" href="index.html">
         <span class="brand__name">AI Knowledge Lab</span>
-        <span class="brand__tag">Independent Thinker · Complex Systems · AI Agents</span>
+        <span class="brand__tag" data-brand-rotate aria-label="Independent Thinker · AI Agents · Complex Systems · Diverse Thinking"><span class="brand__rotate"><span class="brand__item is-active">Independent Thinker</span><span class="brand__item">AI Agents</span><span class="brand__item">Complex Systems</span><span class="brand__item">Diverse Thinking</span></span></span>
       </a>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">菜单</button>
       <nav class="nav" id="site-nav" aria-label="主导航">
         <a href="index.html" aria-current="page">Home</a>
+        <a href="diverse/">Diverse Lab</a>
         <a href="articles/">Articles</a>
-        <a href="thinking/">Thinking Lab</a>
         <a href="projects/">Projects</a>
         <a href="videos/">Videos</a>
-        <a href="about/">About</a>
+        <a href="times/">Hot Words</a>
+        <a href="about/">About Me</a>
         <a class="nav__search" href="tags/">Tags / Search</a>
       </nav>
     </div>
   </header>
 
   <main>
-    <section class="hero hero--compact">
+    <section class="hero hero--compact hero--home">
       <div class="wrap">
-        <p class="hero__kicker">Open Knowledge System</p>
-        <h1 class="hero__title">把工程直觉，接到 Agent 基础设施上。</h1>
+        <p class="hero__kicker">AI Knowledge Lab</p>
+        <h1 class="hero__title hero__title--home">为 AI Agent 建设可发现、可调用的知识系统。</h1>
         <p class="hero__lead">
-          这不是博客，而是一个可演进的知识实验室：记录问题、架构取舍与未闭合的思考。
+          Discover → execute。先读 Skill，再按能力目录调用。
         </p>
-        <p class="hero__meta-line">chengguruchun · Hangzhou · Backend / Distributed → AI Agents</p>
-        <nav class="home-links" aria-label="主要入口">
-          <a href="articles/">Articles</a>
-          <a href="thinking/">Thinking Lab</a>
-          <a href="projects/">Projects</a>
-          <a href="about/">About</a>
-        </nav>
-      </div>
-    </section>
-
-    <section class="section section--tight">
-      <div class="wrap">
-        <ul class="home-latest">
-          <li>
-            <span class="home-latest__kind">Article</span>
-            <a href="articles/agent-control-plane.html">Agent Control Plane：把智能体当成可治理的运行时</a>
-          </li>
-          <li>
-            <span class="home-latest__kind">Thinking</span>
-            <a href="thinking/determinism-sla.html">不确定执行的 SLA：管概率，还是管边界？</a>
-          </li>
-          <li>
-            <span class="home-latest__kind">Project</span>
-            <a href="projects/redpacket.html">RedPacket：热点扣减与一致性解剖</a>
-          </li>
-        </ul>
+        <div class="agent-panel agent-panel--home" style="margin-top:1.75rem">
+          <p class="agent-panel__label">For Agents · How to connect</p>
+          <ol class="agent-howto">
+            <li>读取 <a href="SKILL.md"><code>SKILL.md</code></a>。</li>
+            <li><code>GET</code> <a href="api/discover.json"><code>/api/discover.json</code></a> 发现可用能力。</li>
+            <li>读 <a href="mcp/tools.json"><code>/mcp/tools.json</code></a>，再 <code>lab_execute</code>。</li>
+            <li>正文走 <a href="api/catalog.json"><code>/api/catalog.json</code></a> → <code>/content/**/*.md</code>；索引见 <a href="llms.txt"><code>llms.txt</code></a>。</li>
+          </ol>
+          <nav class="home-links" aria-label="Agent 入口">
+            <a href="SKILL.md"><strong>SKILL.md</strong></a>
+            <a href="api/discover.json">discover</a>
+            <a href="mcp/tools.json">mcp/tools.json</a>
+            <a href="api/catalog.json">api/catalog.json</a>
+            <a href="llms.txt">llms.txt</a>
+          </nav>
+        </div>
       </div>
     </section>
   </main>
@@ -74,11 +65,7 @@
     <div class="wrap site-footer__inner">
       <div>
         <p>© <span id="year"></span> chengguruchun · Hangzhou</p>
-        <p>面向人类与 AI Agent 的开放知识系统</p>
-      </div>
-      <div>
-        <p><a href="mailto:chengguruchun@163.com">chengguruchun@163.com</a></p>
-        <p><a href="https://github.com/chengguruchun" rel="noopener">GitHub</a> · <a href="PRODUCT.md">PRODUCT.md</a></p>
+        <p>面向 AI Agent 的开放知识系统</p>
       </div>
     </div>
   </footer>

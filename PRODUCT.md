@@ -1,8 +1,8 @@
 # AI Knowledge Lab — Product Vision
 
-**定位一句话：** AI Knowledge Lab 是面向人类与 AI Agent 共同阅读的开放知识系统——用独立思考面对复杂系统，把工程直觉接到 Agent 基础设施上。
+**定位一句话：** AI Knowledge Lab 是面向 AI Agent 的开放知识系统——用独立思考面对复杂系统，把工程实践接到 Agent 基础设施上。
 
-**Brand：** Independent Thinker · Complex Systems · AI Agents  
+**Brand：** Independent Thinker · AI Agents · Complex Systems · Diverse Thinking  
 **Owner：** chengguruchun（杭州）· chengguruchun@163.com  
 **路径：** Backend / Distributed → AI Agents / Infrastructure
 
@@ -22,9 +22,10 @@
 |------|------|
 | **Home** | 坐标、导航、阅读路径（人类 / Agent） |
 | **Articles** | 可引用长文（问题、架构、开放问题） |
-| **Thinking Lab** | Question / My Thinking / Open Questions |
+| **Diverse Lab** | Question / My Thinking / Open Questions |
 | **Projects** | Problem → Architecture → … → Lessons + 真实仓库 |
 | **Videos** | 讲解与白板（可占位） |
+| **Hot Words** | 热词（年度热词写法）：一词 + 为何成立；按周或按月更新 |
 | **About** | 作者与实验室说明 |
 | **Tags / Search** | 标签穿越 + content/index.json 客户端检索 |
 
@@ -59,6 +60,12 @@
 - 演化视图、热门主题等社区层——仅在不破坏「实验室」气质时引入  
 
 ---
+
+
+
+## Hot Words Loop（Pi + DeepSeek / LiteLLM）
+
+周更 Hot Words（`/times/`）：项目本地 Pi 包 `.pi/packages/lab-hot-words` 提供 `/hot-words` 与 `lab_hot_words_*` 工具；模型默认 DeepSeek，也可经 LiteLLM 多模型路由。配置见 `docs/pi-deepseek/`，操作见 `HOT_WORDS_LOOP.md`。无 Pi 时用 `python3 scripts/hot_words_apply.py`。**不自动 push**；Pages 以人工合并为准。
 
 ## 设计原则
 

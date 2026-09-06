@@ -3,69 +3,149 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>About · AI Knowledge Lab</title>
-  <meta name="description" content="chengguruchun · Hangzhou · Independent Thinker · Complex Systems · AI Agents">
+  <title>About Me · AI Knowledge Lab</title>
+  <meta name="description" content="chengguruchun · Hangzhou · Independent Thinker · AI Agents · Complex Systems · Diverse Thinking">
   <meta name="theme-color" content="#f7f5f0">
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/css/site.css">
+  <link rel="alternate" type="application/rss+xml" title="AI Knowledge Lab" href="../feed.xml">
 </head>
 <body>
   <header class="site-header">
     <div class="wrap site-header__inner">
       <a class="brand" href="../index.html">
         <span class="brand__name">AI Knowledge Lab</span>
-        <span class="brand__tag">Independent Thinker · Complex Systems · AI Agents</span>
+        <span class="brand__tag" data-brand-rotate aria-label="Independent Thinker · AI Agents · Complex Systems · Diverse Thinking"><span class="brand__rotate"><span class="brand__item is-active">Independent Thinker</span><span class="brand__item">AI Agents</span><span class="brand__item">Complex Systems</span><span class="brand__item">Diverse Thinking</span></span></span>
       </a>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">菜单</button>
-      <nav class="nav" id="site-nav" aria-label="主导航">
-        <a href="../index.html">Home</a><a href="../articles/">Articles</a><a href="../thinking/">Thinking Lab</a><a href="../projects/">Projects</a><a href="../videos/">Videos</a><a href="../about/" aria-current="page">About</a><a class="nav__search" href="../tags/">Tags / Search</a>
-      </nav>
+      <nav class="nav" id="site-nav" aria-label="主导航"><a href="../index.html">Home</a><a href="../diverse/">Diverse Lab</a><a href="../articles/">Articles</a><a href="../projects/">Projects</a><a href="../videos/">Videos</a><a href="../times/">Hot Words</a><a href="../about/" aria-current="page">About Me</a><a class="nav__search" href="../tags/">Tags / Search</a></nav>
     </div>
   </header>
   <main>
-    <header class="page-hero">
+    <section class="hero hero--compact hero--route">
       <div class="wrap">
-        <p class="page-hero__kicker">About</p>
-        <h1>关于实验室与作者</h1>
-        <p class="page-hero__desc">AI Knowledge Lab 是 chengguruchun 的开放知识系统：用独立思考面对复杂系统，把后端与分布式经验接到 AI Agents 与基础设施上。</p>
+        <p class="hero__kicker">About Me</p>
+        <h1 class="hero__title hero__title--route">相信 AI 会重塑软件行业，加快物理 AI 发展</h1>
+        <p class="hero__lead">
+          了解 AI，关注 AI 趋势，试着理解 AI 原理。相信它会改写软件工程，创造人人平等的世界。
+        </p>
       </div>
-    </header>
-    <section class="section" style="padding-top:0">
-      <div class="wrap about-grid">
-        <div>
-          <h2>定位</h2>
-          <p>这不是个人名片站，也不是传统博客。它是一个可演进的知识实验室：Articles 承载可引用论述，Thinking Lab 保留未闭合问题，Projects 记录可论证的工程档案，Videos 补充口述与图示。</p>
-          <h2>路径</h2>
-          <p>过去几年主要做后端与分布式：并发、消息、协调、高并发交易场景。仓库里留下秒杀、抢红包、心跳检测等问题——它们训练的是压力下的正确性直觉。现在关注如何把这些能力变成 Agent 运行时、控制面与注册治理的一部分。</p>
-          <h2>联系</h2>
-          <ul class="stat-list">
-            <li><span>Email</span><strong><a href="mailto:chengguruchun@163.com">chengguruchun@163.com</a></strong></li>
-            <li><span>GitHub</span><strong><a href="https://github.com/chengguruchun" rel="noopener">github.com/chengguruchun</a></strong></li>
-            <li><span>Location</span><strong>Hangzhou · 杭州</strong></li>
-          </ul>
+    </section>
+
+    <section class="section section--tight">
+      <div class="wrap">
+        <div class="route" aria-label="求学与工作航线">
+          <div class="route__meta">
+            <span class="route__code">The Road Here</span>
+          </div>
+
+          <ol class="route__spine">
+            <li class="route-stop">
+              <div class="route-stop__rail" aria-hidden="true">
+                <span class="route-stop__dot"></span>
+                <span class="route-stop__track"></span>
+              </div>
+              <div class="route-stop__card">
+                <p class="route-stop__phase">求学 · 第1站</p>
+                <h2 class="route-stop__city">宿迁</h2>
+              </div>
+            </li>
+
+            <li class="route-stop route-stop--fork">
+              <div class="route-stop__rail" aria-hidden="true">
+                <span class="route-stop__dot"></span>
+                <span class="route-stop__track"></span>
+              </div>
+              <div class="route-stop__card">
+                <p class="route-stop__phase">求学 · 第2站</p>
+                <h2 class="route-stop__city">上海</h2>
+              </div>
+              <aside class="route-branch" aria-label="新加坡">
+                <svg class="route-branch__line" viewBox="0 0 160 72" preserveAspectRatio="none" aria-hidden="true">
+                  <path d="M0 8 C48 8, 72 64, 160 64" fill="none" stroke="currentColor" stroke-width="1.25" stroke-dasharray="3 4"/>
+                </svg>
+                <div class="route-branch__node">
+                  <h3 class="route-branch__city">新加坡</h3>
+                  <p class="route-stop__note">求学期间。</p>
+                </div>
+              </aside>
+            </li>
+
+            <li class="route-stop">
+              <div class="route-stop__rail" aria-hidden="true">
+                <span class="route-stop__dot"></span>
+                <span class="route-stop__track"></span>
+              </div>
+              <div class="route-stop__card">
+                <p class="route-stop__phase">求学 · 第3站</p>
+                <h2 class="route-stop__city">杭州</h2>
+              </div>
+            </li>
+
+            <li class="route-stop route-stop--intern">
+              <div class="route-stop__rail" aria-hidden="true">
+                <span class="route-stop__dot route-stop__dot--intern"></span>
+                <span class="route-stop__track"></span>
+              </div>
+              <div class="route-stop__card">
+                <p class="route-stop__phase">实习 · 杭州</p>
+                <div class="route-badges">
+                  <div class="route-badge route-badge--intern">
+                    <span class="route-badge__label">Intern</span>
+                    <strong class="route-badge__name">星环科技</strong>
+                    <span class="route-badge__role">Java开发工程师</span>
+                    <span class="route-badge__tags">智慧医疗</span>
+                  </div>
+                </div>
+              </div>
+            </li>
+
+            <li class="route-stop route-stop--work">
+              <div class="route-stop__rail" aria-hidden="true">
+                <span class="route-stop__dot route-stop__dot--work"></span>
+                <span class="route-stop__track"></span>
+              </div>
+              <div class="route-stop__card">
+                <p class="route-stop__phase">工作 · 杭州</p>
+                <h2 class="route-stop__city">工作</h2>
+                <div class="route-badges">
+                  <div class="route-badge">
+                    <span class="route-badge__label">Station A</span>
+                    <strong class="route-badge__name">有赞</strong>
+                    <span class="route-badge__role">资深研发工程师</span>
+                    <span class="route-badge__tags">电商</span>
+                  </div>
+                  <div class="route-badge">
+                    <span class="route-badge__label">Station B</span>
+                    <strong class="route-badge__name">涂鸦科技</strong>
+                    <span class="route-badge__role">资深AI全栈工程师</span>
+                    <span class="route-badge__tags">IoT · 软硬结合</span>
+                  </div>
+                  <div class="route-badge">
+                    <span class="route-badge__label">Station C</span>
+                    <strong class="route-badge__name">迈的智能</strong>
+                    <span class="route-badge__role">FDE</span>
+                    <span class="route-badge__tags">垂直工业互联网</span>
+                  </div>
+                </div>
+              </div>
+            </li>
+
+            <li class="route-stop route-stop--now">
+              <div class="route-stop__rail" aria-hidden="true">
+                <span class="route-stop__dot route-stop__dot--now"></span>
+              </div>
+              <div class="route-stop__card route-stop__card--now">
+                <p class="route-stop__phase">现在</p>
+                <h2 class="route-stop__city">What next?</h2>
+                <p class="route-stop__note">把工程纪律接到 Agent 基础设施；建设可发现、可调用的 AI Knowledge Lab。</p>
+              </div>
+            </li>
+          </ol>
         </div>
-        <aside>
-          <div class="card">
-            <h3 class="card__title">Brand</h3>
-            <p class="card__excerpt">Independent Thinker<br>Complex Systems<br>AI Agents</p>
-          </div>
-          <div class="card" style="margin-top:1rem">
-            <h3 class="card__title">Focus</h3>
-            <ul style="margin:0;padding-left:1.1rem;color:var(--text-dim);font-size:0.92rem">
-              <li>Agent Control Plane</li>
-              <li>Runtime &amp; 效应管理</li>
-              <li>Registry / 契约</li>
-              <li>高并发与一致性遗产</li>
-            </ul>
-          </div>
-          <div class="card" style="margin-top:1rem">
-            <h3 class="card__title">For Agents</h3>
-            <p class="card__excerpt">先读 <a href="../PRODUCT.md">PRODUCT.md</a> 与 <a href="../content/index.json">content/index.json</a>，再按需抓取 <code>content/**/*.md</code>。</p>
-          </div>
-        </aside>
       </div>
     </section>
   </main>
@@ -74,15 +154,17 @@
     <div class="wrap site-footer__inner">
       <div>
         <p>© <span id="year"></span> chengguruchun · Hangzhou</p>
-        <p>AI Knowledge Lab — 面向人类与 AI Agent 的开放知识系统</p>
+        <p>面向 AI Agent 的开放知识系统</p>
       </div>
-      <div>
-        <p><a href="mailto:chengguruchun@163.com">chengguruchun@163.com</a></p>
-        <p><a href="https://github.com/chengguruchun" rel="noopener">GitHub</a> · <a href="../PRODUCT.md">PRODUCT.md</a></p>
+      <div class="footer-contacts">
+        <p><span class="footer-label">邮箱</span> <a href="mailto:chengguruchun@163.com">chengguruchun@163.com</a></p>
+        <p><span class="footer-label">GitHub</span> <a href="https://github.com/chengguruchun" rel="noopener">github.com/chengguruchun</a></p>
+        <p><span class="footer-label">RSS</span> <a href="../feed.xml">内容订阅 feed.xml</a></p>
+        <p><span class="footer-label">Watch</span> <a href="https://github.com/chengguruchun/chengguruchun.github.io/subscription" rel="noopener">GitHub 订阅站点 repo</a></p>
+        <p><span class="footer-label">Repo Atom</span> <a href="https://github.com/chengguruchun/chengguruchun.github.io/commits/main.atom" rel="noopener">commits.atom</a></p>
       </div>
     </div>
   </footer>
   <script src="../assets/js/site.js"></script>
-
 </body>
 </html>

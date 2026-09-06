@@ -1,0 +1,43 @@
+{
+  "type": "Diverse Lab",
+  "items": [
+    {
+      "id": "llm-scientific-experiment",
+      "type": "Diverse Lab",
+      "title": "大模型：用科学实验的方式使用",
+      "excerpt": "大模型调用更接近条件分布上的采样。用假设、对照、评测与反馈闭环，把 Prompt Engineering 做成可陈述的 Experiment Engineering。",
+      "url": "/diverse/llm-scientific-experiment.html",
+      "date": "2026-09-06",
+      "tags": [
+        "Diverse",
+        "LLM",
+        "Experiment",
+        "Agent",
+        "Loop Engineering",
+        "Complex Systems"
+      ],
+      "thought_date": "2026-09-02",
+      "published_date": "2026-09-06",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/llm-scientific-experiment.md"
+    },
+    {
+      "id": "physics-ecology-llm",
+      "type": "Diverse Lab",
+      "title": "物理学 × 生态学：对复杂系统的一个思考",
+      "excerpt": "物理学看规律，生态学看关系与反馈；综合二者，才能理解 LLM 与多 Agent 如何逼近 Complex System Engineering。",
+      "url": "/diverse/physics-ecology-llm.html",
+      "date": "2026-09-06",
+      "tags": [
+        "Diverse",
+        "Physics",
+        "Ecology",
+        "Complex Systems",
+        "LLM",
+        "Agent"
+      ],
+      "thought_date": "2026-09-02",
+      "published_date": "2026-09-06",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/physics-ecology-llm.md"
+    }
+  ]
+}

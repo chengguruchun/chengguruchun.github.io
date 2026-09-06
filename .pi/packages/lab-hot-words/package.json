@@ -1,0 +1,15 @@
+{
+  "name": "@chengguruchun/lab-hot-words",
+  "version": "0.1.0",
+  "description": "Weekly Hot Words loop for AI Knowledge Lab — Pi extension + skill, DeepSeek-friendly.",
+  "keywords": ["pi-package", "hot-words", "knowledge-lab", "deepseek"],
+  "license": "MIT",
+  "pi": {
+    "extensions": ["./extensions"],
+    "skills": ["./skills"]
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": "*",
+    "typebox": "*"
+  }
+}

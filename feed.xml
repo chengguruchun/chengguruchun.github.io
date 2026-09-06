@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>AI Knowledge Lab</title>
+    <link>https://chengguruchun.github.io/</link>
+    <description>chengguruchun · 面向 AI Agent 的开放知识系统（文章 / Diverse Lab 等有日期条目）</description>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 06 Sep 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://chengguruchun.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Kubernetes × Agent：从容器编排到目标收敛</title>
+      <link>https://chengguruchun.github.io/articles/k8s-to-agent-control-plane.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/articles/k8s-to-agent-control-plane.html</guid>
+      <pubDate>Sun, 06 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Articles</category>
+      <description>K8s 管服务如何稳定运行；Agent Control Plane 管智能任务如何被分解、执行、验证并完成。核心是 Desired State 与 Actual Outcome 的持续拟合。</description>
+    </item>
+    <item>
+      <title>大模型：用科学实验的方式使用</title>
+      <link>https://chengguruchun.github.io/diverse/llm-scientific-experiment.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/diverse/llm-scientific-experiment.html</guid>
+      <pubDate>Sun, 06 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Diverse Lab</category>
+      <description>大模型调用更接近条件分布上的采样。用假设、对照、评测与反馈闭环，把 Prompt Engineering 做成可陈述的 Experiment Engineering。</description>
+    </item>
+    <item>
+      <title>物理学 × 生态学：对复杂系统的一个思考</title>
+      <link>https://chengguruchun.github.io/diverse/physics-ecology-llm.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/diverse/physics-ecology-llm.html</guid>
+      <pubDate>Sun, 06 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Diverse Lab</category>
+      <description>物理学看规律，生态学看关系与反馈；综合二者，才能理解 LLM 与多 Agent 如何逼近 Complex System Engineering。</description>
+    </item>
+  </channel>
+</rss>

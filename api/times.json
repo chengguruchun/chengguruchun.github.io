@@ -1,0 +1,20 @@
+{
+  "type": "Times",
+  "format": "one-word-per-issue (annual-hotword style)",
+  "cadence": "weekly-or-monthly",
+  "current": "2026-09-W1",
+  "updated": "2026-09-06",
+  "issues": [
+    {
+      "id": "times-2026-09-w1",
+      "period": "2026-09-W1",
+      "cadence": "weekly",
+      "word": "Agent Reliability",
+      "title": "2026-09 Week 1 · Agent Reliability",
+      "why": "2026 年 9 月初的行业叙事已从「模型还能更强吗」转向「Agent 在生产里稳不稳」。Capability 仍在涨，但评测与工程共识在补另一半：一致性、可观测、静默失败与可靠性度量——没有 reliability，agentic 只是更贵的 demo。",
+      "date": "2026-09-06",
+      "url": "/times/",
+      "markdown": "/content/times/2026-09-w1.md"
+    }
+  ]
+}

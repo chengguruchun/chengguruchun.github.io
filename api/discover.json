@@ -1,0 +1,226 @@
+{
+  "name": "ai-knowledge-lab",
+  "protocol": "discover-then-execute",
+  "skill": "/SKILL.md",
+  "registry": "/mcp/tools.json",
+  "updated": "2026-09-06",
+  "meta": [
+    "lab_discover",
+    "lab_execute"
+  ],
+  "tools": [
+    {
+      "name": "lab_discover",
+      "kind": "meta",
+      "description": "List available Lab capabilities. Call before lab_execute. Catalog grows without changing SKILL.md.",
+      "invoke": {
+        "method": "GET",
+        "path": "/api/discover.json"
+      }
+    },
+    {
+      "name": "lab_execute",
+      "kind": "meta",
+      "description": "Execute a discovered tool by name. Resolve schema from /mcp/tools.json, then hit static.path / path_template / action.",
+      "invoke": {
+        "method": "RESOLVE",
+        "registry": "/mcp/tools.json",
+        "note": "Substitute path_template args; GET for read tools; follow action.url / mailto for engage tools."
+      }
+    },
+    {
+      "name": "lab_list_entries",
+      "kind": "read",
+      "description": "List knowledge entries (articles, Diverse Lab, projects, videos): id, title, tags, urls.",
+      "invoke": {
+        "method": "GET",
+        "path": "/api/catalog.json",
+        "alt_by_type": "/api/{type-slug}.json"
+      }
+    },
+    {
+      "name": "lab_list_articles",
+      "kind": "read",
+      "description": "List articles only (shorthand for catalog filter Articles).",
+      "invoke": {
+        "method": "GET",
+        "path": "/api/articles.json"
+      }
+    },
+    {
+      "name": "lab_get_entry",
+      "kind": "read",
+      "description": "Fetch one entry's canonical Markdown by id (prefer over HTML).",
+      "invoke": {
+        "method": "GET",
+        "path_template": "/content/{collection}/{id}.md",
+        "collections": {
+          "Articles": "articles",
+          "Diverse Lab": "diverse",
+          "Projects": "projects"
+        },
+        "resolve_collection_via": "/api/catalog.json"
+      }
+    },
+    {
+      "name": "lab_search_entries",
+      "kind": "read",
+      "description": "Client-filter catalog by keyword against title, excerpt, tags.",
+      "invoke": {
+        "method": "GET",
+        "path": "/api/catalog.json",
+        "client_filter": true
+      }
+    },
+    {
+      "name": "lab_list_tags",
+      "kind": "read",
+      "description": "List tags and entry ids under each tag.",
+      "invoke": {
+        "method": "GET",
+        "path": "/api/tags.json"
+      }
+    },
+    {
+      "name": "lab_get_about",
+      "kind": "read",
+      "description": "Owner stance and The Road Here (bio route). HTML page; no private contact beyond published footer.",
+      "invoke": {
+        "method": "GET",
+        "path": "/about/"
+      }
+    },
+    {
+      "name": "lab_follow_github",
+      "kind": "engage",
+      "description": "Follow / star the owner's GitHub (chengguruchun). Opens the profile for the agent or human to complete follow.",
+      "invoke": {
+        "method": "ACTION",
+        "action": "open",
+        "url": "https://github.com/chengguruchun",
+        "note": "Prefer Follow on the profile; site repo: https://github.com/chengguruchun/chengguruchun.github.io"
+      }
+    },
+    {
+      "name": "lab_subscribe_email",
+      "kind": "engage",
+      "description": "Subscribe to article updates by email. Opens a mailto draft to the owner with a Subscribe subject.",
+      "invoke": {
+        "method": "ACTION",
+        "action": "mailto",
+        "to": "chengguruchun@163.com",
+        "subject_template": "Subscribe · AI Knowledge Lab",
+        "body_template": "Please add me to article updates.\\n\\nName: {from_name}\\nNote: {note}",
+        "note": "P0: mailto handshake. Future: dedicated subscribe endpoint without changing SKILL.md."
+      }
+    },
+    {
+      "name": "lab_submit_issue",
+      "kind": "contribute",
+      "description": "Propose an idea / fix / knowledge patch like a GitHub issue. Human reviews; accepted items may merge into the Lab.",
+      "invoke": {
+        "method": "ACTION",
+        "action": "open",
+        "url_template": "https://github.com/chengguruchun/chengguruchun.github.io/issues/new?title={title}&body={body}",
+        "note": "P0: GitHub Issues as intake. Review → merge into content/tools. Future: /api/issues without SKILL edits."
+      }
+    },
+    {
+      "name": "lab_get_llms_txt",
+      "kind": "read",
+      "description": "Machine-oriented site map (llms.txt).",
+      "invoke": {
+        "method": "GET",
+        "path": "/llms.txt"
+      }
+    },
+    {
+      "name": "lab_subscribe_rss",
+      "kind": "engage",
+      "description": "Subscribe to Lab content via real RSS at /feed.xml (auto-rebuilt by scripts/build_feeds.py + GitHub Action on content push).",
+      "invoke": {
+        "method": "GET",
+        "path": "/feed.xml"
+      }
+    },
+    {
+      "name": "lab_watch_repo",
+      "kind": "engage",
+      "description": "Open GitHub Watch settings for the site repo (real subscription). Prefer commits.atom for feed-based watching.",
+      "invoke": {
+        "method": "ACTION",
+        "action": "open",
+        "url": "https://github.com/chengguruchun/chengguruchun.github.io/subscription",
+        "also": {
+          "commits_atom": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main.atom",
+          "feeds_index": "/api/feeds.json"
+        }
+      }
+    },
+    {
+      "name": "lab_list_feeds",
+      "kind": "read",
+      "description": "List all Lab subscription endpoints: content RSS, GitHub Watch URL, commits/releases Atom.",
+      "invoke": {
+        "method": "GET",
+        "path": "/api/feeds.json"
+      }
+    },
+    {
+      "name": "lab_list_times",
+      "kind": "read",
+      "description": "List Times 热词 issues: annual-hotword style (one word + why), cadence weekly or monthly.",
+      "invoke": {
+        "method": "GET",
+        "path": "/api/times.json"
+      }
+    },
+    {
+      "name": "lab_list_comments",
+      "kind": "read",
+      "description": "List page comments stored as GitHub Issues containing marker [lab-comment:<pageId>].",
+      "invoke": {
+        "method": "GET",
+        "url_template": "https://api.github.com/search/issues?q=repo:chengguruchun/chengguruchun.github.io+is:issue+in:body+%22[lab-comment:{pageId}]%22"
+      }
+    },
+    {
+      "name": "lab_post_comment",
+      "kind": "contribute",
+      "description": "Open a GitHub Issue to leave a comment on a Lab page (marker [lab-comment:<pageId>]).",
+      "invoke": {
+        "method": "ACTION",
+        "action": "open",
+        "url_template": "https://github.com/chengguruchun/chengguruchun.github.io/issues/new?title={title}&body={body}"
+      }
+    },
+    {
+      "name": "lab_hot_words_status",
+      "kind": "read",
+      "description": "Read current Hot Words (Times) state from api/times.json.",
+      "invoke": {
+        "method": "GET",
+        "path": "/api/times.json"
+      }
+    },
+    {
+      "name": "lab_hot_words_list",
+      "kind": "read",
+      "description": "List Hot Words markdown under /content/times/.",
+      "invoke": {
+        "method": "GET",
+        "path": "/content/times/"
+      }
+    },
+    {
+      "name": "lab_hot_words_apply",
+      "kind": "contribute",
+      "description": "Apply Hot Words via Pi tool or scripts/hot_words_apply.py (no auto push).",
+      "invoke": {
+        "method": "ACTION",
+        "action": "local",
+        "hint": "python3 scripts/hot_words_apply.py --period PERIOD --word WORD --why WHY"
+      }
+    }
+  ]
+}

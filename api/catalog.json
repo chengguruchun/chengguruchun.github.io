@@ -1,5 +1,10 @@
 {
+  "name": "AI Knowledge Lab",
+  "skill": "/SKILL.md",
+  "product": "/PRODUCT.md",
+  "llms": "/llms.txt",
   "generated": "2026-09-06",
+  "base_url": "https://chengguruchun.github.io",
   "items": [
     {
       "id": "proj-concurrency",

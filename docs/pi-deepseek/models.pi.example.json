@@ -1,0 +1,25 @@
+{
+  "providers": {
+    "deepseek": {
+      "baseUrl": "https://api.deepseek.com",
+      "api": "openai-completions",
+      "apiKey": "DEEPSEEK_API_KEY",
+      "models": [
+        {
+          "id": "deepseek-chat",
+          "name": "DeepSeek Chat",
+          "contextWindow": 128000,
+          "maxTokens": 8192
+        },
+        {
+          "id": "deepseek-reasoner",
+          "name": "DeepSeek Reasoner",
+          "reasoning": true,
+          "contextWindow": 128000,
+          "maxTokens": 8192
+        }
+      ]
+    }
+  },
+  "_comment": "Copy to ~/.pi/agent/models.json. Prefer official DeepSeek docs if V4 model ids differ in your Pi build. Never commit real keys."
+}
