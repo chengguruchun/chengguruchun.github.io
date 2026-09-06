@@ -64,14 +64,14 @@ Client → Rate Limit → Atomic Debit (Redis/DB) → Receipt
         </section>
         <section class="project-section">
           <h2>Demo</h2>
-          <p>通过压测观察：单 key 热点、锁粒度、Lua/事务方案的差异。记录超发是否为ゼロ、尾延迟如何随并发上升。</p>
+          <p>通过压测观察：单 key 热点、锁粒度、Lua/事务方案的差异。记录超发是否为零、尾延迟如何随并发上升。</p>
         </section>
         <section class="project-section">
           <h2>GitHub</h2>
           <p><a href="https://github.com/chengguruchun/RedPacket" rel="noopener">https://github.com/chengguruchun/RedPacket</a></p>
         </section>
         <section class="project-section">
-          <h2>Lessons</h2>
+          <h2>Lessons Learned</h2>
           <ul>
             <li>热点写的第一敌人是「先查后改」的侥幸。</li>
             <li>公平性是算法问题，也是事务边界问题。</li>
