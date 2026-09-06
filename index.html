@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AI Knowledge Lab · chengguruchun</title>
-  <meta name="description" content="独立思考者的知识实验室：复杂系统、AI Agents 与可演进的基础设施直觉。">
-  <meta name="theme-color" content="#23262b">
+  <meta name="description" content="面向人类与 AI Agent 的开放知识系统：独立思考 · 复杂系统 · AI Agents。">
+  <meta name="theme-color" content="#f7f5f0">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,68 +21,51 @@
       </a>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">菜单</button>
       <nav class="nav" id="site-nav" aria-label="主导航">
-        <a href="index.html" aria-current="page">Home</a><a href="articles/">Articles</a><a href="thinking/">Thinking Lab</a><a href="projects/">Projects</a><a href="videos/">Videos</a><a href="about/">About</a><a class="nav__search" href="tags/">Tags / Search</a>
+        <a href="index.html" aria-current="page">Home</a>
+        <a href="articles/">Articles</a>
+        <a href="thinking/">Thinking Lab</a>
+        <a href="projects/">Projects</a>
+        <a href="videos/">Videos</a>
+        <a href="about/">About</a>
+        <a class="nav__search" href="tags/">Tags / Search</a>
       </nav>
     </div>
   </header>
+
   <main>
-    <section class="hero">
+    <section class="hero hero--compact">
       <div class="wrap">
         <p class="hero__kicker">Open Knowledge System</p>
         <h1 class="hero__title">把工程直觉，接到 Agent 基础设施上。</h1>
         <p class="hero__lead">
-          这不是个人博客。它是面向人类与 AI Agent 的开放知识系统——记录问题、架构取舍与未闭合思考。
-          <strong>Independent Thinker · Complex Systems · AI Agents</strong>
+          这不是博客，而是一个可演进的知识实验室：记录问题、架构取舍与未闭合的思考。
         </p>
-        <div class="hero__meta">
-          <span>chengguruchun · Hangzhou</span>
-          <span>Backend / Distributed → AI Agents</span>
-        </div>
-        <div class="pill-row">
-          <span class="pill pill--accent">Control Plane</span>
-          <span class="pill">Agent Runtime</span>
-          <span class="pill">Registry</span>
-          <span class="pill">高并发遗产</span>
-        </div>
+        <p class="hero__meta-line">chengguruchun · Hangzhou · Backend / Distributed → AI Agents</p>
+        <nav class="home-links" aria-label="主要入口">
+          <a href="articles/">Articles</a>
+          <a href="thinking/">Thinking Lab</a>
+          <a href="projects/">Projects</a>
+          <a href="about/">About</a>
+        </nav>
+      </div>
+    </section>
 
-        <div class="entry-grid" aria-label="栏目入口">
-          <a class="entry-card" href="articles/">
-            <div class="entry-card__label">Articles</div>
-            <h2 class="entry-card__title">长文档案</h2>
-            <p class="entry-card__desc">可引用的系统论述：问题、架构与开放问题。</p>
-          </a>
-          <a class="entry-card" href="thinking/">
-            <div class="entry-card__label">Thinking Lab</div>
-            <h2 class="entry-card__title">思考实验室</h2>
-            <p class="entry-card__desc">Question / My Thinking / Open Questions。</p>
-          </a>
-          <a class="entry-card" href="projects/">
-            <div class="entry-card__label">Projects</div>
-            <h2 class="entry-card__title">项目档案</h2>
-            <p class="entry-card__desc">高并发遗产 → 可论证的工程取舍与仓库。</p>
-          </a>
-          <a class="entry-card" href="about/">
-            <div class="entry-card__label">About</div>
-            <h2 class="entry-card__title">关于实验室</h2>
-            <p class="entry-card__desc">作者、定位，以及给 Agent 的阅读入口。</p>
-          </a>
-        </div>
-
-        <div class="highlight-row">
-          <div class="highlight-row__label">Latest</div>
-          <div class="grid grid--2">
-            <a class="card" href="articles/agent-registry.html">
-              <div class="card__meta"><span>Articles</span><span>2026-09-02</span></div>
-              <h3 class="card__title">Agent Registry</h3>
-              <p class="card__excerpt">能力发现、版本契约与信任边界。</p>
-            </a>
-            <a class="card" href="thinking/multi-agent-failure.html">
-              <div class="card__meta"><span>Thinking</span><span>2026-09-01</span></div>
-              <h3 class="card__title">多 Agent 失败模式</h3>
-              <p class="card__excerpt">协作崩坏更像分布式事务：重试、补偿与真相源。</p>
-            </a>
-          </div>
-        </div>
+    <section class="section section--tight">
+      <div class="wrap">
+        <ul class="home-latest">
+          <li>
+            <span class="home-latest__kind">Article</span>
+            <a href="articles/agent-control-plane.html">Agent Control Plane：把智能体当成可治理的运行时</a>
+          </li>
+          <li>
+            <span class="home-latest__kind">Thinking</span>
+            <a href="thinking/determinism-sla.html">不确定执行的 SLA：管概率，还是管边界？</a>
+          </li>
+          <li>
+            <span class="home-latest__kind">Project</span>
+            <a href="projects/redpacket.html">RedPacket：热点扣减与一致性解剖</a>
+          </li>
+        </ul>
       </div>
     </section>
   </main>
@@ -91,11 +74,11 @@
     <div class="wrap site-footer__inner">
       <div>
         <p>© <span id="year"></span> chengguruchun · Hangzhou</p>
-        <p>AI Knowledge Lab — 面向人类与 AI Agent 的开放知识系统</p>
+        <p>面向人类与 AI Agent 的开放知识系统</p>
       </div>
       <div>
         <p><a href="mailto:chengguruchun@163.com">chengguruchun@163.com</a></p>
-        <p><a href="https://github.com/chengguruchun" rel="noopener">GitHub</a> · <a href="PRODUCT.md">PRODUCT.md</a> · <a href="videos/">Videos</a> · <a href="tags/">Search</a></p>
+        <p><a href="https://github.com/chengguruchun" rel="noopener">GitHub</a> · <a href="PRODUCT.md">PRODUCT.md</a></p>
       </div>
     </div>
   </footer>
