@@ -67,7 +67,7 @@
     root.innerHTML = repos.map(card).join("");
   }
 
-  if (statusEl) statusEl.textContent = "加载 star 与仓库信息…";
+  if (statusEl) statusEl.textContent = "";
 
   Promise.all(
     REPOS.map(function (full) {
@@ -80,9 +80,7 @@
     })
   )
     .then(function (repos) {
-      if (statusEl) {
-        statusEl.textContent = "最近研究的非个人项目";
-      }
+      if (statusEl) statusEl.textContent = "";
       render(repos);
     })
     .catch(function () {
@@ -98,7 +96,7 @@
           language: null,
         };
       });
-      if (statusEl) statusEl.textContent = "GitHub API 暂不可用，已显示仓库链接。";
+      if (statusEl) statusEl.textContent = "";
       render(fallback);
     });
 })();
