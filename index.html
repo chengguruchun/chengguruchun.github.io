@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>chengguruchun · connect to ai</title>
+  <meta name="description" content="chengguruchun 的个人主页。杭州，关注分布式系统与人工智能。">
+  <meta name="theme-color" content="#111210">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=IBM+Plex+Sans:wght@400;500&family=Noto+Serif+SC:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+
+  <header class="mast">
+    <p class="mast__mark">杭州 · Hangzhou</p>
+    <nav class="mast__nav" aria-label="页面导航">
+      <a href="#about">关于</a>
+      <a href="#work">作品</a>
+      <a href="#contact">联系</a>
+    </nav>
+    <time class="mast__clock" id="clock" datetime="">--:--</time>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="hero__kicker">Personal site / 个人站点</p>
+      <h1 class="hero__name">chengguruchun</h1>
+      <p class="hero__line">
+        <em>connect to ai</em>
+        <span>把工程经验接到智能上。</span>
+      </p>
+    </section>
+
+    <section id="about" class="panel">
+      <div class="panel__index">01 / 关于</div>
+      <div class="panel__body">
+        <h2>在系统里写代码，<br>也在系统之外看智能。</h2>
+        <div class="split">
+          <p>
+            我在杭州。过去几年主要做后端与分布式：并发、消息、协调服务、以及高并发交易场景。
+            仓库里留下的是秒杀、抢红包、心跳检测这些具体问题——它们教我如何在压力下把系统写稳。
+          </p>
+          <p>
+            现在更关心一件事：怎么把这些工程能力接到人工智能上。
+            不是追模型名词，而是让智能成为可部署、可观察、可演进的一部分。
+          </p>
+        </div>
+        <ul class="tags" aria-label="关注领域">
+          <li>分布式系统</li>
+          <li>高并发</li>
+          <li>Java / JVM</li>
+          <li>人工智能</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="work" class="panel">
+      <div class="panel__index">02 / 作品</div>
+      <div class="panel__body">
+        <h2>一些还在说话的仓库。</h2>
+        <ol class="works">
+          <li>
+            <a href="https://github.com/chengguruchun/concurrency" rel="noopener">
+              <span class="works__name">concurrency</span>
+              <span class="works__desc">高并发学习笔记与实验</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/chengguruchun/RedPacket" rel="noopener">
+              <span class="works__name">RedPacket</span>
+              <span class="works__desc">抢红包：高并发场景拆解</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/chengguruchun/miaoshao_test" rel="noopener">
+              <span class="works__name">miaoshao_test</span>
+              <span class="works__desc">秒杀优化 · Spring Boot + Redis + RabbitMQ</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/chengguruchun/SecondKill" rel="noopener">
+              <span class="works__name">SecondKill</span>
+              <span class="works__desc">秒杀系统实现</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/chengguruchun/Netty_heartbeat" rel="noopener">
+              <span class="works__name">Netty_heartbeat</span>
+              <span class="works__desc">Netty 分布式心跳检测</span>
+            </a>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="contact" class="panel panel--last">
+      <div class="panel__index">03 / 联系</div>
+      <div class="panel__body">
+        <h2>找到我。</h2>
+        <p class="lead">欢迎就系统、智能与工程实践交流。</p>
+        <ul class="links">
+          <li>
+            <a href="mailto:chengguruchun@163.com">chengguruchun@163.com</a>
+          </li>
+          <li>
+            <a href="https://github.com/chengguruchun" rel="noopener">github.com/chengguruchun</a>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p>© <span id="year"></span> chengguruchun</p>
+    <p>Hosted on GitHub Pages</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
