@@ -10,12 +10,13 @@
 
   var path = location.pathname.replace(/\/$/, "") || "/";
   document.querySelectorAll(".nav a[href]").forEach(function (a) {
+    a.removeAttribute("aria-current");
     var href = a.getAttribute("href");
     if (!href || href.startsWith("http") || href.startsWith("mailto")) return;
-    var clean = href.replace(/\/$/, "") || "/";
-    // Normalize for GitHub Pages project/user site paths
     var full = a.pathname.replace(/\/$/, "") || "/";
-    if (full === path || (path.endsWith(clean) && clean !== "/")) {
+    var pathFile = path.replace(/\/index\.html$/, "") || "/";
+    var fullFile = full.replace(/\/index\.html$/, "") || "/";
+    if (fullFile === pathFile) {
       a.setAttribute("aria-current", "page");
     }
   });

@@ -190,9 +190,9 @@ hr {
 }
 .nav a[aria-current="page"] {
   color: var(--text);
-  font-weight: 600;
+  font-weight: 500;
   border-bottom-color: transparent;
-  box-shadow: inset 0 -2px 0 var(--accent);
+  box-shadow: inset 0 -1px 0 rgba(196,163,90,0.55);
 }
 .nav__search {
   font-size: 0.86rem;
@@ -861,14 +861,13 @@ a.entry-card:hover {
 }
 
 .route-stop__card--now {
-  padding: 1rem 1.15rem 1.15rem;
-  background: var(--bg-elev);
-  border: 1px solid var(--line);
-  border-left: 3px solid var(--accent);
-  border-radius: var(--radius);
-  box-shadow: 0 10px 28px rgba(31, 36, 43, 0.04);
+  padding: 0.15rem 0 0.5rem;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
 }
-.route-stop__card--now .route-stop__city { color: var(--accent); }
+.route-stop__card--now .route-stop__city { color: var(--text); }
 .route-stop__card--now .route-stop__note { max-width: 36rem; }
 
 .route-branch {
@@ -915,7 +914,7 @@ a.entry-card:hover {
   background: var(--bg-elev);
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  box-shadow: inset 0 -2px 0 var(--teal-soft);
+  box-shadow: none;
 }
 .route-badge__label {
   font-family: var(--mono);
@@ -1457,10 +1456,11 @@ a.entry-card:hover {
 /* About · now playing */
 .now-playing {
   margin: 0.5rem 0 1rem;
-  padding: 1.15rem 1.25rem;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background: var(--bg-elev);
+  padding: 0.85rem 0 0.25rem;
+  border: none;
+  border-top: 1px solid var(--line-soft);
+  border-radius: 0;
+  background: transparent;
 }
 .now-playing__label {
   margin: 0 0 0.75rem;
