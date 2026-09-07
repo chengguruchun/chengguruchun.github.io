@@ -5,8 +5,16 @@
     <link>https://chengguruchun.github.io/</link>
     <description>chengguruchun · Blog for Agents · 个人知识博客（文章 / Diverse Lab 等有日期条目）</description>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 06 Sep 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 07 Sep 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://chengguruchun.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>2026-09 Week 1 · Context Engineering</title>
+      <link>https://chengguruchun.github.io/times/</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/times/</guid>
+      <pubDate>Mon, 07 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Times</category>
+      <description>当可靠性成为默认要求后，真正的瓶颈转移到智能体如何理解并利用上下文。Context Engineering 将提示词、记忆检索和工具信息的设计系统化，直接降低因上下文缺失或冲突导致的失败率。它既是可靠性的前置条件，也是从“能用”迈向“可控”的关键工程实践。</description>
+    </item>
     <item>
       <title>Kubernetes × Agent：从容器编排到目标收敛</title>
       <link>https://chengguruchun.github.io/articles/k8s-to-agent-control-plane.html</link>
@@ -30,14 +38,6 @@
       <pubDate>Sun, 06 Sep 2026 00:00:00 +0000</pubDate>
       <category>Diverse Lab</category>
       <description>物理学看规律，生态学看关系与反馈；综合二者，才能理解 LLM 与多 Agent 如何逼近 Complex System Engineering。</description>
-    </item>
-    <item>
-      <title>2026-09 Week 1 · Context Engineering</title>
-      <link>https://chengguruchun.github.io/times/</link>
-      <guid isPermaLink="true">https://chengguruchun.github.io/times/</guid>
-      <pubDate>Sun, 06 Sep 2026 00:00:00 +0000</pubDate>
-      <category>Times</category>
-      <description>当可靠性成为默认要求后，真正的瓶颈转移到智能体如何理解并利用上下文。Context Engineering 将提示词、记忆检索和工具信息的设计系统化，直接降低因上下文缺失或冲突导致的失败率。它既是可靠性的前置条件，也是从“能用”迈向“可控”的关键工程实践。</description>
     </item>
   </channel>
 </rss>
