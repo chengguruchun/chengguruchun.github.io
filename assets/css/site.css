@@ -1603,3 +1603,17 @@ a.project-card:hover .project-card__stars {
   font-variant-numeric: tabular-nums;
 }
 .footer-visits__sep { opacity: 0.55; }
+
+
+/* About · research profile: same wrap left edge as hero/route */
+.about-profile__inner {
+  max-width: 42rem;
+}
+.about-profile__inner > h2:first-of-type {
+  margin-top: 0;
+  border-top: none;
+  padding-top: 0;
+}
+.about-profile .callout {
+  margin-top: 0.35rem;
+}
