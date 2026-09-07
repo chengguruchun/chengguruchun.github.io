@@ -1,6 +1,6 @@
 {
   "name": "Hot Words feedback",
-  "generated": "2026-09-07T03:15:51Z",
+  "generated": "2026-09-07T04:44:46Z",
   "period": "2026-09-W1",
   "word": "Context Engineering",
   "signals": {
@@ -19,36 +19,63 @@
       "note": "可后续接入 GitHub Issues 留言。"
     },
     "citations": {
-      "count": 2,
+      "count": 0,
       "note": "根据 catalog/index 中标题、摘要、标签是否出现该词估算。"
     }
   },
   "lastRun": {
-    "runId": "hot-words-2026-09-W1",
-    "phase": "published",
+    "runId": "hot-words-2026-09-W1-20260907T044436Z",
+    "phase": "awaiting_review",
     "gates": {
       "schema": "pass",
       "duplicate": "pass",
       "editorial": "pass",
-      "evidence": "skip"
+      "evidence": "pass",
+      "relevance": "weak",
+      "consistency": "skip"
     },
-    "evidenceCount": 0,
-    "publish": {
-      "commit": null,
-      "url": "https://chengguruchun.github.io/times/",
-      "note": "Bootstrap from currently published Hot Word until the next Actions run writes a live manifest."
-    },
-    "error": null
+    "evidenceCount": 10,
+    "publish": {},
+    "error": "Review mode: not published. Re-run with mode=autonomous after confirmation."
   },
   "learnHints": {
     "recentWords": [
       "2026-09-W1: Context Engineering"
     ],
-    "rejectedCandidates": [],
-    "prefer": "下一轮务必补齐结构化证据（title/url/claim）；先有来源，再谈热度。",
-    "avoid": "回避与当前词重复、口号化、以及只有空泛描述没有来源的词。"
+    "rejectedCandidates": [
+      {
+        "word": "Context Caching",
+        "reason": "not_chosen",
+        "notes": "Directly related to context engineering but distinct as an infrastructure optimization."
+      },
+      {
+        "word": "Agentic Context Loops",
+        "reason": "not_chosen",
+        "notes": "An advanced evolution of context engineering, emphasizing dynamic adaptation."
+      },
+      {
+        "word": "Retrieval-Augmented Generation (RAG) 2.0",
+        "reason": "not_chosen",
+        "notes": "While RAG is established, RAG 2.0 is a hot evolution that builds on context engineering."
+      },
+      {
+        "word": "Contextual Compression",
+        "reason": "not_chosen",
+        "notes": "A technical solution to context limits, gaining traction in agent design."
+      }
+    ],
+    "prefer": "优先选能落到本站软件 / 系统 / Agent 主线的词，并带至少一条可点开的 https 证据。",
+    "avoid": "回避与当前词重复、口号化、以及只有空泛描述没有来源的词。 最近未入选：Context Caching、Agentic Context Loops、Retrieval-Augmented Generation (RAG) 2.0、Contextual Compression。"
   },
   "recentRuns": [
+    {
+      "runId": "hot-words-2026-09-W1-20260907T044436Z",
+      "period": "2026-09-W1",
+      "phase": "awaiting_review",
+      "word": "Memory-as-a-Service",
+      "finishedAt": "2026-09-07T04:44:46Z",
+      "path": "/api/hot-words/runs/hot-words-2026-09-W1-20260907T044436Z.json"
+    },
     {
       "runId": "hot-words-2026-09-W1",
       "period": "2026-09-W1",
