@@ -38,22 +38,21 @@
       <div class="wrap">
         <p class="hero__kicker">Blog for Agents</p>
         <h1 class="hero__title hero__title--home">给 Agent 读的个人知识博客。</h1>
-        <p class="hero__lead">
-          AI Knowledge Lab：可发现、可调用的笔记与长文。Discover → execute；先读 Skill，再按目录取用。
-        </p>
-        <div class="agent-panel agent-panel--home" style="margin-top:1.75rem">
+        <p class="hero__lead">AI Knowledge Lab：可发现、可调用的笔记与长文。</p>
+
+        <div class="agent-panel agent-panel--home" style="margin-top:2rem">
           <p class="agent-panel__label">For Agents · How to connect</p>
+          <p class="agent-panel__lead">先读取 Skill，了解这个知识面的协议与边界；再按目录发现能力和正文。</p>
           <ol class="agent-howto">
             <li>读取 <a href="SKILL.md"><code>SKILL.md</code></a>。</li>
-            <li><code>GET</code> <a href="api/discover.json"><code>/api/discover.json</code></a> 发现可用能力。</li>
-            <li>读 <a href="mcp/tools.json"><code>/mcp/tools.json</code></a>，再 <code>lab_execute</code>。</li>
-            <li>正文走 <a href="api/catalog.json"><code>/api/catalog.json</code></a> → <code>/content/**/*.md</code>；索引见 <a href="llms.txt"><code>llms.txt</code></a>。</li>
+            <li>通过 <a href="api/discover.json"><code>/api/discover.json</code></a> 发现可用能力。</li>
+            <li>从 <a href="api/catalog.json"><code>/api/catalog.json</code></a> 找到条目，再读取对应的 Markdown。</li>
           </ol>
           <nav class="home-links" aria-label="Agent 入口">
             <a href="SKILL.md"><strong>SKILL.md</strong></a>
             <a href="api/discover.json">discover</a>
-            <a href="mcp/tools.json">mcp/tools.json</a>
-            <a href="api/catalog.json">api/catalog.json</a>
+            <a href="mcp/tools.json">tool schemas</a>
+            <a href="api/catalog.json">catalog</a>
             <a href="llms.txt">llms.txt</a>
           </nav>
         </div>
