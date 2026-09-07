@@ -1,6 +1,6 @@
 {
   "name": "Hot Words feedback",
-  "generated": "2026-09-07T04:47:06Z",
+  "generated": "2026-09-07T05:44:41Z",
   "period": "2026-09-W1",
   "word": "Context Window Optimization",
   "signals": {
@@ -24,55 +24,37 @@
     }
   },
   "lastRun": {
-    "runId": "hot-words-2026-09-W1-20260907T044655Z",
-    "phase": "published",
+    "runId": "hot-words-2026-09-W1-20260907T054441Z",
+    "phase": "skipped",
     "gates": {
-      "schema": "pass",
+      "schema": "skip",
       "duplicate": "pass",
-      "editorial": "pass",
-      "evidence": "pass",
-      "relevance": "pass",
-      "consistency": "pass"
+      "editorial": "skip",
+      "evidence": "skip",
+      "relevance": "skip",
+      "consistency": "skip"
     },
-    "evidenceCount": 10,
-    "publish": {
-      "commit": "739f59f731157fdf9acbde59813956ddc60c2dcd",
-      "url": "https://chengguruchun.github.io/times/",
-      "mode": "autonomous",
-      "periodScheme": "YYYY-MM-WN month block, not ISO week"
-    },
-    "error": null
+    "evidenceCount": 0,
+    "publish": {},
+    "error": "Period 2026-09-W1 already published (Context Window Optimization); skip apply/push (pass force=true to override)"
   },
   "learnHints": {
     "recentWords": [
       "2026-09-W1: Context Window Optimization"
     ],
-    "rejectedCandidates": [
-      {
-        "word": "Context Engineering",
-        "reason": "not_chosen",
-        "notes": "Directly related to current word but with fresh evidence and slightly different angle."
-      },
-      {
-        "word": "Adaptive Context Management",
-        "reason": "not_chosen",
-        "notes": "A more advanced concept that goes beyond static context engineering."
-      },
-      {
-        "word": "Contextual Memory Systems",
-        "reason": "not_chosen",
-        "notes": "Focuses on the memory aspect of context, which is a hot topic in agent design."
-      },
-      {
-        "word": "Prompt Contextualization",
-        "reason": "not_chosen",
-        "notes": "A narrower technique under the umbrella of context engineering, but with distinct focus."
-      }
-    ],
-    "prefer": "优先选能落到本站软件 / 系统 / Agent 主线的词，并带至少一条可点开的 https 证据。",
-    "avoid": "回避与当前词重复、口号化、以及只有空泛描述没有来源的词。 最近未入选：Context Engineering、Adaptive Context Management、Contextual Memory Systems、Prompt Contextualization。"
+    "rejectedCandidates": [],
+    "prefer": "下一轮务必补齐结构化证据（title/url/claim）；先有来源，再谈热度。",
+    "avoid": "回避与当前词重复、口号化、以及只有空泛描述没有来源的词。"
   },
   "recentRuns": [
+    {
+      "runId": "hot-words-2026-09-W1-20260907T054441Z",
+      "period": "2026-09-W1",
+      "phase": "skipped",
+      "word": "Context Window Optimization",
+      "finishedAt": "2026-09-07T05:44:41Z",
+      "path": "/api/hot-words/runs/hot-words-2026-09-W1-20260907T054441Z.json"
+    },
     {
       "runId": "hot-words-2026-09-W1-20260907T044655Z",
       "period": "2026-09-W1",

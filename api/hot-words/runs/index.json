@@ -1,7 +1,15 @@
 {
   "name": "Hot Words run index",
-  "generated": "2026-09-07T04:47:06Z",
+  "generated": "2026-09-07T05:44:41Z",
   "items": [
+    {
+      "runId": "hot-words-2026-09-W1-20260907T054441Z",
+      "period": "2026-09-W1",
+      "phase": "skipped",
+      "word": "Context Window Optimization",
+      "finishedAt": "2026-09-07T05:44:41Z",
+      "path": "/api/hot-words/runs/hot-words-2026-09-W1-20260907T054441Z.json"
+    },
     {
       "runId": "hot-words-2026-09-W1-20260907T044655Z",
       "period": "2026-09-W1",
