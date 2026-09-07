@@ -14,12 +14,13 @@
       "id": "times-2026-09-w1",
       "period": "2026-09-W1",
       "cadence": "weekly",
-      "word": "Context Engineering",
-      "title": "2026-09 Week 1 · Context Engineering",
-      "why": "当可靠性成为默认要求后，真正的瓶颈转移到智能体如何理解并利用上下文。Context Engineering 将提示词、记忆检索和工具信息的设计系统化，直接降低因上下文缺失或冲突导致的失败率。它既是可靠性的前置条件，也是从“能用”迈向“可控”的关键工程实践。",
+      "word": "Context Window Optimization",
+      "title": "2026-09 Week 1 · Context Window Optimization",
+      "why": "在2026年，随着Agent处理长上下文需求的激增，如何高效利用有限的上下文窗口成为工程实践的核心痛点。本站软件与Agent主线高度相关，该词直指系统性能优化，且与当前词形成互补而非重复。证据来源权威，时效性强，能引导读者关注具体的token管理和检索策略，具备实际落地价值。",
       "date": "2026-09-07",
       "url": "/times/",
       "markdown": "/content/times/2026-09-w1.md"
     }
-  ]
+  ],
+  "currentProposalHash": "d37aba673364b495"
 }

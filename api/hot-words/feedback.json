@@ -1,8 +1,8 @@
 {
   "name": "Hot Words feedback",
-  "generated": "2026-09-07T04:44:46Z",
+  "generated": "2026-09-07T04:47:04Z",
   "period": "2026-09-W1",
-  "word": "Context Engineering",
+  "word": "Context Window Optimization",
   "signals": {
     "visits": {
       "site": null,
@@ -19,55 +19,63 @@
       "note": "可后续接入 GitHub Issues 留言。"
     },
     "citations": {
-      "count": 0,
+      "count": 2,
       "note": "根据 catalog/index 中标题、摘要、标签是否出现该词估算。"
     }
   },
   "lastRun": {
-    "runId": "hot-words-2026-09-W1-20260907T044436Z",
-    "phase": "awaiting_review",
+    "runId": "hot-words-2026-09-W1-20260907T044655Z",
+    "phase": "applied",
     "gates": {
       "schema": "pass",
       "duplicate": "pass",
       "editorial": "pass",
       "evidence": "pass",
-      "relevance": "weak",
-      "consistency": "skip"
+      "relevance": "pass",
+      "consistency": "pass"
     },
     "evidenceCount": 10,
     "publish": {},
-    "error": "Review mode: not published. Re-run with mode=autonomous after confirmation."
+    "error": null
   },
   "learnHints": {
     "recentWords": [
-      "2026-09-W1: Context Engineering"
+      "2026-09-W1: Context Window Optimization"
     ],
     "rejectedCandidates": [
       {
-        "word": "Context Caching",
+        "word": "Context Engineering",
         "reason": "not_chosen",
-        "notes": "Directly related to context engineering but distinct as an infrastructure optimization."
+        "notes": "Directly related to current word but with fresh evidence and slightly different angle."
       },
       {
-        "word": "Agentic Context Loops",
+        "word": "Adaptive Context Management",
         "reason": "not_chosen",
-        "notes": "An advanced evolution of context engineering, emphasizing dynamic adaptation."
+        "notes": "A more advanced concept that goes beyond static context engineering."
       },
       {
-        "word": "Retrieval-Augmented Generation (RAG) 2.0",
+        "word": "Contextual Memory Systems",
         "reason": "not_chosen",
-        "notes": "While RAG is established, RAG 2.0 is a hot evolution that builds on context engineering."
+        "notes": "Focuses on the memory aspect of context, which is a hot topic in agent design."
       },
       {
-        "word": "Contextual Compression",
+        "word": "Prompt Contextualization",
         "reason": "not_chosen",
-        "notes": "A technical solution to context limits, gaining traction in agent design."
+        "notes": "A narrower technique under the umbrella of context engineering, but with distinct focus."
       }
     ],
     "prefer": "优先选能落到本站软件 / 系统 / Agent 主线的词，并带至少一条可点开的 https 证据。",
-    "avoid": "回避与当前词重复、口号化、以及只有空泛描述没有来源的词。 最近未入选：Context Caching、Agentic Context Loops、Retrieval-Augmented Generation (RAG) 2.0、Contextual Compression。"
+    "avoid": "回避与当前词重复、口号化、以及只有空泛描述没有来源的词。 最近未入选：Context Engineering、Adaptive Context Management、Contextual Memory Systems、Prompt Contextualization。"
   },
   "recentRuns": [
+    {
+      "runId": "hot-words-2026-09-W1-20260907T044655Z",
+      "period": "2026-09-W1",
+      "phase": "applied",
+      "word": "Context Window Optimization",
+      "finishedAt": "2026-09-07T04:47:04Z",
+      "path": "/api/hot-words/runs/hot-words-2026-09-W1-20260907T044655Z.json"
+    },
     {
       "runId": "hot-words-2026-09-W1-20260907T044436Z",
       "period": "2026-09-W1",
