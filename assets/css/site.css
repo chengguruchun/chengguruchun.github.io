@@ -1633,6 +1633,97 @@ a.project-card:hover .project-card__stars {
 
 
 
+/* Hot Words · loop flowchart */
+.hotwords-flow__lead {
+  max-width: 40rem;
+  margin: 0 0 1.5rem;
+  color: var(--text-dim);
+  font-size: 0.95rem;
+  line-height: 1.65;
+}
+.hotwords-flow__lead code {
+  font-family: var(--mono);
+  font-size: 0.84em;
+}
+.loop-flow {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 0.65rem;
+  position: relative;
+}
+.loop-flow::before {
+  content: "";
+  position: absolute;
+  left: 6%;
+  right: 6%;
+  top: 1.15rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0.45;
+  pointer-events: none;
+}
+.loop-flow__step {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  padding: 1.15rem 0.7rem 0.85rem;
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  min-height: 9.5rem;
+}
+.loop-flow__step.is-current {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 35%, transparent);
+}
+.loop-flow__step.is-done {
+  border-color: color-mix(in srgb, var(--teal) 45%, var(--line));
+}
+.loop-flow__idx {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+}
+.loop-flow__name {
+  display: block;
+  margin: 0.35rem 0 0.1rem;
+  font-family: var(--serif);
+  font-size: 1.12rem;
+  font-weight: 600;
+  color: var(--text);
+}
+.loop-flow__zh {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--text-faint);
+  margin-bottom: 0.45rem;
+}
+.loop-flow__step p {
+  margin: 0;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: var(--text-dim);
+}
+.hotwords-flow__note {
+  margin: 1rem 0 0;
+  font-size: 0.86rem;
+  color: var(--text-faint);
+  max-width: 40rem;
+}
+@media (max-width: 900px) {
+  .loop-flow {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+  .loop-flow::before { display: none; }
+  .loop-flow__step { min-height: 0; }
+}
+
 /* Hot Words · observability */
 .hotwords-observe__lead {
   max-width: 38rem;

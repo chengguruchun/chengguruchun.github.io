@@ -10,7 +10,7 @@ description: >
 
 ## Goal
 
-Each week: pick **one** hot word + a tight why, write canonical Markdown, update the Hot Words page. Human reviews before git push / Pages publish.
+Each week: pick **one** hot word + a tight why, write canonical Markdown, update the Hot Words page. Autonomous Mondays publish after evidence + consistency gates. Use `mode=review` when a human must confirm.
 
 ## Protocol
 
@@ -20,7 +20,7 @@ Each week: pick **one** hot word + a tight why, write canonical Markdown, update
 4. Produce **3 candidates** with evidence. Compare novelty / continuity / engineering relevance.
 5. Choose one. Write `why` in direct Chinese editorial voice. No hedging filler. No roadmap/placeholder language on the public page.
 6. `lab_hot_words_apply` with `dryRun: true`, inspect paths, then apply with `dryRun: false`.
-7. Summarize for the human: word, why, files changed. Do **not** claim GitHub Pages is updated unless pushed.
+7. `lab_hot_words_apply` is local only. Publish is Actions (`mode=autonomous`) or an explicit `lab_hot_words_publish` approval. Do **not** claim Pages is updated unless pushed.
 
 ## Quality bar
 

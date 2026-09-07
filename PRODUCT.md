@@ -65,7 +65,7 @@
 
 ## Hot Words Loop（Pi + DeepSeek / LiteLLM）
 
-周更 Hot Words（`/times/`）：项目本地 Pi 包 `.pi/packages/lab-hot-words` 提供 `/hot-words` 与 `lab_hot_words_*` 工具；模型默认 DeepSeek，也可经 LiteLLM 多模型路由。配置见 `docs/pi-deepseek/`，操作见 `HOT_WORDS_LOOP.md`。无 Pi 时用 `python3 scripts/hot_words_apply.py`。**不自动 push**；Pages 以人工合并为准。
+周更 Hot Words（`/times/`）：Actions 默认 **autonomous**（周一上海 09:00：Propose → 证据门禁 → Apply → 一致性 → push）。`workflow_dispatch` 可选 `mode=review`，只写 `awaiting_review` 不发布。周期 `YYYY-MM-WN` 是当月第 N 个 7 天，不是 ISO week。详见 `HOT_WORDS_LOOP.md`。
 
 ## 设计原则
 

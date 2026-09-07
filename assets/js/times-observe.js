@@ -21,6 +21,7 @@
       failed: "失败",
       applied: "已写入",
       validated: "已校验",
+      awaiting_review: "待复核",
       proposed: "已提案",
       started: "开始"
     };
@@ -28,7 +29,14 @@
   }
 
   function gateLabel(k) {
-    var map = { schema: "结构", duplicate: "去重", editorial: "编辑", evidence: "证据" };
+    var map = {
+      schema: "结构",
+      duplicate: "去重",
+      editorial: "编辑",
+      evidence: "证据",
+      relevance: "相关",
+      consistency: "一致"
+    };
     return map[k] || k;
   }
 
@@ -79,7 +87,7 @@
     var rejected = (hints.rejectedCandidates || []).map(function (x) { return x.word; }).filter(Boolean);
     var runs = ((index && index.items) || fb.recentRuns || []).slice(0, 5);
 
-    var gateHtml = ["schema", "duplicate", "editorial", "evidence"].map(function (k) {
+    var gateHtml = ["schema", "duplicate", "editorial", "evidence", "relevance", "consistency"].map(function (k) {
       var v = gates[k] || "skip";
       return (
         '<span class="hotwords-gate ' + gateClass(v) + '">' +
@@ -135,12 +143,38 @@
       "</div>";
   }
 
+  function markFlow(phase) {
+    var flow = document.querySelector("[data-hotwords-flow]");
+    if (!flow) return;
+    var order = ["state", "propose", "validate", "apply", "publish", "observe"];
+    var map = {
+      started: "state",
+      proposed: "propose",
+      validated: "validate",
+      awaiting_review: "validate",
+      applied: "apply",
+      published: "publish",
+      skipped: "publish",
+      failed: "validate"
+    };
+    var current = map[phase] || "observe";
+    var idx = order.indexOf(current);
+    flow.querySelectorAll(".loop-flow__step").forEach(function (el) {
+      var key = el.getAttribute("data-flow");
+      var i = order.indexOf(key);
+      el.classList.toggle("is-current", key === current);
+      el.classList.toggle("is-done", i >= 0 && i < idx);
+    });
+  }
+
   Promise.all([
     getJSON("../api/hot-words/runs/latest.json").catch(function () { return null; }),
     getJSON("../api/hot-words/runs/index.json").catch(function () { return null; }),
     getJSON("../api/hot-words/feedback.json").catch(function () { return null; }),
   ]).then(function (all) {
+    var latest = all[0] || {};
     render(all[0], all[1], all[2]);
+    markFlow(latest.phase || ((all[2] && all[2].lastRun && all[2].lastRun.phase) || "published"));
     setTimeout(function () { render(all[0], all[1], all[2]); }, 1200);
   });
 })();

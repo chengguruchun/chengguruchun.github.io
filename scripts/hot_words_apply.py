@@ -5,10 +5,14 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import sys
 from datetime import datetime, timezone
 import html as html_lib
 from pathlib import Path
 from zoneinfo import ZoneInfo
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from hot_words_lib import PERIOD_SCHEME, proposal_hash, verify_applied
 
 
 def repo_root(start: Path | None = None) -> Path:
@@ -191,6 +195,8 @@ word: {word}
     api.setdefault("type", "Times")
     api.setdefault("format", "one-word-per-issue (annual-hotword style)")
     api.setdefault("cadence", "weekly-or-monthly")
+    api["periodScheme"] = PERIOD_SCHEME
+    api["currentProposalHash"] = proposal_hash(period, word, why)
     issues = api.get("issues") if isinstance(api.get("issues"), list) else []
     if not issues and isinstance(api.get("items"), list):
         issues = [x for x in api["items"] if isinstance(x, dict)]
@@ -203,15 +209,21 @@ word: {word}
     api["updated"] = date
     api["current"] = period
 
+    payloads = {
+        md_path: md,
+        html_path: html,
+        api_path: json.dumps(api, ensure_ascii=False, indent=2) + "\n",
+    }
     changed = [str(md_path), str(html_path), str(api_path)]
     if not dry_run:
-        md_path.parent.mkdir(parents=True, exist_ok=True)
-        md_path.write_text(md, encoding="utf-8")
-        html_path.write_text(html, encoding="utf-8")
-        api_path.parent.mkdir(parents=True, exist_ok=True)
-        api_path.write_text(json.dumps(api, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        for path, text in payloads.items():
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(text, encoding="utf-8")
 
     changed.extend(upsert_times_into_indexes(root, entry, dry_run))
+    checked = verify_applied(root, period, word) if not dry_run else {"ok": True, "errors": [], "gate": "skip"}
+    if not dry_run and not checked["ok"]:
+        raise SystemExit("consistency failed: " + "; ".join(checked["errors"]))
 
     return {
         "dryRun": dry_run,
@@ -220,6 +232,8 @@ word: {word}
         "date": date,
         "changed": changed,
         "markdown": entry["markdown"],
+        "proposalHash": api["currentProposalHash"],
+        "consistency": checked,
     }
 
 
@@ -230,9 +244,14 @@ def main() -> None:
     p.add_argument("--why", required=True)
     p.add_argument("--cadence", default="weekly")
     p.add_argument("--dry-run", action="store_true")
+    p.add_argument("--verify", action="store_true", help="only check existing files")
     p.add_argument("--root", type=Path, default=None)
     args = p.parse_args()
     root = repo_root(args.root)
+    if args.verify:
+        checked = verify_applied(root, args.period, args.word)
+        print(json.dumps(checked, ensure_ascii=False, indent=2))
+        raise SystemExit(0 if checked["ok"] else 2)
     result = apply(args.period, args.word, args.why, args.cadence, args.dry_run, root)
     print(json.dumps(result, ensure_ascii=False, indent=2))
 

@@ -7,3 +7,4 @@
 .local/
 .preview/
 __pycache__/
+.tmp-hot-words/

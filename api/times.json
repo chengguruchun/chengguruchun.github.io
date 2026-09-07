@@ -2,6 +2,11 @@
   "type": "Times",
   "format": "one-word-per-issue (annual-hotword style)",
   "cadence": "weekly-or-monthly",
+  "periodScheme": {
+    "format": "YYYY-MM-WN",
+    "meaning": "Nth 7-day block of the calendar month in Asia/Shanghai (days 1–7 = W1, 8–14 = W2, …). Not an ISO 8601 week number.",
+    "timezone": "Asia/Shanghai"
+  },
   "current": "2026-09-W1",
   "updated": "2026-09-07",
   "issues": [

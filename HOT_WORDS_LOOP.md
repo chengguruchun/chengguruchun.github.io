@@ -2,7 +2,17 @@
 
 Weekly loop for `/times/` (nav: **Hot Words**).
 
-## Lifecycle (tools protocol)
+## Period
+
+`YYYY-MM-WN` means the **Nth 7-day block of that calendar month** in `Asia/Shanghai`:
+
+- days 1–7 → `W1`
+- days 8–14 → `W2`
+- …
+
+This is **not** an ISO 8601 week number. `2026-09-W1` is not “ISO week 36”.
+
+## Lifecycle
 
 ```
 State → Propose → Validate → Apply → Publish → Observe
@@ -13,76 +23,54 @@ State → Propose → Validate → Apply → Publish → Observe
 | State | `lab_hot_words_state` | none |
 | Propose | `lab_hot_words_propose` | none (Actions / DeepSeek today) |
 | Validate | `lab_hot_words_validate` | none |
-| Apply | `lab_hot_words_apply` | **local files only** |
-| Publish | `lab_hot_words_publish` | **remote commit/push** (requiresApproval) |
+| Apply | `lab_hot_words_apply` | **local files only** + consistency check |
+| Publish | `lab_hot_words_publish` | **remote commit/push** when mode=autonomous |
 | Observe | `lab_hot_words_run_status` / `lab_hot_words_feedback` | none |
 
-**Apply ≠ Publish.** `lab_hot_words_apply` never pushes. Publish is Actions (autonomous Mondays) or an explicit high-risk publish contract.
+**Apply ≠ Publish.** Evidence must include at least one `https` URL or publish fails (`force` can override duplicate only, not a missing URL unless you skip the gate locally).
 
-## Run manifest (Observe)
+## Modes
 
-Every weekly run writes:
+| Mode | Behavior |
+|---|---|
+| **autonomous** (schedule default) | gates pass → apply → consistency → commit/push |
+| **review** (`workflow_dispatch`) | gates pass → `phase=awaiting_review` → no content publish |
+
+## Gates
+
+- `schema` — word present
+- `duplicate` — not the same current word / `proposalHash`
+- `editorial` — `why` ≥ 40 chars
+- `evidence` — ≥1 https URL required to publish
+- `relevance` — overlap with catalog titles/tags (`pass` / `weak`)
+- `consistency` — markdown, HTML, `times.json`, catalog, index agree after apply
+
+## Run manifest
 
 - `/api/hot-words/runs/<runId>.json`
 - `/api/hot-words/runs/latest.json`
 - `/api/hot-words/runs/index.json`
 
-Agents should call **`lab_hot_words_run_status`** (GET latest) instead of parsing Actions logs.
+Phases: `started | proposed | validated | awaiting_review | applied | published | skipped | failed`.
 
-Manifest fields: `runId`, `period`, `phase` (`started|proposed|validated|applied|published|skipped|failed`), `input`, `proposal`, `gates`, `apply`, `publish`, `error`.
+## Monday 09:00 Asia/Shanghai
 
-## What runs Mondays 09:00 Asia/Shanghai
-
-GitHub Action **Hot Words Weekly** (`hot-words-weekly.yml`):
+GitHub Action **Hot Words Weekly**:
 
 1. Compute period + `runId`
-2. DeepSeek Propose (prefer structured evidence objects; string evidence still allowed)
-3. Validate gates: word non-empty; why ≥ 40 chars; word ≠ current (unless `force`)
-4. If period already published and not `force` → `phase=skipped`, still commit run manifest
-5. Apply via `scripts/hot_words_apply.py`
-6. Publish: commit/push content + manifests; finalize `phase=published` with commit SHA
-7. FYI / failure Issues as before
+2. Propose (DeepSeek, structured evidence)
+3. Validate (hard evidence URL)
+4. Review mode stops here
+5. Apply + consistency
+6. Publish + finalize manifest with commit SHA
+7. Failure Issue / FYI Issue
 
-Secret: `DEEPSEEK_API_KEY`. Manual dispatch input **`force`**.
+Secret: `DEEPSEEK_API_KEY`. Inputs: `force`, `mode`.
 
-Default mode: **autonomous**. Future option: **review** (proposal/PR before publish) — not required yet.
-
-## Eval / Learn (next)
-
-Execute loop is in place. Later: feed visits / votes / comments / citations into `lab_hot_words_feedback` and next week's Propose context.
-
-## Local / agent fallback
+## Local
 
 ```bash
-python3 scripts/hot_words_validate.py --period 2026-09-W2 --word "…" --why "…"
+python3 scripts/hot_words_validate.py --period 2026-09-W2 --word "…" --why "…" --require-evidence-url --candidates-json proposal.json
 python3 scripts/hot_words_apply.py --period 2026-09-W2 --word "…" --why "…"
-# apply writes files only — no push
-python3 scripts/hot_words_manifest.py --run-id hot-words-local-1 --period 2026-09-W2 --phase applied
+python3 scripts/hot_words_apply.py --period 2026-09-W2 --word "…" --why "…" --verify
 ```
-
-
-## Evidence (Propose)
-
-Candidates should carry structured evidence:
-
-```json
-{
-  "title": "…",
-  "url": "https://…",
-  "sourceType": "article",
-  "publishedAt": "2026-09-05",
-  "claim": "…"
-}
-```
-
-Gate: `evidence=pass` when ≥1 https URL; `weak` for string-only; `skip` if empty.
-
-## Observe on /times/
-
-The Hot Words page renders **运行观测** from:
-
-- `/api/hot-words/runs/latest.json`
-- `/api/hot-words/runs/index.json`
-- `/api/hot-words/feedback.json`
-
-`scripts/hot_words_feedback.py --write` rebuilds feedback (learnHints + lastRun) for the next Propose context.

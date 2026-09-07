@@ -121,5 +121,6 @@ Weekly Hot Words under `/times/`. See [HOT_WORDS_LOOP.md](HOT_WORDS_LOOP.md) and
 - Pi package: `.pi/packages/lab-hot-words`
 - Apply script: `scripts/hot_words_apply.py`
 - Models: DeepSeek direct, or multi-model via LiteLLM (`docs/pi-deepseek/`)
-- CI: `.github/workflows/hot-words-weekly.yml` (quality gates + auto Monday publish)
+- CI: `.github/workflows/hot-words-weekly.yml` (evidence gate + apply + consistency; autonomous Monday or review mode)
+- Period `YYYY-MM-WN` = Nth 7-day block of the month (not ISO week)
 - Agent Card: `/.well-known/agent-card.json` (static documentation card)

@@ -282,7 +282,7 @@
     {
       "name": "lab_hot_words_validate",
       "kind": "read",
-      "description": "Validate a Hot Words proposal (schema, duplicate vs current word, editorial why length, evidence presence). Today gates run inside Actions; agents can also dry-check fields locally before apply.",
+      "description": "Validate a Hot Words proposal (schema, duplicate, editorial, https evidence required to publish, relevance, consistency). Actions enforce the hard evidence gate.",
       "invoke": {
         "method": "ACTION",
         "action": "local",

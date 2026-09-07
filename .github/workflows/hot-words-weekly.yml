@@ -12,6 +12,14 @@ on:
         required: false
         type: boolean
         default: false
+      mode:
+        description: "autonomous = publish when gates pass; review = stop after validate"
+        required: false
+        type: choice
+        options:
+          - autonomous
+          - review
+        default: autonomous
 
 concurrency:
   group: hot-words-weekly
@@ -58,6 +66,7 @@ jobs:
           PERIOD: ${{ steps.meta.outputs.period }}
           FORCE: ${{ steps.meta.outputs.force }}
           RUN_ID: ${{ steps.meta.outputs.run_id }}
+          MODE: ${{ github.event_name == 'workflow_dispatch' && inputs.mode || 'autonomous' }}
         run: |
           python3 - <<'PY'
           import json, os, re, subprocess, urllib.request
@@ -67,6 +76,9 @@ jobs:
           period = os.environ["PERIOD"]
           force = str(os.environ.get("FORCE", "false")).lower() in ("1", "true", "yes")
           run_id = os.environ["RUN_ID"]
+          mode = str(os.environ.get("MODE") or "autonomous").strip().lower()
+          if mode not in ("autonomous", "review"):
+              mode = "autonomous"
           key = os.environ.get("DEEPSEEK_API_KEY", "").strip()
           out_path = Path(os.environ["GITHUB_OUTPUT"])
           started = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
@@ -157,7 +169,9 @@ jobs:
               "currentWord": current_word,
               "recentHistory": hist,
               "force": force,
+              "mode": mode,
               "hasFeedback": bool(feedback),
+              "periodScheme": "YYYY-MM-WN = Nth 7-day block of the calendar month (Asia/Shanghai), not ISO week",
           }
           Path("/tmp/hw-input.json").write_text(json.dumps(input_state), encoding="utf-8")
           manifest(phase="started", started_at=started, input_json="/tmp/hw-input.json")
@@ -170,7 +184,7 @@ jobs:
               print(msg)
               proposal = {"word": current_word, "candidates": [], "evidenceCount": 0, "why": ""}
               Path("/tmp/hw-proposal.json").write_text(json.dumps(proposal), encoding="utf-8")
-              gates = {"schema": "skip", "duplicate": "pass", "editorial": "skip", "evidence": "skip"}
+              gates = {"schema": "skip", "duplicate": "pass", "editorial": "skip", "evidence": "skip", "relevance": "skip", "consistency": "skip"}
               Path("/tmp/hw-gates.json").write_text(json.dumps(gates), encoding="utf-8")
               manifest(
                   phase="skipped",
@@ -208,9 +222,9 @@ jobs:
               "Return JSON only with keys:\n"
               '  "candidates": [{"word":"...","evidence":[{"title","url","sourceType","publishedAt","claim"}],"notes":"..."}, ...] (3-5),\n'
               '  "chosen": {"word","why"}\n'
-              "Each candidate SHOULD use structured evidence objects with real https urls. "
-              "At least one https evidence URL across candidates is required for a strong pass. "
-              "String-only evidence is weak.\n"
+              "Each candidate MUST use structured evidence objects with real https urls. "
+              "Publish requires at least one https evidence URL (evidence=pass). "
+              "String-only evidence fails the gate.\n"
               "chosen.why must be tight Chinese editorial prose (2-4 sentences, >=40 chars), no placeholders."
           )
           body = {
@@ -292,6 +306,8 @@ jobs:
               "duplicate": "pass",
               "editorial": "pass",
               "evidence": ("pass" if ev_urls > 0 else ("weak" if ev_count > 0 else "skip")),
+              "relevance": "skip",
+              "consistency": "skip",
           }
           if not word:
               gates["schema"] = "fail"
@@ -320,6 +336,40 @@ jobs:
                   proposal=proposal,
                   input_state=input_state,
               )
+          if (not force) and gates["evidence"] != "pass":
+              gates["evidence"] = "fail"
+              Path("/tmp/hw-gates.json").write_text(json.dumps(gates), encoding="utf-8")
+              fail(
+                  "quality gate: evidence requires at least one https URL (structured evidence object)",
+                  gates=gates,
+                  proposal=proposal,
+                  input_state=input_state,
+              )
+          try:
+              chk = subprocess.run(
+                  [
+                      "python3",
+                      "scripts/hot_words_validate.py",
+                      "--period",
+                      period,
+                      "--word",
+                      word,
+                      "--why",
+                      why,
+                      "--candidates-json",
+                      "/tmp/hw-proposal.json",
+                      "--require-evidence-url",
+                  ] + (["--force"] if force else []),
+                  check=False,
+                  capture_output=True,
+                  text=True,
+              )
+              if chk.returncode == 0:
+                  parsed = json.loads(chk.stdout)
+                  gates.update(parsed.get("gates") or {})
+                  proposal["proposalHash"] = parsed.get("proposalHash")
+          except Exception as e:
+              print("validate helper note:", e)
 
           Path("/tmp/hw-gates.json").write_text(json.dumps(gates), encoding="utf-8")
           manifest(
@@ -329,6 +379,29 @@ jobs:
               proposal_json="/tmp/hw-proposal.json",
               gates_json="/tmp/hw-gates.json",
           )
+
+          if mode == "review":
+              print(f"Review mode: holding {period} · {word} for human confirmation")
+              manifest(
+                  phase="awaiting_review",
+                  started_at=started,
+                  input_json="/tmp/hw-input.json",
+                  proposal_json="/tmp/hw-proposal.json",
+                  gates_json="/tmp/hw-gates.json",
+                  error="Review mode: not published. Re-run with mode=autonomous after confirmation.",
+              )
+              subprocess.call(["python3", "scripts/hot_words_feedback.py", "--write"])
+              set_out(
+                  changed="false",
+                  word=word,
+                  failed="false",
+                  skipped="true",
+                  error="",
+                  run_id=run_id,
+                  commit_manifest="true",
+                  review="true",
+              )
+              raise SystemExit(0)
 
           if (not force) and current_period == period and current_word == word:
               print(f"Already published {period} · {word}; skip apply")
@@ -384,6 +457,39 @@ jobs:
                   "api/catalog.json",
               ]
           }
+          try:
+              v = subprocess.run(
+                  [
+                      "python3",
+                      "scripts/hot_words_apply.py",
+                      "--period",
+                      period,
+                      "--word",
+                      word,
+                      "--why",
+                      why,
+                      "--verify",
+                  ],
+                  check=False,
+                  capture_output=True,
+                  text=True,
+              )
+              checked = json.loads(v.stdout) if v.stdout.strip().startswith("{") else {}
+              gates["consistency"] = checked.get("gate") or ("pass" if v.returncode == 0 else "fail")
+              apply_info["consistency"] = checked
+              if v.returncode != 0:
+                  Path("/tmp/hw-gates.json").write_text(json.dumps(gates), encoding="utf-8")
+                  fail(
+                      "consistency gate failed after apply: " + "; ".join(checked.get("errors") or [v.stderr]),
+                      gates=gates,
+                      proposal=proposal,
+                      input_state=input_state,
+                  )
+          except Exception as e:
+              gates["consistency"] = "fail"
+              Path("/tmp/hw-gates.json").write_text(json.dumps(gates), encoding="utf-8")
+              fail(f"consistency check error: {e}", gates=gates, proposal=proposal, input_state=input_state)
+          Path("/tmp/hw-gates.json").write_text(json.dumps(gates), encoding="utf-8")
           Path("/tmp/hw-apply.json").write_text(json.dumps(apply_info), encoding="utf-8")
           manifest(
               phase="applied",
@@ -453,6 +559,7 @@ jobs:
               "commit": sha,
               "url": "https://chengguruchun.github.io/times/",
               "mode": "autonomous",
+              "periodScheme": "YYYY-MM-WN month block, not ISO week",
           }
           Path("/tmp/hw-publish.json").write_text(json.dumps(publish), encoding="utf-8")
           subprocess.check_call([
@@ -568,8 +675,8 @@ jobs:
               ``,
               `Live: https://chengguruchun.github.io/times/`,
               ``,
-              `Fully automatic (DeepSeek → quality gates → apply → push). No human confirmation.`,
-              `Mode: autonomous (Review/PR mode is a future option).`,
+              `Fully automatic when mode=autonomous (DeepSeek → evidence gate → apply → consistency → push).`,
+              `Review mode writes awaiting_review and does not publish.`,
               `— hot-words-weekly.yml`,
             ].join('\n');
             const issues = await github.rest.issues.listForRepo({

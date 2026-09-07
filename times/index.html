@@ -54,6 +54,56 @@
     </section>
 
 
+    <section class="section section--tight hotwords-flow" data-hotwords-flow aria-label="Hot Words 回路设计">
+      <div class="wrap">
+        <div class="section__head">
+          <h2>回路设计</h2>
+        </div>
+        <p class="hotwords-flow__lead">
+          每周一次：读状态、提案、过门禁、写入、发布、再观察。周期 <code>YYYY-MM-WN</code> 表示<strong>某月第 N 个 7 天</strong>（上海时区），不是 ISO 8601 周号。
+        </p>
+        <ol class="loop-flow">
+          <li class="loop-flow__step" data-flow="state">
+            <span class="loop-flow__idx">01</span>
+            <strong class="loop-flow__name">State</strong>
+            <span class="loop-flow__zh">读现状</span>
+            <p>当前词、历史、feedback hints</p>
+          </li>
+          <li class="loop-flow__step" data-flow="propose">
+            <span class="loop-flow__idx">02</span>
+            <strong class="loop-flow__name">Propose</strong>
+            <span class="loop-flow__zh">提案</span>
+            <p>3–5 候选 + 结构化证据</p>
+          </li>
+          <li class="loop-flow__step" data-flow="validate">
+            <span class="loop-flow__idx">03</span>
+            <strong class="loop-flow__name">Validate</strong>
+            <span class="loop-flow__zh">门禁</span>
+            <p>结构 / 去重 / 编辑 / 证据 / 相关性</p>
+          </li>
+          <li class="loop-flow__step" data-flow="apply">
+            <span class="loop-flow__idx">04</span>
+            <strong class="loop-flow__name">Apply</strong>
+            <span class="loop-flow__zh">写入</span>
+            <p>只改工作区，一致性检查</p>
+          </li>
+          <li class="loop-flow__step" data-flow="publish">
+            <span class="loop-flow__idx">05</span>
+            <strong class="loop-flow__name">Publish</strong>
+            <span class="loop-flow__zh">发布</span>
+            <p>Autonomous 直推；Review 等人确认</p>
+          </li>
+          <li class="loop-flow__step" data-flow="observe">
+            <span class="loop-flow__idx">06</span>
+            <strong class="loop-flow__name">Observe</strong>
+            <span class="loop-flow__zh">观察</span>
+            <p>run manifest → 下周 Learn</p>
+          </li>
+        </ol>
+        <p class="hotwords-flow__note">证据必须带 https 来源才能发布。Review 模式会停在 Validate，不改线上词。</p>
+      </div>
+    </section>
+
     <section class="section section--tight hotwords-observe" data-hotwords-observe aria-label="Hot Words 观测">
       <div class="wrap">
         <div class="section__head">

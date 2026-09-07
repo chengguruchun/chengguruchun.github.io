@@ -123,7 +123,7 @@ def write_manifest(
         base["startedAt"] = started_at
     if finished_at is not None:
         base["finishedAt"] = finished_at
-    elif phase in ("published", "skipped", "failed", "applied"):
+    elif phase in ("published", "skipped", "failed", "applied", "awaiting_review"):
         base["finishedAt"] = utc_now()
     if input_state is not None:
         base["input"] = input_state
@@ -148,7 +148,20 @@ def main() -> None:
     ap.add_argument("--root", type=Path, default=None)
     ap.add_argument("--run-id", required=True)
     ap.add_argument("--period", required=True)
-    ap.add_argument("--phase", required=True, choices=["started", "proposed", "validated", "applied", "published", "skipped", "failed"])
+    ap.add_argument(
+        "--phase",
+        required=True,
+        choices=[
+            "started",
+            "proposed",
+            "validated",
+            "awaiting_review",
+            "applied",
+            "published",
+            "skipped",
+            "failed",
+        ],
+    )
     ap.add_argument("--started-at", default=None)
     ap.add_argument("--finished-at", default=None)
     ap.add_argument("--input-json", default=None, help="JSON object or path to JSON file")
