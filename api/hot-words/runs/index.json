@@ -1,0 +1,14 @@
+{
+  "name": "Hot Words run index",
+  "generated": "2026-09-07T02:31:32Z",
+  "items": [
+    {
+      "runId": "hot-words-2026-09-W1",
+      "period": "2026-09-W1",
+      "phase": "published",
+      "word": "Context Engineering",
+      "finishedAt": "2026-09-07T02:31:32Z",
+      "path": "/api/hot-words/runs/hot-words-2026-09-W1.json"
+    }
+  ]
+}

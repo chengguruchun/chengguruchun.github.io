@@ -6,3 +6,4 @@
 # Local-only publish helpers. Do not ship to the public repo.
 .local/
 .preview/
+__pycache__/

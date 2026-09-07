@@ -3,7 +3,7 @@
   "format": "one-word-per-issue (annual-hotword style)",
   "cadence": "weekly-or-monthly",
   "current": "2026-09-W1",
-  "updated": "2026-09-06",
+  "updated": "2026-09-07",
   "issues": [
     {
       "id": "times-2026-09-w1",
@@ -12,7 +12,7 @@
       "word": "Context Engineering",
       "title": "2026-09 Week 1 · Context Engineering",
       "why": "当可靠性成为默认要求后，真正的瓶颈转移到智能体如何理解并利用上下文。Context Engineering 将提示词、记忆检索和工具信息的设计系统化，直接降低因上下文缺失或冲突导致的失败率。它既是可靠性的前置条件，也是从“能用”迈向“可控”的关键工程实践。",
-      "date": "2026-09-06",
+      "date": "2026-09-07",
       "url": "/times/",
       "markdown": "/content/times/2026-09-w1.md"
     }

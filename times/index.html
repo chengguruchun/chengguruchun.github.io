@@ -27,17 +27,17 @@
     <header class="page-hero">
       <div class="wrap">
         <p class="page-hero__kicker">Hot Words</p>
-        <h1>一词成立</h1>
+        <h1>本周热词</h1>
       </div>
     </header>
 
     <section class="section" style="padding-top:0">
       <div class="wrap">
-                <article class="times-year times-period" data-period="2026-09-W1" data-cadence="weekly" data-word="Context Engineering">
+                                <article class="times-year times-period" data-period="2026-09-W1" data-cadence="weekly" data-word="Context Engineering">
           <p class="times-year__meta">
             <span class="times-year__badge">Weekly</span>
             <span>2026-09 · Week 1</span>
-            <span>更新于 2026-09-06</span>
+            <span>更新于 2026-09-07</span>
           </p>
           <h2 class="times-year__word">Context Engineering</h2>
           <p class="times-year__why">当可靠性成为默认要求后，真正的瓶颈转移到智能体如何理解并利用上下文。Context Engineering 将提示词、记忆检索和工具信息的设计系统化，直接降低因上下文缺失或冲突导致的失败率。它既是可靠性的前置条件，也是从“能用”迈向“可控”的关键工程实践。</p>
@@ -52,6 +52,20 @@
         </article>
       </div>
     </section>
+
+
+    <section class="section section--tight hotwords-observe" data-hotwords-observe aria-label="Hot Words 观测">
+      <div class="wrap">
+        <div class="section__head">
+          <h2>本周回路</h2>
+          <a href="../api/hot-words/feedback.json">feedback</a>
+        </div>
+        <p class="hotwords-observe__lead">看这一词是怎么被选出来、校验、发布的；也留下下一轮该偏向什么。详细 JSON 留给 Agent，人看这一块就够。</p>
+        <div data-observe-panel><p class="hotwords-observe__empty">加载中…</p></div>
+      </div>
+    </section>
+
+
   </main>
 
   <footer class="site-footer">
@@ -70,5 +84,6 @@
   <script src="../assets/js/site.js"></script>
   <script src="../assets/js/visits.js"></script>
   <script src="../assets/js/times-vote.js"></script>
+  <script src="../assets/js/times-observe.js"></script>
 </body>
 </html>

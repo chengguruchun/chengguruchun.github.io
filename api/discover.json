@@ -3,7 +3,7 @@
   "protocol": "discover-then-execute",
   "skill": "/SKILL.md",
   "registry": "/mcp/tools.json",
-  "updated": "2026-09-06",
+  "updated": "2026-09-07",
   "meta": [
     "lab_discover",
     "lab_execute"
@@ -222,31 +222,135 @@
       }
     },
     {
-      "name": "lab_hot_words_status",
-      "kind": "read",
-      "description": "Read current Hot Words (Times) state from api/times.json.",
-      "invoke": {
-        "method": "GET",
-        "path": "/api/times.json"
-      }
-    },
-    {
       "name": "lab_hot_words_list",
       "kind": "read",
-      "description": "List Hot Words markdown under /content/times/.",
+      "description": "List Hot Words content markdown under /content/times/.",
       "invoke": {
         "method": "GET",
         "path": "/content/times/"
       }
     },
     {
-      "name": "lab_hot_words_apply",
+      "name": "lab_hot_words_state",
+      "kind": "read",
+      "description": "Read Hot Words state: current period/word, recent history (api/times.json). Phase: State (no side effects).",
+      "invoke": {
+        "method": "GET",
+        "path": "/api/times.json"
+      },
+      "contract": {
+        "sideEffects": [],
+        "requiresApproval": false,
+        "idempotencyKey": "none",
+        "rollback": "n/a",
+        "timeoutSeconds": 30
+      }
+    },
+    {
+      "name": "lab_hot_words_run_status",
+      "kind": "read",
+      "description": "Observe latest Hot Words run manifest (phase, gates, proposal, publish). GET /api/hot-words/runs/latest.json or /api/hot-words/runs/{runId}.json. Prefer this over parsing GitHub Actions logs.",
+      "invoke": {
+        "method": "GET",
+        "path": "/api/hot-words/runs/latest.json"
+      },
+      "contract": {
+        "sideEffects": [],
+        "requiresApproval": false,
+        "idempotencyKey": "runId|latest",
+        "rollback": "n/a",
+        "timeoutSeconds": 30
+      }
+    },
+    {
+      "name": "lab_hot_words_propose",
       "kind": "contribute",
-      "description": "Apply Hot Words locally via scripts/hot_words_apply.py — writes files only (no push). GitHub Actions auto-publishes Mondays (hot-words-weekly.yml).",
+      "description": "Propose 3–5 Hot Words candidates with structured evidence when possible. Today: performed inside GitHub Actions (DeepSeek). No local side effects via static HTTP; agents should treat this as the Propose phase contract.",
+      "invoke": {
+        "method": "ACTION",
+        "action": "workflow",
+        "note": "Embedded in hot-words-weekly.yml DeepSeek step; not a standalone HTTP endpoint yet."
+      },
+      "contract": {
+        "sideEffects": [],
+        "requiresApproval": false,
+        "idempotencyKey": "period + contextHash",
+        "rollback": "n/a",
+        "timeoutSeconds": 120
+      }
+    },
+    {
+      "name": "lab_hot_words_validate",
+      "kind": "read",
+      "description": "Validate a Hot Words proposal (schema, duplicate vs current word, editorial why length, evidence presence). Today gates run inside Actions; agents can also dry-check fields locally before apply.",
       "invoke": {
         "method": "ACTION",
         "action": "local",
-        "hint": "python3 scripts/hot_words_apply.py --period PERIOD --word WORD --why WHY"
+        "command_template": "python3 scripts/hot_words_validate.py --period {period} --word {word} --why {why}"
+      },
+      "contract": {
+        "sideEffects": [],
+        "requiresApproval": false,
+        "idempotencyKey": "period + word",
+        "rollback": "n/a",
+        "timeoutSeconds": 30
+      }
+    },
+    {
+      "name": "lab_hot_words_apply",
+      "kind": "contribute",
+      "description": "Apply an approved Hot Words proposal to the LOCAL workspace only (scripts/hot_words_apply.py). Does NOT commit, push, or publish. Phase: Apply.",
+      "invoke": {
+        "method": "ACTION",
+        "action": "local",
+        "command_template": "python3 scripts/hot_words_apply.py --period {period} --word {word} --why {why}"
+      },
+      "contract": {
+        "sideEffects": [
+          "write_local_files"
+        ],
+        "requiresApproval": false,
+        "idempotencyKey": "period",
+        "rollback": "git checkout -- times/ content/times api/times.json content/index.json api/catalog.json",
+        "timeoutSeconds": 120
+      }
+    },
+    {
+      "name": "lab_hot_words_publish",
+      "kind": "action",
+      "description": "Publish applied Hot Words to the remote repo (git commit/push or future PR). HIGH RISK. Today: GitHub Actions hot-words-weekly.yml performs publish in autonomous mode after apply. Agents must not treat apply as publish.",
+      "invoke": {
+        "method": "ACTION",
+        "action": "workflow",
+        "workflow": ".github/workflows/hot-words-weekly.yml",
+        "note": "Default mode autonomous on Mondays; review/PR mode is a documented future option."
+      },
+      "contract": {
+        "sideEffects": [
+          "git_commit",
+          "git_push",
+          "pages_deploy"
+        ],
+        "requiresApproval": true,
+        "idempotencyKey": "period + proposalId",
+        "rollback": "revert_commit",
+        "timeoutSeconds": 600
+      }
+    },
+    {
+      "name": "lab_hot_words_feedback",
+      "kind": "read",
+      "description": "Observe feedback signals for Hot Words (visits, votes, comments, citations). Stub: returns run manifest + times state until Eval loop is wired.",
+      "invoke": {
+        "method": "GET",
+        "path": "/api/hot-words/feedback.json"
+      },
+      "contract": {
+        "sideEffects": [],
+        "requiresApproval": false,
+        "idempotencyKey": "period|latest",
+        "rollback": "n/a",
+        "timeoutSeconds": 30
       }
     }
   ]

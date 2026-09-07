@@ -1,4 +1,4 @@
-# Fully automatic Weekly Hot Words: DeepSeek → quality gates → apply → commit/push
+# Fully automatic Weekly Hot Words: DeepSeek → gates → apply → commit/push + run manifest
 name: Hot Words Weekly
 
 on:
@@ -34,48 +34,90 @@ jobs:
         run: |
           python3 - <<'PY'
           import os
-          from datetime import datetime
+          from datetime import datetime, timezone
           from zoneinfo import ZoneInfo
           now = datetime.now(ZoneInfo("Asia/Shanghai"))
           week = (now.day - 1) // 7 + 1
           period = f"{now:%Y-%m}-W{week}"
           force = str(os.environ.get("FORCE_INPUT", "false")).lower() in ("1", "true", "yes")
+          ts = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+          run_id = f"hot-words-{period}-{ts}"
           with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as f:
               f.write(f"period={period}\n")
               f.write(f"force={'true' if force else 'false'}\n")
-          print(period, "force=", force)
+              f.write(f"run_id={run_id}\n")
+          print(period, "force=", force, "run_id=", run_id)
           PY
         env:
           FORCE_INPUT: ${{ github.event_name == 'workflow_dispatch' && inputs.force || false }}
 
-      - name: DeepSeek draft + quality gates + apply
+      - name: DeepSeek draft + quality gates + apply + manifest
         id: apply
         env:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
           PERIOD: ${{ steps.meta.outputs.period }}
           FORCE: ${{ steps.meta.outputs.force }}
+          RUN_ID: ${{ steps.meta.outputs.run_id }}
         run: |
           python3 - <<'PY'
-          import json, os, re, subprocess, traceback, urllib.request
+          import json, os, re, subprocess, urllib.request
           from pathlib import Path
+          from datetime import datetime, timezone
 
           period = os.environ["PERIOD"]
           force = str(os.environ.get("FORCE", "false")).lower() in ("1", "true", "yes")
+          run_id = os.environ["RUN_ID"]
           key = os.environ.get("DEEPSEEK_API_KEY", "").strip()
           out_path = Path(os.environ["GITHUB_OUTPUT"])
+          started = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
           def set_out(**kwargs):
               with out_path.open("a", encoding="utf-8") as f:
                   for k, v in kwargs.items():
                       f.write(f"{k}={v}\n")
 
-          def fail(msg: str):
-              set_out(changed="false", word="", failed="true", error=msg.replace("\n", " ")[:1800])
+          def manifest(**kwargs):
+              cmd = [
+                  "python3", "scripts/hot_words_manifest.py",
+                  "--run-id", run_id,
+                  "--period", period,
+              ]
+              for k, v in kwargs.items():
+                  if v is None:
+                      continue
+                  flag = "--" + k.replace("_", "-")
+                  cmd.extend([flag, str(v)])
+              subprocess.check_call(cmd)
+
+          def fail(msg, gates=None, proposal=None, input_state=None):
+              if gates is not None:
+                  Path("/tmp/hw-gates.json").write_text(json.dumps(gates), encoding="utf-8")
+              if proposal is not None:
+                  Path("/tmp/hw-proposal.json").write_text(json.dumps(proposal), encoding="utf-8")
+              if input_state is not None:
+                  Path("/tmp/hw-input.json").write_text(json.dumps(input_state), encoding="utf-8")
+              kw = {"phase": "failed", "started_at": started, "error": msg[:1800]}
+              if gates is not None:
+                  kw["gates_json"] = "/tmp/hw-gates.json"
+              if proposal is not None:
+                  kw["proposal_json"] = "/tmp/hw-proposal.json"
+              if input_state is not None:
+                  kw["input_json"] = "/tmp/hw-input.json"
+              try:
+                  manifest(**kw)
+              except Exception as e:
+                  print("manifest write failed:", e)
+              set_out(
+                  changed="false",
+                  word="",
+                  failed="true",
+                  skipped="false",
+                  error=msg.replace("\n", " ")[:1800],
+                  run_id=run_id,
+                  commit_manifest="true",
+              )
               print("FAIL:", msg)
               raise SystemExit(msg)
-
-          if not key:
-              fail("DEEPSEEK_API_KEY secret missing; cannot run fully automatic Hot Words")
 
           current = {}
           times_path = Path("api/times.json")
@@ -89,28 +131,86 @@ jobs:
           if issues and isinstance(issues[0], dict):
               current_word = str(issues[0].get("word") or "")
           current_period = str(current.get("current") or "")
-
-          # If period already published and not force: skip apply/push but succeed
-          if (not force) and current_period == period and current_word:
-              msg = f"Period {period} already published ({current_word}); skip apply/push (pass force=true to override)"
-              print(msg)
-              set_out(changed="false", word=current_word, failed="false", skipped="true", error="")
-              raise SystemExit(0)
-
           hist = []
           for it in issues[:8]:
               if isinstance(it, dict) and it.get("word"):
                   hist.append(f"{it.get('period')}: {it.get('word')}")
 
+          feedback = {}
+          fb_path = Path("api/hot-words/feedback.json")
+          if fb_path.exists():
+              try:
+                  feedback = json.loads(fb_path.read_text(encoding="utf-8"))
+              except json.JSONDecodeError:
+                  feedback = {}
+          learn = feedback.get("learnHints") if isinstance(feedback.get("learnHints"), dict) else {}
+          learn_txt = ""
+          if learn:
+              learn_txt = (
+                  "Learn hints from prior runs:\n"
+                  f"- prefer: {learn.get('prefer')}\n"
+                  f"- avoid: {learn.get('avoid')}\n"
+                  f"- rejected: {learn.get('rejectedCandidates')!r}\n"
+              )
+
+          input_state = {
+              "currentWord": current_word,
+              "recentHistory": hist,
+              "force": force,
+              "hasFeedback": bool(feedback),
+          }
+          Path("/tmp/hw-input.json").write_text(json.dumps(input_state), encoding="utf-8")
+          manifest(phase="started", started_at=started, input_json="/tmp/hw-input.json")
+
+          if (not force) and current_period == period and current_word:
+              msg = (
+                  f"Period {period} already published ({current_word}); "
+                  "skip apply/push (pass force=true to override)"
+              )
+              print(msg)
+              proposal = {"word": current_word, "candidates": [], "evidenceCount": 0, "why": ""}
+              Path("/tmp/hw-proposal.json").write_text(json.dumps(proposal), encoding="utf-8")
+              gates = {"schema": "skip", "duplicate": "pass", "editorial": "skip", "evidence": "skip"}
+              Path("/tmp/hw-gates.json").write_text(json.dumps(gates), encoding="utf-8")
+              manifest(
+                  phase="skipped",
+                  started_at=started,
+                  input_json="/tmp/hw-input.json",
+                  proposal_json="/tmp/hw-proposal.json",
+                  gates_json="/tmp/hw-gates.json",
+                  error=msg,
+              )
+              subprocess.call(["python3", "scripts/hot_words_feedback.py", "--write"])
+              set_out(
+                  changed="false",
+                  word=current_word,
+                  failed="false",
+                  skipped="true",
+                  error="",
+                  run_id=run_id,
+                  commit_manifest="true",
+              )
+              raise SystemExit(0)
+
+          if not key:
+              fail(
+                  "DEEPSEEK_API_KEY secret missing; cannot run fully automatic Hot Words",
+                  input_state=input_state,
+              )
+
           prompt = (
               f"Period: {period}. Site: AI Agent personal knowledge blog Hot Words.\n"
               f"Current word: {current_word or '(none)'}.\n"
               f"Recent: {'; '.join(hist) or '(none)'}\n\n"
+              f"{learn_txt}"
               "Pick ONE new weekly hot word for AI/Agent engineering (Chinese or common English term). "
               "Avoid duplicating the current word unless continuity is strongly justified.\n"
               "Return JSON only with keys:\n"
-              '  "candidates": [{"word","evidence","notes"}, ...] (3-5),\n'
+              '  "candidates": [{"word":"...","evidence":[{"title","url","sourceType","publishedAt","claim"}],"notes":"..."}, ...] (3-5),\n'
               '  "chosen": {"word","why"}\n'
+              "Each candidate SHOULD use structured evidence objects with real https urls. "
+              "At least one https evidence URL across candidates is required for a strong pass. "
+              "String-only evidence is weak.\n"
               "chosen.why must be tight Chinese editorial prose (2-4 sentences, >=40 chars), no placeholders."
           )
           body = {
@@ -135,7 +235,7 @@ jobs:
                   data = json.loads(resp.read().decode())
               text = data["choices"][0]["message"]["content"].strip()
           except Exception as e:
-              fail(f"DeepSeek request failed: {e}")
+              fail(f"DeepSeek request failed: {e}", input_state=input_state)
 
           Path("hot-words-deepseek-draft.md").write_text(
               f"# DeepSeek draft for {period}\n\n```json\n{text}\n```\n",
@@ -144,32 +244,112 @@ jobs:
 
           m = re.search(r"\{[\s\S]*\}", text)
           if not m:
-              fail("DeepSeek response had no JSON object")
+              fail("DeepSeek response had no JSON object", input_state=input_state)
           try:
               draft = json.loads(m.group(0))
           except json.JSONDecodeError as e:
-              fail(f"DeepSeek JSON parse failed: {e}")
+              fail(f"DeepSeek JSON parse failed: {e}", input_state=input_state)
 
-          chosen = draft.get("chosen") or {}
+          candidates = draft.get("candidates") if isinstance(draft.get("candidates"), list) else []
+          chosen = draft.get("chosen") if isinstance(draft.get("chosen"), dict) else {}
           word = str(chosen.get("word") or "").strip()
           why = str(chosen.get("why") or "").strip()
 
-          # Quality gates
-          if not word:
-              fail(f"quality gate: chosen.word empty: {chosen!r}")
-          if len(why) < 40:
-              fail(f"quality gate: why length {len(why)} < 40: {why!r}")
-          if (not force) and current_word and word == current_word:
-              fail(f"quality gate: word equals current word {current_word!r} (pass force=true to override)")
+          def count_evidence(cands):
+              n = 0
+              urls = 0
+              for c in cands:
+                  if not isinstance(c, dict):
+                      continue
+                  ev = c.get("evidence")
+                  items = ev if isinstance(ev, list) else ([ev] if ev else [])
+                  for it in items:
+                      n += 1
+                      if isinstance(it, dict):
+                          u = str(it.get("url") or "")
+                          if u.startswith("http://") or u.startswith("https://"):
+                              urls += 1
+              return n, urls
 
-          # Skip no-op if same period+word already published
-          if (
-              (not force)
-              and current_period == period
-              and current_word == word
-          ):
+          ev_count, ev_urls = count_evidence(candidates)
+          proposal = {
+              "word": word,
+              "why": why,
+              "candidates": candidates,
+              "evidenceCount": ev_count,
+              "evidenceUrlCount": ev_urls,
+          }
+          Path("/tmp/hw-proposal.json").write_text(json.dumps(proposal, ensure_ascii=False), encoding="utf-8")
+          manifest(
+              phase="proposed",
+              started_at=started,
+              input_json="/tmp/hw-input.json",
+              proposal_json="/tmp/hw-proposal.json",
+          )
+
+          gates = {
+              "schema": "pass",
+              "duplicate": "pass",
+              "editorial": "pass",
+              "evidence": ("pass" if ev_urls > 0 else ("weak" if ev_count > 0 else "skip")),
+          }
+          if not word:
+              gates["schema"] = "fail"
+              Path("/tmp/hw-gates.json").write_text(json.dumps(gates), encoding="utf-8")
+              fail(
+                  f"quality gate: chosen.word empty: {chosen!r}",
+                  gates=gates,
+                  proposal=proposal,
+                  input_state=input_state,
+              )
+          if len(why) < 40:
+              gates["editorial"] = "fail"
+              Path("/tmp/hw-gates.json").write_text(json.dumps(gates), encoding="utf-8")
+              fail(
+                  f"quality gate: why length {len(why)} < 40: {why!r}",
+                  gates=gates,
+                  proposal=proposal,
+                  input_state=input_state,
+              )
+          if (not force) and current_word and word == current_word:
+              gates["duplicate"] = "fail"
+              Path("/tmp/hw-gates.json").write_text(json.dumps(gates), encoding="utf-8")
+              fail(
+                  f"quality gate: word equals current word {current_word!r} (pass force=true to override)",
+                  gates=gates,
+                  proposal=proposal,
+                  input_state=input_state,
+              )
+
+          Path("/tmp/hw-gates.json").write_text(json.dumps(gates), encoding="utf-8")
+          manifest(
+              phase="validated",
+              started_at=started,
+              input_json="/tmp/hw-input.json",
+              proposal_json="/tmp/hw-proposal.json",
+              gates_json="/tmp/hw-gates.json",
+          )
+
+          if (not force) and current_period == period and current_word == word:
               print(f"Already published {period} · {word}; skip apply")
-              set_out(changed="false", word=word, failed="false", skipped="true", error="")
+              manifest(
+                  phase="skipped",
+                  started_at=started,
+                  input_json="/tmp/hw-input.json",
+                  proposal_json="/tmp/hw-proposal.json",
+                  gates_json="/tmp/hw-gates.json",
+                  error=f"Already published {period} · {word}",
+              )
+              subprocess.call(["python3", "scripts/hot_words_feedback.py", "--write"])
+              set_out(
+                  changed="false",
+                  word=word,
+                  failed="false",
+                  skipped="true",
+                  error="",
+                  run_id=run_id,
+                  commit_manifest="true",
+              )
               raise SystemExit(0)
 
           try:
@@ -188,9 +368,41 @@ jobs:
                   ]
               )
           except subprocess.CalledProcessError as e:
-              fail(f"hot_words_apply failed: {e}")
+              fail(
+                  f"hot_words_apply failed: {e}",
+                  gates=gates,
+                  proposal=proposal,
+                  input_state=input_state,
+              )
 
-          set_out(changed="true", word=word, failed="false", skipped="false", error="")
+          apply_info = {
+              "changedFiles": [
+                  "times/index.html",
+                  f"content/times/{period.lower()}.md",
+                  "api/times.json",
+                  "content/index.json",
+                  "api/catalog.json",
+              ]
+          }
+          Path("/tmp/hw-apply.json").write_text(json.dumps(apply_info), encoding="utf-8")
+          manifest(
+              phase="applied",
+              started_at=started,
+              input_json="/tmp/hw-input.json",
+              proposal_json="/tmp/hw-proposal.json",
+              gates_json="/tmp/hw-gates.json",
+              apply_json="/tmp/hw-apply.json",
+          )
+          subprocess.call(["python3", "scripts/hot_words_feedback.py", "--write"])
+          set_out(
+              changed="true",
+              word=word,
+              failed="false",
+              skipped="false",
+              error="",
+              run_id=run_id,
+              commit_manifest="true",
+          )
           print(f"Applied {period} · {word}")
           PY
 
@@ -202,22 +414,62 @@ jobs:
           path: hot-words-deepseek-draft.md
           if-no-files-found: ignore
 
-      - name: Commit and push Hot Words
-        if: steps.apply.outputs.changed == 'true'
+      - name: Commit Hot Words content + run manifest
+        id: commit
+        if: steps.apply.outputs.changed == 'true' || steps.apply.outputs.commit_manifest == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add times/index.html content/times api/times.json content/index.json api/catalog.json api/tags.json || true
-          # draft md is artifact-only; do not commit draft into site root
+          git add times/index.html content/times api/times.json content/index.json api/catalog.json api/tags.json api/hot-words || true
           git reset HEAD -- hot-words-deepseek-draft.md 2>/dev/null || true
           rm -f hot-words-deepseek-draft.md
           if git diff --cached --quiet; then
             echo "No staged changes"
+            echo "sha=" >> "$GITHUB_OUTPUT"
             exit 0
           fi
-          # optional: rebuild tags from catalog if script exists later — catalog already updated by apply
-          git commit -m "chore(hot-words): publish ${{ steps.meta.outputs.period }} · ${{ steps.apply.outputs.word }}"
+          if [ "${{ steps.apply.outputs.changed }}" = "true" ]; then
+            git commit -m "chore(hot-words): publish ${{ steps.meta.outputs.period }} · ${{ steps.apply.outputs.word }}"
+          else
+            git commit -m "chore(hot-words): record run ${{ steps.meta.outputs.run_id }}"
+          fi
           git push
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
+      - name: Finalize published manifest with commit
+        if: steps.apply.outputs.changed == 'true' && steps.commit.outputs.sha != ''
+        env:
+          RUN_ID: ${{ steps.meta.outputs.run_id }}
+          PERIOD: ${{ steps.meta.outputs.period }}
+          SHA: ${{ steps.commit.outputs.sha }}
+        run: |
+          python3 - <<'PY'
+          import json, os, subprocess
+          from pathlib import Path
+          run_id = os.environ["RUN_ID"]
+          period = os.environ["PERIOD"]
+          sha = os.environ["SHA"]
+          publish = {
+              "commit": sha,
+              "url": "https://chengguruchun.github.io/times/",
+              "mode": "autonomous",
+          }
+          Path("/tmp/hw-publish.json").write_text(json.dumps(publish), encoding="utf-8")
+          subprocess.check_call([
+              "python3", "scripts/hot_words_manifest.py",
+              "--run-id", run_id,
+              "--period", period,
+              "--phase", "published",
+              "--publish-json", "/tmp/hw-publish.json",
+          ])
+          subprocess.call(["python3", "scripts/hot_words_feedback.py", "--write"])
+          subprocess.check_call(["git", "add", "api/hot-words"])
+          if subprocess.call(["git", "diff", "--cached", "--quiet"]) != 0:
+              subprocess.check_call(["git", "config", "user.name", "github-actions[bot]"])
+              subprocess.check_call(["git", "config", "user.email", "41898282+github-actions[bot]@users.noreply.github.com"])
+              subprocess.check_call(["git", "commit", "-m", f"chore(hot-words): mark run {run_id} published"])
+              subprocess.check_call(["git", "push"])
+          PY
 
       - name: Open failure issue
         if: failure() || steps.apply.outputs.failed == 'true'
@@ -225,15 +477,19 @@ jobs:
         env:
           PERIOD: ${{ steps.meta.outputs.period }}
           ERR: ${{ steps.apply.outputs.error }}
+          RUN_ID: ${{ steps.meta.outputs.run_id }}
         with:
           script: |
             const period = process.env.PERIOD || 'unknown';
             const err = process.env.ERR || 'unknown error (see workflow logs)';
+            const runId = process.env.RUN_ID || '';
             const title = `[hot-words] failed ${period}`;
             const body = [
               `## Hot Words auto-publish failed`,
               ``,
               `Period: **${period}**`,
+              runId ? `RunId: **${runId}**` : null,
+              runId ? `Manifest: \`/api/hot-words/runs/${runId}.json\`` : null,
               ``,
               '```',
               err,
@@ -241,7 +497,7 @@ jobs:
               ``,
               `Workflow: hot-words-weekly.yml`,
               `Run: ${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
-            ].join('\n');
+            ].filter(Boolean).join('\n');
             const issues = await github.rest.issues.listForRepo({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -256,7 +512,6 @@ jobs:
                 issue_number: exists.number,
                 body,
               });
-              core.info('Updated existing failure issue: ' + title);
               return;
             }
             try {
@@ -284,12 +539,14 @@ jobs:
           WORD: ${{ steps.apply.outputs.word }}
           CHANGED: ${{ steps.apply.outputs.changed }}
           SKIPPED: ${{ steps.apply.outputs.skipped }}
+          RUN_ID: ${{ steps.meta.outputs.run_id }}
         with:
           script: |
             const period = process.env.PERIOD;
             const word = process.env.WORD;
             const changed = process.env.CHANGED;
             const skipped = process.env.SKIPPED;
+            const runId = process.env.RUN_ID;
             if (skipped === 'true' && changed !== 'true') {
               core.info('Skipped republish; no FYI issue');
               return;
@@ -305,10 +562,14 @@ jobs:
               `Period: **${period}**`,
               `Word: **${word}**`,
               `Changed: **${changed}**`,
+              `RunId: **${runId}**`,
+              `Manifest: https://chengguruchun.github.io/api/hot-words/runs/latest.json`,
+              `Feedback: https://chengguruchun.github.io/api/hot-words/feedback.json`,
               ``,
               `Live: https://chengguruchun.github.io/times/`,
               ``,
               `Fully automatic (DeepSeek → quality gates → apply → push). No human confirmation.`,
+              `Mode: autonomous (Review/PR mode is a future option).`,
               `— hot-words-weekly.yml`,
             ].join('\n');
             const issues = await github.rest.issues.listForRepo({
@@ -318,10 +579,7 @@ jobs:
               per_page: 30,
             }).catch(() => ({ data: [] }));
             const exists = (issues.data || []).some(i => i.title === title);
-            if (exists) {
-              core.info('Issue already open: ' + title);
-              return;
-            }
+            if (exists) return;
             try {
               await github.rest.issues.create({
                 owner: context.repo.owner,

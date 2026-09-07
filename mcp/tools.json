@@ -1,7 +1,7 @@
 {
   "name": "ai-knowledge-lab",
   "version": "0.3.0",
-  "description": "Knowledge Lab tools. Agents: lab_discover then lab_execute. Add domain tools here without editing SKILL.md.",
+  "description": "Knowledge Lab tools. Agents: lab_discover then lab_execute. Add domain tools here without editing SKILL.md. Hot Words lifecycle: State → Propose → Validate → Apply → Publish → Observe.",
   "transport_today": "static-http + action urls",
   "transport_next": "mcp-stdio-or-http",
   "skill": "/SKILL.md",
@@ -350,7 +350,7 @@
     {
       "name": "lab_list_times",
       "kind": "read",
-      "description": "List Times 热词 issues: annual-hotword style (one word + why), cadence weekly or monthly.",
+      "description": "Alias of lab_hot_words_state for Times listing. Prefer lab_hot_words_state for Hot Words lifecycle.",
       "inputSchema": {
         "type": "object",
         "properties": {},
@@ -417,7 +417,7 @@
     {
       "name": "lab_hot_words_status",
       "kind": "read",
-      "description": "Read current Hot Words state.",
+      "description": "Deprecated alias of lab_hot_words_state. Prefer lab_hot_words_state.",
       "inputSchema": {
         "type": "object",
         "properties": {}
@@ -430,7 +430,7 @@
     {
       "name": "lab_hot_words_list",
       "kind": "read",
-      "description": "List Hot Words content files.",
+      "description": "List Hot Words content markdown under /content/times/.",
       "inputSchema": {
         "type": "object",
         "properties": {}
@@ -443,7 +443,7 @@
     {
       "name": "lab_hot_words_apply",
       "kind": "contribute",
-      "description": "Apply Hot Words locally via scripts/hot_words_apply.py — writes files only (no push). GitHub Actions auto-publishes Mondays (hot-words-weekly.yml).",
+      "description": "Apply an approved Hot Words proposal to the LOCAL workspace only (scripts/hot_words_apply.py). Does NOT commit, push, or publish. Phase: Apply.",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -466,10 +466,211 @@
           "why"
         ]
       },
+      "contract": {
+        "sideEffects": [
+          "write_local_files"
+        ],
+        "requiresApproval": false,
+        "idempotencyKey": "period",
+        "rollback": "git checkout -- times/ content/times api/times.json content/index.json api/catalog.json",
+        "timeoutSeconds": 120
+      },
       "static": {
         "method": "ACTION",
         "action": "local",
         "command_template": "python3 scripts/hot_words_apply.py --period {period} --word {word} --why {why}"
+      }
+    },
+    {
+      "name": "lab_hot_words_state",
+      "kind": "read",
+      "description": "Read Hot Words state: current period/word, recent history (api/times.json). Phase: State (no side effects).",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "contract": {
+        "sideEffects": [],
+        "requiresApproval": false,
+        "idempotencyKey": "none",
+        "rollback": "n/a",
+        "timeoutSeconds": 30
+      },
+      "static": {
+        "method": "GET",
+        "path": "/api/times.json"
+      }
+    },
+    {
+      "name": "lab_hot_words_run_status",
+      "kind": "read",
+      "description": "Observe latest Hot Words run manifest (phase, gates, proposal, publish). GET /api/hot-words/runs/latest.json or /api/hot-words/runs/{runId}.json. Prefer this over parsing GitHub Actions logs.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "runId": {
+            "type": "string",
+            "description": "Optional run id; omit for latest"
+          }
+        },
+        "additionalProperties": false
+      },
+      "contract": {
+        "sideEffects": [],
+        "requiresApproval": false,
+        "idempotencyKey": "runId|latest",
+        "rollback": "n/a",
+        "timeoutSeconds": 30
+      },
+      "static": {
+        "method": "GET",
+        "path": "/api/hot-words/runs/latest.json"
+      }
+    },
+    {
+      "name": "lab_hot_words_propose",
+      "kind": "contribute",
+      "description": "Propose 3–5 Hot Words candidates with structured evidence when possible. Today: performed inside GitHub Actions (DeepSeek). No local side effects via static HTTP; agents should treat this as the Propose phase contract.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "period": {
+            "type": "string"
+          },
+          "context": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "period"
+        ]
+      },
+      "contract": {
+        "sideEffects": [],
+        "requiresApproval": false,
+        "idempotencyKey": "period + contextHash",
+        "rollback": "n/a",
+        "timeoutSeconds": 120
+      },
+      "static": {
+        "method": "ACTION",
+        "action": "workflow",
+        "note": "Embedded in hot-words-weekly.yml DeepSeek step; not a standalone HTTP endpoint yet."
+      }
+    },
+    {
+      "name": "lab_hot_words_validate",
+      "kind": "read",
+      "description": "Validate proposal: schema, duplicate, editorial why length, structured evidence (https URL => pass; string-only => weak).",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "period": {
+            "type": "string"
+          },
+          "word": {
+            "type": "string"
+          },
+          "why": {
+            "type": "string"
+          },
+          "candidates": {
+            "type": "array"
+          },
+          "force": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "period",
+          "word",
+          "why"
+        ]
+      },
+      "contract": {
+        "sideEffects": [],
+        "requiresApproval": false,
+        "idempotencyKey": "period + word",
+        "rollback": "n/a",
+        "timeoutSeconds": 30
+      },
+      "static": {
+        "method": "ACTION",
+        "action": "local",
+        "command_template": "python3 scripts/hot_words_validate.py --period {period} --word {word} --why {why}"
+      }
+    },
+    {
+      "name": "lab_hot_words_publish",
+      "kind": "action",
+      "description": "Publish applied Hot Words to the remote repo (git commit/push or future PR). HIGH RISK. Today: GitHub Actions hot-words-weekly.yml performs publish in autonomous mode after apply. Agents must not treat apply as publish.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "period": {
+            "type": "string"
+          },
+          "proposalId": {
+            "type": "string"
+          },
+          "approval": {
+            "type": "boolean",
+            "description": "Explicit approval required by contract"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "autonomous",
+              "review"
+            ]
+          }
+        },
+        "required": [
+          "period",
+          "approval"
+        ]
+      },
+      "contract": {
+        "sideEffects": [
+          "git_commit",
+          "git_push",
+          "pages_deploy"
+        ],
+        "requiresApproval": true,
+        "idempotencyKey": "period + proposalId",
+        "rollback": "revert_commit",
+        "timeoutSeconds": 600
+      },
+      "static": {
+        "method": "ACTION",
+        "action": "workflow",
+        "workflow": ".github/workflows/hot-words-weekly.yml",
+        "note": "Default mode autonomous on Mondays; review/PR mode is a documented future option."
+      }
+    },
+    {
+      "name": "lab_hot_words_feedback",
+      "kind": "read",
+      "description": "Observe Hot Words feedback + learnHints for next Propose (api/hot-words/feedback.json). Includes lastRun gates, rejected candidates, and signal placeholders (votes/visits/comments).",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "period": {
+            "type": "string"
+          }
+        }
+      },
+      "contract": {
+        "sideEffects": [],
+        "requiresApproval": false,
+        "idempotencyKey": "period|latest",
+        "rollback": "n/a",
+        "timeoutSeconds": 30
+      },
+      "static": {
+        "method": "GET",
+        "path": "/api/hot-words/feedback.json"
       }
     }
   ]

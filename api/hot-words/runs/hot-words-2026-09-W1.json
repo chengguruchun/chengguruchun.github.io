@@ -1,0 +1,35 @@
+{
+  "runId": "hot-words-2026-09-W1",
+  "period": "2026-09-W1",
+  "phase": "published",
+  "startedAt": "2026-09-07T02:31:32Z",
+  "finishedAt": "2026-09-07T02:31:32Z",
+  "input": {
+    "currentWord": "Context Engineering",
+    "recentHistory": []
+  },
+  "proposal": {
+    "word": "Context Engineering",
+    "candidates": [],
+    "evidenceCount": 0,
+    "why": "当可靠性成为默认要求后，真正的瓶颈转移到智能体如何理解并利用上下文。Context Engineering 将提示词、记忆检索和工具信息的设计系统化，直接降低因上下文缺失或冲突导致的失败率。它既是可靠性的前置条件，也是从“能用”迈向“可控”的关键工程实践。"
+  },
+  "gates": {
+    "schema": "pass",
+    "duplicate": "pass",
+    "editorial": "pass",
+    "evidence": "skip"
+  },
+  "apply": {
+    "changedFiles": [
+      "times/index.html",
+      "api/times.json"
+    ]
+  },
+  "publish": {
+    "commit": null,
+    "url": "https://chengguruchun.github.io/times/",
+    "note": "Bootstrap from currently published Hot Word until the next Actions run writes a live manifest."
+  },
+  "error": null
+}

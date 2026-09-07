@@ -1,0 +1,67 @@
+{
+  "name": "Hot Words feedback",
+  "generated": "2026-09-07T03:15:51Z",
+  "period": "2026-09-W1",
+  "word": "Context Engineering",
+  "signals": {
+    "visits": {
+      "site": null,
+      "page": null,
+      "note": "页面访问由 Abacus 在浏览器端展示；静态 JSON 不权威计数。"
+    },
+    "votes": {
+      "like": null,
+      "dislike": null,
+      "note": "投票存在读者本机 localStorage；观测面板会读取当前浏览器的选择。"
+    },
+    "comments": {
+      "count": null,
+      "note": "可后续接入 GitHub Issues 留言。"
+    },
+    "citations": {
+      "count": 2,
+      "note": "根据 catalog/index 中标题、摘要、标签是否出现该词估算。"
+    }
+  },
+  "lastRun": {
+    "runId": "hot-words-2026-09-W1",
+    "phase": "published",
+    "gates": {
+      "schema": "pass",
+      "duplicate": "pass",
+      "editorial": "pass",
+      "evidence": "skip"
+    },
+    "evidenceCount": 0,
+    "publish": {
+      "commit": null,
+      "url": "https://chengguruchun.github.io/times/",
+      "note": "Bootstrap from currently published Hot Word until the next Actions run writes a live manifest."
+    },
+    "error": null
+  },
+  "learnHints": {
+    "recentWords": [
+      "2026-09-W1: Context Engineering"
+    ],
+    "rejectedCandidates": [],
+    "prefer": "下一轮务必补齐结构化证据（title/url/claim）；先有来源，再谈热度。",
+    "avoid": "回避与当前词重复、口号化、以及只有空泛描述没有来源的词。"
+  },
+  "recentRuns": [
+    {
+      "runId": "hot-words-2026-09-W1",
+      "period": "2026-09-W1",
+      "phase": "published",
+      "word": "Context Engineering",
+      "finishedAt": "2026-09-07T02:31:32Z",
+      "path": "/api/hot-words/runs/hot-words-2026-09-W1.json"
+    }
+  ],
+  "endpoints": {
+    "times": "/api/times.json",
+    "latestRun": "/api/hot-words/runs/latest.json",
+    "runsIndex": "/api/hot-words/runs/index.json",
+    "feedback": "/api/hot-words/feedback.json"
+  }
+}
