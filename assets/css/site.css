@@ -125,8 +125,8 @@ hr {
 .brand:hover { color: inherit; }
 .brand__logo {
   display: block;
-  height: 2.15rem;
-  width: 2.15rem;
+  height: 2.35rem;
+  width: 2.35rem;
 }
 
 .brand__tag {
@@ -1569,3 +1569,37 @@ a.project-card:hover .project-card__stars {
 .section--tight + .section--tight {
   padding-top: 0.5rem;
 }
+
+
+/* Articles · pending pieces */
+.card--pending {
+  opacity: 0.88;
+  border-style: dashed;
+  cursor: default;
+  pointer-events: none;
+}
+.card--pending .card__meta span:first-child {
+  color: var(--accent);
+  letter-spacing: 0.06em;
+}
+.card--pending .card__title {
+  color: var(--text-dim);
+}
+
+
+/* Footer visit counters */
+.footer-visits {
+  margin: 0.55rem 0 0;
+  font-size: 0.78rem;
+  color: var(--text-faint);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.55rem;
+  align-items: baseline;
+}
+.footer-visits strong {
+  font-weight: 600;
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+}
+.footer-visits__sep { opacity: 0.55; }
