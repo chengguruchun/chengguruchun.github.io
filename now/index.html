@@ -54,6 +54,20 @@
 
     <section class="section section--tight">
       <div class="wrap">
+        <section class="comments" data-comments data-repo="chengguruchun/chengguruchun.github.io" data-page-id="now" data-page-url="https://chengguruchun.github.io/now/" aria-label="留言板">
+          <h2 class="comments__title">留言板</h2>
+          <p class="comments__status" data-comments-status>欢迎留下你的想法。</p>
+          <div class="comments__list" data-comments-list></div>
+          <form class="comments__form" data-comments-form>
+            <label>你的名字
+              <input name="name" type="text" maxlength="80" placeholder="怎么称呼你？" autocomplete="nickname">
+            </label>
+            <label>留言
+              <textarea name="body" maxlength="4000" placeholder="写下你想交流的内容" required></textarea>
+            </label>
+            <button class="comments__submit" type="submit">在 GitHub 留言</button>
+          </form>
+        </section>
         <p><a href="../about/">返回 About Me →</a></p>
       </div>
     </section>
@@ -70,5 +84,6 @@
   </footer>
   <script src="../assets/js/site.js"></script>
   <script src="../assets/js/visits.js"></script>
+  <script src="../assets/js/comments.js"></script>
 </body>
 </html>
