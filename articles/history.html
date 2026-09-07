@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>版本回溯 · AI Knowledge Lab</title>
+  <meta name="description" content="查看文章在 Git 中的版本演进，并回到任意历史版本。">
+  <meta name="theme-color" content="#f7f5f0">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/css/site.css">
+  <style>
+    .history{max-width:820px;padding-bottom:96px}.history-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:36px}.history-kicker{font:500 13px/1.5 "IBM Plex Mono",monospace;letter-spacing:.08em;text-transform:uppercase}.history-title{margin:10px 0 8px}.history-desc{color:var(--muted,#777);line-height:1.8}.history-list{border-top:1px solid rgba(0,0,0,.12)}.history-item{display:grid;grid-template-columns:110px 1fr auto;gap:20px;align-items:start;padding:22px 0;border-bottom:1px solid rgba(0,0,0,.1)}.history-version{font:500 14px/1.5 "IBM Plex Mono",monospace}.history-date,.history-sha{font:12px/1.6 "IBM Plex Mono",monospace;color:var(--muted,#777)}.history-message{font-size:17px;line-height:1.6}.history-actions a{display:inline-block;padding:7px 11px;border:1px solid rgba(0,0,0,.16);border-radius:999px;font:500 12px/1.2 "IBM Plex Mono",monospace;text-decoration:none}.history-empty{padding:28px 0;color:var(--muted,#777)}@media (max-width:680px){.history-item{grid-template-columns:1fr}.history-actions{margin-top:-8px}}
+  </style>
+</head>
+<body>
+<header class="site-header"><div class="wrap site-header__inner"><a class="brand" href="../index.html"><img class="brand__logo" src="../assets/img/brand-mark.svg" alt="AI Knowledge Lab" width="44" height="44"><span class="brand__tag"><span class="brand__rotate"><span class="brand__item is-active">Independent Thinker</span><span class="brand__item">AI Agents</span><span class="brand__item">Complex Systems</span><span class="brand__item">Diverse Thinking</span></span></span></a><button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">菜单</button><nav class="nav" id="site-nav" aria-label="主导航"><a href="../index.html">Home</a><a href="../diverse/">Diverse Lab</a><a href="../articles/" aria-current="page">Articles</a><a href="../projects/">Projects</a><a href="../videos/">Videos</a><a href="../times/">Hot Words</a><a href="../about/">About Me</a><a class="nav__search" href="../tags/">Tags / Search</a></nav></div></header>
+<main><header class="page-hero"><div class="wrap"><p class="page-hero__kicker">Articles / Evolution</p><h1>版本回溯</h1><p class="page-hero__desc">不是只记录“什么时候发表”，而是把文章当成持续演进的思考对象。每一次 Git 提交都保留一个可回看的版本。</p></div></header><section class="section" style="padding-top:0"><div class="wrap history"><div class="history-head"><div><div id="history-kicker" class="history-kicker">Thought Evolution</div><h2 id="history-title" class="history-title">加载中…</h2><p id="history-desc" class="history-desc">正在读取 Git 历史。</p></div><a id="back-link" href="index.html">← 返回思考档案</a></div><div id="history-list" class="history-list" aria-live="polite"></div></div></section></main>
+<footer class="site-footer"><div class="wrap site-footer__inner"><div><p>© <span id="year"></span> chengguruchun · Hangzhou</p><p>Blog for Agents · 个人知识博客</p></div></div></footer>
+<script src="../assets/js/site.js"></script>
+<script>
+(function(){
+  var params=new URLSearchParams(location.search), path=params.get('article');
+  var title=document.getElementById('history-title'), desc=document.getElementById('history-desc'), list=document.getElementById('history-list');
+  var known={
+    'k8s-to-agent-control-plane.html':{title:'Kubernetes × Agent：从容器编排到目标收敛',desc:'记录这篇文章从“类比 Kubernetes”走向“Desired State / Actual Outcome 收敛”的思考演进。'},
+    'saas-ecommerce-agent-thinking.html':{title:'SaaS 电商平台的 Agent 思考',desc:'记录从 API / Workflow 中心走向 Goal / Capability / Feedback Loop 中心的版本演进。'},
+    'iot-agent-reconstruction.html':{title:'IoT 平台的 Agent 重构',desc:'记录 IoT 从设备自动化走向面向物理世界的 Goal / Agent / Outcome Loop 的版本演进。'}
+  };
+  if(!path || !known[path]){title.textContent='未指定文章';desc.textContent='请从思考档案进入具体文章的版本回溯。';return;}
+  title.textContent=known[path].title;desc.textContent=known[path].desc;
+  var api='https://api.github.com/repos/chengguruchun/chengguruchun.github.io/commits?path=articles/'+encodeURIComponent(path)+'&per_page=30';
+  fetch(api).then(function(r){if(!r.ok)throw new Error('GitHub API '+r.status);return r.json();}).then(function(commits){
+    if(!commits.length){list.innerHTML='<div class="history-empty">暂时没有可回看的版本。</div>';return;}
+    list.innerHTML=commits.map(function(c,i){
+      var d=new Date(c.commit.author.date), date=d.toLocaleDateString('zh-CN',{year:'numeric',month:'2-digit',day:'2-digit'});
+      var msg=(c.commit.message||'').split('\n')[0];
+      var version='v'+(commits.length-i).toFixed(1);
+      var blob='https://github.com/chengguruchun/chengguruchun.github.io/blob/'+c.sha+'/articles/'+path;
+      return '<div class="history-item"><div><div class="history-version">'+version+'</div><div class="history-date">'+date+'</div></div><div><div class="history-message">'+escapeHtml(msg)+'</div><div class="history-sha">'+c.sha.slice(0,10)+'</div></div><div class="history-actions"><a href="'+blob+'" target="_blank" rel="noopener">查看此版本</a></div></div>';
+    }).join('');
+  }).catch(function(){list.innerHTML='<div class="history-empty">Git 历史暂时无法加载。你仍然可以直接在 GitHub 中查看该文章的提交记录。</div>';});
+  function escapeHtml(s){return s.replace(/[&<>"']/g,function(ch){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch];});}
+})();
+</script>
+</body>
+</html>
