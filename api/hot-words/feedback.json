@@ -1,6 +1,6 @@
 {
   "name": "Hot Words feedback",
-  "generated": "2026-09-07T04:47:04Z",
+  "generated": "2026-09-07T04:47:06Z",
   "period": "2026-09-W1",
   "word": "Context Window Optimization",
   "signals": {
@@ -25,7 +25,7 @@
   },
   "lastRun": {
     "runId": "hot-words-2026-09-W1-20260907T044655Z",
-    "phase": "applied",
+    "phase": "published",
     "gates": {
       "schema": "pass",
       "duplicate": "pass",
@@ -35,7 +35,12 @@
       "consistency": "pass"
     },
     "evidenceCount": 10,
-    "publish": {},
+    "publish": {
+      "commit": "739f59f731157fdf9acbde59813956ddc60c2dcd",
+      "url": "https://chengguruchun.github.io/times/",
+      "mode": "autonomous",
+      "periodScheme": "YYYY-MM-WN month block, not ISO week"
+    },
     "error": null
   },
   "learnHints": {
@@ -71,9 +76,9 @@
     {
       "runId": "hot-words-2026-09-W1-20260907T044655Z",
       "period": "2026-09-W1",
-      "phase": "applied",
+      "phase": "published",
       "word": "Context Window Optimization",
-      "finishedAt": "2026-09-07T04:47:04Z",
+      "finishedAt": "2026-09-07T04:47:06Z",
       "path": "/api/hot-words/runs/hot-words-2026-09-W1-20260907T044655Z.json"
     },
     {
