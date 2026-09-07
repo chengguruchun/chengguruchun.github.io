@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>About Me · AI Knowledge Lab</title>
-  <meta name="description" content="chengguruchun · 杭州 · 研究画像：软件、系统与 AI。好奇、跨学科思考、工程实践。">
+  <meta name="description" content="chengguruchun：从分布式软件、IoT 和工业系统走向 Agent 基础设施的工程师。">
   <meta name="theme-color" content="#f7f5f0">
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,14 +24,13 @@
       <nav class="nav" id="site-nav" aria-label="主导航"><a href="../index.html">Home</a><a href="../diverse/">Diverse Lab</a><a href="../articles/">Articles</a><a href="../projects/">Projects</a><a href="../videos/">Videos</a><a href="../times/">Hot Words</a><a href="../about/" aria-current="page">About Me</a><a class="nav__search" href="../tags/">Tags / Search</a></nav>
     </div>
   </header>
+
   <main>
     <section class="hero hero--compact hero--route">
       <div class="wrap">
         <p class="hero__kicker">About Me · 研究画像</p>
-        <h1 class="hero__title hero__title--route">我正在探索什么</h1>
-        <p class="hero__lead">
-          这是一个面向 AI-native 时代的个人知识站：既给人读，也希望 Agent 能快速弄清我是谁、关注什么、如何思考。
-        </p>
+        <h1 class="hero__title hero__title--route">从分布式系统走向 Agent 基础设施。</h1>
+        <p class="hero__lead">我是 chengguruchun，一名在杭州工作的软件工程师。我的关注点，是如何把确定性软件系统中的工程纪律，迁移到具有概率性、工具调用和反馈闭环的 Agent 系统中。</p>
       </div>
     </section>
 
@@ -39,31 +38,36 @@
       <article class="article-body about-profile">
         <div class="wrap">
           <div class="about-profile__inner">
-          <h2 id="who-i-am">我是谁</h2>
-          <p>我是 <strong>chengguruchun</strong>，一名在杭州工作的软件工程师。</p>
-          <p>这些年主要在电商、IoT 和工业系统里写软件。比起盯着某一项技术本身，我更感兴趣的是不同领域之间的联系，以及这些联系如何改变我们理解和构建软件系统的方式。</p>
+            <h2 id="who-i-am">我是谁</h2>
+            <p>这些年，我在电商、IoT 和工业系统中写软件，也持续观察不同领域之间的共同结构：目标如何被表达，系统如何被约束，结果如何被验证，失败如何反馈到下一轮行动。</p>
+            <p>现在，我把这条经验带到 AI Agents / Infrastructure：不只讨论模型能生成什么，也关注 Agent 如何被调度、被授权、被评测，并最终在真实环境中完成任务。</p>
 
-          <h2 id="what-i-explore">我在探索什么</h2>
-          <p>我反复回到的问题包括：</p>
-          <ul>
-            <li>计算机系统与软件架构</li>
-            <li>分布式系统与基础设施</li>
-            <li>AI / LLM / Agent Engineering</li>
-            <li>软件工程方法如何演进</li>
-            <li>AI 与传统软件工程的交叉</li>
-            <li>人、AI 与软件系统之间新的协作方式</li>
-          </ul>
-          <p>这些主题并不彼此独立。我更希望从不同学科和工程实践里找共同规律，再试着把它们连起来，放到能交付、能观察的工作里验证。</p>
+            <h2 id="what-i-explore">我正在研究的三个问题</h2>
+            <div class="grid grid--3">
+              <article class="card">
+                <div class="card__meta"><span>01 · Agent Infrastructure</span></div>
+                <h3 class="card__title">任务如何可靠地完成？</h3>
+                <p class="card__excerpt">关注 Control Plane、Runtime、Tool Gateway、Policy、Approval、Eval 与 Outcome。</p>
+              </article>
+              <article class="card">
+                <div class="card__meta"><span>02 · Loop Engineering</span></div>
+                <h3 class="card__title">一次回答如何变成闭环？</h3>
+                <p class="card__excerpt">用 Goal → Action → Observation → Gap → Adjustment 描述会行动的智能系统。</p>
+              </article>
+              <article class="card">
+                <div class="card__meta"><span>03 · Experiment Engineering</span></div>
+                <h3 class="card__title">概率性如何被研究？</h3>
+                <p class="card__excerpt">用假设、对照、评测和真实结果，替代对单次 Prompt 经验的依赖。</p>
+              </article>
+            </div>
 
-          <h2 id="how-i-think">我如何思考</h2>
-          <p>我习惯用类比、实验和工程实践去理解复杂问题。</p>
-          <p>对我来说，一个想法不是结论，而是可以被验证的假设。</p>
-          <div class="callout">
-            <p class="callout__title">思考路径</p>
-            <p>提出问题，建立假设，寻找不同领域的对应关系，落到工程实践，观察结果，再修正自己的理解。</p>
-          </div>
-          <p>所以这个网站记录的不只是最终答案，也记录问题、假设、失败，以及思考本身走过的路径。</p>
-
+            <h2 id="how-i-work">我如何工作</h2>
+            <p>我习惯用类比建立模型，用实验检验假设，再把结论放回工程实践中观察。一个想法不是结论，而是一个需要面对反例、成本和真实结果的假设。</p>
+            <div class="callout">
+              <p class="callout__title">我的工作路径</p>
+              <p>提出问题 → 建立假设 → 寻找跨领域对应关系 → 落到工程实践 → 观察结果 → 修正理解。</p>
+            </div>
+            <p>这条方法已经沉淀在本站的内容中：可以从<a href="../diverse/llm-scientific-experiment.html">大模型实验方法</a>开始，再阅读<a href="../articles/k8s-to-agent-control-plane.html">Kubernetes × Agent 的控制面类比</a>，最后查看<a href="../diverse/physics-ecology-llm.html">复杂系统视角</a>。</p>
           </div>
         </div>
       </article>
@@ -72,140 +76,50 @@
     <section class="section section--tight" id="background">
       <div class="wrap">
         <div class="section__head">
-          <h2>背景</h2>
+          <h2>经历如何走到这里</h2>
         </div>
-
-        <div class="route" aria-label="求学与工作航线">
-          <div class="route__meta">
-            <span class="route__code">The Road Here</span>
-          </div>
-
+        <div class="route" aria-label="求学与工作经历">
+          <div class="route__meta"><span class="route__code">The Road Here</span></div>
           <ol class="route__spine">
             <li class="route-stop">
-              <div class="route-stop__rail" aria-hidden="true">
-                <span class="route-stop__dot"></span>
-                <span class="route-stop__track"></span>
-              </div>
-              <div class="route-stop__card">
-                <p class="route-stop__phase">求学 · 第1站</p>
-                <h2 class="route-stop__city">宿迁</h2>
-              </div>
+              <div class="route-stop__rail" aria-hidden="true"><span class="route-stop__dot"></span><span class="route-stop__track"></span></div>
+              <div class="route-stop__card"><p class="route-stop__phase">求学 · 第1站</p><h2 class="route-stop__city">宿迁</h2></div>
             </li>
-
             <li class="route-stop route-stop--fork">
-              <div class="route-stop__rail" aria-hidden="true">
-                <span class="route-stop__dot"></span>
-                <span class="route-stop__track"></span>
-              </div>
-              <div class="route-stop__card">
-                <p class="route-stop__phase">求学 · 第2站</p>
-                <h2 class="route-stop__city">上海</h2>
-              </div>
-              <aside class="route-branch" aria-label="新加坡">
-                <svg class="route-branch__line" viewBox="0 0 160 72" preserveAspectRatio="none" aria-hidden="true">
-                  <path d="M0 8 C48 8, 72 64, 160 64" fill="none" stroke="currentColor" stroke-width="1.25" stroke-dasharray="3 4"/>
-                </svg>
-                <div class="route-branch__node">
-                  <h3 class="route-branch__city">新加坡</h3>
-                  <p class="route-stop__note">求学期间。</p>
-                </div>
-              </aside>
+              <div class="route-stop__rail" aria-hidden="true"><span class="route-stop__dot"></span><span class="route-stop__track"></span></div>
+              <div class="route-stop__card"><p class="route-stop__phase">求学 · 第2站</p><h2 class="route-stop__city">上海</h2></div>
+              <aside class="route-branch" aria-label="新加坡"><svg class="route-branch__line" viewBox="0 0 160 72" preserveAspectRatio="none" aria-hidden="true"><path d="M0 8 C48 8, 72 64, 160 64" fill="none" stroke="currentColor" stroke-width="1.25" stroke-dasharray="3 4"/></svg><div class="route-branch__node"><h3 class="route-branch__city">新加坡</h3><p class="route-stop__note">求学期间。</p></div></aside>
             </li>
-
             <li class="route-stop">
-              <div class="route-stop__rail" aria-hidden="true">
-                <span class="route-stop__dot"></span>
-                <span class="route-stop__track"></span>
-              </div>
-              <div class="route-stop__card">
-                <p class="route-stop__phase">求学 · 第3站</p>
-                <h2 class="route-stop__city">杭州</h2>
-              </div>
+              <div class="route-stop__rail" aria-hidden="true"><span class="route-stop__dot"></span><span class="route-stop__track"></span></div>
+              <div class="route-stop__card"><p class="route-stop__phase">求学 · 第3站</p><h2 class="route-stop__city">杭州</h2></div>
             </li>
-
             <li class="route-stop route-stop--intern">
-              <div class="route-stop__rail" aria-hidden="true">
-                <span class="route-stop__dot route-stop__dot--intern"></span>
-                <span class="route-stop__track"></span>
-              </div>
-              <div class="route-stop__card">
-                <p class="route-stop__phase">实习 · 杭州</p>
-                <div class="route-badges">
-                  <div class="route-badge route-badge--intern">
-                    <span class="route-badge__label">Intern</span>
-                    <strong class="route-badge__name">星环科技</strong>
-                    <span class="route-badge__role">Java开发工程师</span>
-                    <span class="route-badge__tags">智慧医疗</span>
-                  </div>
-                </div>
-              </div>
+              <div class="route-stop__rail" aria-hidden="true"><span class="route-stop__dot route-stop__dot--intern"></span><span class="route-stop__track"></span></div>
+              <div class="route-stop__card"><p class="route-stop__phase">实习 · 杭州</p><div class="route-badges"><div class="route-badge route-badge--intern"><span class="route-badge__label">Intern</span><strong class="route-badge__name">星环科技</strong><span class="route-badge__role">Java 开发工程师</span><span class="route-badge__tags">智慧医疗</span></div></div></div>
             </li>
-
             <li class="route-stop route-stop--work">
-              <div class="route-stop__rail" aria-hidden="true">
-                <span class="route-stop__dot route-stop__dot--work"></span>
-                <span class="route-stop__track"></span>
-              </div>
-              <div class="route-stop__card">
-                <p class="route-stop__phase">工作 · 杭州</p>
-                <h2 class="route-stop__city">工作</h2>
-                <div class="route-badges">
-                  <div class="route-badge">
-                    <span class="route-badge__label">Station A</span>
-                    <strong class="route-badge__name">有赞</strong>
-                    <span class="route-badge__role">资深研发工程师</span>
-                    <span class="route-badge__tags">电商</span>
-                  </div>
-                  <div class="route-badge">
-                    <span class="route-badge__label">Station B</span>
-                    <strong class="route-badge__name">涂鸦科技</strong>
-                    <span class="route-badge__role">资深AI全栈工程师</span>
-                    <span class="route-badge__tags">IoT · 软硬结合</span>
-                  </div>
-                  <div class="route-badge">
-                    <span class="route-badge__label">Station C</span>
-                    <strong class="route-badge__name">迈的智能</strong>
-                    <span class="route-badge__role">FDE</span>
-                    <span class="route-badge__tags">垂直工业互联网</span>
-                  </div>
-                </div>
-              </div>
+              <div class="route-stop__rail" aria-hidden="true"><span class="route-stop__dot route-stop__dot--work"></span><span class="route-stop__track"></span></div>
+              <div class="route-stop__card"><p class="route-stop__phase">工作 · 杭州</p><h2 class="route-stop__city">从业务系统到真实世界</h2><div class="route-badges"><div class="route-badge"><span class="route-badge__label">Station A</span><strong class="route-badge__name">有赞</strong><span class="route-badge__role">资深研发工程师</span><span class="route-badge__tags">电商 · 业务系统</span></div><div class="route-badge"><span class="route-badge__label">Station B</span><strong class="route-badge__name">涂鸦科技</strong><span class="route-badge__role">资深 AI 全栈工程师</span><span class="route-badge__tags">IoT · 软硬结合</span></div><div class="route-badge"><span class="route-badge__label">Station C</span><strong class="route-badge__name">迈的智能</strong><span class="route-badge__role">FDE</span><span class="route-badge__tags">工业互联网 · 现场交付</span></div></div></div>
             </li>
-
             <li class="route-stop route-stop--now">
-              <div class="route-stop__rail" aria-hidden="true">
-                <span class="route-stop__dot route-stop__dot--now"></span>
-              </div>
-              <div class="route-stop__card route-stop__card--now">
-                <p class="route-stop__phase">现在</p>
-                <h2 class="route-stop__city">What next?</h2>
-                <p class="route-stop__note">把工程纪律接到 Agent 基础设施；把 AI Knowledge Lab 建成可发现、可调用的 Blog for Agents。</p>
-              </div>
+              <div class="route-stop__rail" aria-hidden="true"><span class="route-stop__dot route-stop__dot--now"></span></div>
+              <div class="route-stop__card route-stop__card--now"><p class="route-stop__phase">现在</p><h2 class="route-stop__city">What next?</h2><p class="route-stop__note">继续研究 Agent Runtime、Control Plane、Tool Gateway 和 Outcome Evaluation，把工程纪律接到 Agent 的执行与反馈闭环中。</p></div>
             </li>
           </ol>
         </div>
       </div>
     </section>
 
-    <section class="section section--tight" aria-label="Recently listening">
+    <section class="section section--tight">
       <div class="wrap">
-        <div class="now-playing">
-          <p class="now-playing__label">Recently listening</p>
-          <div class="now-playing__body">
-            <div>
-              <p class="now-playing__track">Hotel California</p>
-              <p class="now-playing__artist">Eagles · 2013 Remaster</p>
-              <p class="now-playing__note">最近单曲循环。沙漠公路、旅馆灯火，听着像一段走不完的 reconcile。</p>
-            </div>
-            <div class="now-playing__links">
-              <a class="now-playing__btn" href="https://open.spotify.com/track/40riOy7x9W7GXjyGp4pjAv" rel="noopener">Spotify</a>
-              <a class="now-playing__btn" href="https://www.youtube.com/watch?v=dLl4PZtxia8" rel="noopener">YouTube</a>
-            </div>
-          </div>
+        <div class="callout">
+          <p class="callout__title">AI Knowledge Lab 为什么存在</p>
+          <p>这里记录问题、假设、实验、架构和开放问题。它既是我的公开研究记录，也是一组可以被人阅读、被 Agent 发现和被工程师复用的知识资产。</p>
+          <p><a href="../now/">个人侧注：Now →</a> 最近在听什么，也在想什么。</p>
         </div>
       </div>
     </section>
-
   </main>
 
   <footer class="site-footer">
@@ -213,18 +127,12 @@
       <div>
         <p>© <span id="year"></span> chengguruchun · Hangzhou</p>
         <p>Blog for Agents · 个人知识博客</p>
-        <p class="footer-visits" aria-label="访问统计">
-          <span>本站 <strong data-visits-site>-</strong></span>
-          <span class="footer-visits__sep" aria-hidden="true">·</span>
-          <span>本页 <strong data-visits-page>-</strong></span>
-        </p>
+        <p class="footer-visits" aria-label="访问统计"><span>本站 <strong data-visits-site>-</strong></span><span class="footer-visits__sep" aria-hidden="true">·</span><span>本页 <strong data-visits-page>-</strong></span></p>
       </div>
       <div class="footer-contacts">
         <p><span class="footer-label">邮箱</span> <a href="mailto:chengguruchun@163.com">chengguruchun@163.com</a></p>
         <p><span class="footer-label">GitHub</span> <a href="https://github.com/chengguruchun" rel="noopener">github.com/chengguruchun</a></p>
         <p><span class="footer-label">RSS</span> <a href="../feed.xml">内容订阅 feed.xml</a></p>
-        <p><span class="footer-label">Watch</span> <a href="https://github.com/chengguruchun/chengguruchun.github.io/subscription" rel="noopener">GitHub 订阅站点 repo</a></p>
-        <p><span class="footer-label">Repo Atom</span> <a href="https://github.com/chengguruchun/chengguruchun.github.io/commits/main.atom" rel="noopener">commits.atom</a></p>
       </div>
     </div>
   </footer>
