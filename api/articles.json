@@ -2,6 +2,86 @@
   "type": "Articles",
   "items": [
     {
+      "id": "reasoning-scale-knowledge-external",
+      "type": "Articles",
+      "title": "推理是规模红利，知识是外挂红利",
+      "excerpt": "企业为什么不全用小模型？因为「知识」和「推理」是两回事：知识天天变，该外挂；推理难压缩，才吃规模。真正的决策变量是任务链长度——单步 95% 正确，十步只剩 60%。",
+      "url": "/articles/reasoning-scale-knowledge-external.html",
+      "date": "2026-09-08",
+      "tags": [
+        "Agent",
+        "Reasoning",
+        "Knowledge",
+        "Small Model",
+        "Model Selection",
+        "Cost"
+      ],
+      "thought_date": "2026-09-02",
+      "published_date": "2026-09-08",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/reasoning-scale-knowledge-external.md",
+      "content": "/content/articles/reasoning-scale-knowledge-external.md"
+    },
+    {
+      "id": "agent-industrial-internet",
+      "type": "Articles",
+      "title": "AI Agent 改造工业互联网：壁垒是数据闭环，不是模型",
+      "excerpt": "工业互联网的核心壁垒是「数据闭环 + 行业 know-how」。AI Agent 能加速数据→决策→执行的闭环，但行业知识门槛不会被轻易跨越；组织能力（技术 + 文化）仍是决定性变量。",
+      "url": "/articles/agent-industrial-internet.html",
+      "date": "2026-09-08",
+      "tags": [
+        "Agent",
+        "Industrial Internet",
+        "Know-how",
+        "Data Loop",
+        "Organization",
+        "Vertical"
+      ],
+      "thought_date": "2026-08-19",
+      "published_date": "2026-09-08",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/agent-industrial-internet.md",
+      "content": "/content/articles/agent-industrial-internet.md"
+    },
+    {
+      "id": "agent-evaluation-proxy-vs-real-outcome",
+      "type": "Articles",
+      "title": "Agent 的评价：Proxy Metric ≠ Real Outcome",
+      "excerpt": "测试、API 状态和 outcome.ok 都可能 PASS，但用户仍然认为问题没有解决。Agent 的评价最终必须回到真实 Outcome。",
+      "url": "/articles/agent-evaluation-proxy-vs-real-outcome.html",
+      "date": "2026-09-08",
+      "tags": [
+        "Agent",
+        "Evaluation",
+        "Outcome",
+        "Ground Truth",
+        "Feedback",
+        "Loop Engineering"
+      ],
+      "thought_date": "2026-09-04",
+      "published_date": "2026-09-08",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/agent-evaluation-proxy-vs-real-outcome.md",
+      "content": "/content/articles/agent-evaluation-proxy-vs-real-outcome.md"
+    },
+    {
+      "id": "agent-optimizer-experience-policy",
+      "type": "Articles",
+      "title": "Agent Optimizer：不训练模型，而是优化经验与策略",
+      "excerpt": "Agent 变强不一定首先意味着修改模型权重，也可以通过经验记忆、策略调整和工具调用方式的优化实现。",
+      "url": "/articles/agent-optimizer-experience-policy.html",
+      "date": "2026-09-08",
+      "tags": [
+        "Agent",
+        "Optimizer",
+        "Reinforcement Learning",
+        "Experience Memory",
+        "Evaluation",
+        "Policy"
+      ],
+      "thought_date": "2026-09-04",
+      "published_date": "2026-09-08",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/agent-optimizer-experience-policy.md",
+      "content": "/content/articles/agent-optimizer-experience-policy.md"
+    },
+    {
       "id": "agent-skill-evolution-pruning",
       "type": "Articles",
       "title": "Agent 技能演化：从轨迹回流到可剪枝的程序性记忆",

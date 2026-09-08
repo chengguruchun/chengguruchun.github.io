@@ -1,15 +1,263 @@
 {
-  "generated": "2026-09-08T02:30:00Z",
+  "generated": "2026-09-08T03:58:19Z",
   "items": [
-    {"id":"agent-evaluation-proxy-vs-real-outcome","type":"Articles","title":"Agent 的评价：Proxy Metric ≠ Real Outcome","excerpt":"测试、API 状态和 outcome.ok 都可能 PASS，但用户仍然认为问题没有解决。Agent 的评价最终必须回到真实 Outcome。","url":"/articles/agent-evaluation-proxy-vs-real-outcome.html","date":"2026-09-08","tags":["Agent","Evaluation","Outcome","Ground Truth","Feedback","Loop Engineering"],"thought_date":"2026-09-04","published_date":"2026-09-08","history_url":"https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/agent-evaluation-proxy-vs-real-outcome.md","content":"/content/articles/agent-evaluation-proxy-vs-real-outcome.md"},
-    {"id":"agent-optimizer-experience-policy","type":"Articles","title":"Agent Optimizer：不训练模型，而是优化经验与策略","excerpt":"Agent 变强不一定首先意味着修改模型权重，也可以通过经验记忆、策略调整和工具调用方式的优化实现。","url":"/articles/agent-optimizer-experience-policy.html","date":"2026-09-08","tags":["Agent","Optimizer","Reinforcement Learning","Experience Memory","Evaluation","Policy"],"thought_date":"2026-09-04","published_date":"2026-09-08","history_url":"https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/agent-optimizer-experience-policy.md","content":"/content/articles/agent-optimizer-experience-policy.md"},
-    {"id":"agent-skill-evolution-pruning","type":"Articles","title":"Agent 技能演化：从轨迹回流到可剪枝的程序性记忆","excerpt":"把执行轨迹蒸馏成技能已被两代工作证明有效，但「技能如何停止增长」被留给了未来工作。剪枝的关键转换：不追踪模型为什么用一节，只测量删掉之后效果变不变。","url":"/articles/agent-skill-evolution-pruning.html","date":"2026-09-08","tags":["Agent","Procedural Memory","Skill","Runtime","Loop Engineering","Evaluation"],"thought_date":"2026-09-01","published_date":"2026-09-08","history_url":"https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/agent-skill-evolution-pruning.md","content":"/content/articles/agent-skill-evolution-pruning.md"},
-    {"id":"interpretability-rl-faithfulness","type":"Diverse Lab","title":"可解释性 × 强化学习：让「强」和「真」对得上账","excerpt":"RL 让模型变强、变会说谎；可解释性负责让强和真对账。SAE 与 GRPO 本质都是用对比替代绝对，共同指向 faithfulness。","url":"/diverse/interpretability-rl-faithfulness.html","date":"2026-09-08","tags":["Diverse","Interpretability","RL","Faithfulness","LLM","Complex Systems"],"thought_date":"2026-09-03","published_date":"2026-09-08","history_url":"https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/interpretability-rl-faithfulness.md","content":"/content/diverse/interpretability-rl-faithfulness.md"},
-    {"id":"agent-engineering-from-workflow-to-control-plane","type":"Articles","title":"Agent Engineering：从 Workflow 到 Loop，再到 Control Plane","excerpt":"Workflow、Graph、Loop、Harness 与 Control Plane 并不是互相替代，而是 Agent 系统在不同不确定性和治理尺度上的不同工程层。","url":"/articles/agent-engineering-from-workflow-to-control-plane.html","date":"2026-09-08","tags":["Agent","Workflow","Graph","Loop Engineering","Harness","Control Plane","Kubernetes","Runtime"],"thought_date":"2026-09-04","published_date":"2026-09-08","history_url":"https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/agent-engineering-from-workflow-to-control-plane.md","content":"/content/articles/agent-engineering-from-workflow-to-control-plane.md"},
-    {"id":"from-function-to-ecosystem","type":"Diverse Lab","title":"从函数到生态系统：重新理解大模型与 Agent","excerpt":"物理学给我们规律，生态学给我们关系与反馈，科学实验告诉我们如何验证；把三种心智放在一起，可以重新理解 LLM 与 Agent。","url":"/diverse/from-function-to-ecosystem.html","date":"2026-09-08","tags":["Diverse","Physics","Ecology","LLM","Agent","Experiment","Complex Systems"],"thought_date":"2026-09-04","published_date":"2026-09-08","history_url":"https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/from-function-to-ecosystem.md","content":"/content/diverse/from-function-to-ecosystem.md"},
-    {"id":"k8s-to-agent-control-plane","type":"Articles","title":"Kubernetes × Agent：从容器编排到目标收敛","excerpt":"K8s 管服务如何稳定运行；Agent Control Plane 管智能任务如何被分解、执行、验证并完成。核心是 Desired State 与 Actual Outcome 的持续拟合。","url":"/articles/k8s-to-agent-control-plane.html","date":"2026-09-06","tags":["Agent","Kubernetes","Control Plane","Runtime","Loop Engineering"],"thought_date":"2026-08-28","published_date":"2026-09-06","history_url":"https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/k8s-to-agent-control-plane.md","content":"/content/articles/k8s-to-agent-control-plane.md"},
-    {"id":"llm-scientific-experiment","type":"Diverse Lab","title":"大模型：用科学实验的方式使用","excerpt":"大模型调用更接近条件分布上的采样。用假设、对照、评测与反馈闭环，把 Prompt Engineering 做成可陈述的 Experiment Engineering。","url":"/diverse/llm-scientific-experiment.html","date":"2026-09-06","tags":["Diverse","LLM","Experiment","Agent","Loop Engineering","Complex Systems"],"thought_date":"2026-09-02","published_date":"2026-09-06","history_url":"https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/llm-scientific-experiment.md","content":"/content/diverse/llm-scientific-experiment.md"},
-    {"id":"physics-ecology-llm","type":"Diverse Lab","title":"物理学 × 生态学：对复杂系统的一个思考","excerpt":"物理学看规律，生态学看关系与反馈；综合二者，才能理解 LLM 与多 Agent 如何逼近 Complex System Engineering。","url":"/diverse/physics-ecology-llm.html","date":"2026-09-06","tags":["Diverse","Physics","Ecology","Complex Systems","LLM","Agent"],"thought_date":"2026-09-02","published_date":"2026-09-06","history_url":"https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/physics-ecology-llm.md","content":"/content/diverse/physics-ecology-llm.md"},
-    {"id":"times-2026-09-w1","type":"Times","title":"2026-09 Week 1 · Context Window Optimization","excerpt":"在2026年，随着Agent处理长上下文需求的激增，如何高效利用有限的上下文窗口成为工程实践的核心痛点。本站软件与Agent主线高度相关，该词直指系统性能优化，且与当前词形成互补而非重复。","url":"/times/","date":"2026-09-07","tags":["Times","Hot Words","Context Window Optimization"],"markdown":"/content/times/2026-09-w1.md","period":"2026-09-W1","word":"Context Window Optimization"}
+    {
+      "id": "reasoning-scale-knowledge-external",
+      "type": "Articles",
+      "title": "推理是规模红利，知识是外挂红利",
+      "excerpt": "企业为什么不全用小模型？因为「知识」和「推理」是两回事：知识天天变，该外挂；推理难压缩，才吃规模。真正的决策变量是任务链长度——单步 95% 正确，十步只剩 60%。",
+      "url": "/articles/reasoning-scale-knowledge-external.html",
+      "date": "2026-09-08",
+      "tags": [
+        "Agent",
+        "Reasoning",
+        "Knowledge",
+        "Small Model",
+        "Model Selection",
+        "Cost"
+      ],
+      "thought_date": "2026-09-02",
+      "published_date": "2026-09-08",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/reasoning-scale-knowledge-external.md",
+      "content": "/content/articles/reasoning-scale-knowledge-external.md"
+    },
+    {
+      "id": "agent-industrial-internet",
+      "type": "Articles",
+      "title": "AI Agent 改造工业互联网：壁垒是数据闭环，不是模型",
+      "excerpt": "工业互联网的核心壁垒是「数据闭环 + 行业 know-how」。AI Agent 能加速数据→决策→执行的闭环，但行业知识门槛不会被轻易跨越；组织能力（技术 + 文化）仍是决定性变量。",
+      "url": "/articles/agent-industrial-internet.html",
+      "date": "2026-09-08",
+      "tags": [
+        "Agent",
+        "Industrial Internet",
+        "Know-how",
+        "Data Loop",
+        "Organization",
+        "Vertical"
+      ],
+      "thought_date": "2026-08-19",
+      "published_date": "2026-09-08",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/agent-industrial-internet.md",
+      "content": "/content/articles/agent-industrial-internet.md"
+    },
+    {
+      "id": "symbolicism-vs-connectionism",
+      "type": "Diverse Lab",
+      "title": "符号主义 vs 联结主义：意义如何接地",
+      "excerpt": "符号主义说意义在符号的位置，联结主义说意义在向量的位置；两派都没解决「符号接地」。现实是大模型底层分布式、表层符号化，缺的都是把意义接到真实经验的那块「地」。",
+      "url": "/diverse/symbolicism-vs-connectionism.html",
+      "date": "2026-09-08",
+      "tags": [
+        "Diverse",
+        "Symbolicism",
+        "Connectionism",
+        "Grounding",
+        "Philosophy",
+        "LLM"
+      ],
+      "thought_date": "2026-08-01",
+      "published_date": "2026-09-08",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/symbolicism-vs-connectionism.md",
+      "content": "/content/diverse/symbolicism-vs-connectionism.md"
+    },
+    {
+      "id": "agent-evaluation-proxy-vs-real-outcome",
+      "type": "Articles",
+      "title": "Agent 的评价：Proxy Metric ≠ Real Outcome",
+      "excerpt": "测试、API 状态和 outcome.ok 都可能 PASS，但用户仍然认为问题没有解决。Agent 的评价最终必须回到真实 Outcome。",
+      "url": "/articles/agent-evaluation-proxy-vs-real-outcome.html",
+      "date": "2026-09-08",
+      "tags": [
+        "Agent",
+        "Evaluation",
+        "Outcome",
+        "Ground Truth",
+        "Feedback",
+        "Loop Engineering"
+      ],
+      "thought_date": "2026-09-04",
+      "published_date": "2026-09-08",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/agent-evaluation-proxy-vs-real-outcome.md",
+      "content": "/content/articles/agent-evaluation-proxy-vs-real-outcome.md"
+    },
+    {
+      "id": "agent-optimizer-experience-policy",
+      "type": "Articles",
+      "title": "Agent Optimizer：不训练模型，而是优化经验与策略",
+      "excerpt": "Agent 变强不一定首先意味着修改模型权重，也可以通过经验记忆、策略调整和工具调用方式的优化实现。",
+      "url": "/articles/agent-optimizer-experience-policy.html",
+      "date": "2026-09-08",
+      "tags": [
+        "Agent",
+        "Optimizer",
+        "Reinforcement Learning",
+        "Experience Memory",
+        "Evaluation",
+        "Policy"
+      ],
+      "thought_date": "2026-09-04",
+      "published_date": "2026-09-08",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/agent-optimizer-experience-policy.md",
+      "content": "/content/articles/agent-optimizer-experience-policy.md"
+    },
+    {
+      "id": "agent-skill-evolution-pruning",
+      "type": "Articles",
+      "title": "Agent 技能演化：从轨迹回流到可剪枝的程序性记忆",
+      "excerpt": "把执行轨迹蒸馏成技能已被两代工作证明有效，但「技能如何停止增长」被留给了未来工作。剪枝的关键转换：不追踪模型为什么用一节，只测量删掉之后效果变不变。",
+      "url": "/articles/agent-skill-evolution-pruning.html",
+      "date": "2026-09-08",
+      "tags": [
+        "Agent",
+        "Procedural Memory",
+        "Skill",
+        "Runtime",
+        "Loop Engineering",
+        "Evaluation"
+      ],
+      "thought_date": "2026-09-01",
+      "published_date": "2026-09-08",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/agent-skill-evolution-pruning.md",
+      "content": "/content/articles/agent-skill-evolution-pruning.md"
+    },
+    {
+      "id": "interpretability-rl-faithfulness",
+      "type": "Diverse Lab",
+      "title": "可解释性 × 强化学习：让「强」和「真」对得上账",
+      "excerpt": "RL 让模型变强、变会说谎；可解释性负责让强和真对账。SAE 与 GRPO 本质都是用对比替代绝对，共同指向 faithfulness。",
+      "url": "/diverse/interpretability-rl-faithfulness.html",
+      "date": "2026-09-08",
+      "tags": [
+        "Diverse",
+        "Interpretability",
+        "RL",
+        "Faithfulness",
+        "LLM",
+        "Complex Systems"
+      ],
+      "thought_date": "2026-09-03",
+      "published_date": "2026-09-08",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/interpretability-rl-faithfulness.md",
+      "content": "/content/diverse/interpretability-rl-faithfulness.md"
+    },
+    {
+      "id": "agent-engineering-from-workflow-to-control-plane",
+      "type": "Articles",
+      "title": "Agent Engineering：从 Workflow 到 Loop，再到 Control Plane",
+      "excerpt": "Workflow、Graph、Loop、Harness 与 Control Plane 并不是互相替代，而是 Agent 系统在不同不确定性和治理尺度上的不同工程层。",
+      "url": "/articles/agent-engineering-from-workflow-to-control-plane.html",
+      "date": "2026-09-08",
+      "tags": [
+        "Agent",
+        "Workflow",
+        "Graph",
+        "Loop Engineering",
+        "Harness",
+        "Control Plane",
+        "Kubernetes",
+        "Runtime"
+      ],
+      "thought_date": "2026-09-04",
+      "published_date": "2026-09-08",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/agent-engineering-from-workflow-to-control-plane.md",
+      "content": "/content/articles/agent-engineering-from-workflow-to-control-plane.md"
+    },
+    {
+      "id": "from-function-to-ecosystem",
+      "type": "Diverse Lab",
+      "title": "从函数到生态系统：重新理解大模型与 Agent",
+      "excerpt": "物理学给我们规律，生态学给我们关系与反馈，科学实验告诉我们如何验证；把三种心智放在一起，可以重新理解 LLM 与 Agent。",
+      "url": "/diverse/from-function-to-ecosystem.html",
+      "date": "2026-09-08",
+      "tags": [
+        "Diverse",
+        "Physics",
+        "Ecology",
+        "LLM",
+        "Agent",
+        "Experiment",
+        "Complex Systems"
+      ],
+      "thought_date": "2026-09-04",
+      "published_date": "2026-09-08",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/from-function-to-ecosystem.md",
+      "content": "/content/diverse/from-function-to-ecosystem.md"
+    },
+    {
+      "id": "k8s-to-agent-control-plane",
+      "type": "Articles",
+      "title": "Kubernetes × Agent：从容器编排到目标收敛",
+      "excerpt": "K8s 管服务如何稳定运行；Agent Control Plane 管智能任务如何被分解、执行、验证并完成。核心是 Desired State 与 Actual Outcome 的持续拟合。",
+      "url": "/articles/k8s-to-agent-control-plane.html",
+      "date": "2026-09-06",
+      "tags": [
+        "Agent",
+        "Kubernetes",
+        "Control Plane",
+        "Runtime",
+        "Loop Engineering"
+      ],
+      "thought_date": "2026-08-28",
+      "published_date": "2026-09-06",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/k8s-to-agent-control-plane.md",
+      "content": "/content/articles/k8s-to-agent-control-plane.md"
+    },
+    {
+      "id": "llm-scientific-experiment",
+      "type": "Diverse Lab",
+      "title": "大模型：用科学实验的方式使用",
+      "excerpt": "大模型调用更接近条件分布上的采样。用假设、对照、评测与反馈闭环，把 Prompt Engineering 做成可陈述的 Experiment Engineering。",
+      "url": "/diverse/llm-scientific-experiment.html",
+      "date": "2026-09-06",
+      "tags": [
+        "Diverse",
+        "LLM",
+        "Experiment",
+        "Agent",
+        "Loop Engineering",
+        "Complex Systems"
+      ],
+      "thought_date": "2026-09-02",
+      "published_date": "2026-09-06",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/llm-scientific-experiment.md",
+      "content": "/content/diverse/llm-scientific-experiment.md"
+    },
+    {
+      "id": "physics-ecology-llm",
+      "type": "Diverse Lab",
+      "title": "物理学 × 生态学：对复杂系统的一个思考",
+      "excerpt": "物理学看规律，生态学看关系与反馈；综合二者，才能理解 LLM 与多 Agent 如何逼近 Complex System Engineering。",
+      "url": "/diverse/physics-ecology-llm.html",
+      "date": "2026-09-06",
+      "tags": [
+        "Diverse",
+        "Physics",
+        "Ecology",
+        "Complex Systems",
+        "LLM",
+        "Agent"
+      ],
+      "thought_date": "2026-09-02",
+      "published_date": "2026-09-06",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/physics-ecology-llm.md",
+      "content": "/content/diverse/physics-ecology-llm.md"
+    },
+    {
+      "id": "times-2026-09-w1",
+      "type": "Times",
+      "title": "2026-09 Week 1 · Context Window Optimization",
+      "excerpt": "在2026年，随着Agent处理长上下文需求的激增，如何高效利用有限的上下文窗口成为工程实践的核心痛点。本站软件与Agent主线高度相关，该词直指系统性能优化，且与当前词形成互补而非重复。",
+      "url": "/times/",
+      "date": "2026-09-07",
+      "tags": [
+        "Times",
+        "Hot Words",
+        "Context Window Optimization"
+      ],
+      "markdown": "/content/times/2026-09-w1.md",
+      "period": "2026-09-W1",
+      "word": "Context Window Optimization"
+    }
   ]
 }

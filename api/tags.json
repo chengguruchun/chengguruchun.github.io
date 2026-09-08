@@ -2,6 +2,10 @@
   "updated": "2026-09-08",
   "tags": {
     "Agent": [
+      "reasoning-scale-knowledge-external",
+      "agent-industrial-internet",
+      "agent-evaluation-proxy-vs-real-outcome",
+      "agent-optimizer-experience-policy",
       "agent-skill-evolution-pruning",
       "agent-engineering-from-workflow-to-control-plane",
       "from-function-to-ecosystem",
@@ -15,6 +19,9 @@
       "llm-scientific-experiment",
       "physics-ecology-llm"
     ],
+    "Connectionism": [
+      "symbolicism-vs-connectionism"
+    ],
     "Context Window Optimization": [
       "times-2026-09-w1"
     ],
@@ -22,7 +29,14 @@
       "agent-engineering-from-workflow-to-control-plane",
       "k8s-to-agent-control-plane"
     ],
+    "Cost": [
+      "reasoning-scale-knowledge-external"
+    ],
+    "Data Loop": [
+      "agent-industrial-internet"
+    ],
     "Diverse": [
+      "symbolicism-vs-connectionism",
       "interpretability-rl-faithfulness",
       "from-function-to-ecosystem",
       "llm-scientific-experiment",
@@ -33,7 +47,12 @@
       "physics-ecology-llm"
     ],
     "Evaluation": [
+      "agent-evaluation-proxy-vs-real-outcome",
+      "agent-optimizer-experience-policy",
       "agent-skill-evolution-pruning"
+    ],
+    "Experience Memory": [
+      "agent-optimizer-experience-policy"
     ],
     "Experiment": [
       "from-function-to-ecosystem",
@@ -42,8 +61,17 @@
     "Faithfulness": [
       "interpretability-rl-faithfulness"
     ],
+    "Feedback": [
+      "agent-evaluation-proxy-vs-real-outcome"
+    ],
     "Graph": [
       "agent-engineering-from-workflow-to-control-plane"
+    ],
+    "Ground Truth": [
+      "agent-evaluation-proxy-vs-real-outcome"
+    ],
+    "Grounding": [
+      "symbolicism-vs-connectionism"
     ],
     "Harness": [
       "agent-engineering-from-workflow-to-control-plane"
@@ -51,34 +79,69 @@
     "Hot Words": [
       "times-2026-09-w1"
     ],
+    "Industrial Internet": [
+      "agent-industrial-internet"
+    ],
     "Interpretability": [
       "interpretability-rl-faithfulness"
+    ],
+    "Know-how": [
+      "agent-industrial-internet"
+    ],
+    "Knowledge": [
+      "reasoning-scale-knowledge-external"
     ],
     "Kubernetes": [
       "agent-engineering-from-workflow-to-control-plane",
       "k8s-to-agent-control-plane"
     ],
     "LLM": [
+      "symbolicism-vs-connectionism",
       "interpretability-rl-faithfulness",
       "from-function-to-ecosystem",
       "llm-scientific-experiment",
       "physics-ecology-llm"
     ],
     "Loop Engineering": [
+      "agent-evaluation-proxy-vs-real-outcome",
       "agent-skill-evolution-pruning",
       "agent-engineering-from-workflow-to-control-plane",
       "k8s-to-agent-control-plane",
       "llm-scientific-experiment"
     ],
+    "Model Selection": [
+      "reasoning-scale-knowledge-external"
+    ],
+    "Optimizer": [
+      "agent-optimizer-experience-policy"
+    ],
+    "Organization": [
+      "agent-industrial-internet"
+    ],
+    "Outcome": [
+      "agent-evaluation-proxy-vs-real-outcome"
+    ],
+    "Philosophy": [
+      "symbolicism-vs-connectionism"
+    ],
     "Physics": [
       "from-function-to-ecosystem",
       "physics-ecology-llm"
+    ],
+    "Policy": [
+      "agent-optimizer-experience-policy"
     ],
     "Procedural Memory": [
       "agent-skill-evolution-pruning"
     ],
     "RL": [
       "interpretability-rl-faithfulness"
+    ],
+    "Reasoning": [
+      "reasoning-scale-knowledge-external"
+    ],
+    "Reinforcement Learning": [
+      "agent-optimizer-experience-policy"
     ],
     "Runtime": [
       "agent-skill-evolution-pruning",
@@ -88,8 +151,17 @@
     "Skill": [
       "agent-skill-evolution-pruning"
     ],
+    "Small Model": [
+      "reasoning-scale-knowledge-external"
+    ],
+    "Symbolicism": [
+      "symbolicism-vs-connectionism"
+    ],
     "Times": [
       "times-2026-09-w1"
+    ],
+    "Vertical": [
+      "agent-industrial-internet"
     ],
     "Workflow": [
       "agent-engineering-from-workflow-to-control-plane"
