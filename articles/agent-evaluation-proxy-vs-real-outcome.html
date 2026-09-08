@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agent 的评价：Proxy Metric ≠ Real Outcome · Articles</title>
+  <meta name="description" content="从 Agent 评价中的具体矛盾出发：测试、API 状态和 outcome.ok 都可能 PASS，但用户仍然认为问题没有解决。Agent 的评价最终必须回到真实 Outcome。">
+  <meta name="theme-color" content="#f7f5f0"><link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+<header class="site-header"><div class="wrap site-header__inner"><a class="brand" href="../index.html"><img class="brand__logo" src="../assets/img/brand-mark.svg" alt="AI Knowledge Lab" width="44" height="44"><span class="brand__tag"><span class="brand__rotate"><span class="brand__item is-active">Independent Thinker</span><span class="brand__item">AI Agents</span><span class="brand__item">Complex Systems</span><span class="brand__item">Diverse Thinking</span></span></span></a><button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">菜单</button><nav class="nav" id="site-nav" aria-label="主导航"><a href="../index.html">Home</a><a href="../diverse/">Diverse Lab</a><a href="../articles/" aria-current="page">Articles</a><a href="../projects/">Projects</a><a href="../videos/">Videos</a><a href="../times/">Hot Words</a><a href="../about/">About Me</a><a class="nav__search" href="../tags/">Tags / Search</a></nav></div></header>
+<main><article class="article-body"><header class="page-hero"><div class="prose-wrap"><p class="page-hero__kicker">Articles</p><h1>Agent 的评价：Proxy Metric ≠ Real Outcome</h1><p class="page-hero__desc">测试通过、API PASS 和 outcome.ok 都可能是真的，但它们仍然不等于用户的问题已经解决。</p><p class="article-meta"><span>思路 2026-09-04</span><span>发表 2026-09-08</span><span>作者 chengguruchun</span><a class="tag" href="../tags/?tag=Agent">Agent</a><a class="tag" href="../tags/?tag=Evaluation">Evaluation</a><a class="tag" href="../tags/?tag=Outcome">Outcome</a><a class="tag" href="../tags/?tag=Feedback">Feedback</a></p></div></header>
+<div class="prose-wrap">
+<p class="lede">我们讨论 Agent 优化时遇到过一个直接的问题：一个 Agent 的测试全部通过，是否意味着它真的把事情做好了？答案并不一定是。</p>
+<pre>outcome.ok = true
+12 tests passed
+API PASS
+multi-style PASS
+
+        ↓
+
+用户反馈：
+「覆盖问题也没有修正」</pre>
+<h2>一、Proxy Metric 很容易看起来像结果</h2>
+<p>传统软件里，HTTP 200、单元测试 PASS、API PASS、Workflow SUCCESS 往往已经很接近执行结果。但 Agent 做的事情越来越接近开放目标以后，过程成功和目标完成需要分开。</p>
+<pre>Proxy Metric
+    ↓
+「过程看起来成功」
+
+Real Outcome
+    ↓
+「目标实际上被完成」</pre>
+<h2>二、为什么 Agent 更容易出现这种偏差</h2>
+<p>Agent 的执行通常是 Goal → Action → Tool → Environment → Observation → Adjustment。于是成功标准天然有两层：Action 有没有正确执行，以及 Action 有没有让环境朝目标移动。</p>
+<p>如果只测第一层，Agent 很容易学会优化代理指标，而不是优化真正的目标。</p>
+<h2>三、Ground Truth Status</h2>
+<p>我们讨论 Agent Optimizer 时，我提出过把真实结果状态显式记录下来，而不是只保存一个 <code>ok=true</code>：</p>
+<pre>Ground Truth Status
+├── test_verified
+├── user_confirmed
+└── unverified</pre>
+<p><code>test_verified</code> 表示自动校验已经提供证据；<code>user_confirmed</code> 表示用户明确确认；<code>unverified</code> 则意味着证据还不足。这样比一个简单的 <code>outcome.ok</code> 更诚实。</p>
+<h2>四、Proxy 与真实结果发生冲突</h2>
+<pre>Proxy Metric
+      ↓
+    PASS
+      │
+      │  ≠
+      ↓
+Real Outcome
+      ↓
+User Confirmed: FAIL
+
+=> divergence_flag = true</pre>
+<p><code>divergence_flag</code> 不是为了判断谁一定正确，而是告诉 Optimizer：这里出现了评价体系与真实反馈之间的偏差，不能直接把这条轨迹当成成功案例学习。</p>
+<h2>五、为什么要有 Held-out Test</h2>
+<pre>Visible Tests
+      ↓
+Proxy Signal
+
+Held-out Tests
+      ↓
+Independent Signal
+
+User Feedback
+      ↓
+Real-world Signal</pre>
+<p>如果 Agent 自己生成的测试就是最终优化的测试，很容易把优化变成“对着可见指标做高分”。Held-out Test 提供独立信号，用户反馈则进一步把评价拉回真实环境。</p>
+<h2>六、Evaluation 应该进入 Agent Loop</h2>
+<pre>Goal
+ ↓
+Agent
+ ↓
+Action
+ ↓
+Environment
+ ↓
+Observation
+ ↓
+Evaluation
+ ↓
+Gap
+ ↓
+Next Action
+ ↺</pre>
+<p>Evaluation 的作用不只是打分，而是回答：<strong>现在的结果，离真正目标还有多远？</strong></p>
+<h2>七、这会直接影响 Agent Optimizer</h2>
+<pre>错误 Proxy
+    ↓
+Optimizer
+    ↓
+更强的策略
+    ↓
+更高的 Proxy 分数
+    ↓
+更大的 Real Outcome 偏差</pre>
+<p>因此 Optimizer 的第一步不是“怎么优化”，而是先回答：<strong>这个成功信号是真的吗？</strong></p>
+<p>我们讨论过把 <code>task_fingerprint</code>、<code>ground_truth_status</code>、<code>divergence_flag</code> 和 <code>cost</code> 放在一起。它们分别帮助系统识别任务、判断证据强度、发现评价冲突，并记录得到结果付出的成本。</p>
+<h2>八、我现在更愿意这样理解 Agent Evaluation</h2>
+<pre>传统软件
+Function → Expected Output → PASS / FAIL
+
+Agent
+Goal → Agent → Action → Environment → Observed Outcome → Ground Truth</pre>
+<p><strong>Agent Evaluation 不是给 Agent 一个分数，而是建立 Proxy Metric 与 Real Outcome 之间的对应关系。</strong></p>
+<p>如果两者长期一致，Proxy 才值得信任；如果出现偏差，就应该优先研究这个偏差，而不是继续提高 Proxy 分数。</p>
+<p>最终 Agent 真正需要优化的不是“我通过了多少测试”，而是：<strong>我是否真的解决了用户要解决的问题？</strong></p>
+</div></article></main>
+<footer class="site-footer"><div class="wrap site-footer__inner"><div><p>© <span id="year"></span> chengguruchun · Hangzhou</p><p>Blog for Agents · 个人知识博客</p><p class="footer-visits" aria-label="访问统计"><span>本站 <strong data-visits-site>-</strong></span><span class="footer-visits__sep" aria-hidden="true">·</span><span>本页 <strong data-visits-page>-</strong></span></p></div></div></footer><script src="../assets/js/site.js"></script><script src="../assets/js/visits.js"></script></body></html>
