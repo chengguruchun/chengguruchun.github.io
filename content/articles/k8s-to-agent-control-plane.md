@@ -6,6 +6,10 @@ date: 2026-09-06
 thought_date: 2026-08-28
 published_date: 2026-09-06
 tags: [Agent, Kubernetes, Control Plane, Runtime, Loop Engineering]
+stage: published
+origin: joint
+contribution: extension
+thought_id: thought-k8s-agent-control-plane
 excerpt: K8s 管服务如何稳定运行；Agent Control Plane 管智能任务如何被分解、执行、验证并完成。核心是 Desired State 与 Actual Outcome 的持续拟合。
 history_url: https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/k8s-to-agent-control-plane.md
 ---

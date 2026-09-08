@@ -25,3 +25,8 @@
 - lab_agent_native_status
 - [Agent-native latest](/api/agent-native/runs/latest.json)
 - [Agent-native criteria](/api/agent-native/criteria.json)
+- lab_list_thoughts / lab_get_thought / lab_propose_topic / lab_thought_validate / lab_thought_criteria / lab_thought_judge
+- [Thoughts](/api/thoughts.json)
+- [Thought criteria](/api/thoughts-criteria.json)
+- [Bench](/bench/)
+- [Thought Loop](/THOUGHT_LOOP.md)

@@ -1,0 +1,112 @@
+{
+  "type": "Thoughts",
+  "loop": "Chat(off-site, distill) → Topic (inbound) → Candidate → Validated → Route → Published",
+  "intake": {
+    "inbound": "topic",
+    "from": "Any agent that loaded /SKILL.md. Chat and rough ideas distill to one sentence.",
+    "transcripts": "off-site",
+    "publish_only_after_gates": true
+  },
+  "criteria": "/api/thoughts-criteria.json",
+  "criteria_version": "2026-09-08.1",
+  "gates_layers": {
+    "field": "build_thoughts.py checks fields. No model is called on the site.",
+    "model": "An agent runs the criteria prompt and files thought.judgement."
+  },
+  "note": "Inbound is topic, not a conclusion. Agents filter and validate. They do not ghostwrite. Field PASS is not enough to publish.",
+  "generated": "2026-09-08T07:06:46Z",
+  "items": [
+    {
+      "id": "thought-rl-vs-finetune",
+      "thought": "微调是教模型怎么回答，强化学习是用奖惩让行为变得更好；固定知识、格式或风格优先微调，实践上常先微调再强化学习。",
+      "stage": "topic",
+      "status": "hold",
+      "origin": "user",
+      "contribution": "synthesis",
+      "source": {
+        "agent": "none",
+        "note": "User intake. Filed contribution as synthesis (manus is not in the schema)."
+      },
+      "critiques": [
+        "这是常见对照，还不是新命题；要离开 topic，需要更尖的主张或可核证据。"
+      ],
+      "comparisons": [
+        "SFT 改条件分布上的回答；RL 改策略。对象都是行为，不是两套互斥的模型。"
+      ],
+      "evidence": [],
+      "route": null,
+      "also": [],
+      "promotes_to": null,
+      "published_url": null,
+      "updated": "2026-09-08",
+      "gates": [
+        {
+          "id": "origin",
+          "name": "Origin",
+          "pass": true,
+          "required_from": "candidate"
+        },
+        {
+          "id": "contribution",
+          "name": "Contribution",
+          "pass": true,
+          "required_from": "candidate"
+        },
+        {
+          "id": "articles_ok",
+          "name": "¬ ai+known",
+          "pass": true,
+          "required_from": "article_candidate"
+        },
+        {
+          "id": "evidence",
+          "name": "Evidence",
+          "pass": false,
+          "required_from": "validated"
+        },
+        {
+          "id": "route",
+          "name": "Route",
+          "pass": false,
+          "required_from": "validated"
+        },
+        {
+          "id": "published",
+          "name": "Published",
+          "pass": false,
+          "required_from": "published"
+        }
+      ],
+      "model_gates": [
+        {
+          "id": "sharp",
+          "name": "句子够尖",
+          "kind": "model",
+          "pass": false,
+          "status": "pending",
+          "required_from": "candidate",
+          "criteria_version": null
+        },
+        {
+          "id": "evidence_real",
+          "name": "证据真相关",
+          "kind": "model",
+          "pass": false,
+          "status": "pending",
+          "required_from": "validated",
+          "criteria_version": null
+        },
+        {
+          "id": "route_fit",
+          "name": "分流匹配",
+          "kind": "model",
+          "pass": false,
+          "status": "pending",
+          "required_from": "validated",
+          "criteria_version": null
+        }
+      ],
+      "content": "/content/thoughts/thought-rl-vs-finetune.json"
+    }
+  ]
+}

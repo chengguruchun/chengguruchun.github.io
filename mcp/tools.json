@@ -693,6 +693,179 @@
         "method": "GET",
         "path": "/api/agent-native/runs/latest.json"
       }
+    },
+    {
+      "name": "lab_list_thoughts",
+      "kind": "read",
+      "description": "List thought-loop items. Inbound from any Skill-loading agent is stage=topic (distilled chat, not a conclusion). Filter by stage, origin, or route. Only published items are conclusions. Hot Words is a separate weekly loop.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "stage": {
+            "type": "string",
+            "description": "topic | candidate | validated | article_candidate | published"
+          },
+          "origin": {
+            "type": "string",
+            "description": "user | ai | joint | external"
+          },
+          "route": {
+            "type": "string",
+            "description": "diverse | articles | videos | projects"
+          }
+        },
+        "additionalProperties": false
+      },
+      "static": {
+        "method": "GET",
+        "path": "/api/thoughts.json",
+        "client_filter": true
+      }
+    },
+    {
+      "name": "lab_get_thought",
+      "kind": "read",
+      "description": "Fetch one thought JSON by id. Canonical file is /content/thoughts/{id}.json. Topics are inbound experiments, not articles.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Thought id, e.g. thought-rl-vs-finetune"
+          }
+        },
+        "required": ["id"],
+        "additionalProperties": false
+      },
+      "static": {
+        "method": "GET",
+        "path_template": "/content/thoughts/{id}.json"
+      }
+    },
+    {
+      "name": "lab_propose_topic",
+      "kind": "contribute",
+      "description": "File an inbound idea as stage=topic: one distilled sentence plus origin. No transcript. Does not write catalog or Articles. Promote only after gates in /api/thoughts.json.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "thought": {
+            "type": "string",
+            "description": "One distilled sentence. Not a chat log."
+          },
+          "origin": {
+            "type": "string",
+            "description": "user | ai | joint | external"
+          },
+          "contribution": {
+            "type": "string",
+            "description": "known | synthesis | extension | original_candidate"
+          },
+          "source_note": {
+            "type": "string",
+            "description": "Why this is a topic. Do not paste the transcript."
+          }
+        },
+        "required": ["thought", "origin"],
+        "additionalProperties": false
+      },
+      "contract": {
+        "sideEffects": ["content/thoughts/*.json"],
+        "requiresApproval": true,
+        "idempotencyKey": "thought sentence",
+        "rollback": "delete the topic file",
+        "timeoutSeconds": 30
+      },
+      "static": {
+        "method": "ACTION",
+        "action": "pr",
+        "path": "/content/thoughts/",
+        "note": "Open a PR with stage=topic JSON. Human review. Never write Articles from this tool."
+      }
+    },
+    {
+      "name": "lab_thought_validate",
+      "kind": "read",
+      "description": "Read field gates[] and model_gates[] on /api/thoughts.json. Field = script. Model = criteria prompt. Pending/stale is not a ship. Do not treat topic or candidate as conclusions.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Optional thought id to inspect"
+          }
+        },
+        "additionalProperties": false
+      },
+      "static": {
+        "method": "GET",
+        "path": "/api/thoughts.json",
+        "client_filter": true
+      }
+    },
+    {
+      "name": "lab_thought_criteria",
+      "kind": "read",
+      "description": "Read the living model-gate standard: prompt + axes + changelog. Improve by editing /content/thoughts/criteria.json and bumping version. Old judgements become stale.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "static": {
+        "method": "GET",
+        "path": "/api/thoughts-criteria.json"
+      }
+    },
+    {
+      "name": "lab_thought_judge",
+      "kind": "contribute",
+      "description": "Run the current criteria prompt on one thought. Write only judgement (criteria_version + verdicts). Do not change stage, route, catalog, or article bodies. Do not paste transcripts.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Thought id to judge"
+          },
+          "model": {
+            "type": "string",
+            "description": "Model name that produced the verdicts"
+          },
+          "criteria_version": {
+            "type": "string",
+            "description": "Must match /api/thoughts-criteria.json version"
+          },
+          "verdicts": {
+            "type": "array",
+            "description": "One verdict per current axis: sharp, evidence_real, route_fit",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": { "type": "string" },
+                "pass": { "type": "boolean" },
+                "note": { "type": "string" }
+              },
+              "required": ["id", "pass"]
+            }
+          }
+        },
+        "required": ["id", "criteria_version", "verdicts"],
+        "additionalProperties": false
+      },
+      "contract": {
+        "sideEffects": ["content/thoughts/{id}.json judgement"],
+        "requiresApproval": true,
+        "idempotencyKey": "thought id + criteria_version",
+        "rollback": "remove judgement",
+        "timeoutSeconds": 60
+      },
+      "static": {
+        "method": "ACTION",
+        "action": "pr",
+        "path": "/content/thoughts/",
+        "note": "Open a PR that only updates judgement. Re-run build_thoughts.py. Never write Articles from this tool."
+      }
     }
   ]
 }

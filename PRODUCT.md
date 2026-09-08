@@ -21,11 +21,12 @@
 | 区域 | 作用 |
 |------|------|
 | **Home** | 坐标、导航、阅读路径（人类 / Agent） |
-| **Articles** | 可引用长文（问题、架构、开放问题） |
-| **Diverse Lab** | Question / My Thinking / Open Questions |
-| **Projects** | Problem → Architecture → … → Lessons + 真实仓库 |
-| **Videos** | 讲解与白板（可占位） |
-| **Hot Words** | 热词（年度热词写法）：一词 + 为何成立；按周或按月更新 |
+| **Bench** | 实验台：筛选、验证，过门后再分流 |
+| **Articles** | 按文章风格写下的过门结论 |
+| **Diverse Lab** | 跨学科、多元写法 |
+| **Projects** | 能直接做的工程 + 真实仓库 |
+| **Videos** | 口述 / 白板；需要画面的可模型生成后再发 |
+| **Hot Words** | 热词周环（不走 Thought Loop） |
 | **About** | 作者与实验室说明 |
 | **Tags / Search** | 标签穿越 + content/index.json 客户端检索 |
 
@@ -62,6 +63,14 @@
 ---
 
 
+
+## Thought Loop
+
+本站的工作方式，不是「聊天 → 直接发文」，而是：
+
+`对话（站外）→ Topic → Candidate → Validated → Article Candidate → Published → Evolution`
+
+Skill 可被任意 Agent 加载。带过来的聊天和初步想法只落 `topic`，过完字段 `gates[]` **和** 模型 `model_gates[]` 才能当验证过。模型标准是可改的提示词（`/content/thoughts/criteria.json`）；本站不调用模型，Agent 读 prompt、写 `judgement`。`ai` + `known` 不能当 Articles 主文。过门后按 `route` 分流。已有正文不重写。Hot Words 仍走自己的周环。详见 `THOUGHT_LOOP.md`、`lab_thought_criteria`、`lab_thought_judge`。
 
 ## Agent-native Loop
 

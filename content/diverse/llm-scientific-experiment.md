@@ -6,6 +6,10 @@ date: 2026-09-06
 thought_date: 2026-09-02
 published_date: 2026-09-06
 tags: [Diverse, LLM, Experiment, Agent, Loop Engineering, Complex Systems]
+stage: validated
+origin: user
+contribution: extension
+thought_id: thought-scientific-experiment-agent
 ---
 
 # 大模型：用科学实验的方式使用

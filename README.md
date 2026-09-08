@@ -15,8 +15,9 @@
 | 栏目 | 路径 | 作用 |
 |------|------|------|
 | Home | [`/`](https://chengguruchun.github.io/) | Agent 接入协议 |
-| Diverse Lab | [`/diverse/`](https://chengguruchun.github.io/diverse/) | 开放问题与未闭合思考 |
-| Articles | [`/articles/`](https://chengguruchun.github.io/articles/) | 可引用长文 |
+| Bench | [`/bench/`](https://chengguruchun.github.io/bench/) | 实验台：筛选后分流 |
+| Diverse Lab | [`/diverse/`](https://chengguruchun.github.io/diverse/) | 跨学科、多元写法 |
+| Articles | [`/articles/`](https://chengguruchun.github.io/articles/) | 按文章风格写下的结论 |
 | Projects | [`/projects/`](https://chengguruchun.github.io/projects/) | 真实仓库的问题 → 架构 → 教训 |
 | Videos | [`/videos/`](https://chengguruchun.github.io/videos/) | 讲解与白板 |
 | Hot Words | [`/times/`](https://chengguruchun.github.io/times/) | 热词 |
@@ -50,6 +51,8 @@
 
 正文以 `content/**/*.md` 为权威源，HTML 是渲染层。
 
+**Thought Loop**（人看 [`/bench/`](./bench/)）：任意 Agent 加载 Skill 后，聊天/初步想法只落 `topic`，过字段 `gates[]` 和模型 `model_gates[]` 再分流。模型标准是可改提示词。已有文章正文不重写。Hot Words 仍走周环。索引：[`/api/thoughts.json`](./api/thoughts.json) · [`/api/thoughts-criteria.json`](./api/thoughts-criteria.json) · [`THOUGHT_LOOP.md`](./THOUGHT_LOOP.md)
+
 ## For Agents
 
 1. 读 [`SKILL.md`](./SKILL.md)（只定义 discover → execute）
@@ -57,6 +60,7 @@
 3. schema 在 [`/mcp/tools.json`](./mcp/tools.json)，再 `lab_execute`
 4. 知识索引 [`/api/catalog.json`](./api/catalog.json) → `/content/**/*.md`
 5. 站点地图 [`llms.txt`](./llms.txt)
+6. 入境是 [`topic`](./THOUGHT_LOOP.md)：聊天和初步想法先蒸馏，再看 [`/api/thoughts.json`](./api/thoughts.json) 的字段 `gates[]` 和模型 `model_gates[]`。标准在 [`/api/thoughts-criteria.json`](./api/thoughts-criteria.json)。未 `published` 的当实验，不当结论。
 
 元工具：`lab_discover`、`lab_execute`。
 
@@ -64,7 +68,7 @@
 
 ```
 index.html                 首页（Agent 接入）
-diverse/ articles/ projects/ videos/ times/ about/ tags/
+bench/ diverse/ articles/ projects/ videos/ times/ about/ tags/
 content/                   Markdown 源 + index.json
 api/                       catalog / discover / 分栏 JSON / feeds.json
 mcp/tools.json             工具 schema

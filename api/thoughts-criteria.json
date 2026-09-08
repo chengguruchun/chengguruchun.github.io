@@ -1,0 +1,41 @@
+{
+  "id": "thought-loop-criteria",
+  "name": "Thought Loop · 模型门禁标准",
+  "version": "2026-09-08.1",
+  "updated": "2026-09-08",
+  "note": "标准就是这段提示词。改提示词或轴，必须升 version 并写 changelog。旧 judgement 对不上当前 version 即为 stale，必须重判。",
+  "improve": "Edit prompt and/or axes in this file, bump version, append changelog, run python3 scripts/build_thoughts.py. Do not rewrite published article bodies to satisfy a new standard.",
+  "layers": {
+    "field": "build_thoughts.py 硬判字段（origin / evidence / route）。本站不调用模型。",
+    "model": "加载了 /SKILL.md 的 Agent 用下面 prompt 判断，只把结果写入 thought.judgement。"
+  },
+  "axes": [
+    {
+      "id": "sharp",
+      "name": "句子够尖",
+      "required_from": "candidate",
+      "ask": "这句话是否提出一个可反驳的主张，而不是名词堆砌或正确的废话？"
+    },
+    {
+      "id": "evidence_real",
+      "name": "证据真相关",
+      "required_from": "validated",
+      "ask": "evidence 里的路径或 URL 是否真能核验这句话，而不是数组非空？"
+    },
+    {
+      "id": "route_fit",
+      "name": "分流匹配",
+      "required_from": "validated",
+      "ask": "route 是否是这句话该去的栏目？未定 route 记 UNPASS。"
+    }
+  ],
+  "prompt": "你是本站 Thought Loop 的模型门禁，不是代笔。\n\n只根据输入判断，不要补写文章，不要把聊天记录写进仓库，不要改 stage / origin / route。\n\n输入你会看到：thought（蒸馏后的一句）、origin、contribution、stage、route、evidence、critiques。\n\n按当前标准的三轴判断，吃不准就 UNPASS：\n1. sharp — 这句话是否提出一个可反驳的主张，而不是名词堆砌或正确的废话。\n2. evidence_real — evidence 里的路径/URL 是否真能核验这句话。没有可核路径就是 UNPASS；数组非空不等于真相关。\n3. route_fit — route 是否匹配这句话该去的栏目（diverse / articles / videos / projects）。未定 route 的句子本轴 UNPASS。\n\n硬规则：\n- 字段门禁仍由脚本判，你不代替脚本。\n- 你只输出 judgement，不升 stage，不写 catalog，不写 Articles。\n- 不要因为文笔好或态度对就 PASS。\n- note 只能一句，说明为什么过或不过。\n\n只输出 JSON：\n{\n  \"criteria_version\": \"<用你读到的当前 version>\",\n  \"model\": \"<你所用的模型名，未知则 unknown>\",\n  \"verdicts\": [\n    {\"id\": \"sharp\", \"pass\": true, \"note\": \"一句理由\"},\n    {\"id\": \"evidence_real\", \"pass\": false, \"note\": \"一句理由\"},\n    {\"id\": \"route_fit\", \"pass\": false, \"note\": \"一句理由\"}\n  ]\n}",
+  "changelog": [
+    {
+      "version": "2026-09-08.1",
+      "note": "首版：sharp / evidence_real / route_fit。字段硬判仍独立。"
+    }
+  ],
+  "content": "/content/thoughts/criteria.json",
+  "generated": "2026-09-08T07:06:46Z"
+}

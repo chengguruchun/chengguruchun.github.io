@@ -6,6 +6,10 @@ date: 2026-09-08
 thought_date: 2026-09-04
 published_date: 2026-09-08
 tags: [Agent, Evaluation, Outcome, Ground Truth, Feedback, Loop Engineering]
+stage: published
+origin: joint
+contribution: original_candidate
+thought_id: thought-proxy-vs-outcome
 excerpt: 从我们讨论 Agent 评价时遇到的一个具体矛盾出发：测试、API 状态和 outcome.ok 都可能是 PASS，但用户仍然认为问题没有解决。Agent 的评价最终必须回到真实 Outcome。
 history_url: https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/agent-evaluation-proxy-vs-real-outcome.md
 ---

@@ -1,19 +1,36 @@
 (function () {
-  var buttons = document.querySelectorAll("[data-filter]");
-  var cards = document.querySelectorAll("[data-tags]");
-  if (!buttons.length || !cards.length) return;
+  var bars = document.querySelectorAll("[role=toolbar]");
+  if (!bars.length) return;
 
-  buttons.forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      var f = btn.getAttribute("data-filter");
-      buttons.forEach(function (b) {
-        b.classList.toggle("is-active", b === btn);
+  function apply() {
+    var needed = [];
+    bars.forEach(function (bar) {
+      var btn = bar.querySelector(".filter-btn.is-active, [data-filter].is-active");
+      var f = btn && btn.getAttribute("data-filter");
+      if (f && f !== "all") needed.push(f);
+    });
+    document.querySelectorAll("[data-tags]").forEach(function (card) {
+      var tags = (card.getAttribute("data-tags") || "").split(/\s+/);
+      var stage = card.getAttribute("data-stage") || "";
+      var route = card.getAttribute("data-route") || "";
+      var show = needed.every(function (f) {
+        return tags.indexOf(f) !== -1 || stage === f || route === f;
       });
-      cards.forEach(function (card) {
-        var tags = (card.getAttribute("data-tags") || "").split(/\s+/);
-        var show = f === "all" || tags.indexOf(f) !== -1;
-        card.style.display = show ? "" : "none";
+      card.style.display = show ? "" : "none";
+    });
+  }
+
+  bars.forEach(function (bar) {
+    var buttons = bar.querySelectorAll("[data-filter]");
+    buttons.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        buttons.forEach(function (b) {
+          b.classList.toggle("is-active", b === btn);
+        });
+        apply();
       });
     });
   });
+
+  document.addEventListener("thoughts:loaded", apply);
 })();

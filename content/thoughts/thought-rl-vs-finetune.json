@@ -1,0 +1,24 @@
+{
+  "id": "thought-rl-vs-finetune",
+  "thought": "微调是教模型怎么回答，强化学习是用奖惩让行为变得更好；固定知识、格式或风格优先微调，实践上常先微调再强化学习。",
+  "stage": "topic",
+  "status": "hold",
+  "origin": "user",
+  "contribution": "synthesis",
+  "source": {
+    "agent": "none",
+    "note": "User intake. Filed contribution as synthesis (manus is not in the schema)."
+  },
+  "critiques": [
+    "这是常见对照，还不是新命题；要离开 topic，需要更尖的主张或可核证据。"
+  ],
+  "comparisons": [
+    "SFT 改条件分布上的回答；RL 改策略。对象都是行为，不是两套互斥的模型。"
+  ],
+  "evidence": [],
+  "route": null,
+  "also": [],
+  "promotes_to": null,
+  "published_url": null,
+  "updated": "2026-09-08"
+}

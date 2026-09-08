@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Tags & Search · AI Knowledge Lab</title>
-  <meta name="description" content="按标签浏览并搜索 AI Knowledge Lab 知识条目。">
+  <title>Bench · AI Knowledge Lab</title>
+  <meta name="description" content="实验台：一句在路上。先筛选、过门禁，再决定去 Diverse Lab、Articles、Videos 或 Projects。">
   <meta name="theme-color" content="#f7f5f0">
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,32 +20,23 @@
         <span class="brand__tag" data-brand-rotate aria-label="Independent Thinker · AI Agents · Complex Systems · Diverse Thinking"><span class="brand__rotate"><span class="brand__item is-active">Independent Thinker</span><span class="brand__item">AI Agents</span><span class="brand__item">Complex Systems</span><span class="brand__item">Diverse Thinking</span></span></span>
       </a>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">菜单</button>
-      <nav class="nav" id="site-nav" aria-label="主导航"><a href="../index.html">Home</a><a href="../bench/">Bench</a><a href="../diverse/">Diverse Lab</a><a href="../articles/">Articles</a><a href="../projects/">Projects</a><a href="../videos/">Videos</a><a href="../times/">Hot Words</a><a href="../about/">About Me</a><a class="nav__search" href="../tags/">Tags / Search</a></nav>
+      <nav class="nav" id="site-nav" aria-label="主导航"><a href="../index.html">Home</a><a href="../bench/" aria-current="page">Bench</a><a href="../diverse/">Diverse Lab</a><a href="../articles/">Articles</a><a href="../projects/">Projects</a><a href="../videos/">Videos</a><a href="../times/">Hot Words</a><a href="../about/">About Me</a><a class="nav__search" href="../tags/">Tags / Search</a></nav>
     </div>
   </header>
   <main>
-    <header class="page-hero">
+    <header class="page-hero page-hero--bench">
       <div class="wrap">
-        <p class="page-hero__kicker">Tags / Search</p>
-        <h1>标签与检索</h1>
-        <p class="page-hero__desc">按关键词与标签检索知识条目。</p>
+        <p class="page-hero__kicker">Bench</p>
+        <h1>一句在路上</h1>
+        <p class="page-hero__desc">看它从 Chat 走到哪一档、卡在哪一扇门。过门之前不当结论。</p>
       </div>
     </header>
     <section class="section" style="padding-top:0">
       <div class="wrap">
-        <div class="search-box">
-          <input id="search-input" type="search" placeholder="搜索：Agent、控制面、Kubernetes、实验…" aria-label="搜索知识条目" autocomplete="off">
+        <div class="bench-stage" id="bench-stage">
+          <div id="bench-flow" class="bench-stage__play" aria-label="Thought 走轨"></div>
+          <div id="lab-thoughts" data-src="../api/thoughts.json" data-mode="stage" hidden></div>
         </div>
-        <p class="search-hint" id="search-hint">加载索引中…</p>
-        <div class="filters" role="toolbar" aria-label="快捷标签">
-          <button class="filter-btn is-active" type="button" data-tag-filter="all">全部</button>
-          <button class="filter-btn" type="button" data-tag-filter="Agent">Agent</button>
-          <button class="filter-btn" type="button" data-tag-filter="Control Plane">Control Plane</button>
-          <button class="filter-btn" type="button" data-tag-filter="Diverse">Diverse</button>
-          <button class="filter-btn" type="button" data-tag-filter="Kubernetes">Kubernetes</button>
-          <button class="filter-btn" type="button" data-tag-filter="高并发">高并发</button>
-        </div>
-        <div class="grid grid--2" id="search-results"></div>
       </div>
     </section>
   </main>
@@ -65,9 +56,7 @@
   </footer>
   <script src="../assets/js/site.js"></script>
   <script src="../assets/js/visits.js"></script>
-<script>
-  document.body.setAttribute("data-base", "..");
-</script>
-<script src="../assets/js/search.js"></script>
+  <script src="../assets/js/thoughts.js"></script>
+  <script src="../assets/js/bench-flow.js"></script>
 </body>
 </html>

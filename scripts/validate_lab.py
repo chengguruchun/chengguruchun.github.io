@@ -65,6 +65,11 @@ def check_agent_surfaces() -> None:
         ".well-known/agent-card.json",
         "api/agent-native/criteria.json",
         "api/agent-native/runs/latest.json",
+        "api/thoughts.json",
+        "api/thoughts-criteria.json",
+        "content/thoughts/criteria.json",
+        "THOUGHT_LOOP.md",
+        "bench/index.html",
     ]
     for rel in required:
         p = ROOT / rel
@@ -96,6 +101,12 @@ def check_agent_surfaces() -> None:
             "lab_list_projects_research",
             "lab_list_projects_personal",
             "lab_agent_native_status",
+            "lab_list_thoughts",
+            "lab_get_thought",
+            "lab_propose_topic",
+            "lab_thought_validate",
+            "lab_thought_criteria",
+            "lab_thought_judge",
         ):
             if need not in dnames:
                 fail(f"discover missing {need}")
@@ -276,6 +287,100 @@ def check_hot_words() -> None:
         ok("hot_words_apply upserts index/catalog")
 
 
+def check_thoughts() -> None:
+    print("\n== Thought loop ==")
+    thoughts = load_json(ROOT / "api" / "thoughts.json")
+    if not thoughts:
+        return
+    items = thoughts.get("items") or []
+    if len(items) < 1:
+        fail("thoughts.json should have at least 1 inbound topic")
+    else:
+        ok(f"thoughts {len(items)} items")
+    if thoughts.get("intake", {}).get("inbound") != "topic":
+        fail("thoughts.json intake.inbound should be topic")
+    else:
+        ok("intake inbound is topic")
+    stages = {x.get("stage") for x in items if isinstance(x, dict)}
+    if "topic" not in stages:
+        fail("need at least one topic (inbound, not a conclusion)")
+    else:
+        ok("has inbound topic")
+    if "candidate" not in stages and "published" not in stages:
+        ok("bench is staging inbound topic only")
+    for it in items:
+        if not isinstance(it, dict):
+            continue
+        for k in ("id", "thought", "stage", "origin", "contribution"):
+            if not it.get(k):
+                fail(f"thought {it.get('id')} missing {k}")
+        if not it.get("gates"):
+            fail(f"thought {it.get('id')} missing gates")
+        if not it.get("model_gates"):
+            fail(f"thought {it.get('id')} missing model_gates")
+        if it.get("stage") in {"validated", "published", "article_candidate"} and not it.get("route"):
+            fail(f"thought {it.get('id')} needs route")
+        if it.get("stage") == "published":
+            dest = it.get("promotes_to") or ""
+            if not dest or not (ROOT / str(dest).lstrip("/")).exists():
+                fail(f"published thought {it.get('id')} missing promotes_to file")
+            else:
+                ok(f"promoted {it.get('id')} → {it.get('route')}")
+        src = ROOT / str((it.get("content") or "")).lstrip("/")
+        if it.get("content") and not src.exists():
+            fail(f"missing thought source {it.get('content')}")
+    if thoughts.get("criteria") != "/api/thoughts-criteria.json":
+        fail("thoughts.json should point at thoughts-criteria.json")
+    else:
+        ok("thoughts.json has criteria pointer")
+    criteria = load_json(ROOT / "api" / "thoughts-criteria.json")
+    src_criteria = load_json(ROOT / "content" / "thoughts" / "criteria.json")
+    if not criteria or not src_criteria:
+        pass
+    elif not criteria.get("prompt") or not criteria.get("version") or not criteria.get("axes"):
+        fail("thoughts-criteria.json needs prompt, version, axes")
+    elif criteria.get("version") != src_criteria.get("version"):
+        fail("api/thoughts-criteria.json version != content/thoughts/criteria.json")
+    else:
+        ok(f"model criteria v{criteria.get('version')}")
+    loop_doc = (ROOT / "THOUGHT_LOOP.md").read_text(encoding="utf-8")
+    if "off-site" not in loop_doc and "offsite" not in loop_doc.lower():
+        fail("THOUGHT_LOOP.md should keep chats off-site")
+    else:
+        ok("THOUGHT_LOOP.md chats off-site")
+    if "model_gates" not in loop_doc or "criteria.json" not in loop_doc:
+        fail("THOUGHT_LOOP.md should document model gates + living criteria")
+    else:
+        ok("THOUGHT_LOOP.md documents model criteria")
+    bench = (ROOT / "bench" / "index.html").read_text(encoding="utf-8")
+    if "lab-thoughts" not in bench:
+        fail("bench page should render thoughts")
+    else:
+        ok("bench page has thought mount")
+    if "bench-flow" not in bench:
+        fail("bench page should mount the flow")
+    else:
+        ok("bench page has flow mount")
+    if 'id="bench-stage"' not in bench or 'id="bench-flow"' not in bench:
+        fail("bench page should mount the stage play")
+    else:
+        ok("bench page has stage play")
+    skill = (ROOT / "SKILL.md").read_text(encoding="utf-8")
+    if "Bench process" not in skill or "lab_thought_judge" not in skill:
+        fail("SKILL.md should document the Bench process")
+    else:
+        ok("SKILL.md documents Bench process")
+    home = (ROOT / "index.html").read_text(encoding="utf-8")
+    if "Bench 过程" not in home or "lab_propose_topic" not in home:
+        fail("home should include the Bench process in the Skill panel")
+    else:
+        ok("home Skill panel has Bench process")
+    if 'href="bench/"' not in home or ">Bench<" not in home:
+        fail("home nav should include Bench")
+    else:
+        ok("home nav has Bench")
+
+
 def check_projects() -> None:
     print("\n== Projects ==")
     proj = load_json(ROOT / "api" / "projects.json")
@@ -379,6 +484,7 @@ def main() -> None:
     check_scrub()
     check_index_coherence()
     check_hot_words()
+    check_thoughts()
     check_projects()
     check_feeds_script()
     if args.live:

@@ -377,6 +377,62 @@
         "rollback": "n/a",
         "timeoutSeconds": 30
       }
+    },
+    {
+      "name": "lab_list_thoughts",
+      "kind": "read",
+      "description": "List thought-loop items. Inbound from any Skill-loading agent is stage=topic (distilled chat, not a conclusion). Filter by stage, origin, or route. Only published items are conclusions. Hot Words is a separate weekly loop.",
+      "invoke": {
+        "method": "GET",
+        "path": "/api/thoughts.json"
+      }
+    },
+    {
+      "name": "lab_get_thought",
+      "kind": "read",
+      "description": "Fetch one thought JSON by id (canonical source under /content/thoughts/). Topics are inbound experiments, not articles.",
+      "invoke": {
+        "method": "GET",
+        "path_template": "/content/thoughts/{id}.json"
+      }
+    },
+    {
+      "name": "lab_propose_topic",
+      "kind": "contribute",
+      "description": "File an inbound idea as stage=topic: one distilled sentence, origin, no transcript. Does not write catalog or Articles. Human review promotes it through gates.",
+      "invoke": {
+        "method": "ACTION",
+        "action": "pr",
+        "path": "/content/thoughts/"
+      }
+    },
+    {
+      "name": "lab_thought_validate",
+      "kind": "read",
+      "description": "Read field gates[] and model_gates[] on /api/thoughts.json. Field = script. Model = criteria prompt. Pending/stale is not a ship. Do not treat topic or candidate as conclusions.",
+      "invoke": {
+        "method": "GET",
+        "path": "/api/thoughts.json"
+      }
+    },
+    {
+      "name": "lab_thought_criteria",
+      "kind": "read",
+      "description": "Read the living model-gate standard (prompt + axes + changelog). Improve by editing content/thoughts/criteria.json and bumping version.",
+      "invoke": {
+        "method": "GET",
+        "path": "/api/thoughts-criteria.json"
+      }
+    },
+    {
+      "name": "lab_thought_judge",
+      "kind": "contribute",
+      "description": "Run the current criteria prompt on one thought. Write only judgement. Do not change stage/route/catalog or article bodies.",
+      "invoke": {
+        "method": "ACTION",
+        "action": "pr",
+        "path": "/content/thoughts/"
+      }
     }
   ]
 }

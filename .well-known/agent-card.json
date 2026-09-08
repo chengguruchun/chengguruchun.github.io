@@ -54,6 +54,15 @@
       "outputModes": ["application/json"]
     },
     {
+      "id": "thoughts",
+      "name": "Thought loop",
+      "description": "Any agent may load the Skill. Inbound chat/ideas are topic only. Field gates plus a versioned model-criteria prompt, then route → published. Agents filter; they do not ghostwrite.",
+      "tags": ["thoughts", "bench", "origin", "criteria"],
+      "examples": ["GET /api/thoughts.json", "GET /api/thoughts-criteria.json", "GET /bench/"],
+      "inputModes": ["text"],
+      "outputModes": ["application/json"]
+    },
+    {
       "id": "agent-native",
       "name": "Agent-native check",
       "description": "Weekly observe loop: whether the Lab still has discoverable, callable surfaces.",

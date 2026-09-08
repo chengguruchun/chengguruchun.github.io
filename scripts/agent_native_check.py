@@ -35,6 +35,8 @@ SURFACES = [
     "api/projects-personal.json",
     "api/projects-research.json",
     "api/agent-native/criteria.json",
+    "api/thoughts.json",
+    "api/thoughts-criteria.json",
 ]
 
 LIVE_PATHS = [
@@ -45,6 +47,9 @@ LIVE_PATHS = [
     "/llms.txt",
     "/.well-known/agent-card.json",
     "/api/agent-native/criteria.json",
+    "/api/thoughts.json",
+    "/api/thoughts-criteria.json",
+    "/THOUGHT_LOOP.md",
 ]
 
 
@@ -133,7 +138,7 @@ def check_catalog_index(results: list[dict[str, Any]]) -> None:
 
 def check_machine_map(results: list[dict[str, Any]]) -> None:
     text = (ROOT / "llms.txt").read_text(encoding="utf-8")
-    need = ["/SKILL.md", "/api/discover.json", "/mcp/tools.json", "/api/catalog.json", "/content/"]
+    need = ["/SKILL.md", "/api/discover.json", "/mcp/tools.json", "/api/catalog.json", "/content/", "/api/thoughts.json", "/api/thoughts-criteria.json"]
     missing = [n for n in need if n not in text]
     gate(results, "machine_map", not missing, "llms.txt lists core surfaces" if not missing else "llms.txt missing " + ", ".join(missing))
 
