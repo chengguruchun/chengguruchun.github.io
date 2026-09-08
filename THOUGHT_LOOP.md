@@ -82,5 +82,5 @@ Agent：`lab_thought_criteria` 读 prompt → 按 prompt 判断 → `lab_thought
 - Source: `content/thoughts/*.json`
 - Index: `/api/thoughts.json`（`python3 scripts/build_thoughts.py`，含 `gates` + `model_gates`）
 - Criteria: `/content/thoughts/criteria.json` → `/api/thoughts-criteria.json`
-- Page: `/bench/`（给人看的走轨：一句在路上）
+- Page: `/bench/`（给人看的走轨：思想实验台）
 - Tools: `lab_list_thoughts` · `lab_get_thought` · `lab_propose_topic` · `lab_thought_validate` · `lab_thought_criteria` · `lab_thought_judge`

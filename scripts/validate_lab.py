@@ -375,7 +375,7 @@ def check_thoughts() -> None:
         fail("home should include the Bench process in the Skill panel")
     else:
         ok("home Skill panel has Bench process")
-    if 'href="bench/"' not in home or ">Bench<" not in home:
+    if 'href="bench/"' not in home or ">Agent Bench<" not in home:
         fail("home nav should include Bench")
     else:
         ok("home nav has Bench")

@@ -14,7 +14,7 @@
     "model": "An agent runs the criteria prompt and files thought.judgement."
   },
   "note": "Inbound is topic, not a conclusion. Agents filter and validate. They do not ghostwrite. Field PASS is not enough to publish.",
-  "generated": "2026-09-08T07:06:46Z",
+  "generated": "2026-09-08T07:59:24Z",
   "items": [
     {
       "id": "thought-rl-vs-finetune",

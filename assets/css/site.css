@@ -375,6 +375,41 @@ a.tag:hover { color: #8fbfab; border-color: rgba(106,158,138,0.5); }
   border-radius: 4px;
   overflow: hidden;
 }
+.bench-queue {
+  display: grid;
+  gap: 0.45rem;
+  margin: 0 0 1.15rem;
+}
+.bench-queue__item {
+  appearance: none;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  margin: 0;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--text);
+  border-radius: var(--radius);
+  line-height: 1.45;
+}
+.bench-queue__item:hover {
+  border-color: var(--accent);
+}
+.bench-queue__item.is-on {
+  border-color: var(--accent);
+  box-shadow: inset 0 -2px 0 rgba(154, 116, 40, 0.45);
+  background: var(--accent-soft);
+}
+.bench-queue__stage {
+  display: inline-block;
+  margin-right: 0.45rem;
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
 .bench-stage__kicker {
   margin: 0 0 0.7rem;
   font-family: var(--mono);

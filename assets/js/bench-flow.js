@@ -18,6 +18,7 @@
 
   var viewAt = 0;
   var liveAt = 1;
+  var items = [];
   var item = null;
   var meta = {};
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -111,7 +112,8 @@
         note.hidden = false;
         el.classList.add("is-blocked");
       } else if (at === liveAt && item && (item.status === "hold" || !item.route)) {
-        note.textContent = "停在 Topic 是刻意的。模型还没按标准提示词判决，也没有可核证据。";
+        var stop = STOPS[liveAt] ? STOPS[liveAt].name : "这一档";
+        note.textContent = "停在 " + stop + " 是刻意的。没过门就不会进右边栏目。";
         note.hidden = false;
         el.classList.remove("is-blocked");
       } else {
@@ -173,8 +175,31 @@
       );
     }).join("");
 
+    var queue = "";
+    if (items.length > 1) {
+      queue =
+        '<div class="bench-queue" role="tablist" aria-label="台上的句子">' +
+        items
+          .map(function (it, i) {
+            return (
+              '<button type="button" role="tab" class="bench-queue__item' +
+              (it === item ? " is-on" : "") +
+              '" data-pick="' +
+              i +
+              '"><span class="bench-queue__stage">' +
+              esc(it.stage || "topic") +
+              "</span>" +
+              esc(it.thought) +
+              "</button>"
+            );
+          })
+          .join("") +
+        "</div>";
+    }
+
     el.innerHTML =
-      '<p class="bench-stage__kicker">一句在路上 · ' +
+      queue +
+      '<p class="bench-stage__kicker">思想实验台 · ' +
       esc(item.stage) +
       " · " +
       esc(item.origin || "") +
@@ -229,6 +254,13 @@
       '<a href="../THOUGHT_LOOP.md">过程说明</a>' +
       "</div>";
 
+    el.querySelectorAll("[data-pick]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var i = Number(btn.getAttribute("data-pick"));
+        item = items[i] || item;
+        render();
+      });
+    });
     el.querySelectorAll("[data-stop]").forEach(function (btn) {
       btn.addEventListener("click", function () {
         go(Number(btn.getAttribute("data-stop")));
@@ -244,7 +276,7 @@
   }
 
   document.addEventListener("thoughts:loaded", function (ev) {
-    var items = (ev.detail && ev.detail.items) || [];
+    items = (ev.detail && ev.detail.items) || [];
     meta = ev.detail || {};
     item = items[0] || null;
     render();
