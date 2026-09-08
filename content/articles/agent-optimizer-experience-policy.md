@@ -256,6 +256,8 @@ Agent
 
 这比一开始就重新训练一个模型更轻，也更容易观察到底是什么发生了变化。
 
+这一层我先做成了一个很薄的实现：[llm-trace-reuse](https://github.com/chengguruchun/llm-trace-reuse)（站内：[Projects](/projects/)）。不改模型权重，只在任务开始时路由：命中 playbook 就走手册，能复用上次的 `preferred_path` 就不要重新规划。它还没有完整的 Ground Truth，所以 `outcome.ok` 仍然可能只是 Proxy。
+
 ## 八、Task Fingerprint 是连接经验与任务的关键
 
 如果所有历史经验只是一个巨大的向量库，那么相似度本身并不足够。
@@ -408,4 +410,4 @@ Next Agent
 
 > **Optimizer 到底应该相信什么结果？**
 
-如果没有可靠的 Ground Truth，所谓“自动优化”很容易只是“自动把 Proxy Metric 做得更高”。
+如果没有可靠的 Ground Truth，所谓“自动优化”很容易只是“自动把 Proxy Metric 做得更高”。评测怎么接到优化器，见 [Agent 的评价：Proxy Metric ≠ Real Outcome](/articles/agent-evaluation-proxy-vs-real-outcome.html)。

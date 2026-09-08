@@ -292,3 +292,5 @@ Ground Truth
 > **“我是否真的解决了用户要解决的问题？”**
 
 这也是 Agent 从 Workflow 走向 Loop 以后，一个必须面对的问题。
+
+一个正在用的薄实现是 [llm-trace-reuse](https://github.com/chengguruchun/llm-trace-reuse)（站内：[Projects](/projects/)）：复用 `preferred_path` 之前，仍然要先问这条轨迹的成功信号是不是真的。优化器怎么用这些经验，见 [Agent Optimizer](/articles/agent-optimizer-experience-policy.html)。

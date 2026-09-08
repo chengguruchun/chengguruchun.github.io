@@ -112,6 +112,7 @@ Prompt / Policy / Tool Routine
         ↓
 Agent</pre>
 <p>这些 Case 可以被向量化，用于寻找相似问题；上面再放一个轻量的 Decision Layer。这样比一开始就重新训练一个模型更轻，也更容易观察究竟是什么发生了变化。</p>
+<p>这一层我先做成了一个很薄的实现：<a href="https://github.com/chengguruchun/llm-trace-reuse" rel="noopener">llm-trace-reuse</a>（站内：<a href="../projects/">Projects</a>）。不改模型权重，只在任务开始时路由：命中 playbook 就走手册，能复用上次的 <code>preferred_path</code> 就不要重新规划。它还没有完整的 Ground Truth，所以 <code>outcome.ok</code> 仍然可能只是 Proxy。</p>
 <h2>八、Task Fingerprint 连接经验与任务</h2>
 <p>如果所有历史经验只是一个巨大的向量库，那么相似度本身并不足够。我们讨论过 <code>task_fingerprint</code>：它试图描述问题类型、失败模式、所需能力以及过去什么策略有效。</p>
 <pre>“和它长得像”
@@ -186,6 +187,6 @@ Next Agent
  ↺</pre>
 <p>这里最重要的不是“自动优化”四个字，而是：<strong>经验不会只留在日志里，而是成为下一次决策的一部分。</strong></p>
 <p>所以 Agent 的持续进化未必首先表现为模型参数发生变化，也可能表现为经验越来越丰富、策略越来越稳定、工具调用越来越合理、失败模式越来越少。</p>
-<p>而整个系统真正需要解决的，仍然是另一个问题：<strong>Optimizer 到底应该相信什么结果？</strong></p>
+<p>而整个系统真正需要解决的，仍然是另一个问题：<strong>Optimizer 到底应该相信什么结果？</strong> 评测怎么接到优化器，见 <a href="agent-evaluation-proxy-vs-real-outcome.html">Agent 的评价：Proxy Metric ≠ Real Outcome</a>。</p>
 </div></article></main>
 <footer class="site-footer"><div class="wrap site-footer__inner"><div><p>© <span id="year"></span> chengguruchun · Hangzhou</p><p>Blog for Agents · 个人知识博客</p><p class="footer-visits" aria-label="访问统计"><span>本站 <strong data-visits-site>-</strong></span><span class="footer-visits__sep" aria-hidden="true">·</span><span>本页 <strong data-visits-page>-</strong></span></p></div></div></footer><script src="../assets/js/site.js"></script><script src="../assets/js/visits.js"></script></body></html>

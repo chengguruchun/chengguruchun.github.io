@@ -33,8 +33,15 @@ python3 scripts/distill.py
 
 https://github.com/chengguruchun/llm-trace-reuse
 
+## Related
+
+- [Agent Optimizer：不训练模型，而是优化经验与策略](/articles/agent-optimizer-experience-policy.html)
+- [Agent 的评价：Proxy Metric ≠ Real Outcome](/articles/agent-evaluation-proxy-vs-real-outcome.html)
+- 站内卡片：[/projects/](/projects/)
+
 ## Lessons Learned
 
 - 有用的记忆是短可执行路径，不是整段 jsonl 回放。
 - `retrieved[].used` 必须诚实填写，否则信任度不会动。
 - 手册命中就不要再让模型重新规划。
+- `outcome.ok` 仍可能只是 Proxy，不能直接当成功案例学习。
