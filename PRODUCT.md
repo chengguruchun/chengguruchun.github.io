@@ -12,7 +12,7 @@
 
 - 不是传统博客或个人名片站  
 - 不是课程平台或资讯聚合  
-- P0 **不包含**：Questions 广场、Hot Topics、Research Notes、Evolution UI、Guestbook、Subscribe、API/RSS/MCP、AI Editor、数据库
+- P0 **不包含**：Questions 广场、Hot Topics、Research Notes、Evolution UI、Guestbook、AI Editor、数据库
 
 ## 它是什么（P0）
 
@@ -38,8 +38,10 @@
 
 - 纯静态多页（HTML/CSS/JS），GitHub Pages 可直接服务  
 - .nojekyll；无 Node/Astro 构建依赖  
-- 中文优先的编辑式深色 UI、响应式  
+- 中文优先的编辑式浅色 UI、响应式  
 - 种子内容：Control Plane / Runtime vs K8s / Registry；三条 Thinking；三项目档案；视频占位  
+- 双读者可发现性：Agent 侧 SKILL / discover / catalog；搜索引擎侧 canonical / OG / JSON-LD / sitemap / robots（`scripts/build_seo.py`）  
+- 分发与度量：可安装 Skill 包（`dist/skills/`）+ `lab_hello` 匿名信标，首页公开展示接入次数  
 
 ## P1（下一步）
 
@@ -47,6 +49,7 @@
 - 文章内图表组件化（仍保持静态）  
 - 视频替换为真实嵌入与字幕文稿  
 - 轻量「修订历史」展示（基于 git 日志说明，非应用 DB）  
+- HTML 从 `content/**/*.md` 生成，消除双份事实来源与重复样板  
 
 ## P2
 
@@ -56,9 +59,10 @@
 
 ## P3
 
-- 可选 RSS / 只读 API  
-- MCP 只读工具（若有明确需求）  
+- 真正的 MCP 运行时（stdio / HTTP），取代当前的静态 HTTP + ACTION URL  
 - 演化视图、热门主题等社区层——仅在不破坏「实验室」气质时引入  
+
+已交付但仍属实验：RSS（`feed.xml`）、只读 JSON API（`api/**`）、MCP 形态的工具 schema（`mcp/tools.json`）。
 
 ---
 
@@ -84,6 +88,6 @@ Skill 可被任意 Agent 加载。带过来的聊天和初步想法只落 `topic
 
 1. **问题优于观点包装** — 开放问题必须可见  
 2. **架构可论证** — Projects 写清取舍，不只贴仓库链接  
-3. **双读者** — 人类可读，Agent 可抓取 Markdown/JSON  
+3. **双读者** — 人类可读（含搜索引擎可索引：canonical / JSON-LD / sitemap），Agent 可抓取 Markdown/JSON  
 4. **静态优先** — 部署简单，审查面小  
 5. **克制** — 不做功能堆砌；P0 以外写在路线图，不假装已上线  

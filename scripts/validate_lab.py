@@ -475,6 +475,121 @@ def check_live() -> None:
             warn(f"live {path} failed: {e}")
 
 
+DIST_SKILL = Path("dist/skills/ai-knowledge-lab/SKILL.md")
+
+
+def frontmatter_description(text: str) -> str:
+    m = re.match(r"---\n(.*?)\n---\n", text, re.DOTALL)
+    if not m:
+        return ""
+    d = re.search(r"description: >-\n((?:[ \t]+.*\n)+)", m.group(1))
+    if not d:
+        return ""
+    return " ".join(line.strip() for line in d.group(1).splitlines())
+
+
+def check_distribution() -> None:
+    """The skill only gets used if agents can find it and the beacon can report back."""
+    print("\n== Distribution ==")
+    dist = ROOT / DIST_SKILL
+    if not dist.exists():
+        fail(f"missing {DIST_SKILL}")
+        return
+    ok(str(DIST_SKILL))
+
+    root_desc = frontmatter_description((ROOT / "SKILL.md").read_text(encoding="utf-8"))
+    dist_desc = frontmatter_description(dist.read_text(encoding="utf-8"))
+    if not root_desc or not dist_desc:
+        fail("SKILL.md description frontmatter not parseable")
+    elif root_desc != dist_desc:
+        fail("dist skill description drifted from /SKILL.md — keep them identical")
+    else:
+        ok("skill descriptions in sync")
+
+    if len(dist_desc) > 1024:
+        fail(f"dist skill description {len(dist_desc)} chars (max 1024)")
+    else:
+        ok(f"description length {len(dist_desc)}")
+
+    for rel, key in (("api/discover.json", "tools"), ("mcp/tools.json", "tools")):
+        data = load_json(ROOT / rel)
+        names = {t.get("name") for t in (data or {}).get(key, [])}
+        if "lab_hello" in names:
+            ok(f"{rel} exposes lab_hello")
+        else:
+            fail(f"{rel} missing lab_hello beacon")
+
+    skill = (ROOT / "SKILL.md").read_text(encoding="utf-8")
+    if "lab_hello" in skill:
+        ok("SKILL.md documents the hello step")
+    else:
+        fail("SKILL.md does not tell agents to call lab_hello")
+
+    home = (ROOT / "index.html").read_text(encoding="utf-8")
+    if "data-agent-hello" in home:
+        ok("home page shows the handshake count")
+    else:
+        fail("home page missing data-agent-hello counter")
+
+
+SEO_SKIP_DIRS = {".git", ".preview", ".local", ".pi", "node_modules", "__pycache__"}
+
+
+def site_path_for(rel: str) -> str:
+    if rel == "index.html":
+        return "/"
+    if rel.endswith("/index.html"):
+        return "/" + rel[: -len("index.html")]
+    return "/" + rel
+
+
+def check_seo() -> None:
+    """Every page must be indexable by search engines, not just readable by agents."""
+    print("\n== SEO surfaces ==")
+    for rel in ("sitemap.xml", "robots.txt", "assets/img/og-cover.png", "assets/img/og-cover.svg"):
+        if (ROOT / rel).exists():
+            ok(rel)
+        else:
+            fail(f"missing {rel} — run `python3 scripts/build_seo.py`")
+
+    sitemap = (ROOT / "sitemap.xml").read_text(encoding="utf-8") if (ROOT / "sitemap.xml").exists() else ""
+    robots = (ROOT / "robots.txt").read_text(encoding="utf-8") if (ROOT / "robots.txt").exists() else ""
+    if f"Sitemap: {BASE}/sitemap.xml" in robots:
+        ok("robots.txt points at sitemap")
+    else:
+        fail("robots.txt missing Sitemap directive")
+
+    pages = [
+        p
+        for p in sorted(ROOT.rglob("*.html"))
+        if not any(part in SEO_SKIP_DIRS for part in p.relative_to(ROOT).parts)
+    ]
+    if not pages:
+        fail("no HTML pages found")
+        return
+
+    missing_meta: list[str] = []
+    missing_from_sitemap: list[str] = []
+    for p in pages:
+        rel = p.relative_to(ROOT).as_posix()
+        text = p.read_text(encoding="utf-8", errors="ignore")
+        needed = ('rel="canonical"', 'property="og:title"', 'application/ld+json')
+        if not all(token in text for token in needed):
+            missing_meta.append(rel)
+        if f"<loc>{BASE}{site_path_for(rel)}</loc>" not in sitemap:
+            missing_from_sitemap.append(rel)
+
+    if missing_meta:
+        fail(f"{len(missing_meta)} page(s) without canonical/OG/JSON-LD: {', '.join(missing_meta[:4])}")
+    else:
+        ok(f"canonical + OG + JSON-LD on {len(pages)} pages")
+
+    if missing_from_sitemap:
+        fail(f"{len(missing_from_sitemap)} page(s) absent from sitemap: {', '.join(missing_from_sitemap[:4])}")
+    else:
+        ok(f"sitemap covers {len(pages)} pages")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--live", action="store_true", help="Also hit production URLs (soft warnings)")
@@ -487,6 +602,8 @@ def main() -> None:
     check_thoughts()
     check_projects()
     check_feeds_script()
+    check_seo()
+    check_distribution()
     if args.live:
         check_live()
     print()

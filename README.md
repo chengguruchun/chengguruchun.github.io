@@ -26,16 +26,13 @@
 
 ## 当前知识条目
 
-以 `content/index.json` / `api/catalog.json` 为准（2026-09-06）：
+条目清单以 [`api/catalog.json`](./api/catalog.json) 为唯一权威（这里只记规模，避免手写清单再次漂移）：
 
-**Articles**
-
-- [Kubernetes × Agent：从容器编排到目标收敛](articles/k8s-to-agent-control-plane.html)
-
-**Diverse Lab**
-
-- [大模型：用科学实验的方式使用](diverse/llm-scientific-experiment.html)
-- [物理学 × 生态学：对复杂系统的一个思考](diverse/physics-ecology-llm.html)
+| 类型 | 数量 | 入口 |
+|------|------|------|
+| Articles | 9 | [`/articles/`](https://chengguruchun.github.io/articles/) |
+| Diverse Lab | 5 | [`/diverse/`](https://chengguruchun.github.io/diverse/) |
+| Hot Words | 1 | [`/times/`](https://chengguruchun.github.io/times/) |
 
 **Projects** (page + API only; not in catalog search)
 
@@ -75,7 +72,9 @@ mcp/tools.json             工具 schema
 SKILL.md                   Agent 协议
 llms.txt                   机器可读地图
 feed.xml                   内容 RSS
+sitemap.xml robots.txt     搜索引擎入口（生成物）
 scripts/build_feeds.py     从 catalog 生成 RSS
+scripts/build_seo.py       注入页面元数据 + 生成 sitemap / robots
 PRODUCT.md                 产品愿景与路线图
 assets/                    CSS / JS
 ```
@@ -103,7 +102,47 @@ python3 scripts/build_feeds.py
 - Watch 仓库：https://github.com/chengguruchun/chengguruchun.github.io/subscription
 - commits Atom：https://github.com/chengguruchun/chengguruchun.github.io/commits/main.atom
 
-推送到 GitHub 后，`.github/workflows/build-feed.yml` 会在内容变更时自动重建 `feed.xml`。
+推送到 GitHub 后，`.github/workflows/build-feed.yml` 会在内容或页面变更时自动重建 `feed.xml`、页面元数据、`sitemap.xml` 与 `robots.txt`。
+
+## 搜索引擎可发现性
+
+Agent 侧靠 `SKILL.md` / `discover.json`；人类侧靠搜索引擎。后者由一个脚本统一维护：
+
+```bash
+python3 scripts/build_seo.py           # 重建元数据 + sitemap + robots
+python3 scripts/build_seo.py --check   # CI：校验产物是否最新，不写盘
+```
+
+它只拥有每个页面 `<head>` 里 `<!-- seo:begin -->` 与 `<!-- seo:end -->` 之间的内容，可反复重跑：
+
+- `canonical`、`og:*`、`twitter:*`、全站 RSS `<link rel="alternate">`
+- JSON-LD：文章 `BlogPosting`（含 `datePublished` / `keywords`）+ `BreadcrumbList`；栏目页 `CollectionPage`；首页 `WebSite`；About `ProfilePage`
+- `sitemap.xml`（`lastmod` 取自 catalog 日期，缺失时回退到 git 提交日期）
+- `robots.txt`（显式放行 GPTBot / ClaudeBot / PerplexityBot 等模型抓取器，并声明 sitemap）
+
+分享卡片：`assets/img/og-cover.svg` 是源，PNG 是产物。改完 SVG 重新光栅化：
+
+```bash
+rsvg-convert -w 1200 -h 630 assets/img/og-cover.svg -o assets/img/og-cover.png
+```
+
+上线后需在 [Google Search Console](https://search.google.com/search-console) 完成一次资源验证并提交 `sitemap.xml`，收录才会开始。
+
+## 分发与度量
+
+搜索引擎解决人类侧的发现；Agent 侧靠投放和一个信标。
+
+**可安装的 Skill 包**：[`dist/skills/ai-knowledge-lab/`](./dist/skills/ai-knowledge-lab/SKILL.md)。它是薄加载器，只讲协议、指向线上接口，内容和工具变化时不会过期。Cursor 与 Claude 共用同一形态（目录 + 带 `name` / `description` 前置元数据的 `SKILL.md`），安装方式见 [`dist/skills/README.md`](./dist/skills/README.md)。
+
+`description` 决定 Agent 会不会加载这个 Skill——必须写清**覆盖什么主题**和**什么时候用**，含糊的描述永远不会被触发。`validate_lab.py` 会强制它与根目录 `/SKILL.md` 保持一致，防止两份描述漂移。
+
+**信标 `lab_hello`**：静态站没有服务端日志，无法被动统计谁抓了 `discover.json`。协议因此要求 Agent 接入时做一次匿名 GET：
+
+```
+GET https://abacus.jasoncameron.dev/hit/chengguruchun-lab/agent-connect
+```
+
+不带身份、不带载荷、本站不记日志。首页展示这个计数（用 `/get/` 读取，人类浏览不会把自己算进去），所以它是一条公开的反馈回路，而不是私下埋点。它只统计守协议的 Agent——但这恰恰就是要验证的假设：**有没有 Agent 真的按 Agent-Native 协议在用这个站**。
 
 ## 技术选择
 
@@ -112,6 +151,7 @@ python3 scripts/build_feeds.py
 ## Validation
 
 ```bash
+python3 scripts/build_seo.py --check     # SEO 产物是否最新
 python3 scripts/validate_lab.py          # local / CI
 python3 scripts/validate_lab.py --live   # optional soft live checks
 ```

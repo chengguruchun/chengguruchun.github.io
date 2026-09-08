@@ -7,10 +7,16 @@
 - [Catalog](/api/catalog.json)
 - [Markdown](/content/)
 - [Agent Card](/.well-known/agent-card.json)
+- [Sitemap](/sitemap.xml)
+
+- [Installable skill](/dist/skills/ai-knowledge-lab/SKILL.md)
 
 ## Meta
 - lab_discover
 - lab_execute
+
+## Handshake
+- lab_hello — one anonymous GET per session; the only signal this static site gets about agent usage
 
 ## Example capabilities
 - lab_list_entries / lab_list_articles / lab_get_entry
