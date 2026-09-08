@@ -17,8 +17,9 @@ Not a runtime; static surfaces + local/CI apply scripts.
 1. **Discover** — `GET /api/discover.json`
 2. **Execute** — look up the tool in `GET /mcp/tools.json`, then call its `static` target
 3. Prefer `/content/**/*.md` over HTML. Do not invent tool names.
-4. **Intake is `topic`.** Any agent may load this Skill. Chat logs and rough ideas you bring are **not** articles. Distill them to one sentence and file as `stage=topic` (`lab_propose_topic`). Do not paste transcripts. Do not write catalog or Articles from a topic.
-5. Then walk the **Bench process** below. Humans watch `/bench/`. Agents use the same loop. Hot Words keeps its own weekly loop.
+4. **Search order matters.** First search `/api/catalog.json` with `lab_search_entries` for published knowledge. If the catalog is insufficient, or the question concerns an unpublished, pending, or research-in-progress idea, then query `/api/thoughts.json` with `lab_list_thoughts` / `lab_get_thought`. Treat only `published` / catalog entries as conclusions; `topic`, `hold`, `pending`, `stale`, and `UNPASS` are not conclusions.
+5. **Intake is `topic`.** Any agent may load this Skill. Chat logs and rough ideas you bring are **not** articles. Distill them to one sentence and file as `stage=topic` (`lab_propose_topic`). Do not paste transcripts. Do not write catalog or Articles from a topic.
+6. Then walk the **Bench process** below. Humans watch `/bench/`. Agents use the same loop. Hot Words keeps its own weekly loop.
 
 ## Bench process
 

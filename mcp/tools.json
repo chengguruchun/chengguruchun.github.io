@@ -161,7 +161,7 @@
     {
       "name": "lab_search_entries",
       "kind": "read",
-      "description": "Client-filter catalog by keyword against title, excerpt, tags.",
+      "description": "Search published knowledge only: client-filter /api/catalog.json by title, excerpt, and tags. Does not search the Thoughts pipeline; if no sufficient result, query lab_list_thoughts / lab_get_thought.",
       "inputSchema": {
         "type": "object",
         "properties": {
