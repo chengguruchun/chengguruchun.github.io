@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>从函数到生态系统：重新理解大模型与 Agent · Diverse Lab</title>
-  <meta name="description" content="物理学、生态学与科学实验方法如何帮助我们重新理解 LLM 与 Agent。">
+  <meta name="description" content="从科学实验、物理学、生态学与 Agent 的讨论出发，重新理解大模型与反馈系统。">
   <meta name="theme-color" content="#f7f5f0">
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,24 +13,17 @@
 </head>
 <body>
 <header class="site-header"><div class="wrap site-header__inner"><a class="brand" href="../index.html"><img class="brand__logo" src="../assets/img/brand-mark.svg" alt="AI Knowledge Lab" width="44" height="44"><span class="brand__tag"><span class="brand__rotate"><span class="brand__item is-active">Independent Thinker</span><span class="brand__item">AI Agents</span><span class="brand__item">Complex Systems</span><span class="brand__item">Diverse Thinking</span></span></span></a><button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">菜单</button><nav class="nav" id="site-nav" aria-label="主导航"><a href="../index.html">Home</a><a href="../diverse/" aria-current="page">Diverse Lab</a><a href="../articles/">Articles</a><a href="../projects/">Projects</a><a href="../videos/">Videos</a><a href="../times/">Hot Words</a><a href="../about/">About Me</a><a class="nav__search" href="../tags/">Tags / Search</a></nav></div></header>
-<main><article class="article-body"><header class="page-hero"><div class="prose-wrap"><p class="page-hero__kicker">Diverse Lab</p><h1>从函数到生态系统：重新理解大模型与 Agent</h1><p class="page-hero__desc">物理学给我们规律，生态学给我们关系与反馈，科学实验告诉我们如何验证；把三种心智放在一起，可以重新理解 LLM 与 Agent。</p><p class="article-meta"><span>思路 2026-09-04</span><span>发表 2026-09-08</span><span>作者 chengguruchun</span><a class="tag" href="../tags/?tag=Physics">Physics</a><a class="tag" href="../tags/?tag=Ecology">Ecology</a><a class="tag" href="../tags/?tag=LLM">LLM</a><a class="tag" href="../tags/?tag=Agent">Agent</a></p></div></header>
+<main><article class="article-body"><header class="page-hero"><div class="prose-wrap"><p class="page-hero__kicker">Diverse Lab</p><h1>从函数到生态系统：重新理解大模型与 Agent</h1><p class="page-hero__desc">从科学实验、物理学、生态学与 Agent 的讨论出发：大模型需要用实验思维理解，Agent 则进一步进入环境、反馈与持续调整的问题。</p><p class="article-meta"><span>思路 2026-09-04</span><span>发表 2026-09-08</span><span>作者 chengguruchun</span><a class="tag" href="../tags/?tag=Physics">Physics</a><a class="tag" href="../tags/?tag=Ecology">Ecology</a><a class="tag" href="../tags/?tag=LLM">LLM</a><a class="tag" href="../tags/?tag=Agent">Agent</a></p></div></header>
 <div class="prose-wrap">
-<p class="lede">我们习惯把软件系统理解成函数：给定输入，经过确定的逻辑，得到输出。但大模型出现以后，这个直觉开始出现裂缝。我越来越觉得，理解这种裂缝，可以同时借用两种看起来距离很远的学科：<strong>物理学与生态学</strong>。</p>
+<p class="lede">这篇文章不是在给 AI 套一个新的理论，而是把我们最近几次讨论串起来：为什么使用大模型越来越像做科学实验？为什么物理学和生态学给人的感觉不同？以及，当模型开始调用工具、改变环境、获得反馈以后，为什么系统不再只是一个「输入 → 输出」的函数。</p>
 <h2>一、为什么大模型不像传统函数</h2>
-<p>传统程序通常可以近似成：</p><pre>Input
+<p>传统软件很容易形成这样的工程直觉：</p><pre>Input
   ↓
 Deterministic Logic
   ↓
 Output</pre>
-<p>而一次大模型调用真正依赖的东西更多：Prompt、Context、History、Model、Tools 与 Decoding。更接近：</p><pre>Prompt + Context + History + Model + Tools + Decoding
-                         ↓
-                Conditional Distribution
-                         ↓
-                   One Sample</pre>
-<p>所以同一个问题换一种上下文组织方式，结果可能改变；换一个示例，分布可能改变；换一个模型版本，行为可能改变。它不是「没有规律」，而是规律更多表现为<strong>条件下的概率分布</strong>。</p>
-<blockquote><p>真正值得问的问题，不只是「这一次为什么错了」，而是「在什么条件下，它更容易正确？」</p></blockquote>
-<h2>二、物理学给我们的启发：寻找可重复的规律</h2>
-<p>物理学不断从复杂现象中寻找稳定关系。把这种心智迁移到 LLM，工程就不应该只是不断试 Prompt，而应该逐渐变成：</p><pre>Hypothesis
+<p>但大模型并不是这么简单。同一个问题，Prompt 的写法、上下文的位置、历史信息、模型版本、采样参数，都可能影响最终结果。</p>
+<p>所以我们之前讨论「为什么一个提示词放在前面，模型似乎更容易记住」时，真正重要的并不是马上给出一个确定解释，而是把它当成一个可以验证的假设。</p><pre>Hypothesis
     ↓
 Experiment
     ↓
@@ -38,14 +31,33 @@ Observation
     ↓
 Comparison
     ↓
-Conclusion
-    ↓
-Next Hypothesis</pre>
-<p>例如怀疑「规则放在 Prompt 最前面更有效」，就固定模型、数据集和解码参数，只改变规则位置，然后重复采样。结论应该带边界：在数据集 D、模型 M 和参数 Θ 下，条件 A 比条件 B 有更高的成功率，而不是「这个 Prompt 永远更好」。</p>
-<p>这也是我认为 <strong>Prompt Engineering 会逐渐长成 Experiment Engineering</strong> 的原因。</p>
-<h2>三、但只用物理学的心智还不够</h2>
-<p>如果只用输入 → 输出理解 Agent，很容易把 Agent 想成一个更大的函数。但当系统开始拥有 Memory、Tools、Multiple Agents、Environment、Feedback、External Side Effects 与 Long-term State，事情开始变化。</p>
-<p>生态系统很少存在一个简单的 A → B。一个行为会改变环境，环境变化又反过来影响下一步行为。这与 Agent Loop 非常接近：</p><pre>Goal
+Conclusion</pre>
+<p>也就是说，<strong>不要把一次模型行为直接当成规律。</strong></p>
+<h2>二、为什么我越来越觉得应该用科学实验的方式使用大模型</h2>
+<p>以前使用软件，通常是在调用确定的能力；现在使用大模型，很多时候是在观察一个概率系统在不同条件下的行为。</p>
+<blockquote><p>如果一个 Prompt 有效，真正应该问的是：是什么条件让它有效？</p></blockquote>
+<p>比如怀疑「某条规则放在 Prompt 前面更容易被模型遵循」，就可以固定其他条件，只改变规则的位置，然后重复实验。</p><pre>条件 A → 成功率 X
+条件 B → 成功率 Y</pre>
+<p>而不是直接得到：「Prompt 放前面一定更好。」这也是我们讨论到的一个判断：<strong>使用大模型，应该越来越接近科学实验的思维。</strong></p>
+<h2>三、物理学和生态学为什么给了我两种不同的感觉</h2>
+<p>我们后来又讨论了：为什么物理学给人的感觉往往比较确定，而生物学、生态学则更加概率化、多元化？</p>
+<p>一个重要区别是，我们观察到的系统不同。物理学经常试图寻找可以重复验证的稳定规律；生态系统则包含大量相互作用的个体、环境和反馈关系。</p><pre>物理学
+寻找稳定规律
+     ↓
+控制变量
+     ↓
+重复验证</pre><pre>生态系统
+多主体 + 多变量 + 相互作用
+        ↓
+      反馈
+        ↓
+    状态变化
+        ↓
+    下一轮行为</pre>
+<p>这并不是说物理学没有概率，也不是说生态学没有规律，而是面对复杂系统时，不能只期待一个简单、确定的输入输出关系。</p>
+<h2>四、这个区别为什么又回到了 Agent</h2>
+<p>如果只看一次 LLM 调用，我们仍然可以把它理解成：</p><pre>Prompt → Answer</pre>
+<p>但 Agent 不一样。当 Agent 开始拥有 Tool、Memory，并且能够对外部环境产生影响以后，它的行为就变成了一个连续过程：</p><pre>Goal
  ↓
 Action
  ↓
@@ -55,76 +67,104 @@ Observation
  ↓
 Gap
  ↓
-Adjustment
+Next Action
  ↺</pre>
-<h2>四、Agent 真正复杂的地方，是反馈而不是模型</h2>
-<p>例如一个 Agent 要「降低工厂能源消耗」：读取设备数据、判断状态、调整设备、观察功率变化、发现温度变化、再调整策略。这里已经不是 Prompt → Answer，而是一个持续与环境交互的系统。</p><pre>Goal
- ↓
-Policy
- ↓
-Action
- ↓
-Environment
- ↓
+<p>这也是我们讨论 Loop Engineering 时形成的一个核心理解：<strong>Loop 不是把 Workflow 写得更复杂，而是让现实结果进入下一步决策。</strong></p>
+<h2>五、Agent 的复杂性开始来自环境和反馈</h2>
+<p>所以我现在不太愿意把 Agent 简单理解成「一个更强的模型」。真正让 Agent 复杂起来的，是它进入了一个环境。</p>
+<p>例如我们讨论 IoT 和制造业时，Agent 并不是只生成一段文字，而可能需要：</p><pre>读取设备状态
+     ↓
+判断当前情况
+     ↓
+调用设备能力
+     ↓
+观察设备变化
+     ↓
+判断是否达到目标
+     ↓
+继续调整</pre>
+<p>这时候，模型只是其中的一部分。工具、设备、数据、环境和反馈共同决定了系统最后的行为。</p>
+<blockquote><p><strong>系统的行为开始来自参与者、环境和反馈之间的持续互动。</strong></p></blockquote>
+<h2>六、概率性不代表不能工程化</h2>
+<p>大模型具有概率性，并不意味着工程师只能接受「它有时候就是这样」。概率性意味着我们需要换一种工程方式。</p><pre>Input → Output</pre><pre>Conditions → Behavior Distribution → Outcome</pre>
+<p>与其只看某一次回答，不如记录什么条件下成功、什么条件下失败、失败是什么类型、改变了什么之后发生变化，以及是否可以在新的任务上复现。</p>
+<p>一次成功只是一个样本。真正有价值的是找到<strong>成功和失败背后的条件与规律</strong>。</p>
+<h2>七、Proxy Metric 不等于真实结果</h2>
+<p>我们在讨论 Agent 优化时还碰到过一个很实际的问题：<strong>测试通过，不代表用户的问题真的解决了。</strong></p><pre>API PASS
+Test PASS
+Workflow SUCCESS
+
+       ≠
+
+用户真正的问题已经解决</pre>
+<p>这就是 Proxy Metric 和 Real Outcome 的区别。如果评测只看 API 是否调用成功、测试是否通过，Agent 可能越来越擅长「通过测试」，但不一定越来越擅长解决真实问题。</p>
+<p>所以我们后来讨论 Agent Optimizer 时，特别强调：</p><pre>Task Fingerprint
+Ground Truth Status
+Divergence Flag
+Cost</pre>
+<p>尤其要区分：</p><pre>Test Verified
+User Confirmed
+Unverified</pre>
+<p>这其实和科学实验的思维又连起来了：<strong>测量指标必须尽可能接近我们真正想知道的东西。</strong></p>
+<h2>八、从实验，到 Loop</h2>
+<p>科学实验解决的是「怎样知道什么条件更有效？」Loop Engineering 解决的是「当现实结果和目标存在差距时，系统下一步怎么调整？」</p><pre>Hypothesis
+    ↓
+Experiment
+    ↓
 Observation
- ↓
-Outcome
- ↓
-Policy Adjustment
- ↺</pre>
-<p>Agent 的能力因此越来越像一种<strong>环境中的适应能力</strong>。</p>
-<h2>五、概率性并不等于不可工程化</h2>
-<p>天气是概率性的，但气象学仍然可以工作；生态系统高度复杂，但生态学仍然可以研究。工程目标发生了变化：</p><pre>确定性系统：
-Input → Output
-
-概率性系统：
-Conditions → Distribution → Outcome</pre>
-<p>因此评价 Agent 时，也应该从「这次回答对不对」逐渐走向 Success Rate、Error Distribution、Cost、Latency、Consistency、Held-out Performance 与 Real Outcome。</p>
-<p>一次漂亮的回答只是一个样本。真正值得沉淀的是<strong>在什么条件下，系统更可靠</strong>。</p>
-<h2>六、Proxy Metric 不等于真实结果</h2>
-<p>复杂系统还有一个危险：我们很容易把代理指标当成真实目标。</p><pre>Tool Call = PASS
-API Test = PASS
-Workflow = SUCCESS
-Model Self-Eval = PASS
-
-          ≠
-
-Real Outcome = SUCCESS</pre>
-<p>因此我越来越倾向于把任务结果拆成三层：<strong>Proxy</strong>（过程是否正常）、<strong>Evidence</strong>（是否存在可核对证据）、<strong>Outcome</strong>（真实目标是否完成）。</p>
-<h2>七、从 Experiment Engineering 走向 Loop Engineering</h2>
-<p>科学实验解决「如何知道什么条件更好」，Agent Loop 进一步解决「知道以后，系统如何自己调整」。两者其实是一条连续的路线：</p><pre>Experiment Engineering
-        ↓
+    ↓
 Evaluation
-        ↓
-Policy / Strategy
-        ↓
-Agent Loop
-        ↓
+    ↓
+Strategy
+    ↓
+Agent Action
+    ↓
 Environment Feedback
-        ↓
-Next Experiment</pre>
-<p>这也是我理解 Loop Engineering 的方式：不是把 Workflow 写得更复杂，而是让<strong>现实结果成为下一步行动的输入</strong>。</p>
-<h2>八、最终会从模型工程走向环境工程</h2>
-<p>如果继续往前推，Agent Engineering 的对象会不断扩大：</p><pre>Model
-  ↓
-Prompt
-  ↓
+    ↓
+Next Action / Next Experiment</pre>
+<p>这也是我现在理解 Agent 的一个重要变化：<strong>Agent 不只是生成 Action，而是要面对 Action 产生的真实结果。</strong></p>
+<h2>九、从「函数」到「关系」</h2>
+<p>如果把这几次讨论再往前推一步，我觉得我们真正改变的可能不是某一个模型，而是理解软件系统的方式。</p><pre>调用什么函数？
+调用哪个 API？
+执行哪个 Workflow？</pre><p>逐渐变成：</p><pre>我要达到什么目标？
+我现在在哪里？
+我能使用什么能力？
+现实发生了什么？
+距离目标还有多远？
+下一步应该怎么做？</pre>
+<p>这也是为什么我们后来会把 Agent 和 Kubernetes 联系起来。Kubernetes 最值得借鉴的并不是「Pod 对应 Agent」，而是它背后的 <strong>Desired State → Actual State → Reconcile</strong> 思维。</p><pre>Goal / Desired Outcome
+          ↓
+       Action
+          ↓
+   Actual Environment
+          ↓
+      Observation
+          ↓
+          Gap
+          ↓
+      Adjustment
+          ↺</pre>
+<p>这里已经不再只是函数调用，而是一个持续的关系和反馈系统。</p>
+<h2>十、我现在更愿意这样理解这条路线</h2>
+<pre>传统软件
+   ↓
+函数 / API
+   ↓
+Workflow
+   ↓
+LLM
+   ↓
+实验与评测
+   ↓
 Agent
-  ↓
-Runtime
-  ↓
-Multi-Agent
-  ↓
-Environment
-  ↓
-Feedback
-  ↓
-Evolution</pre>
-<p>模型仍然重要，但它只是系统中的一个参与者。真正决定系统长期能力的，是模型如何与工具、记忆、其他 Agent 和环境发生关系，以及这些关系能不能形成稳定的反馈闭环。</p>
-<h2>九、我现在更愿意这样理解 AI 工程</h2>
-<p><strong>物理学提醒我们寻找规律，生态学提醒我们观察关系，科学实验告诉我们如何验证，而 Agent Engineering 要把这些东西变成可以运行的反馈系统。</strong></p>
-<p>所以未来 AI 工程可能不只是 Model Engineering。它会同时包含 Model Engineering、Experiment Engineering、Agent Engineering、Loop Engineering 与 Environment Engineering。</p>
-<blockquote><p>从函数到实验，从实验到循环，从循环到生态系统。这可能是理解下一代 AI 系统的一条重要路径。</p></blockquote>
+   ↓
+Loop
+   ↓
+环境与反馈</pre>
+<p>这并不是说后面的东西会把前面的东西全部替代。我们讨论 SaaS、IoT 和制造业时也一直在强调：<strong>原来的微服务、Workflow、规则系统并不需要被推倒重来。</strong></p>
+<p>它们依然负责确定性的事情。变化的是上层的控制方式：从「调用哪个函数」，逐渐走向「如何让系统达到目标」。</p>
+<p>所以我现在更愿意把 Agent 理解成一种新的系统控制方式，而不只是一个新的 AI UI。</p>
+<blockquote><p>从函数到实验，从实验到循环，再从循环进入环境。<br><br>这可能是我目前理解大模型和 Agent 的一条比较自然的思考路径。</p></blockquote>
 </div></article></main>
 <footer class="site-footer"><div class="wrap site-footer__inner"><div><p>© <span id="year"></span> chengguruchun · Hangzhou</p><p>Blog for Agents · 个人知识博客</p><p class="footer-visits" aria-label="访问统计"><span>本站 <strong data-visits-site>-</strong></span><span class="footer-visits__sep" aria-hidden="true">·</span><span>本页 <strong data-visits-page>-</strong></span></p></div></div></footer>
 <script src="../assets/js/site.js"></script><script src="../assets/js/visits.js"></script>
