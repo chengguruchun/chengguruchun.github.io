@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="AI Knowledge Lab · Blog for Agents">
+  <title>AI Knowledge Lab · Blog for Agents</title>
+
+  <rect width="1200" height="630" fill="#f7f5f0"/>
+  <rect x="40" y="40" width="1120" height="550" fill="none" stroke="#ddd7cb" stroke-width="2"/>
+  <rect x="40" y="40" width="1120" height="6" fill="#9a7428"/>
+
+  <!-- brand mark, scaled from assets/img/brand-mark.svg -->
+  <g transform="translate(96,104) scale(2.1)">
+    <rect x="0.75" y="0.75" width="38.5" height="38.5" rx="8" fill="#f7f5f0" stroke="#c4a35a" stroke-width="1.4"/>
+    <g transform="translate(7,10)">
+      <rect x="0" y="0" width="12.5" height="17.5" rx="1.3" fill="#fff" stroke="#1f242b" stroke-width="1.25"/>
+      <path d="M2.4 3.6h7.8M2.4 6.5h7.8M2.4 9.4h6.2M2.4 12.3h7M2.4 15.2h4.8" stroke="#1f242b" stroke-width="1.05" stroke-linecap="round" opacity="0.72"/>
+    </g>
+    <g transform="translate(22.2,11.5)">
+      <path d="M6.1 2.8V0.6" stroke="#6a9e8a" stroke-width="1.25" stroke-linecap="round"/>
+      <circle cx="6.1" cy="0.2" r="1.15" fill="#6a9e8a"/>
+      <rect x="0.2" y="2.8" width="11.8" height="10.8" rx="2.1" fill="#f7f5f0" stroke="#1f242b" stroke-width="1.3"/>
+      <circle cx="3.9" cy="7.4" r="1.2" fill="#1f242b"/>
+      <circle cx="8.3" cy="7.4" r="1.2" fill="#1f242b"/>
+      <rect x="3.2" y="10.7" width="5.8" height="1.3" rx="0.65" fill="#6a9e8a"/>
+    </g>
+    <path d="M24.8 18.2 L17.8 18.9" stroke="#c4a35a" stroke-width="1.05" stroke-linecap="round"/>
+    <path d="M24.7 16.6 L17.9 16.2" stroke="#c4a35a" stroke-width="0.95" stroke-linecap="round" opacity="0.7"/>
+  </g>
+
+  <text x="196" y="152" font-family="IBM Plex Mono, SF Mono, Menlo, monospace" font-size="26" letter-spacing="3.5" fill="#9a7428">BLOG FOR AGENTS</text>
+  <text x="196" y="188" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="21" fill="#5a616c">chengguruchun · Hangzhou</text>
+
+  <text x="96" y="330" font-family="Songti SC, Noto Serif SC, Georgia, serif" font-size="92" font-weight="600" fill="#1f242b">AI Knowledge Lab</text>
+  <text x="96" y="410" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="40" fill="#1f242b">面向 Agent-Native 的知识博客</text>
+  <text x="96" y="462" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="27" fill="#5a616c">可发现 · 可调用 · 可编辑 · 可发布</text>
+
+  <line x1="96" y1="510" x2="1104" y2="510" stroke="#ddd7cb" stroke-width="1.5"/>
+
+  <text x="96" y="552" font-family="IBM Plex Mono, SF Mono, Menlo, monospace" font-size="23" fill="#3f7a68">chengguruchun.github.io</text>
+  <text x="1104" y="552" text-anchor="end" font-family="PingFang SC, Hiragino Sans GB, Noto Sans SC, sans-serif" font-size="21" fill="#8a9099">AI Agents · Complex Systems · Diverse Thinking</text>
+</svg>

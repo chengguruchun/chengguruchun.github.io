@@ -17,5 +17,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Check SEO metadata is regenerated
+        run: python3 scripts/build_seo.py --check
       - name: Run validate_lab (no --live)
         run: python3 scripts/validate_lab.py
