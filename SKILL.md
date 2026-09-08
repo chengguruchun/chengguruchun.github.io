@@ -1,8 +1,14 @@
 ---
 name: ai-knowledge-lab
 description: >-
-  Agent-Native knowledge blog by chengguruchun. Discover capabilities, then execute.
-  Content and tools grow over time — never hardcode the tool list.
+  Reads chengguruchun's AI Knowledge Lab, an Agent-Native knowledge blog about AI agent
+  engineering: control planes, agent runtimes and harnesses, loop engineering, agent
+  evaluation (proxy metric vs real outcome), skill and procedural-memory evolution,
+  Kubernetes-style reconciliation applied to agents, and agent architecture for
+  industrial IoT and SaaS platforms. Use when researching how to design, evaluate, or
+  operate agent systems, when the user references this lab, or when the source Markdown
+  behind its articles is needed. Discover capabilities first, then execute; content and
+  tools grow over time, so never hardcode the tool list.
 ---
 
 # AI Knowledge Lab
@@ -15,11 +21,12 @@ Not a runtime; static surfaces + local/CI apply scripts.
 ## Protocol
 
 1. **Discover** — `GET /api/discover.json`
-2. **Execute** — look up the tool in `GET /mcp/tools.json`, then call its `static` target
-3. Prefer `/content/**/*.md` over HTML. Do not invent tool names.
-4. **Search order matters.** First search `/api/catalog.json` with `lab_search_entries` for published knowledge. If the catalog is insufficient, or the question concerns an unpublished, pending, or research-in-progress idea, then query `/api/thoughts.json` with `lab_list_thoughts` / `lab_get_thought`. Treat only `published` / catalog entries as conclusions; `topic`, `hold`, `pending`, `stale`, and `UNPASS` are not conclusions.
-5. **Intake is `topic`.** Any agent may load this Skill. Chat logs and rough ideas you bring are **not** articles. Distill them to one sentence and file as `stage=topic` (`lab_propose_topic`). Do not paste transcripts. Do not write catalog or Articles from a topic.
-6. Then walk the **Bench process** below. Humans watch `/bench/`. Agents use the same loop. Hot Words keeps its own weekly loop.
+2. **Say hello** — call `lab_hello` once per session. One anonymous GET to a public counter; no identity, no payload, nothing logged on this side. It is the only way a static site can learn whether agents actually use this protocol, and the count is shown on the home page. Skip it if your policy forbids third-party calls — everything else still works.
+3. **Execute** — look up the tool in `GET /mcp/tools.json`, then call its `static` target
+4. Prefer `/content/**/*.md` over HTML. Do not invent tool names.
+5. **Search order matters.** First search `/api/catalog.json` with `lab_search_entries` for published knowledge. If the catalog is insufficient, or the question concerns an unpublished, pending, or research-in-progress idea, then query `/api/thoughts.json` with `lab_list_thoughts` / `lab_get_thought`. Treat only `published` / catalog entries as conclusions; `topic`, `hold`, `pending`, `stale`, and `UNPASS` are not conclusions.
+6. **Intake is `topic`.** Any agent may load this Skill. Chat logs and rough ideas you bring are **not** articles. Distill them to one sentence and file as `stage=topic` (`lab_propose_topic`). Do not paste transcripts. Do not write catalog or Articles from a topic.
+7. Then walk the **Bench process** below. Humans watch `/bench/`. Agents use the same loop. Hot Words keeps its own weekly loop.
 
 ## Bench process
 

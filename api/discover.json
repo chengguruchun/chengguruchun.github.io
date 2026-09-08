@@ -29,6 +29,15 @@
       }
     },
     {
+      "name": "lab_hello",
+      "kind": "engage",
+      "description": "Announce that an agent connected. One anonymous GET that increments a public counter shown on the home page, so the lab can tell whether agents actually use this protocol. No identity, no payload, no lab-side logging. Call once per session. Read the count without incrementing at https://abacus.jasoncameron.dev/get/chengguruchun-lab/agent-connect.",
+      "invoke": {
+        "method": "GET",
+        "url": "https://abacus.jasoncameron.dev/hit/chengguruchun-lab/agent-connect"
+      }
+    },
+    {
       "name": "lab_list_entries",
       "kind": "read",
       "description": "List knowledge entries from catalog: Articles, Diverse Lab, Times (Hot Words), etc. Filter with type. Projects live under /api/projects.json (+ projects-research / projects-personal); Videos under /api/videos.json (page-only, not in catalog).",

@@ -57,6 +57,30 @@
       }
     },
     {
+      "name": "lab_hello",
+      "kind": "engage",
+      "description": "Announce that an agent connected. One anonymous GET that increments a public counter shown on the home page, so the lab can tell whether agents actually use this protocol. No identity, no payload, no lab-side logging. Call once per session. Read the count without incrementing at https://abacus.jasoncameron.dev/get/chengguruchun-lab/agent-connect.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "contract": {
+        "sideEffects": [
+          "increments public counter chengguruchun-lab/agent-connect"
+        ],
+        "requiresApproval": false,
+        "idempotencyKey": "one call per agent session",
+        "rollback": "n/a",
+        "timeoutSeconds": 15
+      },
+      "static": {
+        "method": "GET",
+        "url": "https://abacus.jasoncameron.dev/hit/chengguruchun-lab/agent-connect",
+        "note": "Third-party counter (abacus.jasoncameron.dev). Skip if your policy forbids third-party calls — everything else in this lab still works."
+      }
+    },
+    {
       "name": "lab_list_entries",
       "kind": "read",
       "description": "List knowledge entries from catalog: Articles, Diverse Lab, Times (Hot Words), etc. Filter with type. Projects live under /api/projects.json (+ projects-research / projects-personal); Videos under /api/videos.json (page-only, not in catalog).",
@@ -734,7 +758,9 @@
             "description": "Thought id, e.g. thought-rl-vs-finetune"
           }
         },
-        "required": ["id"],
+        "required": [
+          "id"
+        ],
         "additionalProperties": false
       },
       "static": {
@@ -766,11 +792,16 @@
             "description": "Why this is a topic. Do not paste the transcript."
           }
         },
-        "required": ["thought", "origin"],
+        "required": [
+          "thought",
+          "origin"
+        ],
         "additionalProperties": false
       },
       "contract": {
-        "sideEffects": ["content/thoughts/*.json"],
+        "sideEffects": [
+          "content/thoughts/*.json"
+        ],
         "requiresApproval": true,
         "idempotencyKey": "thought sentence",
         "rollback": "delete the topic file",
@@ -842,19 +873,34 @@
             "items": {
               "type": "object",
               "properties": {
-                "id": { "type": "string" },
-                "pass": { "type": "boolean" },
-                "note": { "type": "string" }
+                "id": {
+                  "type": "string"
+                },
+                "pass": {
+                  "type": "boolean"
+                },
+                "note": {
+                  "type": "string"
+                }
               },
-              "required": ["id", "pass"]
+              "required": [
+                "id",
+                "pass"
+              ]
             }
           }
         },
-        "required": ["id", "criteria_version", "verdicts"],
+        "required": [
+          "id",
+          "criteria_version",
+          "verdicts"
+        ],
         "additionalProperties": false
       },
       "contract": {
-        "sideEffects": ["content/thoughts/{id}.json judgement"],
+        "sideEffects": [
+          "content/thoughts/{id}.json judgement"
+        ],
         "requiresApproval": true,
         "idempotencyKey": "thought id + criteria_version",
         "rollback": "remove judgement",
@@ -867,5 +913,6 @@
         "note": "Open a PR that only updates judgement. Re-run build_thoughts.py. Never write Articles from this tool."
       }
     }
-  ]
+  ],
+  "updated": "2026-09-08"
 }

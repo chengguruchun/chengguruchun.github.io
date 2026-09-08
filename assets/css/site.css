@@ -1650,6 +1650,19 @@ a.entry-card:hover {
 }
 .section--agents { padding-bottom: 4rem; }
 
+.agent-panel__meta {
+  margin: -0.35rem 0 1rem;
+  padding-left: 1.15rem;
+  color: var(--text-faint);
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+}
+.agent-panel__meta strong {
+  color: var(--teal);
+  font-weight: 500;
+}
+
 .agent-howto {
   margin: 0 0 1rem;
   padding-left: 1.15rem;
