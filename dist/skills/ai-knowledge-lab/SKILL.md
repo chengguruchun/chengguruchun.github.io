@@ -26,6 +26,10 @@ Everything below is a plain HTTP GET. There is no runtime and no auth.
 3. **Execute** — resolve the tool in `https://chengguruchun.github.io/mcp/tools.json`,
    then call its `static` target.
 4. Prefer `/content/**/*.md` over the rendered HTML. Never invent tool names.
+5. **Search order matters.** Search `/api/catalog.json` first for published knowledge.
+   Only if that is insufficient, or the question is about an unpublished or
+   in-progress idea, query `/api/thoughts.json`. Treat only `published` catalog
+   entries as conclusions: `topic`, `hold`, `pending`, `stale` and `UNPASS` are not.
 
 This file is a loader on purpose. The authoritative protocol is
 `https://chengguruchun.github.io/SKILL.md` — read it when the task goes beyond lookup.
