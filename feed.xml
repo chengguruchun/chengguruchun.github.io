@@ -8,12 +8,12 @@
     <lastBuildDate>Mon, 07 Sep 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://chengguruchun.github.io/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
-      <title>2026-09 Week 1 · Context Engineering</title>
+      <title>2026-09 Week 1 · Context Window Optimization</title>
       <link>https://chengguruchun.github.io/times/</link>
       <guid isPermaLink="true">https://chengguruchun.github.io/times/</guid>
       <pubDate>Mon, 07 Sep 2026 00:00:00 +0000</pubDate>
       <category>Times</category>
-      <description>当可靠性成为默认要求后，真正的瓶颈转移到智能体如何理解并利用上下文。Context Engineering 将提示词、记忆检索和工具信息的设计系统化，直接降低因上下文缺失或冲突导致的失败率。它既是可靠性的前置条件，也是从“能用”迈向“可控”的关键工程实践。</description>
+      <description>在2026年，随着Agent处理长上下文需求的激增，如何高效利用有限的上下文窗口成为工程实践的核心痛点。本站软件与Agent主线高度相关，该词直指系统性能优化，且与当前词形成互补而非重复。证据来源权威，时效性强，能引导读者关注具体的token管理和检索策略，具备实际落地价值。</description>
     </item>
     <item>
       <title>Kubernetes × Agent：从容器编排到目标收敛</title>
