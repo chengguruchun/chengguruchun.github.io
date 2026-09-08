@@ -80,6 +80,22 @@
       <description>物理学给我们规律，生态学给我们关系与反馈，科学实验告诉我们如何验证；把三种心智放在一起，可以重新理解 LLM 与 Agent。</description>
     </item>
     <item>
+      <title>SaaS 电商平台的 Agent 思考</title>
+      <link>https://chengguruchun.github.io/articles/saas-ecommerce-agent-thinking.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/articles/saas-ecommerce-agent-thinking.html</guid>
+      <pubDate>Mon, 07 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Articles</category>
+      <description>从某电商 SaaS 平台出发：Agent 不是给业务系统加一个聊天入口，而是让软件从 API / Workflow 中心逐渐演化为 Goal / Capability / Feedback Loop 中心。</description>
+    </item>
+    <item>
+      <title>IoT 平台的 Agent 重构</title>
+      <link>https://chengguruchun.github.io/articles/iot-agent-reconstruction.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/articles/iot-agent-reconstruction.html</guid>
+      <pubDate>Mon, 07 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Articles</category>
+      <description>如果说传统 IoT 平台解决的是“设备如何被连接、管理和自动化”，那么 Agent 时代真正值得思考的问题是：设备、云边能力和智能决策，能不能共同组成一个可以围绕目标持续工作的运行系统？</description>
+    </item>
+    <item>
       <title>2026-09 Week 1 · Context Window Optimization</title>
       <link>https://chengguruchun.github.io/times/</link>
       <guid isPermaLink="true">https://chengguruchun.github.io/times/</guid>

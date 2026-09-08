@@ -194,6 +194,44 @@
       "content": "/content/diverse/from-function-to-ecosystem.md"
     },
     {
+      "id": "saas-ecommerce-agent-thinking",
+      "type": "Articles",
+      "title": "SaaS 电商平台的 Agent 思考",
+      "excerpt": "从某电商 SaaS 平台出发：Agent 不是给业务系统加一个聊天入口，而是让软件从 API / Workflow 中心逐渐演化为 Goal / Capability / Feedback Loop 中心。",
+      "url": "/articles/saas-ecommerce-agent-thinking.html",
+      "date": "2026-09-07",
+      "tags": [
+        "Agent",
+        "SaaS",
+        "E-commerce",
+        "Architecture",
+        "Loop Engineering"
+      ],
+      "thought_date": "2026-09-07",
+      "published_date": "2026-09-07",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/saas-ecommerce-agent-thinking.md",
+      "content": "/content/articles/saas-ecommerce-agent-thinking.md"
+    },
+    {
+      "id": "iot-agent-reconstruction",
+      "type": "Articles",
+      "title": "IoT 平台的 Agent 重构",
+      "excerpt": "如果说传统 IoT 平台解决的是“设备如何被连接、管理和自动化”，那么 Agent 时代真正值得思考的问题是：设备、云边能力和智能决策，能不能共同组成一个可以围绕目标持续工作的运行系统？",
+      "url": "/articles/iot-agent-reconstruction.html",
+      "date": "2026-09-07",
+      "tags": [
+        "Agent",
+        "IoT",
+        "Architecture",
+        "Edge",
+        "Control Plane"
+      ],
+      "thought_date": "2026-09-07",
+      "published_date": "2026-09-07",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/iot-agent-reconstruction.md",
+      "content": "/content/articles/iot-agent-reconstruction.md"
+    },
+    {
       "id": "k8s-to-agent-control-plane",
       "type": "Articles",
       "title": "Kubernetes × Agent：从容器编排到目标收敛",
