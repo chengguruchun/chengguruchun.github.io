@@ -8,6 +8,22 @@
     <lastBuildDate>Tue, 08 Sep 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://chengguruchun.github.io/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
+      <title>Agent 的评价：Proxy Metric ≠ Real Outcome</title>
+      <link>https://chengguruchun.github.io/articles/agent-evaluation-proxy-vs-real-outcome.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/articles/agent-evaluation-proxy-vs-real-outcome.html</guid>
+      <pubDate>Tue, 08 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Articles</category>
+      <description>测试、API 状态和 outcome.ok 都可能 PASS，但用户仍然认为问题没有解决。Agent 的评价最终必须回到真实 Outcome。</description>
+    </item>
+    <item>
+      <title>Agent Optimizer：不训练模型，而是优化经验与策略</title>
+      <link>https://chengguruchun.github.io/articles/agent-optimizer-experience-policy.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/articles/agent-optimizer-experience-policy.html</guid>
+      <pubDate>Tue, 08 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Articles</category>
+      <description>Agent 变强不一定首先意味着修改模型权重，也可以通过经验记忆、策略调整和工具调用方式的优化实现。</description>
+    </item>
+    <item>
       <title>Agent 技能演化：从轨迹回流到可剪枝的程序性记忆</title>
       <link>https://chengguruchun.github.io/articles/agent-skill-evolution-pruning.html</link>
       <guid isPermaLink="true">https://chengguruchun.github.io/articles/agent-skill-evolution-pruning.html</guid>
