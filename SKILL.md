@@ -33,6 +33,7 @@ Add capabilities in `discover.json` + `tools.json`, not this file.
 | `/api/projects*.json` | Projects (research + personal) |
 | `/api/videos.json` | Videos (page-only; not in catalog) |
 | `/.well-known/agent-card.json` | Static Agent Card (documentation) |
+| `/api/agent-native/` | Weekly check: still agent-native? (`runs/latest.json`) |
 
 Owner: chengguruchun · Hangzhou  
 GitHub: https://github.com/chengguruchun · Mail: chengguruchun@163.com

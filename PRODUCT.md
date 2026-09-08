@@ -63,6 +63,10 @@
 
 
 
+## Agent-native Loop
+
+周日上海 10:00 定时检查本站是否仍面向 Agent 原生（可发现、可调用、正文在 Markdown/JSON）。只写 run 报告，不改知识内容；硬门禁失败开 issue。详见 `api/agent-native/criteria.json` 与 `lab_agent_native_status`。
+
 ## Hot Words Loop（Pi + DeepSeek / LiteLLM）
 
 周更 Hot Words（`/times/`）：Actions 默认 **autonomous**（周一上海 09:00：Propose → 证据门禁 → Apply → 一致性 → push）。`workflow_dispatch` 可选 `mode=review`，只写 `awaiting_review` 不发布。周期 `YYYY-MM-WN` 是当月第 N 个 7 天，不是 ISO week。详见 `HOT_WORDS_LOOP.md`。

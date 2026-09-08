@@ -63,6 +63,8 @@ def check_agent_surfaces() -> None:
         "feed.xml",
         "llms.txt",
         ".well-known/agent-card.json",
+        "api/agent-native/criteria.json",
+        "api/agent-native/runs/latest.json",
     ]
     for rel in required:
         p = ROOT / rel
@@ -93,6 +95,7 @@ def check_agent_surfaces() -> None:
             "lab_hot_words_apply",
             "lab_list_projects_research",
             "lab_list_projects_personal",
+            "lab_agent_native_status",
         ):
             if need not in dnames:
                 fail(f"discover missing {need}")

@@ -672,6 +672,27 @@
         "method": "GET",
         "path": "/api/hot-words/feedback.json"
       }
+    },
+    {
+      "name": "lab_agent_native_status",
+      "kind": "read",
+      "description": "Observe the latest Agent-native weekly check (surfaces, discover→execute, canonical Markdown, tool parity). GET /api/agent-native/runs/latest.json. Criteria: /api/agent-native/criteria.json.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "contract": {
+        "sideEffects": [],
+        "requiresApproval": false,
+        "idempotencyKey": "runId|latest",
+        "rollback": "n/a",
+        "timeoutSeconds": 30
+      },
+      "static": {
+        "method": "GET",
+        "path": "/api/agent-native/runs/latest.json"
+      }
     }
   ]
 }

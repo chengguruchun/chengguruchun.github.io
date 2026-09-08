@@ -1,0 +1,137 @@
+# Weekly observe loop: is the Lab still agent-native?
+name: Agent Native Weekly
+
+on:
+  schedule:
+    # Sunday 02:00 UTC = Sunday 10:00 Asia/Shanghai
+    - cron: "0 2 * * 0"
+  workflow_dispatch:
+    inputs:
+      live:
+        description: "Also GET production surfaces"
+        required: false
+        type: boolean
+        default: true
+
+concurrency:
+  group: agent-native-weekly
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Compute period
+        id: meta
+        run: |
+          python3 - <<'PY'
+          import os
+          from datetime import datetime, timezone
+          from zoneinfo import ZoneInfo
+          now = datetime.now(ZoneInfo("Asia/Shanghai"))
+          week = (now.day - 1) // 7 + 1
+          period = f"{now:%Y-%m}-W{week}"
+          ts = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+          run_id = f"agent-native-{period}-{ts}"
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as f:
+              f.write(f"period={period}\n")
+              f.write(f"run_id={run_id}\n")
+          print(period, run_id)
+          PY
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Check agent-native gates + write manifest
+        id: check
+        env:
+          PERIOD: ${{ steps.meta.outputs.period }}
+          RUN_ID: ${{ steps.meta.outputs.run_id }}
+        run: |
+          LIVE_FLAG=""
+          if [ "${{ github.event_name }}" = "schedule" ] || [ "${{ github.event.inputs.live }}" = "true" ]; then
+            LIVE_FLAG="--live"
+          fi
+          python3 scripts/agent_native_check.py --write $LIVE_FLAG
+        continue-on-error: true
+
+      - name: Commit run manifest
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add api/agent-native/
+          if git diff --cached --quiet; then
+            echo "no manifest change"
+            exit 0
+          fi
+          git commit -m "chore(agent-native): record run ${{ steps.meta.outputs.run_id }}"
+          git push
+
+      - name: Open drift issue
+        if: steps.check.outcome == 'failure' || steps.check.outputs.failed == 'true'
+        uses: actions/github-script@v7
+        env:
+          PERIOD: ${{ steps.meta.outputs.period }}
+          RUN_ID: ${{ steps.meta.outputs.run_id }}
+          ERR: ${{ steps.check.outputs.error }}
+        with:
+          script: |
+            const period = process.env.PERIOD || 'unknown';
+            const runId = process.env.RUN_ID || '';
+            const err = process.env.ERR || 'see workflow logs';
+            const title = `[agent-native] drift ${period}`;
+            const body = [
+              '## Agent-native weekly check failed',
+              '',
+              `Period: **${period}**`,
+              runId ? `RunId: **${runId}**` : null,
+              runId ? `Manifest: \`/api/agent-native/runs/${runId}.json\`` : null,
+              '',
+              '```',
+              err,
+              '```',
+              '',
+              `Workflow: agent-native-weekly.yml`,
+              `Run: ${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+            ].filter(Boolean).join('\n');
+            const issues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              per_page: 50,
+            }).catch(() => ({ data: [] }));
+            const exists = (issues.data || []).find(i => i.title === title);
+            if (exists) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: exists.number,
+                body,
+              });
+              return;
+            }
+            try {
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title,
+                body,
+                labels: ['agent-native'],
+              });
+            } catch (e) {
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title,
+                body,
+              });
+            }

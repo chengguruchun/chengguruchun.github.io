@@ -3,7 +3,7 @@
   "protocol": "discover-then-execute",
   "skill": "/SKILL.md",
   "registry": "/mcp/tools.json",
-  "updated": "2026-09-07",
+  "updated": "2026-09-08",
   "meta": [
     "lab_discover",
     "lab_execute"
@@ -222,6 +222,15 @@
       }
     },
     {
+      "name": "lab_hot_words_status",
+      "kind": "read",
+      "description": "Deprecated alias of lab_hot_words_state. Prefer lab_hot_words_state.",
+      "invoke": {
+        "method": "GET",
+        "path": "/api/times.json"
+      }
+    },
+    {
       "name": "lab_hot_words_list",
       "kind": "read",
       "description": "List Hot Words content markdown under /content/times/.",
@@ -349,6 +358,22 @@
         "sideEffects": [],
         "requiresApproval": false,
         "idempotencyKey": "period|latest",
+        "rollback": "n/a",
+        "timeoutSeconds": 30
+      }
+    },
+    {
+      "name": "lab_agent_native_status",
+      "kind": "read",
+      "description": "Observe the latest Agent-native weekly check (surfaces, discover→execute, canonical Markdown, tool parity). GET /api/agent-native/runs/latest.json. Criteria: /api/agent-native/criteria.json.",
+      "invoke": {
+        "method": "GET",
+        "path": "/api/agent-native/runs/latest.json"
+      },
+      "contract": {
+        "sideEffects": [],
+        "requiresApproval": false,
+        "idempotencyKey": "runId|latest",
         "rollback": "n/a",
         "timeoutSeconds": 30
       }

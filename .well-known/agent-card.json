@@ -52,6 +52,15 @@
       "examples": ["GET /mcp/tools.json"],
       "inputModes": ["text"],
       "outputModes": ["application/json"]
+    },
+    {
+      "id": "agent-native",
+      "name": "Agent-native check",
+      "description": "Weekly observe loop: whether the Lab still has discoverable, callable surfaces.",
+      "tags": ["agents", "observe"],
+      "examples": ["GET /api/agent-native/runs/latest.json"],
+      "inputModes": ["text"],
+      "outputModes": ["application/json"]
     }
   ],
   "note": "Documentation / Agent Card only. No live A2A runtime endpoint — agents fetch static JSON/Markdown over HTTPS."

@@ -1,0 +1,54 @@
+{
+  "name": "AI Knowledge Lab · Agent-native criteria",
+  "version": "1.0",
+  "periodScheme": "YYYY-MM-WN = Nth 7-day block of the calendar month (Asia/Shanghai), not ISO week",
+  "loop": "State → Check → Publish report → Observe",
+  "meaning": "The Lab is agent-native when an external agent can discover capabilities, resolve schemas, and fetch canonical Markdown/JSON without scraping HTML or inventing tool names.",
+  "gates": [
+    {
+      "id": "surfaces",
+      "hard": true,
+      "ask": "Do the stable agent surfaces exist?"
+    },
+    {
+      "id": "protocol",
+      "hard": true,
+      "ask": "Is discover → execute documented as the only protocol?"
+    },
+    {
+      "id": "tool_parity",
+      "hard": true,
+      "ask": "Do discover.json and tools.json advertise the same tool names?"
+    },
+    {
+      "id": "canonical_md",
+      "hard": true,
+      "ask": "Does every catalog knowledge entry point at an existing /content/**/*.md?"
+    },
+    {
+      "id": "catalog_index",
+      "hard": true,
+      "ask": "Do content/index.json and api/catalog.json share the same id order?"
+    },
+    {
+      "id": "machine_map",
+      "hard": true,
+      "ask": "Does llms.txt list SKILL, discover, tools, catalog, and content?"
+    },
+    {
+      "id": "agent_card",
+      "hard": true,
+      "ask": "Does the Agent Card declare discover/catalog/skill and stay read-only?"
+    },
+    {
+      "id": "projects_api",
+      "hard": true,
+      "ask": "Are Projects exposed as JSON (not HTML-only), with a non-empty personal snapshot?"
+    },
+    {
+      "id": "live",
+      "hard": false,
+      "ask": "Do production HTTPS surfaces return 2xx? (schedule uses --live)"
+    }
+  ]
+}

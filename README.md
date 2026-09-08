@@ -114,6 +114,20 @@ python3 scripts/validate_lab.py --live   # optional soft live checks
 
 CI runs on PR/push via `.github/workflows/validate-lab.yml` (no `--live`).
 
+## Agent-native Loop
+
+Weekly scheduled check: does the Lab still look like a site agents can discover and call?
+
+```bash
+python3 scripts/agent_native_check.py --write
+python3 scripts/agent_native_check.py --write --live
+```
+
+- Criteria: [`/api/agent-native/criteria.json`](./api/agent-native/criteria.json)
+- Latest run: [`/api/agent-native/runs/latest.json`](./api/agent-native/runs/latest.json)
+- CI: `.github/workflows/agent-native-weekly.yml` (Sunday 10:00 Asia/Shanghai; drift opens an issue)
+- Tool: `lab_agent_native_status`
+
 ## Hot Words Loop (Pi + LiteLLM + DeepSeek)
 
 Weekly Hot Words under `/times/`. See [HOT_WORDS_LOOP.md](HOT_WORDS_LOOP.md) and [docs/pi-deepseek/README.md](docs/pi-deepseek/README.md).
