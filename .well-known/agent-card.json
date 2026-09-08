@@ -1,6 +1,6 @@
 {
   "name": "AI Knowledge Lab",
-  "description": "Blog for Agents — personal knowledge blog by chengguruchun. Static, read-only knowledge surfaces for discovery and fetch.",
+  "description": "Blog for Agents — an Agent-Native knowledge blog by chengguruchun. Notes are discoverable, callable, editable, and publishable.",
   "url": "https://chengguruchun.github.io",
   "version": "0.3.0",
   "provider": {

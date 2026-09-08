@@ -1,14 +1,14 @@
 # AI Knowledge Lab
 
-**EN:** An open knowledge system for AI Agents — discoverable, callable. Independent Thinker · AI Agents · Complex Systems · Diverse Thinking.
+**EN:** An Agent-Native knowledge blog — discoverable, callable, editable, publishable. Independent Thinker · AI Agents · Complex Systems · Diverse Thinking.
 
-**ZH:** Blog for Agents — 面向 AI Agent 的个人知识博客：可发现、可调用。Independent Thinker · AI Agents · Complex Systems · Diverse Thinking。
+**ZH:** Blog for Agents — 面向 Agent-Native 的知识博客：可发现、可调用、可编辑、可发布的笔记。Independent Thinker · AI Agents · Complex Systems · Diverse Thinking。
 
 - 站点：https://chengguruchun.github.io
 - 仓库：https://github.com/chengguruchun/chengguruchun.github.io
 - 作者：chengguruchun（杭州）· chengguruchun@163.com
 
-**Blog for Agents** — 个人知识博客，首页面向 Agent：**Discover → execute**。
+**Blog for Agents** — 面向 Agent-Native 的知识博客，首页：**Discover → execute**。
 
 ## 人类阅读
 

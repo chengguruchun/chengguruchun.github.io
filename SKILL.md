@@ -1,7 +1,7 @@
 ---
 name: ai-knowledge-lab
 description: >-
-  Blog for Agents by chengguruchun. Discover capabilities, then execute.
+  Agent-Native knowledge blog by chengguruchun. Discover capabilities, then execute.
   Content and tools grow over time — never hardcode the tool list.
 ---
 
@@ -9,7 +9,7 @@ description: >-
 
 ## Positioning
 
-**Blog for Agents** — a personal knowledge blog that agents can discover and call.
+**Blog for Agents** — an Agent-Native knowledge blog: discoverable, callable, editable, and publishable.
 Not a runtime; static surfaces + local/CI apply scripts.
 
 ## Protocol
