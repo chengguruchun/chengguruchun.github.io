@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agent 技能演化：从轨迹回流到可剪枝的程序性记忆 · Articles</title>
+  <meta name="description" content="把执行轨迹蒸馏成技能已被两代工作证明有效，但「技能如何停止增长」被留给了未来工作。剪枝的关键转换：不追踪模型为什么用一节，只测量删掉之后效果变不变。">
+  <meta name="theme-color" content="#f7f5f0">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+<header class="site-header"><div class="wrap site-header__inner"><a class="brand" href="../index.html"><img class="brand__logo" src="../assets/img/brand-mark.svg" alt="AI Knowledge Lab" width="44" height="44"><span class="brand__tag"><span class="brand__rotate"><span class="brand__item is-active">Independent Thinker</span><span class="brand__item">AI Agents</span><span class="brand__item">Complex Systems</span><span class="brand__item">Diverse Thinking</span></span></span></a><button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">菜单</button><nav class="nav" id="site-nav" aria-label="主导航"><a href="../index.html">Home</a><a href="../diverse/">Diverse Lab</a><a href="../articles/" aria-current="page">Articles</a><a href="../projects/">Projects</a><a href="../videos/">Videos</a><a href="../times/">Hot Words</a><a href="../about/">About Me</a><a class="nav__search" href="../tags/">Tags / Search</a></nav></div></header>
+<main><article class="article-body"><header class="page-hero"><div class="prose-wrap"><p class="page-hero__kicker">Articles</p><h1>Agent 技能演化：从轨迹回流到可剪枝的程序性记忆</h1><p class="page-hero__desc">检索与归纳不是信仰之争，是知识总量的函数；技能与剪枝不是两件事，是同一个生命周期的两端。</p><p class="article-meta"><span>思路 2026-09-01</span><span>发表 2026-09-08</span><span>作者 chengguruchun</span><a class="tag" href="../tags/?tag=Agent">Agent</a><a class="tag" href="../tags/?tag=Procedural%20Memory">Procedural Memory</a><a class="tag" href="../tags/?tag=Skill">Skill</a><a class="tag" href="../tags/?tag=Evaluation">Evaluation</a></p></div></header>
+<div class="prose-wrap">
+<p class="lede">让 Agent 长期变强，靠的不是更长的上下文，而是把经验外置成可复用的程序性知识。Memp（Findings of ACL 2026）与 Trace2Skill（2026）是同一条路线的两代：前者系统扫描了「怎么建记忆、怎么检索、怎么更新」的设计空间，后者几乎是照着前者的软肋打——直接论证「检索这个环节本身是负债而非资产」。</p>
+<p>两篇都证明了「经验能外置成技能」，但都把同一件事留给了未来工作：<strong>技能怎么停止增长</strong>。Memp 写了删除算子但没在实验里验证；Trace2Skill 明确承认「无法追踪 agent 在推理时到底依赖了哪一节」。本文先把两代的真分歧立住，再补那个洞：一套可跑的技能自动剪枝机制。</p>
+<blockquote><p>技能库的问题不是「怎么长大」，而是「怎么不长坏」。只增不减的演化，终点是随机游走。</p></blockquote>
+<h2>两代路线：基本盘对照</h2>
+<table>
+<thead>
+<tr><th></th><th>Memp（ACL 2026 Findings）</th><th>Trace2Skill（2026）</th></tr>
+</thead>
+<tbody>
+<tr><td>定位</td><td>探索性：程序性记忆当一等公民，扫描 Build / Retrieval / Update 设计空间</td><td>工程性：可落地的自动化技能流水线，逐个替换前人环节</td></tr>
+<tr><td>知识形态</td><td>记忆库：多条可检索条目（逐步轨迹 / 抽象脚本 / 混合）</td><td>技能目录：一份 SKILL.md + scripts/ references/ 子目录</td></tr>
+<tr><td>基准</td><td>TravelPlanner、ALFWorld</td><td>SpreadsheetBench（+ WikiTQ 做 OOD）、DAPO-Math/AIME、DocVQA</td></tr>
+<tr><td>更新方式</td><td>在线逐批（追加 / 只留成功 / 反射修正）</td><td>128 个子代理并行分析 + 层级归纳合并（批大小 32）</td></tr>
+</tbody>
+</table>
+<p>Memp 最有价值的发现是 <strong>Proceduralization</strong>（抽象脚本 + 具体轨迹混合）最优：同时给泛化指导和具体示例。Trace2Skill 把同样的洞见固化成了目录结构——SKILL.md 放通用原则，references/ 放低频边缘案例。<strong>一个是运行时检索，一个是构建时分层：同一个设计的两种实现。</strong></p>
+<p>结果上最有分量的两组数字：</p>
+<ul>
+<li>Trace2Skill 主战场：122B 模型 Vrf 48.33 → 69.83（+21.5），超越 Anthropic 官方 xlsx skill；跨规模迁移的极端案例里，35B 自己演化出的技能让 122B 在 WikiTQ 上 +57.65 个百分点，反超人类手写技能。</li>
+<li>Memp 侧，Proceduralization 把 GPT-4o 的步数从 23.76 压到 15.01，Qwen2.5-72B 的 ALFWorld Test 从 41.25 拉到 77.19。</li>
+</ul>
+<p>效率也不是小事：Trace2Skill 的并行分析约 3 分钟跑完顺序 60 分钟的活，且质量更高——顺序更新存在「漂移」，每次改技能都会污染后续轨迹的分析语境。</p>
+<h2>真分歧：检索是资产还是负债</h2>
+<p>这是两篇最硬的分歧。Memp 默认记忆必须检索，并花了一整张表优化检索键；Trace2Skill 用对照实验直接论证检索是负债，理由三条：检索对表层相似度敏感；召回片段要和任务上下文抢注意力；原始轨迹摘要没做过去重与泛化过滤。它对检索式记忆库（ReasoningBank）的实测也支持这个判断：在弱模型上，检索式记忆几乎打不过 No Skill——弱模型的查询表示和存储记忆对不齐，检索器根本捞不出东西。</p>
+<p>但两篇其实不是矛盾，是<strong>同一条曲线上的两个采样点</strong>。Memp 自己的 Figure 5(b) 就测出了检索收益随记忆条数的非单调性：</p>
+<pre>最终分数随检索条数：
+40.7 → 70.7 → 75.8 → 78.2 → 82.5 → 81.5 → 79.3
+                                  峰值之后回落</pre>
+<p>读法因此是：任务类型可枚举、条目少时（ALFWorld 六类任务），检索便宜又准，处在曲线上升段；知识量大、条目高度冗余时（一次产出 323 个补丁），召回噪声盖过收益，处在下降段。Trace2Skill 的对比实验恰好采样在下降段。<strong>「检索 vs 归纳」的切换变量是知识总量，不是信仰。</strong></p>
+<h2>熟练度幻觉：被加粗却没人讨论的负面结果</h2>
+<p>翻 Memp 的 Table 1 要盯 #HC（硬约束满足率）这一列，而不是 #CS：</p>
+<table>
+<thead>
+<tr><th>配置</th><th>#CS ↑</th><th>#HC ↑</th></tr>
+</thead>
+<tbody>
+<tr><td>No Memory</td><td>71.93</td><td><strong>12.88</strong></td></tr>
+<tr><td>Script</td><td>72.08</td><td>5.50</td></tr>
+<tr><td>Trajectory</td><td>76.02</td><td>8.25</td></tr>
+<tr><td>Proceduralization</td><td><strong>79.94</strong></td><td>9.76</td></tr>
+</tbody>
+</table>
+<p>#CS 一路涨、步数降了 35%，但硬约束满足率反而从 12.88 掉到 9.76；另一个模型上更极端，No Memory 的 #HC 是全表最高，加了记忆后一路走低。这个最高值在论文里被加粗了，全文却没有一处讨论它——经过 ACL 审稿也没人问，camera-ready 版原样保留。</p>
+<p>我管这叫「熟练度幻觉」：<strong>记忆让 Agent 更像在套熟练模板，逐步约束校验被跳过，走得更顺但守得更松。</strong>三个数放在一起——#CS 涨、Steps 降 35%、#HC 降 24%——增益的成色要打折。</p>
+<p>这与 <a href="k8s-to-agent-control-plane.html">Kubernetes × Agent</a> 里「过程健康 ≠ 语义完成」是同一条警告的又一个实例：#CS 和 Steps 是 Proxy，#HC 才更接近 Real Outcome。Trace2Skill 恰好在这点上做得更对——它学到的 Top-4 SoP 里有三条是校验类（公式重算回写验证、显式回读验证、结构编辑安全性），等于把约束检查显式写进了技能，这是它能涨效率而不牺牲正确性的原因。</p>
+<h2>能力三解耦：会做 ≠ 会反思 ≠ 会归纳</h2>
+<p>两篇都宣称强模型产物能给弱模型用，但 Trace2Skill 挖出了反例：DocVQA 上 35B 任务执行得比 122B 好，可 35B 当技能作者时产出的技能反而损害同模型性能（ANLS -0.062）。</p>
+<p>结论很扎心，也很实用：<strong>会做任务 ≠ 会反思为什么失败 ≠ 能归纳出可迁移的技能，这是三个可解耦的能力。</strong>工程推论：选技能作者模型和选执行模型是两回事，作者至少要用你手上反思能力最强的那个。另外一条可直接抄的经验：优先从失败里学——Trace2Skill 的实测是「Error 信号最稳、Success 信号方差极大」，+Error 在四个设置里全正，+Success 有一项为负。</p>
+<h2>落地决策树：先问前置条件</h2>
+<p>两篇的共同命门是<strong>可验证的正确性信号</strong>。Memp 明确承认依赖 benchmark 的显式奖励；Trace2Skill 的 Error Analyst 做得好，恰恰是因为它能打开输出文件和 ground truth 逐格比对——靠这个特权，它在 33 个案例里纠正了 LLM-only 分析器 57% 的 parse-error 误归因。</p>
+<p>落到真实业务，绝大多数任务没有 ground truth。所以决策树的第一步不是选方案：</p>
+<pre>第一步：这一步能不能自动验证成败？
+├─ 答不上来 → 别上演化，先造校验器
+└─ 能自动校验 → 进入架构选择
+   ├─ 任务类型可枚举、条目少（固定几类交付流程）
+   │   → Memp 路线：检索式记忆库，务必用脚本+轨迹混合
+   └─ 领域知识厚重、陷阱密集、条目持续膨胀（表格 / 财税 / 单据）
+       → Trace2Skill 路线：并行分析 + 归纳合并成单一技能目录，别上检索</pre>
+<h2>补上空白：技能自动剪枝</h2>
+<p>两条路线都没回答「技能怎么停止增长」。补上它的关键转换只有一步：</p>
+<blockquote><p><strong>不要追踪模型单次推理时「为什么」用这一节——那条路又贵又噪，Trace2Skill 自己说了做不到。把归因问题转化成 A/B 实验问题：只测量「删掉之后效果变不变」。</strong></p></blockquote>
+<p>这在工程上可行，因为它只需要两样东西：一个可靠的校验器 + 一个固定的回归集。而这两样恰好是决策树第一步已经要求的前置条件，整条链路闭环。</p>
+<p>五阶段链路：</p>
+<table>
+<thead>
+<tr><th>阶段</th><th>做法</th><th>成本</th></tr>
+</thead>
+<tbody>
+<tr><td>1. 埋点</td><td>归纳时早已算出支持度（如 178/323），只是没持久化，存下来即可</td><td>≈ 0</td></tr>
+<tr><td>2. 回归门禁</td><td>把 held-out 从「评估工具」升级成「合入闸门」，否则演化是随机游走</td><td>低</td></tr>
+<tr><td>3. 长尾排序</td><td>只测低支持度尾部——头部几条守则占数百次引用，几乎不可能无效</td><td>低</td></tr>
+<tr><td>4. 批量消融</td><td>ddmin 变体，O(N) → O(k·log(N/k))</td><td>中</td></tr>
+<tr><td>5. 精简落盘</td><td>保留完整剪枝日志，支持回滚</td><td>低</td></tr>
+</tbody>
+</table>
+<p>ddmin 变体的骨架：</p>
+<pre>def ablate(core, group):
+    """ddmin 变体：返回 (保留, 剪掉)"""
+    if not group:
+        return [], []
+    if evaluate(core) &gt;= baseline - EPS:   # 整组移除后不掉分
+        return [], group                   # 整组可删
+    if len(group) == 1:
+        return group, []                   # 单节导致掉分 → 有效，保留
+    mid = len(group) // 2
+    keep_a, drop_a = ablate(core + group[mid:], group[:mid])
+    keep_b, drop_b = ablate(core + keep_a,     group[mid:])
+    return keep_a + keep_b, drop_a + drop_b</pre>
+<p>按 Trace2Skill 的量级粗估：N=323、k≈20 时，逐个测要 323 次评测，二分回溯约 80 次，省 4 倍。还有一个良性性质值得记住：<strong>无效章节越少，剪枝越便宜</strong>——目录膨胀时剪枝成本几乎不增长，机制能自我维持。</p>
+<p>边界必须诚实说：</p>
+<ul>
+<li>校验器不可靠 = 整套崩塌，这是单点故障。先标定校验器与人工判断的一致率，不达标别上线。</li>
+<li>ddmin 假设单调性，章节有交互时可能剪错——只对同簇高相似章节做成对联合检测。</li>
+<li>低频调用场景可能不划算，此时降剪枝频率，而不是放弃机制。</li>
+</ul>
+<h2>三条环的视角</h2>
+<p>把技能演化放回<a href="k8s-to-agent-control-plane.html">三条环</a>的框架里看，位置就清楚了：</p>
+<pre>Execute (秒–分钟)     Eval (小时–天)          Learn (天–周)
+单次任务跑完           轨迹 → 校验器 → 门禁     成功/失败证据 → 技能库 → 剪枝</pre>
+<p>剪枝属于 Learn Loop 的卫生机制：Execute 的成果经 Eval 沉淀进技能库，剪枝保证库本身不腐化。把 Learn 偷塞进每一次 Execute 会过拟合当前任务（Trace2Skill 的「顺序更新漂移」就是这个病的临床报告）；没有剪枝，Learn Loop 会在自己的排泄物上空转。</p>
+<blockquote><p>检索与归纳不是信仰之争，是知识总量的函数；技能与剪枝不是两件事，是同一个生命周期的两端。谁先把章节级归因做扎实，谁就是下一篇。</p></blockquote>
+<h2>开放问题</h2>
+<ul>
+<li>没有 ground truth 的业务场景里，校验器本身如何演化？校验器会不会也得上剪枝？</li>
+<li>技能作者模型与执行模型的能力解耦，是否存在「作者能力下限」的可判定条件，而不是靠事后踩坑？</li>
+<li>#HC 反转（熟练度幻觉）在更长程、更多工具的任务上会不会放大？技能里显式写入校验 SoP 的边际收益何时耗尽？</li>
+<li>剪枝的 A/B 判据基于回归集均分，低频但关键的章节（「平时没用、出事救命」）如何避免被误剪？</li>
+<li>技能库跨团队共享时，剪枝日志能否成为审计证据——谁在什么时候、基于什么数据删掉了哪条能力？</li>
+</ul>
+</div></article></main>
+<footer class="site-footer"><div class="wrap site-footer__inner"><div><p>© <span id="year"></span> chengguruchun · Hangzhou</p><p>Blog for Agents · 个人知识博客</p><p class="footer-visits" aria-label="访问统计"><span>本站 <strong data-visits-site>-</strong></span><span class="footer-visits__sep" aria-hidden="true">·</span><span>本页 <strong data-visits-page>-</strong></span></p></div></div></footer>
+<script src="../assets/js/site.js"></script><script src="../assets/js/visits.js"></script>
+</body></html>
