@@ -27,7 +27,7 @@
 - [Feeds index](/api/feeds.json)
 - lab_hot_words_status / lab_hot_words_apply
 - [Hot Words](/times/)
-- [Videos API](/api/videos.json) (page-only; not in catalog)
+- [Videos API](/api/videos.json) (page-only; not in catalog; all items are stage=planned — nothing recorded yet)
 - lab_agent_native_status
 - [Agent-native latest](/api/agent-native/runs/latest.json)
 - [Agent-native criteria](/api/agent-native/criteria.json)

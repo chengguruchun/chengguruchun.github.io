@@ -1,15 +1,17 @@
 {
   "type": "Videos",
   "url": "/videos/",
-  "note": "Videos live on /videos/ only; not indexed in catalog/search",
+  "note": "Videos live on /videos/ only; not indexed in catalog/search. Nothing is recorded yet: every item below is stage=planned and must not be cited as published work.",
   "items": [
     {
       "id": "vid-control-plane",
       "type": "Videos",
       "title": "讲解：为什么 Agent 需要 Control Plane",
-      "excerpt": "约 15 分钟口述：从服务网格到 Agent 治理的迁移路径。对应长文《Kubernetes × Agent：从容器编排到目标收敛》。",
+      "excerpt": "计划以约 15 分钟口述，讲从服务网格到 Agent 治理的迁移路径。同一条思路已经写成长文《Kubernetes × Agent：从容器编排到目标收敛》。",
       "url": "/videos/#vid-control-plane",
       "date": "",
+      "stage": "planned",
+      "related_article": "/articles/k8s-to-agent-control-plane.html",
       "tags": [
         "video",
         "Agent"
@@ -19,9 +21,11 @@
       "id": "vid-runtime",
       "type": "Videos",
       "title": "对照阅读：K8s 抽象 vs Agent Runtime",
-      "excerpt": "白板推演 Pod / Goal / Tool Session 三类生命周期与失败语义。",
+      "excerpt": "计划用白板推演 Pod / Goal / Tool Session 三类生命周期与失败语义。",
       "url": "/videos/#vid-runtime",
       "date": "",
+      "stage": "planned",
+      "related_article": "/articles/k8s-to-agent-control-plane.html",
       "tags": [
         "video",
         "Kubernetes"
@@ -31,9 +35,10 @@
       "id": "vid-registry",
       "type": "Videos",
       "title": "Registry：能力、契约与信任",
-      "excerpt": "短述：为什么 DNS 式发现不够，以及契约测试如何进入注册流程。",
+      "excerpt": "计划短述：为什么 DNS 式发现不够，以及契约测试如何进入注册流程。这条还没有对应的长文。",
       "url": "/videos/#vid-registry",
       "date": "",
+      "stage": "planned",
       "tags": [
         "video",
         "Registry"

@@ -427,20 +427,41 @@ def check_projects() -> None:
         ok("personal repo is llm-trace-reuse")
 
     videos = load_json(ROOT / "api" / "videos.json")
-    if videos:
-        ids = [x.get("id") for x in videos.get("items") or []]
-        expect = ["vid-control-plane", "vid-runtime", "vid-registry"]
-        if ids != expect:
-            fail(f"videos.json ids {ids} != {expect}")
-        else:
-            ok("videos.json 3 items")
-    # page has 3 cards
     vhtml = (ROOT / "videos" / "index.html").read_text(encoding="utf-8")
-    for vid in ("vid-control-plane", "vid-runtime", "vid-registry"):
+    items = (videos or {}).get("items") or []
+    if not videos:
+        fail("api/videos.json missing or unreadable")
+    else:
+        ok(f"videos.json {len(items)} item(s)")
+
+    # A card with no recording behind it must say so on both surfaces, or the
+    # page advertises work that does not exist.
+    for item in items:
+        vid = item.get("id") or "<no id>"
         if f'id="{vid}"' not in vhtml:
-            fail(f"videos page missing {vid}")
+            fail(f"videos page missing card for {vid}")
+            continue
+        planned = item.get("stage") == "planned"
+        if not item.get("date") and not planned:
+            fail(f"{vid} has no date and is not stage=planned")
+        elif planned and item.get("date"):
+            fail(f"{vid} is stage=planned but carries a date")
         else:
-            ok(f"videos page has {vid}")
+            ok(f"videos page has {vid} ({item.get('stage') or 'published'})")
+
+    planned_ids = [i.get("id") for i in items if i.get("stage") == "planned"]
+    for vid in planned_ids:
+        card = re.search(
+            rf'<article[^>]*id="{re.escape(vid)}".*?</article>', vhtml, re.DOTALL
+        )
+        if not card:
+            continue
+        if "video-frame--planned" not in card.group(0):
+            fail(f"{vid} is planned but its frame still shows a play button")
+        elif ">planned<" not in card.group(0):
+            fail(f"{vid} is planned but the card shows no planned tag")
+        else:
+            ok(f"{vid} card marked planned")
 
 
 def check_feeds_script() -> None:

@@ -40,7 +40,7 @@
 
 **Videos** (page only; not in catalog search)
 
-- `/videos/` · 3 cards · `api/videos.json`
+- `/videos/` · 3 cards · `api/videos.json`（全部为 `stage=planned`，尚未录制；`validate_lab.py` 会确保未录制的条目不被渲染成可播放视频）
 
 **Hot Words / Times** (in catalog)
 

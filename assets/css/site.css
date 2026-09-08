@@ -948,6 +948,12 @@ a.tag:hover { color: #8fbfab; border-color: rgba(106,158,138,0.5); }
   margin-bottom: 0.75rem;
 }
 .page-hero__desc { color: var(--text-dim); max-width: 40rem; margin: 0; }
+.page-hero__note {
+  color: var(--text-faint);
+  max-width: 40rem;
+  margin: 0.6rem 0 0;
+  font-size: 0.88rem;
+}
 .article-meta {
   display: flex;
   flex-wrap: wrap;
@@ -1081,6 +1087,18 @@ a.tag:hover { color: #8fbfab; border-color: rgba(106,158,138,0.5); }
   place-items: center;
   background: rgba(247, 245, 240, 0.95);
   color: var(--accent);
+}
+/* Nothing is recorded yet: drop the play affordance so the frame cannot be
+   mistaken for a video that exists. */
+.video-frame--planned {
+  background: var(--bg-soft);
+  border: 1px dashed #c9c0ad;
+  color: var(--text-dim);
+  padding: 0 1.25rem;
+  text-align: center;
+}
+.video-frame--planned::after {
+  content: none;
 }
 
 /* Search */
