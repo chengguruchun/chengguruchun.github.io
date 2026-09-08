@@ -3,13 +3,12 @@
   var personalRoot = document.getElementById("github-projects-personal");
   if (!researchRoot && !personalRoot) return;
 
-  var USER = "chengguruchun";
   var RESEARCH = [
     "TencentCloud/TencentDB-Agent-Memory",
     "cobusgreyling/loop-engineering",
     "deepseek-ai/deepseek-harness",
   ];
-  var PERSONAL_LIMIT = 3;
+  var PERSONAL = ["chengguruchun/llm-trace-reuse"];
 
   function escapeHtml(s) {
     return String(s == null ? "" : s)
@@ -91,44 +90,28 @@
 
   function loadResearch() {
     return Promise.all(RESEARCH.map(fetchRepo)).catch(function () {
-      return RESEARCH.map(function (full) {
-        return {
-          full_name: full,
-          name: full.split("/")[1],
-          html_url: "https://github.com/" + full,
-          description: "",
-          stargazers_count: 0,
-          updated_at: "",
-          language: null,
-        };
-      });
+      return stubs(RESEARCH);
+    });
+  }
+
+  function stubs(fulls) {
+    return fulls.map(function (full) {
+      return {
+        full_name: full,
+        name: full.split("/")[1],
+        html_url: "https://github.com/" + full,
+        description: "",
+        stargazers_count: 0,
+        updated_at: "",
+        language: null,
+      };
     });
   }
 
   function loadPersonal() {
-    var url =
-      "https://api.github.com/users/" +
-      USER +
-      "/repos?per_page=100&sort=updated&type=owner";
-    return fetch(url, {
-      headers: { Accept: "application/vnd.github+json" },
-    })
-      .then(function (r) {
-        if (!r.ok) throw new Error("personal " + r.status);
-        return r.json();
-      })
-      .then(function (list) {
-        return (list || [])
-          .filter(function (repo) {
-            if (!repo || repo.fork || repo.archived) return false;
-            if (/\.github\.io$/i.test(String(repo.name || ""))) return false;
-            return true;
-          })
-          .slice(0, PERSONAL_LIMIT);
-      })
-      .catch(function () {
-        return [];
-      });
+    return Promise.all(PERSONAL.map(fetchRepo)).catch(function () {
+      return stubs(PERSONAL);
+    });
   }
 
   Promise.all([loadResearch(), loadPersonal()]).then(function (parts) {

@@ -1,7 +1,7 @@
 {
   "type": "Projects",
   "url": "/projects/",
-  "updated": "2026-09-06",
+  "updated": "2026-09-08",
   "sections": {
     "research": {
       "title": "研究",
@@ -38,31 +38,13 @@
       "api": "/api/projects-personal.json",
       "items": [
         {
-          "full_name": "chengguruchun/SecondKill",
-          "name": "SecondKill",
-          "description": "慕课网-秒杀系统",
-          "html_url": "https://github.com/chengguruchun/SecondKill",
+          "full_name": "chengguruchun/llm-trace-reuse",
+          "name": "llm-trace-reuse",
+          "description": "Procedural memory for coding agents: route to playbooks, reuse preferred paths, distill repeated failures.",
+          "html_url": "https://github.com/chengguruchun/llm-trace-reuse",
           "stargazers_count": 0,
-          "language": "Java",
-          "updated_at": "2018-10-18T01:12:48Z"
-        },
-        {
-          "full_name": "chengguruchun/RedPacket",
-          "name": "RedPacket",
-          "description": "高并发应用场景--抢红包问题",
-          "html_url": "https://github.com/chengguruchun/RedPacket",
-          "stargazers_count": 0,
-          "language": "Java",
-          "updated_at": "2018-10-16T06:28:03Z"
-        },
-        {
-          "full_name": "chengguruchun/concurrency",
-          "name": "concurrency",
-          "description": "高并发学习",
-          "html_url": "https://github.com/chengguruchun/concurrency",
-          "stargazers_count": 0,
-          "language": "Java",
-          "updated_at": "2018-07-19T06:03:40Z"
+          "language": "Python",
+          "updated_at": "2026-09-08T01:13:00Z"
         }
       ]
     }

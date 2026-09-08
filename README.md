@@ -38,7 +38,7 @@
 
 **Projects** (page + API only; not in catalog search)
 
-- `/projects/` · research + personal snapshots: `api/projects-research.json`, `api/projects-personal.json`
+- `/projects/` · research + personal snapshots: `api/projects-research.json`, `api/projects-personal.json`（个人目前只列 [llm-trace-reuse](https://github.com/chengguruchun/llm-trace-reuse)）
 
 **Videos** (page only; not in catalog search)
 

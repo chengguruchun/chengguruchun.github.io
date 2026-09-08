@@ -308,16 +308,15 @@ def check_projects() -> None:
         for k in ("full_name", "description", "html_url", "stargazers_count", "language", "updated_at"):
             if k not in x:
                 fail(f"research item missing {k}: {x.get('full_name')}")
-    if len(p_items) != 3:
-        fail(f"personal should have 3 items, got {len(p_items)}")
+    if len(p_items) != 1:
+        fail(f"personal should have 1 item, got {len(p_items)}")
     else:
-        ok("personal 3 items")
-    names = {x.get("name") or (x.get("full_name") or "").split("/")[-1] for x in p_items}
-    for expect in ("SecondKill", "RedPacket", "concurrency"):
-        if expect not in names:
-            fail(f"personal missing {expect}")
+        ok("personal 1 item")
+    p_got = {x.get("full_name") for x in p_items}
+    if p_got != {"chengguruchun/llm-trace-reuse"}:
+        fail(f"personal repos mismatch: {p_got}")
     else:
-        ok("personal top3 names present")
+        ok("personal repo is llm-trace-reuse")
 
     videos = load_json(ROOT / "api" / "videos.json")
     if videos:
