@@ -2,6 +2,48 @@
   "type": "Articles",
   "items": [
     {
+      "id": "agent-skill-evolution-pruning",
+      "type": "Articles",
+      "title": "Agent 技能演化：从轨迹回流到可剪枝的程序性记忆",
+      "excerpt": "把执行轨迹蒸馏成技能已被两代工作证明有效，但「技能如何停止增长」被留给了未来工作。剪枝的关键转换：不追踪模型为什么用一节，只测量删掉之后效果变不变。",
+      "url": "/articles/agent-skill-evolution-pruning.html",
+      "date": "2026-09-08",
+      "tags": [
+        "Agent",
+        "Procedural Memory",
+        "Skill",
+        "Runtime",
+        "Loop Engineering",
+        "Evaluation"
+      ],
+      "thought_date": "2026-09-01",
+      "published_date": "2026-09-08",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/agent-skill-evolution-pruning.md",
+      "content": "/content/articles/agent-skill-evolution-pruning.md"
+    },
+    {
+      "id": "agent-engineering-from-workflow-to-control-plane",
+      "type": "Articles",
+      "title": "Agent Engineering：从 Workflow 到 Loop，再到 Control Plane",
+      "excerpt": "Workflow、Graph、Loop、Harness 与 Control Plane 并不是互相替代，而是 Agent 系统在不同不确定性和治理尺度上的不同工程层。",
+      "url": "/articles/agent-engineering-from-workflow-to-control-plane.html",
+      "date": "2026-09-08",
+      "tags": [
+        "Agent",
+        "Workflow",
+        "Graph",
+        "Loop Engineering",
+        "Harness",
+        "Control Plane",
+        "Kubernetes",
+        "Runtime"
+      ],
+      "thought_date": "2026-09-04",
+      "published_date": "2026-09-08",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/agent-engineering-from-workflow-to-control-plane.md",
+      "content": "/content/articles/agent-engineering-from-workflow-to-control-plane.md"
+    },
+    {
       "id": "k8s-to-agent-control-plane",
       "type": "Articles",
       "title": "Kubernetes × Agent：从容器编排到目标收敛",

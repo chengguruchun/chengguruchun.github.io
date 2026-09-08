@@ -3,9 +3,35 @@
   "skill": "/SKILL.md",
   "product": "/PRODUCT.md",
   "llms": "/llms.txt",
-  "generated": "2026-09-08T01:30:00Z",
+  "generated": "2026-09-08T01:59:39Z",
   "base_url": "https://chengguruchun.github.io",
   "items": [
+    {
+      "id": "agent-skill-evolution-pruning",
+      "type": "Articles",
+      "title": "Agent 技能演化：从轨迹回流到可剪枝的程序性记忆",
+      "excerpt": "把执行轨迹蒸馏成技能已被两代工作证明有效，但「技能如何停止增长」被留给了未来工作。剪枝的关键转换：不追踪模型为什么用一节，只测量删掉之后效果变不变。",
+      "url": "/articles/agent-skill-evolution-pruning.html",
+      "date": "2026-09-08",
+      "tags": ["Agent", "Procedural Memory", "Skill", "Runtime", "Loop Engineering", "Evaluation"],
+      "thought_date": "2026-09-01",
+      "published_date": "2026-09-08",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/agent-skill-evolution-pruning.md",
+      "content": "/content/articles/agent-skill-evolution-pruning.md"
+    },
+    {
+      "id": "interpretability-rl-faithfulness",
+      "type": "Diverse Lab",
+      "title": "可解释性 × 强化学习：让「强」和「真」对得上账",
+      "excerpt": "RL 让模型变强、变会说谎；可解释性负责让强和真对账。SAE 与 GRPO 本质都是用对比替代绝对，共同指向 faithfulness。",
+      "url": "/diverse/interpretability-rl-faithfulness.html",
+      "date": "2026-09-08",
+      "tags": ["Diverse", "Interpretability", "RL", "Faithfulness", "LLM", "Complex Systems"],
+      "thought_date": "2026-09-03",
+      "published_date": "2026-09-08",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/interpretability-rl-faithfulness.md",
+      "content": "/content/diverse/interpretability-rl-faithfulness.md"
+    },
     {
       "id": "agent-engineering-from-workflow-to-control-plane",
       "type": "Articles",

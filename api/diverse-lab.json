@@ -2,6 +2,47 @@
   "type": "Diverse Lab",
   "items": [
     {
+      "id": "interpretability-rl-faithfulness",
+      "type": "Diverse Lab",
+      "title": "可解释性 × 强化学习：让「强」和「真」对得上账",
+      "excerpt": "RL 让模型变强、变会说谎；可解释性负责让强和真对账。SAE 与 GRPO 本质都是用对比替代绝对，共同指向 faithfulness。",
+      "url": "/diverse/interpretability-rl-faithfulness.html",
+      "date": "2026-09-08",
+      "tags": [
+        "Diverse",
+        "Interpretability",
+        "RL",
+        "Faithfulness",
+        "LLM",
+        "Complex Systems"
+      ],
+      "thought_date": "2026-09-03",
+      "published_date": "2026-09-08",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/interpretability-rl-faithfulness.md",
+      "content": "/content/diverse/interpretability-rl-faithfulness.md"
+    },
+    {
+      "id": "from-function-to-ecosystem",
+      "type": "Diverse Lab",
+      "title": "从函数到生态系统：重新理解大模型与 Agent",
+      "excerpt": "物理学给我们规律，生态学给我们关系与反馈，科学实验告诉我们如何验证；把三种心智放在一起，可以重新理解 LLM 与 Agent。",
+      "url": "/diverse/from-function-to-ecosystem.html",
+      "date": "2026-09-08",
+      "tags": [
+        "Diverse",
+        "Physics",
+        "Ecology",
+        "LLM",
+        "Agent",
+        "Experiment",
+        "Complex Systems"
+      ],
+      "thought_date": "2026-09-04",
+      "published_date": "2026-09-08",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/from-function-to-ecosystem.md",
+      "content": "/content/diverse/from-function-to-ecosystem.md"
+    },
+    {
       "id": "llm-scientific-experiment",
       "type": "Diverse Lab",
       "title": "大模型：用科学实验的方式使用",
@@ -18,7 +59,8 @@
       ],
       "thought_date": "2026-09-02",
       "published_date": "2026-09-06",
-      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/llm-scientific-experiment.md"
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/llm-scientific-experiment.md",
+      "content": "/content/diverse/llm-scientific-experiment.md"
     },
     {
       "id": "physics-ecology-llm",
@@ -37,7 +79,8 @@
       ],
       "thought_date": "2026-09-02",
       "published_date": "2026-09-06",
-      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/physics-ecology-llm.md"
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/physics-ecology-llm.md",
+      "content": "/content/diverse/physics-ecology-llm.md"
     }
   ]
 }

@@ -1,53 +1,98 @@
 {
-  "updated": "2026-09-06",
+  "updated": "2026-09-08",
   "tags": {
     "Agent": [
+      "agent-skill-evolution-pruning",
+      "agent-engineering-from-workflow-to-control-plane",
+      "from-function-to-ecosystem",
       "k8s-to-agent-control-plane",
       "llm-scientific-experiment",
       "physics-ecology-llm"
     ],
     "Complex Systems": [
+      "interpretability-rl-faithfulness",
+      "from-function-to-ecosystem",
       "llm-scientific-experiment",
       "physics-ecology-llm"
     ],
-    "Context Engineering": [
+    "Context Window Optimization": [
       "times-2026-09-w1"
     ],
     "Control Plane": [
+      "agent-engineering-from-workflow-to-control-plane",
       "k8s-to-agent-control-plane"
     ],
     "Diverse": [
+      "interpretability-rl-faithfulness",
+      "from-function-to-ecosystem",
       "llm-scientific-experiment",
       "physics-ecology-llm"
     ],
     "Ecology": [
+      "from-function-to-ecosystem",
       "physics-ecology-llm"
     ],
+    "Evaluation": [
+      "agent-skill-evolution-pruning"
+    ],
     "Experiment": [
+      "from-function-to-ecosystem",
       "llm-scientific-experiment"
+    ],
+    "Faithfulness": [
+      "interpretability-rl-faithfulness"
+    ],
+    "Graph": [
+      "agent-engineering-from-workflow-to-control-plane"
+    ],
+    "Harness": [
+      "agent-engineering-from-workflow-to-control-plane"
     ],
     "Hot Words": [
       "times-2026-09-w1"
     ],
+    "Interpretability": [
+      "interpretability-rl-faithfulness"
+    ],
     "Kubernetes": [
+      "agent-engineering-from-workflow-to-control-plane",
       "k8s-to-agent-control-plane"
     ],
     "LLM": [
+      "interpretability-rl-faithfulness",
+      "from-function-to-ecosystem",
       "llm-scientific-experiment",
       "physics-ecology-llm"
     ],
     "Loop Engineering": [
+      "agent-skill-evolution-pruning",
+      "agent-engineering-from-workflow-to-control-plane",
       "k8s-to-agent-control-plane",
       "llm-scientific-experiment"
     ],
     "Physics": [
+      "from-function-to-ecosystem",
       "physics-ecology-llm"
     ],
+    "Procedural Memory": [
+      "agent-skill-evolution-pruning"
+    ],
+    "RL": [
+      "interpretability-rl-faithfulness"
+    ],
     "Runtime": [
+      "agent-skill-evolution-pruning",
+      "agent-engineering-from-workflow-to-control-plane",
       "k8s-to-agent-control-plane"
+    ],
+    "Skill": [
+      "agent-skill-evolution-pruning"
     ],
     "Times": [
       "times-2026-09-w1"
+    ],
+    "Workflow": [
+      "agent-engineering-from-workflow-to-control-plane"
     ]
   }
 }

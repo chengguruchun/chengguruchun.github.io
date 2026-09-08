@@ -8,6 +8,22 @@
     <lastBuildDate>Tue, 08 Sep 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://chengguruchun.github.io/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
+      <title>Agent 技能演化：从轨迹回流到可剪枝的程序性记忆</title>
+      <link>https://chengguruchun.github.io/articles/agent-skill-evolution-pruning.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/articles/agent-skill-evolution-pruning.html</guid>
+      <pubDate>Tue, 08 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Articles</category>
+      <description>把执行轨迹蒸馏成技能已被两代工作证明有效，但「技能如何停止增长」被留给了未来工作。剪枝的关键转换：不追踪模型为什么用一节，只测量删掉之后效果变不变。</description>
+    </item>
+    <item>
+      <title>可解释性 × 强化学习：让「强」和「真」对得上账</title>
+      <link>https://chengguruchun.github.io/diverse/interpretability-rl-faithfulness.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/diverse/interpretability-rl-faithfulness.html</guid>
+      <pubDate>Tue, 08 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Diverse Lab</category>
+      <description>RL 让模型变强、变会说谎；可解释性负责让强和真对账。SAE 与 GRPO 本质都是用对比替代绝对，共同指向 faithfulness。</description>
+    </item>
+    <item>
       <title>Agent Engineering：从 Workflow 到 Loop，再到 Control Plane</title>
       <link>https://chengguruchun.github.io/articles/agent-engineering-from-workflow-to-control-plane.html</link>
       <guid isPermaLink="true">https://chengguruchun.github.io/articles/agent-engineering-from-workflow-to-control-plane.html</guid>
