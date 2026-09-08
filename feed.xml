@@ -5,15 +5,31 @@
     <link>https://chengguruchun.github.io/</link>
     <description>chengguruchun · Blog for Agents · 个人知识博客（文章 / Diverse Lab 等有日期条目）</description>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 07 Sep 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 08 Sep 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://chengguruchun.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Agent Engineering：从 Workflow 到 Loop，再到 Control Plane</title>
+      <link>https://chengguruchun.github.io/articles/agent-engineering-from-workflow-to-control-plane.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/articles/agent-engineering-from-workflow-to-control-plane.html</guid>
+      <pubDate>Tue, 08 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Articles</category>
+      <description>Workflow、Graph、Loop、Harness 与 Control Plane 并不是互相替代，而是 Agent 系统在不同不确定性和治理尺度上的不同工程层。</description>
+    </item>
+    <item>
+      <title>从函数到生态系统：重新理解大模型与 Agent</title>
+      <link>https://chengguruchun.github.io/diverse/from-function-to-ecosystem.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/diverse/from-function-to-ecosystem.html</guid>
+      <pubDate>Tue, 08 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Diverse Lab</category>
+      <description>物理学给我们规律，生态学给我们关系与反馈，科学实验告诉我们如何验证；把三种心智放在一起，可以重新理解 LLM 与 Agent。</description>
+    </item>
     <item>
       <title>2026-09 Week 1 · Context Window Optimization</title>
       <link>https://chengguruchun.github.io/times/</link>
       <guid isPermaLink="true">https://chengguruchun.github.io/times/</guid>
       <pubDate>Mon, 07 Sep 2026 00:00:00 +0000</pubDate>
       <category>Times</category>
-      <description>在2026年，随着Agent处理长上下文需求的激增，如何高效利用有限的上下文窗口成为工程实践的核心痛点。本站软件与Agent主线高度相关，该词直指系统性能优化，且与当前词形成互补而非重复。证据来源权威，时效性强，能引导读者关注具体的token管理和检索策略，具备实际落地价值。</description>
+      <description>在2026年，随着Agent处理长上下文需求的激增，如何高效利用有限的上下文窗口成为工程实践的核心痛点。本站软件与Agent主线高度相关，该词直指系统性能优化，且与当前词形成互补而非重复。</description>
     </item>
     <item>
       <title>Kubernetes × Agent：从容器编排到目标收敛</title>
