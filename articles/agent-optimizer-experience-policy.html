@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agent Optimizer：不训练模型，而是优化经验与策略 · Articles</title>
+  <meta name="description" content="从 Local RL Optimizer、JitRL、EvoTest 与 GEPA 的讨论出发：Agent 变强不一定首先意味着修改模型权重，也可以通过经验记忆、轨迹检索、策略调整与工具调用方式的优化实现。">
+  <meta name="theme-color" content="#f7f5f0"><link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+<header class="site-header"><div class="wrap site-header__inner"><a class="brand" href="../index.html"><img class="brand__logo" src="../assets/img/brand-mark.svg" alt="AI Knowledge Lab" width="44" height="44"><span class="brand__tag"><span class="brand__rotate"><span class="brand__item is-active">Independent Thinker</span><span class="brand__item">AI Agents</span><span class="brand__item">Complex Systems</span><span class="brand__item">Diverse Thinking</span></span></span></a><button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">菜单</button><nav class="nav" id="site-nav" aria-label="主导航"><a href="../index.html">Home</a><a href="../diverse/">Diverse Lab</a><a href="../articles/" aria-current="page">Articles</a><a href="../projects/">Projects</a><a href="../videos/">Videos</a><a href="../times/">Hot Words</a><a href="../about/">About Me</a><a class="nav__search" href="../tags/">Tags / Search</a></nav></div></header>
+<main><article class="article-body"><header class="page-hero"><div class="prose-wrap"><p class="page-hero__kicker">Articles</p><h1>Agent Optimizer：不训练模型，而是优化经验与策略</h1><p class="page-hero__desc">Agent 变强不一定首先意味着修改模型权重，也可以通过经验记忆、策略调整和工具调用方式的优化实现。</p><p class="article-meta"><span>思路 2026-09-04</span><span>发表 2026-09-08</span><span>作者 chengguruchun</span><a class="tag" href="../tags/?tag=Agent">Agent</a><a class="tag" href="../tags/?tag=Optimizer">Optimizer</a><a class="tag" href="../tags/?tag=Evaluation">Evaluation</a><a class="tag" href="../tags/?tag=Policy">Policy</a></p></div></header>
+<div class="prose-wrap">
+<p class="lede">我们讨论 Agent 优化时，一个问题很快出现了：Agent 变强，是不是一定要重新训练模型？我当时越来越倾向于认为，不一定。</p>
+<pre>Model
+ +
+Experience
+ +
+Policy
+ +
+Tool Routine
+ +
+Evaluation</pre>
+<p>模型权重只是其中的一层。</p>
+<h2>一、把 Agent 和模型分开</h2>
+<pre>模型变弱
+ ↓
+Fine-tuning / RL
+ ↓
+模型变强
+
+另一条路径：
+Task → Experience → Retrieval / Reflection → Policy Adjustment → Next Action</pre>
+<p>这里并没有修改 LLM 的参数。优化的是 Agent 如何利用已经发生过的经验，以及下一次面对类似任务时采取什么策略。这也是我们讨论 Local RL Optimizer 时形成的一个方向：把优化器放在模型之外，让它优化策略，而不是直接修改 LLM weights。</p>
+<h2>二、经验可以成为 Agent 的外部参数</h2>
+<pre>Task
+ ↓
+Trajectory
+ ↓
+Outcome
+ ↓
+Critique
+ ↓
+Case / Experience Memory</pre>
+<p>一次执行产生的轨迹不应该只是日志。它可以成为下一次 Agent 决策时能够使用的经验。</p>
+<h2>三、JitRL 给我的一个启发</h2>
+<p>我们讨论过 ICLR 2026 的 JitRL。它让我注意到一个方向：<strong>不改变模型梯度，也可以通过非参数化的经验记忆来估计行动的价值。</strong></p>
+<pre>当前任务
+   ↓
+寻找相似历史轨迹
+   ↓
+比较历史 Action 的结果
+   ↓
+估计 Action Advantage
+   ↓
+帮助当前决策</pre>
+<p>这里的意义不只是降低训练成本，也让我开始把 Agent Optimizer 看成一个独立系统。</p>
+<h2>四、EvoTest：执行本身成为改进输入</h2>
+<pre>Actor
+ ↓
+执行任务
+ ↓
+Transcript
+ ↓
+Evolver
+ ↓
+分析问题
+ ↓
+Prompt / State / Tool Routine
+ ↓
+下一轮 Actor</pre>
+<p>这和“重新训练一个模型”是不同的工程路径。它优化的是 Agent 的行为程序：Prompt、Persistent Memory、State、Tool Call Routine 和 Execution Strategy。</p>
+<h2>五、Prompt Evolution 说明了另一种优化对象</h2>
+<p>我们还聊过 DSPy 生态和 GEPA（Reflective Prompt Evolution）。这里让我关注的不是某一个 benchmark，而是它体现出的方向：<strong>优化对象不一定是模型参数，也可以是模型周围的程序。</strong></p>
+<pre>LLM + Prompt + Tools + Memory + Policy + Evaluation</pre>
+<p>如果把 Agent 看成这个整体，那么真正需要优化的可能是整个行为程序，而不是只有 LLM。</p>
+<h2>六、Optimizer 最危险的问题：错误的评价信号</h2>
+<pre>API PASS
+12 tests passed
+outcome.ok = true
+
+        ↓
+
+用户：问题没有解决</pre>
+<p>如果 Optimizer 只相信前面的信号，它就会把这个失败案例当成成功案例继续学习。</p>
+<pre>错误 Proxy
+    ↓
+Optimizer
+    ↓
+更强的策略
+    ↓
+更高的 Proxy 分数
+    ↓
+更大的 Real Outcome 偏差</pre>
+<p>因此 Optimizer 的第一步不是“怎么优化”，而是先回答：<strong>这个成功信号是真的吗？</strong></p>
+<h2>七、Case Memory 应该成为 Optimizer 的第一层</h2>
+<pre>Tier 1
+Case / Experience Memory
+
+Task
+Critique
+Trajectory
+Outcome
+Ground Truth Status
+Cost
+
+        ↓
+Decision Layer
+        ↓
+Prompt / Policy / Tool Routine
+        ↓
+Agent</pre>
+<p>这些 Case 可以被向量化，用于寻找相似问题；上面再放一个轻量的 Decision Layer。这样比一开始就重新训练一个模型更轻，也更容易观察究竟是什么发生了变化。</p>
+<h2>八、Task Fingerprint 连接经验与任务</h2>
+<p>如果所有历史经验只是一个巨大的向量库，那么相似度本身并不足够。我们讨论过 <code>task_fingerprint</code>：它试图描述问题类型、失败模式、所需能力以及过去什么策略有效。</p>
+<pre>“和它长得像”
+        ↓
+“属于同一种问题，因此某种策略可能有效”</pre>
+<h2>九、Optimizer 真正优化的可能是“下一次怎么做”</h2>
+<pre>                 Agent Optimizer
+                        │
+        ┌───────────────┼───────────────┐
+        ↓               ↓               ↓
+   Experience       Policy          Tool Routine
+     Memory        Adjustment         Tuning
+        │               │               │
+        └───────────────┼───────────────┘
+                        ↓
+                     Agent
+                        ↓
+                    Outcome
+                        ↓
+                   Evaluation
+                        ↓
+                     Memory
+                        ↺</pre>
+<p>它优化的不是“模型知道多少”，而是：<strong>面对一个任务，Agent 下一次应该怎么做。</strong></p>
+<h2>十、为什么这条路线可能更适合 Agent</h2>
+<p>Agent 的任务分布可能一直变化。如果每遇到一种新情况都重新训练模型，周期和成本都很高，也很难知道究竟是什么改变了模型行为。</p>
+<pre>新问题
+ ↓
+执行
+ ↓
+得到经验
+ ↓
+验证结果
+ ↓
+写入 Case Memory
+ ↓
+下一次相似任务直接利用</pre>
+<p>Agent 可以形成一种轻量的持续改进机制：不是让模型本身不断变化，而是让<strong>模型周围的系统不断积累经验</strong>。</p>
+<h2>十一、这不意味着永远不要训练模型</h2>
+<p>我并不认为经验记忆和策略优化可以替代模型训练。更合理的理解是，它们处在不同层次：</p>
+<pre>Model Training
+    ↓
+基础能力
+
+Agent Optimizer
+    ↓
+任务策略 / 经验 / 工具使用方式 / 行为程序
+
+Runtime / Control Plane
+    ↓
+执行与治理</pre>
+<h2>十二、最终形成一个持续学习的 Loop</h2>
+<pre>Goal
+ ↓
+Agent
+ ↓
+Action
+ ↓
+Environment
+ ↓
+Outcome
+ ↓
+Evaluation
+ ↓
+Experience
+ ↓
+Optimizer
+ ↓
+Policy / Memory / Tool Routine
+ ↓
+Next Agent
+ ↺</pre>
+<p>这里最重要的不是“自动优化”四个字，而是：<strong>经验不会只留在日志里，而是成为下一次决策的一部分。</strong></p>
+<p>所以 Agent 的持续进化未必首先表现为模型参数发生变化，也可能表现为经验越来越丰富、策略越来越稳定、工具调用越来越合理、失败模式越来越少。</p>
+<p>而整个系统真正需要解决的，仍然是另一个问题：<strong>Optimizer 到底应该相信什么结果？</strong></p>
+</div></article></main>
+<footer class="site-footer"><div class="wrap site-footer__inner"><div><p>© <span id="year"></span> chengguruchun · Hangzhou</p><p>Blog for Agents · 个人知识博客</p><p class="footer-visits" aria-label="访问统计"><span>本站 <strong data-visits-site>-</strong></span><span class="footer-visits__sep" aria-hidden="true">·</span><span>本页 <strong data-visits-page>-</strong></span></p></div></div></footer><script src="../assets/js/site.js"></script><script src="../assets/js/visits.js"></script></body></html>
