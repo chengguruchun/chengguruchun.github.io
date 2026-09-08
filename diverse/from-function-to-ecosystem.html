@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>从函数到生态系统：重新理解大模型与 Agent · Diverse Lab</title>
+  <meta name="description" content="物理学、生态学与科学实验方法如何帮助我们重新理解 LLM 与 Agent。">
+  <meta name="theme-color" content="#f7f5f0">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+<header class="site-header"><div class="wrap site-header__inner"><a class="brand" href="../index.html"><img class="brand__logo" src="../assets/img/brand-mark.svg" alt="AI Knowledge Lab" width="44" height="44"><span class="brand__tag"><span class="brand__rotate"><span class="brand__item is-active">Independent Thinker</span><span class="brand__item">AI Agents</span><span class="brand__item">Complex Systems</span><span class="brand__item">Diverse Thinking</span></span></span></a><button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">菜单</button><nav class="nav" id="site-nav" aria-label="主导航"><a href="../index.html">Home</a><a href="../diverse/" aria-current="page">Diverse Lab</a><a href="../articles/">Articles</a><a href="../projects/">Projects</a><a href="../videos/">Videos</a><a href="../times/">Hot Words</a><a href="../about/">About Me</a><a class="nav__search" href="../tags/">Tags / Search</a></nav></div></header>
+<main><article class="article-body"><header class="page-hero"><div class="prose-wrap"><p class="page-hero__kicker">Diverse Lab</p><h1>从函数到生态系统：重新理解大模型与 Agent</h1><p class="page-hero__desc">物理学给我们规律，生态学给我们关系与反馈，科学实验告诉我们如何验证；把三种心智放在一起，可以重新理解 LLM 与 Agent。</p><p class="article-meta"><span>思路 2026-09-04</span><span>发表 2026-09-08</span><span>作者 chengguruchun</span><a class="tag" href="../tags/?tag=Physics">Physics</a><a class="tag" href="../tags/?tag=Ecology">Ecology</a><a class="tag" href="../tags/?tag=LLM">LLM</a><a class="tag" href="../tags/?tag=Agent">Agent</a></p></div></header>
+<div class="prose-wrap">
+<p class="lede">我们习惯把软件系统理解成函数：给定输入，经过确定的逻辑，得到输出。但大模型出现以后，这个直觉开始出现裂缝。我越来越觉得，理解这种裂缝，可以同时借用两种看起来距离很远的学科：<strong>物理学与生态学</strong>。</p>
+<h2>一、为什么大模型不像传统函数</h2>
+<p>传统程序通常可以近似成：</p><pre>Input
+  ↓
+Deterministic Logic
+  ↓
+Output</pre>
+<p>而一次大模型调用真正依赖的东西更多：Prompt、Context、History、Model、Tools 与 Decoding。更接近：</p><pre>Prompt + Context + History + Model + Tools + Decoding
+                         ↓
+                Conditional Distribution
+                         ↓
+                   One Sample</pre>
+<p>所以同一个问题换一种上下文组织方式，结果可能改变；换一个示例，分布可能改变；换一个模型版本，行为可能改变。它不是「没有规律」，而是规律更多表现为<strong>条件下的概率分布</strong>。</p>
+<blockquote><p>真正值得问的问题，不只是「这一次为什么错了」，而是「在什么条件下，它更容易正确？」</p></blockquote>
+<h2>二、物理学给我们的启发：寻找可重复的规律</h2>
+<p>物理学不断从复杂现象中寻找稳定关系。把这种心智迁移到 LLM，工程就不应该只是不断试 Prompt，而应该逐渐变成：</p><pre>Hypothesis
+    ↓
+Experiment
+    ↓
+Observation
+    ↓
+Comparison
+    ↓
+Conclusion
+    ↓
+Next Hypothesis</pre>
+<p>例如怀疑「规则放在 Prompt 最前面更有效」，就固定模型、数据集和解码参数，只改变规则位置，然后重复采样。结论应该带边界：在数据集 D、模型 M 和参数 Θ 下，条件 A 比条件 B 有更高的成功率，而不是「这个 Prompt 永远更好」。</p>
+<p>这也是我认为 <strong>Prompt Engineering 会逐渐长成 Experiment Engineering</strong> 的原因。</p>
+<h2>三、但只用物理学的心智还不够</h2>
+<p>如果只用输入 → 输出理解 Agent，很容易把 Agent 想成一个更大的函数。但当系统开始拥有 Memory、Tools、Multiple Agents、Environment、Feedback、External Side Effects 与 Long-term State，事情开始变化。</p>
+<p>生态系统很少存在一个简单的 A → B。一个行为会改变环境，环境变化又反过来影响下一步行为。这与 Agent Loop 非常接近：</p><pre>Goal
+ ↓
+Action
+ ↓
+Environment
+ ↓
+Observation
+ ↓
+Gap
+ ↓
+Adjustment
+ ↺</pre>
+<h2>四、Agent 真正复杂的地方，是反馈而不是模型</h2>
+<p>例如一个 Agent 要「降低工厂能源消耗」：读取设备数据、判断状态、调整设备、观察功率变化、发现温度变化、再调整策略。这里已经不是 Prompt → Answer，而是一个持续与环境交互的系统。</p><pre>Goal
+ ↓
+Policy
+ ↓
+Action
+ ↓
+Environment
+ ↓
+Observation
+ ↓
+Outcome
+ ↓
+Policy Adjustment
+ ↺</pre>
+<p>Agent 的能力因此越来越像一种<strong>环境中的适应能力</strong>。</p>
+<h2>五、概率性并不等于不可工程化</h2>
+<p>天气是概率性的，但气象学仍然可以工作；生态系统高度复杂，但生态学仍然可以研究。工程目标发生了变化：</p><pre>确定性系统：
+Input → Output
+
+概率性系统：
+Conditions → Distribution → Outcome</pre>
+<p>因此评价 Agent 时，也应该从「这次回答对不对」逐渐走向 Success Rate、Error Distribution、Cost、Latency、Consistency、Held-out Performance 与 Real Outcome。</p>
+<p>一次漂亮的回答只是一个样本。真正值得沉淀的是<strong>在什么条件下，系统更可靠</strong>。</p>
+<h2>六、Proxy Metric 不等于真实结果</h2>
+<p>复杂系统还有一个危险：我们很容易把代理指标当成真实目标。</p><pre>Tool Call = PASS
+API Test = PASS
+Workflow = SUCCESS
+Model Self-Eval = PASS
+
+          ≠
+
+Real Outcome = SUCCESS</pre>
+<p>因此我越来越倾向于把任务结果拆成三层：<strong>Proxy</strong>（过程是否正常）、<strong>Evidence</strong>（是否存在可核对证据）、<strong>Outcome</strong>（真实目标是否完成）。</p>
+<h2>七、从 Experiment Engineering 走向 Loop Engineering</h2>
+<p>科学实验解决「如何知道什么条件更好」，Agent Loop 进一步解决「知道以后，系统如何自己调整」。两者其实是一条连续的路线：</p><pre>Experiment Engineering
+        ↓
+Evaluation
+        ↓
+Policy / Strategy
+        ↓
+Agent Loop
+        ↓
+Environment Feedback
+        ↓
+Next Experiment</pre>
+<p>这也是我理解 Loop Engineering 的方式：不是把 Workflow 写得更复杂，而是让<strong>现实结果成为下一步行动的输入</strong>。</p>
+<h2>八、最终会从模型工程走向环境工程</h2>
+<p>如果继续往前推，Agent Engineering 的对象会不断扩大：</p><pre>Model
+  ↓
+Prompt
+  ↓
+Agent
+  ↓
+Runtime
+  ↓
+Multi-Agent
+  ↓
+Environment
+  ↓
+Feedback
+  ↓
+Evolution</pre>
+<p>模型仍然重要，但它只是系统中的一个参与者。真正决定系统长期能力的，是模型如何与工具、记忆、其他 Agent 和环境发生关系，以及这些关系能不能形成稳定的反馈闭环。</p>
+<h2>九、我现在更愿意这样理解 AI 工程</h2>
+<p><strong>物理学提醒我们寻找规律，生态学提醒我们观察关系，科学实验告诉我们如何验证，而 Agent Engineering 要把这些东西变成可以运行的反馈系统。</strong></p>
+<p>所以未来 AI 工程可能不只是 Model Engineering。它会同时包含 Model Engineering、Experiment Engineering、Agent Engineering、Loop Engineering 与 Environment Engineering。</p>
+<blockquote><p>从函数到实验，从实验到循环，从循环到生态系统。这可能是理解下一代 AI 系统的一条重要路径。</p></blockquote>
+</div></article></main>
+<footer class="site-footer"><div class="wrap site-footer__inner"><div><p>© <span id="year"></span> chengguruchun · Hangzhou</p><p>Blog for Agents · 个人知识博客</p><p class="footer-visits" aria-label="访问统计"><span>本站 <strong data-visits-site>-</strong></span><span class="footer-visits__sep" aria-hidden="true">·</span><span>本页 <strong data-visits-page>-</strong></span></p></div></div></footer>
+<script src="../assets/js/site.js"></script><script src="../assets/js/visits.js"></script>
+</body></html>
