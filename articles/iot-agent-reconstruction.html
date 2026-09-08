@@ -1,58 +1,58 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="zh-CN" data-page-node-id="w3T9LamCFeP1zkcJ6bpoOV">
+<head data-page-node-id="a0E95p4Q2XC0PnMNrS3jHd">
+  <meta charset="UTF-8" data-page-node-id="dBm9VUs6QWYsIPs0z2RfXR">
+  <meta name="viewport" content="width=device-width, initial-scale=1" data-page-node-id="hDmHCIJ6lNZB6KQHIFXuFI">
   <title>IoT 平台的 Agent 重构 · AI Knowledge Lab</title>
-  <meta name="description" content="从设备、规则引擎、云边协同到 Agent Control Plane，思考 IoT 平台如何从自动化平台演化为目标驱动的智能运行系统。">
-  <meta name="theme-color" content="#f7f5f0">
-  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../assets/css/site.css">
+  <meta name="description" content="从设备、规则引擎、云边协同到 Agent Control Plane，思考 IoT 平台如何从自动化平台演化为目标驱动的智能运行系统。" data-page-node-id="q1614wiRPVy9ZCUfrig6A8">
+  <meta name="theme-color" content="#f7f5f0" data-page-node-id="8Fc8gg9dALgdyAHG9AjuvA">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml" data-page-node-id="8EfFF0JMZEsK0pivmut31A">
+  <link rel="preconnect" href="https://fonts.googleapis.com" data-page-node-id="GPi5vB7H9XYOsfAeLlwahj">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin data-page-node-id="iVMFi8BHLcEDHn9CCwqYNO">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@500;600;700&display=swap" rel="stylesheet" data-page-node-id="4b9wbe9V2JRn7IkzcgOLB8">
+  <link rel="stylesheet" href="../assets/css/site.css" data-page-node-id="1Ub8iCDCrlMtS3XQMVWuUf">
   <style>
     .article-hero{padding:72px 0 48px}.article-kicker{font:500 13px/1.5 "IBM Plex Mono",monospace;letter-spacing:.08em;text-transform:uppercase}.article-hero h1{max-width:900px;margin:14px 0 18px}.article-sub{max-width:780px;font-size:20px;line-height:1.8}.article-meta{margin-top:24px;color:var(--muted,#777);font:13px/1.6 "IBM Plex Mono",monospace}.article-body{max-width:820px;padding-bottom:88px}.article-body h2{margin:56px 0 18px}.article-body h3{margin:36px 0 12px}.article-body p,.article-body li{font-size:17px;line-height:1.95}.article-body ul{padding-left:24px}.architecture{margin:28px 0;padding:24px;border:1px solid rgba(0,0,0,.12);border-radius:14px;background:rgba(255,255,255,.45);font:14px/1.8 "IBM Plex Mono",monospace;white-space:pre-wrap}.callout{margin:32px 0;padding:22px 24px;border-left:3px solid currentColor;background:rgba(0,0,0,.035)}
   </style>
 </head>
-<body>
-<header class="site-header"><div class="wrap site-header__inner"><a class="brand" href="../index.html"><img class="brand__logo" src="../assets/img/brand-mark.svg" alt="AI Knowledge Lab" width="44" height="44"><span class="brand__tag" data-brand-rotate aria-label="Independent Thinker · AI Agents · Complex Systems · Diverse Thinking"><span class="brand__rotate"><span class="brand__item is-active">Independent Thinker</span><span class="brand__item">AI Agents</span><span class="brand__item">Complex Systems</span><span class="brand__item">Diverse Thinking</span></span></span></a><button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">菜单</button><nav class="nav" id="site-nav" aria-label="主导航"><a href="../index.html">Home</a><a href="../diverse/">Diverse Lab</a><a href="../articles/" aria-current="page">Articles</a><a href="../projects/">Projects</a><a href="../videos/">Videos</a><a href="../times/">Hot Words</a><a href="../about/">About Me</a><a class="nav__search" href="../tags/">Tags / Search</a></nav></div></header>
-<main>
-  <header class="article-hero"><div class="wrap"><p class="article-kicker">Agent · IoT · Architecture</p><h1>IoT 平台的 Agent 重构</h1><p class="article-sub">如果说传统 IoT 平台解决的是“设备如何被连接、管理和自动化”，那么 Agent 时代真正值得思考的问题是：<strong>设备、云边能力和智能决策，能不能共同组成一个可以围绕目标持续工作的运行系统？</strong></p><p class="article-meta">思路 2026-09-07 · AI Knowledge Lab</p></div></header>
-  <section class="section" style="padding-top:0"><div class="wrap article-body">
-    <h2>1. IoT 的问题，比 SaaS 更接近“现实世界”</h2>
-    <p>和纯软件 SaaS 相比，IoT 平台天然连接着物理世界：设备、传感器、网关、网络、边缘节点、云服务以及最终的业务系统。设备状态会变化，网络会抖动，数据会延迟，动作可能失败，现实世界也不会严格按照 Workflow 的预设运行。</p>
-    <p>因此，一个传统 IoT 平台通常围绕几件事构建：设备接入、设备管理、数据采集、规则引擎、消息处理、远程控制、告警和运维。它的核心是把<strong>物理世界转换成软件可以理解和操作的对象</strong>。</p>
-    <div class="architecture">传统 IoT
+<body data-page-node-id="8omS8defEj0ObWGDltmXxf">
+<header class="site-header" data-page-node-id="28RkY5tvVcBCIcyiqUftEH"><div class="wrap site-header__inner" data-page-node-id="wnVdOPaKv6c1jEwuTXFqlZ"><a class="brand" href="../index.html" data-page-node-id="CYqOmWU9UrDWx9BDAE0nJ2"><img class="brand__logo" src="../assets/img/brand-mark.svg" alt="AI Knowledge Lab" width="44" height="44" data-page-node-id="OZDHpoKqmBi3h3C4BGvWGC"><span class="brand__tag" data-brand-rotate aria-label="Independent Thinker · AI Agents · Complex Systems · Diverse Thinking" data-page-node-id="UBCpeCQ2WVwbiAIELWqj8A"><span class="brand__rotate" data-page-node-id="v1pfKgw8ruDaH6lL3fDgWT"><span class="brand__item is-active" data-page-node-id="gKzEPWUF1l9O2EZkRuLqwa">Independent Thinker</span><span class="brand__item" data-page-node-id="fczjWpGVy4m19lupkznzhX">AI Agents</span><span class="brand__item" data-page-node-id="mTxYxV9z6SYAHmVdd78HZi">Complex Systems</span><span class="brand__item" data-page-node-id="4k0JklFOXMcx5rw2K9Xrj2">Diverse Thinking</span></span></span></a><button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-page-node-id="KAPkS2a7lyl3eUOrqHtlQh">菜单</button><nav class="nav" id="site-nav" aria-label="主导航" data-page-node-id="f7hre2tjsyHcAn0p5O3sf2"><a href="../index.html" data-page-node-id="kORC7HC4bWWpRSyNRrkyj3">Home</a><a href="../diverse/" data-page-node-id="AbHADHcvL0RWpJiw93Fbmd">Diverse Lab</a><a href="../articles/" aria-current="page" data-page-node-id="YnAXZN9SYlDjC2VU90qd3b">Articles</a><a href="../projects/" data-page-node-id="DCUCsDYjPchYfUZFUfplRS">Projects</a><a href="../videos/" data-page-node-id="L2SEVdC9PIYpTjXZSIZ67j">Videos</a><a href="../times/" data-page-node-id="vSKHsB7sGQmyekStgEPAZL">Hot Words</a><a href="../about/" data-page-node-id="tTw8NO7bholpzdpn87uOoO">About Me</a><a class="nav__search" href="../tags/" data-page-node-id="oZuTUWTO7jgKIWj6nj0l95">Tags / Search</a></nav></div></header>
+<main data-page-node-id="nsBffXd3DZh3RuNdh9XTp0">
+  <header class="article-hero" data-page-node-id="NtHer0n5DKEwRzDBMWQ8Yi"><div class="wrap" data-page-node-id="OdmlltrCMR3ROkGDgyQFSn"><p class="article-kicker" data-page-node-id="X1Oeqb6Jk7P14dNq6JQ0HW">Agent · IoT · Architecture</p><h1 data-page-node-id="1iKkCGVXNHaP4nE4R70xud">IoT 平台的 Agent 重构</h1><p class="article-sub" data-page-node-id="nhMdUboSHdtCVBwEqEpW9s">如果说传统 IoT 平台解决的是“设备如何被连接、管理和自动化”，那么 Agent 时代真正值得思考的问题是：<strong data-page-node-id="AFp4LX3fM7XU8TyQvSi7Cn">设备、云边能力和智能决策，能不能共同组成一个可以围绕目标持续工作的运行系统？</strong></p><p class="article-meta" data-page-node-id="GNCwmoxPfcv2B6B36uNyGD">思路 2026-09-07 · AI Knowledge Lab</p></div></header>
+  <section class="section" style="padding-top:0" data-page-node-id="c9h6bcTBjiXoCEslI7dSVZ"><div class="wrap article-body" data-page-node-id="OL9lx5TyWiFNtuebErSFAv">
+    <h2 data-page-node-id="pV2phc9yIMAE5sUXlYyBYo">1. IoT 的问题，比 SaaS 更接近“现实世界”</h2>
+    <p data-page-node-id="DL0cTmmtaxS0CFI17GCwn0">和纯软件 SaaS 相比，IoT 平台天然连接着物理世界：设备、传感器、网关、网络、边缘节点、云服务以及最终的业务系统。设备状态会变化，网络会抖动，数据会延迟，动作可能失败，现实世界也不会严格按照 Workflow 的预设运行。</p>
+    <p data-page-node-id="HoYCCTvKnJwCbVHqH2IQLd">因此，一个传统 IoT 平台通常围绕几件事构建：设备接入、设备管理、数据采集、规则引擎、消息处理、远程控制、告警和运维。它的核心是把<strong data-page-node-id="BHIPvqk6QlQRBC63vEk0Ys">物理世界转换成软件可以理解和操作的对象</strong>。</p>
+    <div class="architecture" data-page-node-id="dHHdbE7YjhtdnjED9XcBux">传统 IoT
 
 设备 → 网关 → IoT Platform → 规则 / Workflow → API / Command
   ↑                                      ↓
 状态 / Telemetry ←─────────────── 执行动作</div>
-    <p>这个体系已经非常成熟，但它的默认交互方式仍然是“事件触发规则”或“用户发起操作”。Agent 带来的变化，是把问题从“发生了什么，然后执行哪条规则”，提升为“<strong>我想达到什么结果，当前现实是什么，下一步应该做什么</strong>”。</p>
+    <p data-page-node-id="vvrDPoTsKYPabBGPfqC2yF">这个体系已经非常成熟，但它的默认交互方式仍然是“事件触发规则”或“用户发起操作”。Agent 带来的变化，是把问题从“发生了什么，然后执行哪条规则”，提升为“<strong data-page-node-id="9hpBpFjA22m1MXmK4Q0ruv">我想达到什么结果，当前现实是什么，下一步应该做什么</strong>”。</p>
 
-    <h2>2. 涂鸦这类 IoT 平台，Agent 不应该只是一个聊天入口</h2>
-    <p>以涂鸦这样的 IoT 平台为例，它已经拥有大量设备模型、设备能力、数据、场景自动化、用户与企业体系，以及连接硬件和云服务的基础设施。</p>
-    <p>如果只是增加一个“AI 助手”，让用户用自然语言创建场景，例如“晚上十点自动关灯”，这当然有价值，但它本质上仍然是把自然语言转换成已有的规则配置。</p>
-    <p>真正值得做的重构，是把现有 IoT 能力重新抽象成 Agent 可以理解、发现和组合的能力。</p>
-    <div class="callout"><strong>不是给 IoT 平台加一个 Agent，而是让 IoT 平台本身逐渐成为 Agent 可以工作的环境。</strong></div>
+    <h2 data-page-node-id="zAF9ZLwm6xEYC4CISJhIVg">2. 这类 IoT 平台，Agent 不应该只是一个聊天入口</h2>
+    <p data-page-node-id="wDrHzM7bSqKcafHpBhAo5D">以某 IoT 平台为例，它已经拥有大量设备模型、设备能力、数据、场景自动化、用户与企业体系，以及连接硬件和云服务的基础设施。</p>
+    <p data-page-node-id="CKGNiEAZCWklh6spgXqYfx">如果只是增加一个“AI 助手”，让用户用自然语言创建场景，例如“晚上十点自动关灯”，这当然有价值，但它本质上仍然是把自然语言转换成已有的规则配置。</p>
+    <p data-page-node-id="miaAuTiN0grRNZLMmYfyYJ">真正值得做的重构，是把现有 IoT 能力重新抽象成 Agent 可以理解、发现和组合的能力。</p>
+    <div class="callout" data-page-node-id="eQ3rFHkr1ccO41b8zWiVle"><strong data-page-node-id="D7LzHOFvvnByX3Xmv01pqV">不是给 IoT 平台加一个 Agent，而是让 IoT 平台本身逐渐成为 Agent 可以工作的环境。</strong></div>
 
-    <h2>3. 第一层变化：Device 不再只是“设备”，而是 Capability</h2>
-    <p>传统 IoT 的核心抽象是 Device。Agent 更关心的是 Capability：这个环境里有什么能力？它可以读取什么？可以控制什么？执行之后会产生什么状态变化？</p>
-    <p>例如一盏智能灯，传统模型可能描述为设备 ID、在线状态、亮度、颜色和开关状态；面向 Agent，则应该进一步表达为“照明能力”“调节亮度能力”“设置色温能力”，以及这些能力的约束、权限、成本和预期结果。</p>
-    <div class="architecture">Device Model
+    <h2 data-page-node-id="h8U3OtZDXe2F7w5H38t1xq">3. 第一层变化：Device 不再只是“设备”，而是 Capability</h2>
+    <p data-page-node-id="ivQfMXdlxv3Bmh1VWMLDUV">传统 IoT 的核心抽象是 Device。Agent 更关心的是 Capability：这个环境里有什么能力？它可以读取什么？可以控制什么？执行之后会产生什么状态变化？</p>
+    <p data-page-node-id="KsgaEHR12r5L7sPDsezEGV">例如一盏智能灯，传统模型可能描述为设备 ID、在线状态、亮度、颜色和开关状态；面向 Agent，则应该进一步表达为“照明能力”“调节亮度能力”“设置色温能力”，以及这些能力的约束、权限、成本和预期结果。</p>
+    <div class="architecture" data-page-node-id="Mh2JNU8CAmqS1A1fziOTjd">Device Model
       ↓
 Capability Model
       ├── observe：读取温度 / 电量 / 状态
       ├── act：开关 / 调光 / 设置模式
       ├── compose：与其他设备形成场景
       └── verify：确认动作是否真正生效</div>
-    <p>这和之前讨论 SaaS 时的 OpenAPI → Tool 是类似的：<strong>设备 API 不是 Agent 的最终抽象，Agent 需要的是带语义、约束和结果反馈的能力。</strong></p>
+    <p data-page-node-id="ggDnHRreH9FZwXKNghcjuY">这和之前讨论 SaaS 时的 OpenAPI → Tool 是类似的：<strong data-page-node-id="d66fVGQWrrzHiOuJIFCXG3">设备 API 不是 Agent 的最终抽象，Agent 需要的是带语义、约束和结果反馈的能力。</strong></p>
 
-    <h2>4. 第二层变化：规则引擎不会消失，但 Agent 会站在它的上面</h2>
-    <p>一个常见误区是认为 Agent 出现后，原来的规则引擎和 Workflow 都应该被替代。IoT 恰恰相反：确定性的规则非常适合继续运行在底层。</p>
-    <p>例如“温度超过 30℃ 就打开风扇”“门打开后 30 秒关闭照明”，这些逻辑不需要 LLM。它们应该保持低延迟、可预测、可验证。</p>
-    <p>Agent 更适合处理目标不明确、需要综合上下文、需要动态调整的任务。例如：</p>
-    <div class="architecture">目标：降低这个仓库的能源消耗，同时不要影响生产
+    <h2 data-page-node-id="HDKqTGDta3sqqyDOG0xFLn">4. 第二层变化：规则引擎不会消失，但 Agent 会站在它的上面</h2>
+    <p data-page-node-id="bMcCINWiAGP2hWBy0tKmpE">一个常见误区是认为 Agent 出现后，原来的规则引擎和 Workflow 都应该被替代。IoT 恰恰相反：确定性的规则非常适合继续运行在底层。</p>
+    <p data-page-node-id="9917n34uBctkBmxwJNg58X">例如“温度超过 30℃ 就打开风扇”“门打开后 30 秒关闭照明”，这些逻辑不需要 LLM。它们应该保持低延迟、可预测、可验证。</p>
+    <p data-page-node-id="aXxHigB0f1GwZsbT27v9Wq">Agent 更适合处理目标不明确、需要综合上下文、需要动态调整的任务。例如：</p>
+    <div class="architecture" data-page-node-id="wIWq8wlxYhdYg3IvlcrVzD">目标：降低这个仓库的能源消耗，同时不要影响生产
 
 Agent
   ↓
@@ -71,11 +71,11 @@ Agent
 调整策略
   ↓
 继续验证</div>
-    <p>因此，<strong>Workflow 负责确定性执行，Agent 负责动态决策，IoT Runtime 负责连接现实世界。</strong></p>
+    <p data-page-node-id="sOradJbLbCMnVldnGbnejQ">因此，<strong data-page-node-id="DlvAGC2kSs3FJePPcZDLmO">Workflow 负责确定性执行，Agent 负责动态决策，IoT Runtime 负责连接现实世界。</strong></p>
 
-    <h2>5. 第三层变化：IoT 需要自己的 Agent Control Plane</h2>
-    <p>当 Agent 数量增加以后，真正困难的问题会从“怎么调用模型”变成“怎么管理大量 Agent 任务”。这时 Kubernetes 的思想会再次出现。</p>
-    <div class="architecture">IoT Agent Control Plane
+    <h2 data-page-node-id="4f7EQdx4092e7zfa4ZUbER">5. 第三层变化：IoT 需要自己的 Agent Control Plane</h2>
+    <p data-page-node-id="3HvSEcmDGIPod9YJr5C4jZ">当 Agent 数量增加以后，真正困难的问题会从“怎么调用模型”变成“怎么管理大量 Agent 任务”。这时 Kubernetes 的思想会再次出现。</p>
+    <div class="architecture" data-page-node-id="LFDetcCEIJtqyrZUKV5fJN">IoT Agent Control Plane
 
                     Business Goal
                          ↓
@@ -101,12 +101,12 @@ Agent
                     Observation
                          ↓
                    Reconciliation</div>
-    <p>Control Plane 的职责不是执行每一个动作，而是管理目标、任务、策略、权限、Agent 生命周期、状态、调度、观测和结果。Agent Runtime 则负责真正的推理和工具调用。</p>
-    <p>这和 Kubernetes 的类比非常自然：K8s 让“Desired State → Actual State”不断收敛；Agent 系统则让“Desired Outcome → Actual Outcome”不断收敛。</p>
+    <p data-page-node-id="wY0LZBOVlLoJDRv8qciBkl">Control Plane 的职责不是执行每一个动作，而是管理目标、任务、策略、权限、Agent 生命周期、状态、调度、观测和结果。Agent Runtime 则负责真正的推理和工具调用。</p>
+    <p data-page-node-id="s3sytOjXzikHUVDeDN2fup">这和 Kubernetes 的类比非常自然：K8s 让“Desired State → Actual State”不断收敛；Agent 系统则让“Desired Outcome → Actual Outcome”不断收敛。</p>
 
-    <h2>6. IoT 的 Agent Loop，比 SaaS 更重要</h2>
-    <p>IoT 最大的特殊性在于：Agent 的动作会进入物理世界，而物理世界会反过来告诉 Agent“你到底做没做到”。</p>
-    <div class="architecture">Goal
+    <h2 data-page-node-id="XOuKl8FeDRJzBgMLEBM0Ij">6. IoT 的 Agent Loop，比 SaaS 更重要</h2>
+    <p data-page-node-id="MqTFb0eTxxq5QvX0bBEjvi">IoT 最大的特殊性在于：Agent 的动作会进入物理世界，而物理世界会反过来告诉 Agent“你到底做没做到”。</p>
+    <div class="architecture" data-page-node-id="pfxVbpBfaOJSilueaLKbTJ">Goal
   ↓
 Plan / Action
   ↓
@@ -120,12 +120,12 @@ Gap
   ↓
 Next Action
   ↺</div>
-    <p>例如 Agent 下发“降低空调功率”的命令，并不意味着任务已经完成。它还需要观察功率、电流、温度和设备状态，判断目标是否真正达到。</p>
-    <p>所以 IoT Agent 的核心能力不是“会调用设备 API”，而是<strong>能根据现实反馈持续修正行动</strong>。</p>
+    <p data-page-node-id="I7qz9e0cifscPCFHvyWnH0">例如 Agent 下发“降低空调功率”的命令，并不意味着任务已经完成。它还需要观察功率、电流、温度和设备状态，判断目标是否真正达到。</p>
+    <p data-page-node-id="N7XNmuz2mONYoJtEcadPtH">所以 IoT Agent 的核心能力不是“会调用设备 API”，而是<strong data-page-node-id="3qfDACzq5ZaWI9o4RVF8FH">能根据现实反馈持续修正行动</strong>。</p>
 
-    <h2>7. 从“设备自动化”走向“环境自动化”</h2>
-    <p>传统 IoT 往往以单个设备或单条规则为中心。Agent 会推动抽象层级上移：用户不再需要知道具体要控制哪些设备，而是提出环境目标。</p>
-    <div class="architecture">传统：
+    <h2 data-page-node-id="0psAPM0DicK7WMGlEwqVlR">7. 从“设备自动化”走向“环境自动化”</h2>
+    <p data-page-node-id="DRj5jEHKKU2BP6tcmGHxzQ">传统 IoT 往往以单个设备或单条规则为中心。Agent 会推动抽象层级上移：用户不再需要知道具体要控制哪些设备，而是提出环境目标。</p>
+    <div class="architecture" data-page-node-id="dpb6AKBCQPbIRlYgmRsMxE">传统：
 “打开客厅灯 → 设置亮度 60% → 打开空调 24℃”
 
 Agent：
@@ -136,21 +136,21 @@ Agent 理解环境
 灯光 + 空调 + 窗帘 + 传感器
         ↓
 执行 → 观察 → 调整</div>
-    <p>这意味着 IoT 平台的竞争壁垒也可能从“连接了多少设备”逐渐转向“<strong>能不能让这些设备作为一个环境被理解和操作</strong>”。</p>
+    <p data-page-node-id="1TnsrwMtZOSHQzsy2rmpho">这意味着 IoT 平台的竞争壁垒也可能从“连接了多少设备”逐渐转向“<strong data-page-node-id="ef9VF44lol0klqJwzJmnEW">能不能让这些设备作为一个环境被理解和操作</strong>”。</p>
 
-    <h2>8. 云、边、端不会被 Agent 抹平</h2>
-    <p>Agent 架构也不能简单理解为“把所有事情交给云端大模型”。IoT 对实时性、可靠性和网络条件有严格要求。</p>
-    <ul>
-      <li><strong>端 / Device：</strong>负责真实世界的感知与执行。</li>
-      <li><strong>Edge：</strong>负责低延迟、本地闭环、协议适配和断网情况下的基本运行。</li>
-      <li><strong>Cloud：</strong>负责全局上下文、跨设备分析、模型推理、长期记忆和复杂任务编排。</li>
-      <li><strong>Agent Control Plane：</strong>负责目标、任务、策略、调度和治理。</li>
+    <h2 data-page-node-id="GdsxA89NwmfHEBgphKPPd3">8. 云、边、端不会被 Agent 抹平</h2>
+    <p data-page-node-id="e3ugUzIvz8vjuYAuL5hAGR">Agent 架构也不能简单理解为“把所有事情交给云端大模型”。IoT 对实时性、可靠性和网络条件有严格要求。</p>
+    <ul data-page-node-id="IHEqtgrnwMbbxF7H7HXGJh">
+      <li data-page-node-id="NxRAlaqW6W3VSzjArRwcHK"><strong data-page-node-id="9fMi1DEpXqAWy5bfFD8u4s">端 / Device：</strong>负责真实世界的感知与执行。</li>
+      <li data-page-node-id="EIACBGLiERncWUkzfUY5b6"><strong data-page-node-id="mZFxl8MrouJ6CK3GEHyyrN">Edge：</strong>负责低延迟、本地闭环、协议适配和断网情况下的基本运行。</li>
+      <li data-page-node-id="Q2FqknNxt1xWWlovEAUE68"><strong data-page-node-id="8DQT070nTCGPcrz3hOJ0GM">Cloud：</strong>负责全局上下文、跨设备分析、模型推理、长期记忆和复杂任务编排。</li>
+      <li data-page-node-id="mqddKpr7HsB5cFjsU3h9Bg"><strong data-page-node-id="7DeFDTQqlFXxsXlHEYQfqG">Agent Control Plane：</strong>负责目标、任务、策略、调度和治理。</li>
     </ul>
-    <p>因此未来更合理的形态不是“Cloud Agent 替代 IoT Runtime”，而是<strong>Agent 与 IoT Runtime 分层协作</strong>。</p>
+    <p data-page-node-id="aiYJ00gz2RMQaMfk0D4Qc2">因此未来更合理的形态不是“Cloud Agent 替代 IoT Runtime”，而是<strong data-page-node-id="CG6M4Lhj2tesH4WbU3FVtM">Agent 与 IoT Runtime 分层协作</strong>。</p>
 
-    <h2>9. Tool Gateway 是 IoT Agent 化的关键基础设施</h2>
-    <p>如果每一个 Agent 都直接调用设备服务、用户服务、场景服务、数据服务，系统很快会失控。和 SaaS 一样，IoT 也需要 Tool Gateway。</p>
-    <div class="architecture">Agent
+    <h2 data-page-node-id="hbuoRpQ3kuyrxwSLhdd2R0">9. Tool Gateway 是 IoT Agent 化的关键基础设施</h2>
+    <p data-page-node-id="88TnCD07IO4GtzU5K8YB4q">如果每一个 Agent 都直接调用设备服务、用户服务、场景服务、数据服务，系统很快会失控。和 SaaS 一样，IoT 也需要 Tool Gateway。</p>
+    <div class="architecture" data-page-node-id="xBZ2uhUd0yc1UJ0XNJP9zl">Agent
   ↓
 Tool Gateway
   ├── Device Tools
@@ -163,17 +163,17 @@ Tool Gateway
 IoT Platform Services
         ↓
 Devices / Edge / Cloud</div>
-    <p>Gateway 负责能力发现、Tool Schema、认证、租户、权限、路由、限流、审计和可观测性。这样 Agent 不需要知道底层微服务如何实现，只需要理解“我有哪些能力可以完成目标”。</p>
+    <p data-page-node-id="u8nVsb8PuzRKvvWQFFnK0u">Gateway 负责能力发现、Tool Schema、认证、租户、权限、路由、限流、审计和可观测性。这样 Agent 不需要知道底层微服务如何实现，只需要理解“我有哪些能力可以完成目标”。</p>
 
-    <h2>10. 多租户与权限，在 Agent 时代会变得更重要</h2>
-    <p>IoT 平台通常天然存在企业、项目、用户、设备等层级。Agent 一旦获得设备控制能力，权限边界就不能只停留在传统 API Token 层面。</p>
-    <p>未来需要回答的不只是“这个用户能不能调用 API”，还包括“这个 Agent 在这个任务上下文中，是否允许控制这批设备”“它能读取什么数据”“哪些动作必须人工确认”。</p>
-    <p>因此 Agent Identity、Tenant Context、Capability Permission、Policy 和 Audit Log，会成为 IoT Agent Platform 的基础设施，而不是外围功能。</p>
+    <h2 data-page-node-id="rdUx8S4Et9g6hJw4zOudK1">10. 多租户与权限，在 Agent 时代会变得更重要</h2>
+    <p data-page-node-id="a4tGDCu1PdXrQB2lkVj00W">IoT 平台通常天然存在企业、项目、用户、设备等层级。Agent 一旦获得设备控制能力，权限边界就不能只停留在传统 API Token 层面。</p>
+    <p data-page-node-id="zGinTEy8PK9nYef98m8CJn">未来需要回答的不只是“这个用户能不能调用 API”，还包括“这个 Agent 在这个任务上下文中，是否允许控制这批设备”“它能读取什么数据”“哪些动作必须人工确认”。</p>
+    <p data-page-node-id="dVeNAiMzmSj3Lyb5lCpFq5">因此 Agent Identity、Tenant Context、Capability Permission、Policy 和 Audit Log，会成为 IoT Agent Platform 的基础设施，而不是外围功能。</p>
 
-    <h2>11. Agent 的评价指标也要改变</h2>
-    <p>如果只统计“Tool 调用了多少次”“Workflow 成功多少次”，很容易产生代理指标与真实结果之间的偏差。</p>
-    <p>IoT 更应该关注 Outcome：设备是否真的达到目标？环境是否改善？故障是否减少？能源是否下降？用户是否满意？</p>
-    <div class="architecture">Proxy Metrics
+    <h2 data-page-node-id="UTwHzk2WCT8wAOQQlGHd4O">11. Agent 的评价指标也要改变</h2>
+    <p data-page-node-id="ElqbD53evUnv8L0DF6bPkR">如果只统计“Tool 调用了多少次”“Workflow 成功多少次”，很容易产生代理指标与真实结果之间的偏差。</p>
+    <p data-page-node-id="PHytCbDJOQOyPV9vnevm3w">IoT 更应该关注 Outcome：设备是否真的达到目标？环境是否改善？故障是否减少？能源是否下降？用户是否满意？</p>
+    <div class="architecture" data-page-node-id="mvtnOZDyt02nV3xbYIH7a0">Proxy Metrics
   ├── Tool call success
   ├── API PASS
   └── Workflow completed
@@ -185,24 +185,24 @@ Real Outcome
   ├── Target actually reached
   ├── No unintended side effects
   └── User / business goal satisfied</div>
-    <p>这也意味着 Agent 平台需要保存任务轨迹、观察结果、失败原因、人工反馈以及最终 Ground Truth，形成可持续优化的 Case Memory，而不是只保存聊天记录。</p>
+    <p data-page-node-id="1ac82KkPHwAKXwdHCu45Il">这也意味着 Agent 平台需要保存任务轨迹、观察结果、失败原因、人工反馈以及最终 Ground Truth，形成可持续优化的 Case Memory，而不是只保存聊天记录。</p>
 
-    <h2>12. 涂鸦这类平台真正值得重构的地方</h2>
-    <p>如果把上面的思路放在涂鸦这样的 IoT 平台上，我认为重点并不是重新做一个“超级 Agent”，而是逐步建立一套 Agent-native Infrastructure：</p>
-    <ul>
-      <li>把 Device Model 向 Capability Model 演化；</li>
-      <li>把已有 IoT API / OpenAPI 暴露成有语义的 Tools；</li>
-      <li>建立 Tool Gateway，统一权限、租户、路由和审计；</li>
-      <li>建立 Agent Runtime，承载推理、计划、工具调用和 Loop；</li>
-      <li>建立 Agent Control Plane，管理 Goal、Task、Policy、Scheduler 和状态；</li>
-      <li>让 Workflow / Rule Engine 成为 Agent 可以调用的确定性执行层；</li>
-      <li>把 Telemetry 从“监控数据”升级成 Agent 的 Observation；</li>
-      <li>把最终业务结果作为 Agent 的 Outcome，而不是只看 API 是否成功。</li>
+    <h2 data-page-node-id="h8sD5mFz4pvYjBgcrJNxXZ">12. 这类平台真正值得重构的地方</h2>
+    <p data-page-node-id="BglbF8sCN4GKNIEiPuvDAO">如果把上面的思路放在这类 IoT 平台上，我认为重点并不是重新做一个“超级 Agent”，而是逐步建立一套 Agent-native Infrastructure：</p>
+    <ul data-page-node-id="EidTJwkt41lVUVjEEGcoId">
+      <li data-page-node-id="oSYjwFUhgFG8E6xB0LV9q9">把 Device Model 向 Capability Model 演化；</li>
+      <li data-page-node-id="nCFSGHVcOjnsAKMOGNbKff">把已有 IoT API / OpenAPI 暴露成有语义的 Tools；</li>
+      <li data-page-node-id="sOws3ENHS2uwTDH9YmZdbq">建立 Tool Gateway，统一权限、租户、路由和审计；</li>
+      <li data-page-node-id="Vb86mHM8jbT73pETNgu2vm">建立 Agent Runtime，承载推理、计划、工具调用和 Loop；</li>
+      <li data-page-node-id="Zzk2NDxHdb9ALJnVLeOfiz">建立 Agent Control Plane，管理 Goal、Task、Policy、Scheduler 和状态；</li>
+      <li data-page-node-id="dxIB0B33OISW7vi4H8RwlW">让 Workflow / Rule Engine 成为 Agent 可以调用的确定性执行层；</li>
+      <li data-page-node-id="VHXLJzBJieOrglD13pytwe">把 Telemetry 从“监控数据”升级成 Agent 的 Observation；</li>
+      <li data-page-node-id="D0BJ4PstOAS3AQQjipTqKd">把最终业务结果作为 Agent 的 Outcome，而不是只看 API 是否成功。</li>
     </ul>
 
-    <h2>13. 最终形态：IoT 平台变成一个 Agent 可以工作的世界</h2>
-    <p>从这个角度看，IoT Agent 重构和 SaaS Agent 重构其实是一条相同的技术路线，只是 IoT 多了一层物理世界。</p>
-    <div class="architecture">                    Goal
+    <h2 data-page-node-id="5X0IRRtpzBinVE417S38L4">13. 最终形态：IoT 平台变成一个 Agent 可以工作的世界</h2>
+    <p data-page-node-id="rqqXtdHGT5nENiXKz8vyNK">从这个角度看，IoT Agent 重构和 SaaS Agent 重构其实是一条相同的技术路线，只是 IoT 多了一层物理世界。</p>
+    <div class="architecture" data-page-node-id="9g6eWANd2KegfxW1QwLg2R">                    Goal
                       ↓
                Agent Control Plane
                       ↓
@@ -222,11 +222,19 @@ Real Outcome
                     Gap
                       ↓
                      Loop</div>
-    <p>所以，IoT 的 Agent 化并不是把 LLM 塞进设备平台，而是把整个系统的控制方式，从<strong>“事件 → 规则 → 动作”</strong>逐渐扩展成<strong>“目标 → Agent → 能力 → 环境 → 反馈 → 再行动”</strong>。</p>
-    <div class="callout"><strong>最终的问题不是“涂鸦应该做哪些 Agent”，而是“涂鸦应该把 IoT 平台改造成什么样的基础设施，才能让未来各种 Agent 都可以在上面工作”。</strong></div>
-    <p>如果 SaaS 的 Agent 化，是让软件从 API / Workflow 中逐渐走向 Goal / Agent / Outcome，那么 IoT 的 Agent 化更进一步：它是在让<strong>数字世界与物理世界共同进入一个可被 Agent 持续感知、决策、执行和校正的闭环</strong>。</p>
+    <p data-page-node-id="a2llXFDKYFuvZi30qB2Cmp">所以，IoT 的 Agent 化并不是把 LLM 塞进设备平台，而是把整个系统的控制方式，从<strong data-page-node-id="u7jmfvGdoGgYirdewdY7Ts">“事件 → 规则 → 动作”</strong>逐渐扩展成<strong data-page-node-id="IKIFxb8tRjj53GCaShsG4F">“目标 → Agent → 能力 → 环境 → 反馈 → 再行动”</strong>。</p>
+    <div class="callout" data-page-node-id="boF1N5qiw7hh8F17H0exog"><strong data-page-node-id="1kgAgQV1SgNpRUAFoPZcxZ">最终的问题不是“这类平台应该做哪些 Agent”，而是“这类平台应该把 IoT 平台改造成什么样的基础设施，才能让未来各种 Agent 都可以在上面工作”。</strong></div>
+    <p data-page-node-id="fRsMmVPqKvtFGLZbeZgOs9">如果 SaaS 的 Agent 化，是让软件从 API / Workflow 中逐渐走向 Goal / Agent / Outcome，那么 IoT 的 Agent 化更进一步：它是在让<strong data-page-node-id="Opyt9THvuXHqmWHz1uPwAp">数字世界与物理世界共同进入一个可被 Agent 持续感知、决策、执行和校正的闭环</strong>。</p>
+
+    <h2 data-page-node-id="LVZ13c1i7WlMCcdDpLjsAi">14. 商业视角：IoT 平台怕的不是重构，而是绕过</h2>
+    <p data-page-node-id="JALGnZBWlhZ9E7CS7YgNBD">如果把 SaaS 和 IoT 放在一起看，IoT 平台其实比 SaaS 平台更危险，但它的护城河也更硬。</p>
+    <p data-page-node-id="RFvPnDNcKxTzEygWvyRyHX">危险在于「智能外移」：当用户说「帮我关灯、调温」，理解意图的是 Alexa、Siri 或某个助手层的 LLM，执行连接的是 IoT 平台——它会慢慢退化成一条只收连接费的哑管道，高毛利层被助手层吃掉。</p>
+    <p data-page-node-id="WHo2HuOmsqE7WTtVwk7Af1">硬也硬在这里：模组、认证、制造供应链、数十万 SKU 的设备库，这是物理地板，LLM 造不出来。</p>
+    <p data-page-node-id="xDs4RoEJfGv1TVu4woHI4W">所以 IoT 平台的活路很清晰：把自己暴露成所有 LLM Agent 调用物理世界的入口——无论是 MCP 还是设备动作 API——从「被配置的平台」变成「Agent 的物理世界工具层」。这恰好就是第 9 节说的 Tool Gateway，只不过这类平台要把这个 Gateway 做成整个行业的物理入口，而不是自己平台内部的一个组件。</p>
+    <p data-page-node-id="3hjiz0caArIh6imZQt5Meo">收费上，也会从「设备订阅」走向「动作 / 效果分成」。而这一条能不能走通，最终还是落到组织：技术弱、氛围差的组织，连「成为 Agent 物理入口」这道硬工程门都接不住，只能守着模组 / 供应链那块硬件地板，慢慢变成低毛利的连接商。</p>
+    <div class="callout" data-page-node-id="TgYfua02jWsZ7Fc9iq4rZ9"><strong data-page-node-id="J2R2A5YLJ7fkqrBKR3gHHP">一句话：SaaS 平台怕被「重做」，IoT 平台怕被「绕过」。前者拼组织能不能交付，后者拼能不能把自己焊死在「Agent 的物理世界入口」上。</strong></div>
   </div></section>
 </main>
-<footer class="site-footer"><div class="wrap site-footer__inner"><div><p>© <span id="year"></span> chengguruchun · Hangzhou</p><p>Blog for Agents · 个人知识博客</p><p class="footer-visits" aria-label="访问统计"><span>本站 <strong data-visits-site>-</strong></span><span class="footer-visits__sep" aria-hidden="true">·</span><span>本页 <strong data-visits-page>-</strong></span></p></div></div></footer>
+<footer class="site-footer" data-page-node-id="wRhxzPtArgw0acVwahFagL"><div class="wrap site-footer__inner" data-page-node-id="PZotDXyvqGz1zFnRBQFA8F"><div data-page-node-id="cy4iC78VHsoQzIyynmSQTl"><p data-page-node-id="4lFsv2FEZzUTd16BOInBYH">© <span id="year" data-page-node-id="9O7WJHpwMmiRGnygb5hj6W"></span> chengguruchun · Hangzhou</p><p data-page-node-id="G1kRF0qxyqmnA4du6Pwmc9">Blog for Agents · 个人知识博客</p><p class="footer-visits" aria-label="访问统计" data-page-node-id="ESj5BT5AAEn7snrrwFf64f"><span data-page-node-id="hr9QQGeYYkGEFdTUPiKOJA">本站 <strong data-visits-site data-page-node-id="46BnFSK4ZGMs7CoPH2dZNO">-</strong></span><span class="footer-visits__sep" aria-hidden="true" data-page-node-id="xrUjMZyIgaHIwYsq1AUkOz">·</span><span data-page-node-id="uhJm2Y7jEKcogPtsIx4Npq">本页 <strong data-visits-page data-page-node-id="8UHbzkraC9y6idlJJzh4NC">-</strong></span></p></div></div></footer>
 <script src="../assets/js/site.js"></script><script src="../assets/js/visits.js"></script>
 </body></html>
