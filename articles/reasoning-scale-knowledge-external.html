@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>推理是规模红利，知识是外挂红利 · Articles</title>
+  <meta name="description" content="企业为什么不全用小模型？因为「知识」和「推理」是两回事：知识天天变，该外挂（RAG/Agent）；推理难压缩，才吃规模。真正的决策变量是任务链长度——单步 95% 正确，十步只剩 60%。">
+  <meta name="theme-color" content="#f7f5f0">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap site-header__inner">
+      <a class="brand" href="../index.html">
+        <img class="brand__logo" src="../assets/img/brand-mark.svg" alt="AI Knowledge Lab" width="44" height="44">
+        <span class="brand__tag" data-brand-rotate aria-label="Independent Thinker · AI Agents · Complex Systems · Diverse Thinking"><span class="brand__rotate"><span class="brand__item is-active">Independent Thinker</span><span class="brand__item">AI Agents</span><span class="brand__item">Complex Systems</span><span class="brand__item">Diverse Thinking</span></span></span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">菜单</button>
+      <nav class="nav" id="site-nav" aria-label="主导航"><a href="../index.html">Home</a><a href="../diverse/">Diverse Lab</a><a href="../articles/" aria-current="page">Articles</a><a href="../projects/">Projects</a><a href="../videos/">Videos</a><a href="../times/">Hot Words</a><a href="../about/">About Me</a><a class="nav__search" href="../tags/">Tags / Search</a></nav>
+    </div>
+  </header>
+  <main>
+    <article class="article-body">
+      <header class="page-hero">
+        <div class="prose-wrap">
+          <p class="page-hero__kicker">Articles</p>
+          <h1>推理是规模红利，知识是外挂红利</h1>
+          <p class="page-hero__desc">企业为什么不全用小模型？因为「知识」和「推理」是两回事：知识天天变，该外挂；推理难压缩，才吃规模。</p>
+          <p class="article-meta"><span title="思路时间">思路 2026-09-02</span><span title="发表时间">发表 2026-09-08</span><span title="作者">作者 chengguruchun</span><a class="tag" href="../tags/?tag=Agent">Agent</a><a class="tag" href="../tags/?tag=Reasoning">Reasoning</a><a class="tag" href="../tags/?tag=Knowledge">Knowledge</a><a class="tag" href="../tags/?tag=Small%20Model">Small Model</a><a class="tag" href="../tags/?tag=Model%20Selection">Model Selection</a><a class="tag" href="../tags/?tag=Cost">Cost</a></p>
+        </div>
+      </header>
+      <div class="prose-wrap">
+        <p class="lede">「如果大模型的作用就是推理，那企业内部为什么不能全换成小模型？」这个问题里藏着一个最常见的误区：把「知识」和「推理」当成一回事。</p>
+        <p>两者其实是两件完全不同的东西，一旦混为一谈，选型就全盘跑偏。拆开看，结论很干净：<strong>知识天天变，不该烧进参数，应当外挂；推理难压缩，是规模红利的涌现，才真正吃大模型。</strong></p>
+        <blockquote>
+          <p>知识调用可以外挂（RAG / 数据库 / 工具），小模型就行，甚至更优；推理（多步规划、归因、跨系统判断）吃的是模型内部能力，规模越大越稳。</p>
+        </blockquote>
+
+        <h2>先拆开：知识与推理是两种红利</h2>
+        <table>
+          <thead>
+            <tr><th></th><th>知识</th><th>推理</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>本质</td><td>会变的事实、制度、FAQ、工单</td><td>多步规划、归因、写复杂代码、跨系统判断</td></tr>
+            <tr><td>载体</td><td>数据库、文档、工具、RAG</td><td>模型内部能力</td></tr>
+            <tr><td>是否可外挂</td><td>可以，且应该</td><td>难，基本靠模型自身</td></tr>
+            <tr><td>红利来源</td><td>外挂红利（数据/工具）</td><td>规模红利（涌现）</td></tr>
+            <tr><td>适合的模型</td><td>小模型行，甚至更优</td><td>越大越稳</td></tr>
+          </tbody>
+        </table>
+        <p>关键洞察在于「变」这个字：企业内部知识天天在变，把天天变的东西烧进权重，训练成本追不上业务变化；一旦知识外挂，模型「记忆容量」的需求骤降，小模型才有生存空间。</p>
+        <p>反过来，推理几乎压不回去。它是涌现出来的能力，掉回小模型时，最常见的失败形态不是「完全不会」，而是<strong>「第一步对、第二步对、第三步开始幻觉」</strong>——单步看着都靠谱，链条一长就散架。</p>
+
+        <h2>决策变量是任务链长度，误差会相乘</h2>
+        <p>为什么 Agent harness 默认押强模型？不是迷信规模，而是数学：</p>
+        <pre>单步正确率 95% × 十步  = 0.95^10 ≈ 0.60
+单步正确率 99% × 十步  = 0.99^10 ≈ 0.90</pre>
+        <p>Agent 是多步循环，每一步的误差会<strong>乘起来</strong>。小模型单步 95% 已经很体面，但一条十步的任务链，成功率只剩六成；强模型单步 99%，同样十步还有九成。</p>
+        <pre>小模型（单步 95%）:  95% → 90% → 86% → … → 60%
+强模型（单步 99%）:  99% → 98% → 97% → … → 90%
+                 ↑
+        任务链越长，差距越被放大</pre>
+        <p>这直接解释了为什么「长链条推理」是最不能小模型化的场景，也解释了为什么「单步分类/抽取」这种无链条任务，用小模型几乎无损失。</p>
+
+        <h2>落地：路由 + RAG 是前置，不是可选项</h2>
+        <p>选型不是二选一，而是按「任务链长度 + 是否依赖会变的知识」分流：</p>
+        <ul>
+          <li><strong>分类 / 抽取 / FAQ / 格式转换</strong>（占真实调用量 80%+）：小模型即可，成本降一个数量级。</li>
+          <li><strong>规划 / 代码生成 / 质检兜底 / 跨系统归因</strong>：上大模型。</li>
+          <li><strong>最常见的失败</strong>：既没做路由、也没做 RAG，让小模型「裸奔」去答它参数里根本没有的知识——这是<strong>架构问题，不是选型问题</strong>。</li>
+        </ul>
+        <pre>           ┌─ 任务链短 + 知识会变 ──→ 小模型 + RAG（成本降一个数量级）
+请求 ── 路由 ─┤
+           └─ 任务链长 / 难压缩推理 ──→ 大模型（规模红利）</pre>
+
+        <h2>2026 年的变局：小模型也开始会推理了</h2>
+        <p>过去「小模型」和「会推理」几乎互斥。2026 年的分水岭已经不在参数量，而在<strong>训练数据里有没有长 CoT（思维链）轨迹</strong>：</p>
+        <ul>
+          <li>DeepSeek-R1-Distill 用约 80 万条推理轨迹做 SFT，蒸馏出 1.5B 到 70B 全系「小推理模型」——1.5B 的 AIME 成绩从 0 提到 28.9，同体积直接获得多步推理。</li>
+          <li>分水岭是<strong>数据</strong>，不是<strong>参数</strong>：同样的规模，喂过高质量长思维链的，才谈得上「会推理」。</li>
+        </ul>
+        <p>但这也只是把「规模红利」部分转移成了「数据红利」——蒸馏出来的推理仍是别人大模型的能力影子，上限仍受母模型约束。真正的难压缩推理，还是得靠规模。</p>
+
+        <h2>一个实战背书：本地跑 R1-Distill 排障</h2>
+        <p>这条判断不是纯推演，有本地实操印证。在 2019 款 Intel Mac（16G 内存、无 GPU 加速）上跑 <code>deepseek-r1:1.5b</code>，踩了三个坑，恰好印证上面「知识外挂、推理内置」的边界：</p>
+        <pre>第一层  8K 上下文装不下 13K 启动载荷（system prompt + MCP 工具定义）→ 第一条消息必挂
+第二层  长会话历史涨到 53K，把 32K 又挤爆 → 再次 400
+第三层  排障时把地址指向了已死的本地代理 → 502</pre>
+        <p>真正有意思的是「慢」的归因：同一道题，<code>think=false</code> 吐 689 token / 125.3s，<code>think=low</code> 只吐 85 token / 6.9s——<strong>18 倍差距</strong>。慢的主因不是硬件，是「思考档位」和「上下文开销」；硬件（Intel Mac 纯 CPU）只是叠加项。</p>
+        <p>本地跑小推理模型的结论很务实：<strong>学原理够用，正经活还是走云端强模型</strong>。这又回到那条边界——1.5B 的 R1 是蒸馏版，思考链质量一般，偶尔算数翻车；它适合验证「推理是怎么回事」，不适合扛生产任务链。</p>
+
+        <h2>收束</h2>
+        <p>「推理是规模红利，知识是外挂红利」这句话真正的价值，是让你在选型时<strong>不再用同一个尺度量两件不同的事</strong>：</p>
+        <pre>知识（会变、可检索）──→ 外挂（RAG / 工具）──→ 释放小模型的生存空间
+推理（涌现、难压缩）──→ 内置（规模红利）──→ 任务链越长越押强模型</pre>
+        <p>决策时只需要问两个问题：<strong>这段任务的知识会不会变？这条任务链有多长？</strong> 答案会自己指向该用哪个模型。</p>
+        <blockquote>
+          <p>别让小模型去答它参数里没有的知识（那是缺 RAG），也别让小模型扛它撑不起的推理链（那是缺路由）。选型错误里，九成是架构偷懒，不是模型不行。</p>
+        </blockquote>
+
+        <h2>开放问题</h2>
+        <ul>
+          <li>蒸馏出的「小推理模型」的推理上限，到底由母模型决定还是由蒸馏数据决定？未来能不能只靠更长的思维链数据，就把规模红利彻底搬进小模型？</li>
+          <li>任务链长度如何低成本地度量？没有可靠的长度估计，路由规则就只能拍脑袋。</li>
+          <li>当 RAG 与工具召回也引入「概率」时，小模型 + 外挂这条路的整体误差，会不会反而追平甚至反超纯大模型？</li>
+          <li>知识外挂的边界在哪——哪些「知识」其实已经内化成了需要规模的「推理」，无法干净地切出去？</li>
+        </ul>
+
+        <p>源码笔记：<a href="../content/articles/reasoning-scale-knowledge-external.md"><code>content/articles/reasoning-scale-knowledge-external.md</code></a></p>
+        <p><a href="https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/reasoning-scale-knowledge-external.md" rel="noopener">Revisions</a></p>
+        <p><a href="./">← 返回 Articles</a></p>
+
+        <section class="comments" data-comments data-repo="chengguruchun/chengguruchun.github.io" data-page-id="reasoning-scale-knowledge-external" data-page-url="https://chengguruchun.github.io/articles/reasoning-scale-knowledge-external.html" aria-label="Comments">
+          <h2 class="comments__title">Comments</h2>
+          <p class="comments__status" data-comments-status></p>
+          <div class="comments__list" data-comments-list></div>
+          <form class="comments__form" data-comments-form>
+            <label>Name
+              <input name="name" type="text" maxlength="80" placeholder="your name" autocomplete="nickname">
+            </label>
+            <label>Comment
+              <textarea name="body" maxlength="4000" placeholder="写下你的想法" required></textarea>
+            </label>
+            <button class="comments__submit" type="submit">Leave a comment</button>
+          </form>
+        </section>
+
+      </div>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap site-footer__inner">
+      <div>
+        <p>© <span id="year"></span> chengguruchun · Hangzhou</p>
+        <p>Blog for Agents · 个人知识博客</p>
+        <p class="footer-visits" aria-label="访问统计">
+          <span>本站 <strong data-visits-site>-</strong></span>
+          <span class="footer-visits__sep" aria-hidden="true">·</span>
+          <span>本页 <strong data-visits-page>-</strong></span>
+        </p>
+      </div>
+    </div>
+  </footer>
+  <script src="../assets/js/site.js"></script>
+  <script src="../assets/js/visits.js"></script>
+  <script src="../assets/js/comments.js"></script>
+</body>
+</html>

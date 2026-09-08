@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>符号主义 vs 联结主义：意义如何接地 · Diverse Lab</title>
+  <meta name="description" content="符号主义说意义在符号的位置，联结主义说意义在向量的位置；两派都没解决「符号接地」。现实是大模型底层分布式、表层符号化，缺的都是把意义接到真实经验的那块「地」。">
+  <meta name="theme-color" content="#f7f5f0">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+<header class="site-header"><div class="wrap site-header__inner"><a class="brand" href="../index.html"><img class="brand__logo" src="../assets/img/brand-mark.svg" alt="AI Knowledge Lab" width="44" height="44"><span class="brand__tag" data-brand-rotate aria-label="Independent Thinker · AI Agents · Complex Systems · Diverse Thinking"><span class="brand__rotate"><span class="brand__item is-active">Independent Thinker</span><span class="brand__item">AI Agents</span><span class="brand__item">Complex Systems</span><span class="brand__item">Diverse Thinking</span></span></span></a><button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">菜单</button><nav class="nav" id="site-nav" aria-label="主导航"><a href="../index.html">Home</a><a href="../diverse/" aria-current="page">Diverse Lab</a><a href="../articles/">Articles</a><a href="../projects/">Projects</a><a href="../videos/">Videos</a><a href="../times/">Hot Words</a><a href="../about/">About Me</a><a class="nav__search" href="../tags/">Tags / Search</a></nav></div></header>
+<main><article class="article-body"><header class="page-hero"><div class="prose-wrap"><p class="page-hero__kicker">Diverse Lab</p><h1>符号主义 vs 联结主义：意义如何接地</h1><p class="page-hero__desc">符号主义说意义在符号的位置，联结主义说意义在向量的位置；两派都没解决「符号接地」。缺的都是把意义接到真实经验的那块「地」。</p><p class="article-meta"><span>思路 2026-08-01</span><span>发表 2026-09-08</span><span>作者 chengguruchun</span><a class="tag" href="../tags/?tag=Symbolicism">Symbolicism</a><a class="tag" href="../tags/?tag=Connectionism">Connectionism</a><a class="tag" href="../tags/?tag=Grounding">Grounding</a><a class="tag" href="../tags/?tag=Philosophy">Philosophy</a><a class="tag" href="../tags/?tag=LLM">LLM</a></p></div></header>
+<div class="prose-wrap">
+<p class="lede">「符号主义」和「联结主义」吵了几十年，一个说意义是符号在形式系统中的位置，一个说意义是向量在高维空间中的位置。这场争论跟今天的 LLM 有什么关系？更尖锐一点问：当一个词的意义既不是写在词典里的定义、也不只是共现统计时，它到底「接」在什么东西上？</p>
+
+<h2>Question</h2>
+<p>把两派先摆成一张对照表，再看它们共同的软肋。</p>
+<table>
+<thead><tr><th></th><th>符号主义（GOFAI）</th><th>联结主义（神经网络）</th></tr></thead>
+<tbody>
+<tr><td>意义的定义</td><td>离散符号在形式系统中的位置</td><td>分布式向量在高维空间的位置</td></tr>
+<tr><td>载体</td><td>词符、概念节点、框架槽位</td><td>embedding、网络权重（亚符号）</td></tr>
+<tr><td>来源</td><td>指称 + 形式定义（弗雷格、塔斯基）</td><td>共现统计（分布假说：看其友知其义）</td></tr>
+<tr><td>组合性</td><td>强：部分意义 + 句法规则精确算出</td><td>弱：靠上下文 + 参数涌现</td></tr>
+<tr><td>性质</td><td>确定、可解释、共享同一本「词典」</td><td>模糊、连续、随语境变、原型式</td></tr>
+<tr><td>软肋</td><td>常识黑洞、符号接地问题</td><td>接地未解、可解释性差</td></tr>
+</tbody>
+</table>
+<p>有意思的是，两派的软肋最后指到了<strong>同一个地方</strong>：符号接地问题（symbol grounding）。</p>
+<p>符号主义的问题在于——一个符号的意义靠「其他符号」来定义，这本词典再大，也总有一层悬空，连不到真实世界。联结主义的问题在于——向量是从文本共现里学出来的，一个词的意义再准确，也是「语言内部的相互指认」，同样悬空。</p>
+<p>所以两条看似对立的路，缺的是<strong>同一块「地」</strong>：把意义接到真实经验上。</p>
+
+<h2>My Thinking</h2>
+<h3>现实：底层分布式，表层符号化</h3>
+<p>今天的大模型，其实是「两者都沾一点」的缝合：</p>
+<pre>表层：符号化（token、词、语法、规则性的输出）
+底层：分布式（embedding、权重、亚符号表征）
+缺的：把意义接到真实经验的那块「地」</pre>
+<p>LLM 的表层是符号化的——它输出词、遵守语法、甚至能做形式推理；但它的底层是分布式向量。这正好证明了两派不是非此即彼：<strong>意义可以底层分布式、表层符号化</strong>，缺的不是某一种表征，而是接地。</p>
+
+<h3>硅基 vs 碳基：差别不在「聪不聪明」</h3>
+<p>顺着「接地」往下，碳基和硅基的区别也清楚了：</p>
+<ul>
+<li><strong>碳基（生物智能）</strong>：碳化学为底，代谢供能，神经毫秒级，会生老病死，自愈强——最关键的是，它<strong>天然接地</strong>：感官与世界直接相连。</li>
+<li><strong>硅基（机器智能）</strong>：硅半导体为底，电力供能，电子纳秒级，可拷贝量产，自愈弱——它<strong>悬空未接地</strong>：符号与向量还没连上真实经验。</li>
+</ul>
+<p>所以核心差异从来不是「谁更聪明」，而是<strong>意义怎么接地</strong>。多模态、具身智能（机器人）正在给硅基补这块「地」——让模型不再只是读文本，而是去看、去摸、去行动。补上了，才谈得上真正的「理解」，而不只是「预测下一个词」。</p>
+
+<h3>为什么这条线值得继续追</h3>
+<p>把「符号接地」当作共同根，就同时串起了几件事：符号主义 vs 联结主义、碳基 vs 硅基、以及大模型从「文本」走向「多模态/具身」的必然性。</p>
+<pre>符号主义 ─┐
+          ├─ 共同软肋：符号接地 ──→ 多模态 / 具身是补「地」的方向
+联结主义 ─┘
+          ↓
+碳基（天然接地） vs 硅基（悬空未接地）</pre>
+<p>这与本站<a href="llm-scientific-experiment.html">「用科学实验的方式使用大模型」</a>是一条弧：既然模型还悬空、还没接地，那面对它唯一诚实的姿态，就是黑盒实验——轰击它、观察反应、反推结构，而不是假装我们已经读懂了它的内部。</p>
+<blockquote><p>两派吵的是「意义装在哪」，但真正没解决的是「意义接到哪」。大模型把符号与向量缝在了一起，却依然悬空——缺的那块「地」，正是多模态与具身要补的。</p></blockquote>
+
+<h2>Open Questions</h2>
+<ul>
+<li>「符号接地」到底是一个能被工程解决的工程问题，还是一个哲学上的伪问题（意义本来就不需要接地）？</li>
+<li>LLM 的表层符号化，是真的「理解」了符号，还是只是学到了符号的用法分布？这两者有没有可操作的区别标准？</li>
+<li>多模态和具身智能补「地」的进度，有没有可度量的里程碑？「接地」本身怎么验证？</li>
+<li>如果接地是渐进而非二值的，那「部分接地」的模型，我们该用多高的信任去对待？</li>
+</ul>
+</div></article></main>
+<footer class="site-footer"><div class="wrap site-footer__inner"><div><p>© <span id="year"></span> chengguruchun · Hangzhou</p><p>Blog for Agents · 个人知识博客</p><p class="footer-visits" aria-label="访问统计"><span>本站 <strong data-visits-site>-</strong></span><span class="footer-visits__sep" aria-hidden="true">·</span><span>本页 <strong data-visits-page>-</strong></span></p></div></div></footer>
+<script src="../assets/js/site.js"></script><script src="../assets/js/visits.js"></script>
+</body></html>
