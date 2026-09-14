@@ -1,8 +1,8 @@
 {
   "name": "Hot Words feedback",
-  "generated": "2026-09-07T05:44:41Z",
-  "period": "2026-09-W1",
-  "word": "Context Window Optimization",
+  "generated": "2026-09-14T05:52:09Z",
+  "period": "2026-09-W2",
+  "word": "Agent 记忆架构",
   "signals": {
     "visits": {
       "site": null,
@@ -24,29 +24,59 @@
     }
   },
   "lastRun": {
-    "runId": "hot-words-2026-09-W1-20260907T054441Z",
-    "phase": "skipped",
+    "runId": "hot-words-2026-09-W2-20260914T055159Z",
+    "phase": "applied",
     "gates": {
-      "schema": "skip",
+      "schema": "pass",
       "duplicate": "pass",
-      "editorial": "skip",
-      "evidence": "skip",
-      "relevance": "skip",
-      "consistency": "skip"
+      "editorial": "pass",
+      "evidence": "pass",
+      "relevance": "pass",
+      "consistency": "pass"
     },
-    "evidenceCount": 0,
+    "evidenceCount": 15,
     "publish": {},
-    "error": "Period 2026-09-W1 already published (Context Window Optimization); skip apply/push (pass force=true to override)"
+    "error": null
   },
   "learnHints": {
     "recentWords": [
+      "2026-09-W2: Agent 记忆架构",
       "2026-09-W1: Context Window Optimization"
     ],
-    "rejectedCandidates": [],
-    "prefer": "下一轮务必补齐结构化证据（title/url/claim）；先有来源，再谈热度。",
-    "avoid": "回避与当前词重复、口号化、以及只有空泛描述没有来源的词。"
+    "rejectedCandidates": [
+      {
+        "word": "Agent 评估与可观测性",
+        "reason": "not_chosen",
+        "notes": "热度持续走高：Agent 上线后最缺的是可复现的评估与追踪，而非再堆一个提示词技巧。"
+      },
+      {
+        "word": "MCP 工具生态",
+        "reason": "not_chosen",
+        "notes": "与上下文优化互补：工具描述本身占用窗口，MCP 的按需发现与资源引用可减少无效上下文注入。"
+      },
+      {
+        "word": "Agent 安全与权限边界",
+        "reason": "not_chosen",
+        "notes": "随 Agent 获得写权限与支付能力，安全边界从模型层转向系统层，成为工程团队必答题。"
+      },
+      {
+        "word": "推理成本优化",
+        "reason": "not_chosen",
+        "notes": "与上下文窗口优化同属效率主线，但聚焦单位任务成本与延迟，是团队预算压力下的直接抓手。"
+      }
+    ],
+    "prefer": "优先选能落到本站软件 / 系统 / Agent 主线的词，并带至少一条可点开的 https 证据。",
+    "avoid": "回避与当前词重复、口号化、以及只有空泛描述没有来源的词。 最近未入选：Agent 评估与可观测性、MCP 工具生态、Agent 安全与权限边界、推理成本优化。"
   },
   "recentRuns": [
+    {
+      "runId": "hot-words-2026-09-W2-20260914T055159Z",
+      "period": "2026-09-W2",
+      "phase": "applied",
+      "word": "Agent 记忆架构",
+      "finishedAt": "2026-09-14T05:52:09Z",
+      "path": "/api/hot-words/runs/hot-words-2026-09-W2-20260914T055159Z.json"
+    },
     {
       "runId": "hot-words-2026-09-W1-20260907T054441Z",
       "period": "2026-09-W1",

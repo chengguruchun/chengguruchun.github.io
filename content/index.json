@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-08T03:58:19Z",
+  "generated": "2026-09-14T05:52:09Z",
   "items": [
     {
       "id": "reasoning-scale-knowledge-external",
@@ -292,6 +292,22 @@
       "published_date": "2026-09-06",
       "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/physics-ecology-llm.md",
       "content": "/content/diverse/physics-ecology-llm.md"
+    },
+    {
+      "id": "times-2026-09-w2",
+      "type": "Times",
+      "title": "2026-09 Week 2 · Agent 记忆架构",
+      "excerpt": "上下文窗口优化解决的是单次能装多少，而记忆架构决定跨会话该留下什么、遗忘什么，二者构成同一条工程主线。近期 arXiv 综述、LangGraph 官方文档与 Anthropic 工程博客密集讨论分层记忆、冲突消解与遗忘策略，社区热度与落地需求同步上升。把它作为本周热词，既延续上周主题，又把讨论从窗口容量推进到长期状态管理这一更难的工程问题。",
+      "url": "/times/",
+      "date": "2026-09-14",
+      "tags": [
+        "Times",
+        "Hot Words",
+        "Agent 记忆架构"
+      ],
+      "markdown": "/content/times/2026-09-w2.md",
+      "period": "2026-09-W2",
+      "word": "Agent 记忆架构"
     },
     {
       "id": "times-2026-09-w1",
