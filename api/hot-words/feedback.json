@@ -1,6 +1,6 @@
 {
   "name": "Hot Words feedback",
-  "generated": "2026-09-14T05:52:09Z",
+  "generated": "2026-09-14T05:52:11Z",
   "period": "2026-09-W2",
   "word": "Agent 记忆架构",
   "signals": {
@@ -25,7 +25,7 @@
   },
   "lastRun": {
     "runId": "hot-words-2026-09-W2-20260914T055159Z",
-    "phase": "applied",
+    "phase": "published",
     "gates": {
       "schema": "pass",
       "duplicate": "pass",
@@ -35,7 +35,12 @@
       "consistency": "pass"
     },
     "evidenceCount": 15,
-    "publish": {},
+    "publish": {
+      "commit": "0b56290987202209776faea4be6a8036e1a2b0c7",
+      "url": "https://chengguruchun.github.io/times/",
+      "mode": "autonomous",
+      "periodScheme": "YYYY-MM-WN month block, not ISO week"
+    },
     "error": null
   },
   "learnHints": {
@@ -72,9 +77,9 @@
     {
       "runId": "hot-words-2026-09-W2-20260914T055159Z",
       "period": "2026-09-W2",
-      "phase": "applied",
+      "phase": "published",
       "word": "Agent 记忆架构",
-      "finishedAt": "2026-09-14T05:52:09Z",
+      "finishedAt": "2026-09-14T05:52:11Z",
       "path": "/api/hot-words/runs/hot-words-2026-09-W2-20260914T055159Z.json"
     },
     {
