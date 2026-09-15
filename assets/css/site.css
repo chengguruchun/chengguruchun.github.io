@@ -2162,6 +2162,34 @@ a.entry-card:hover {
   font-size: 0.98rem;
   line-height: 1.7;
 }
+.now-note {
+  max-width: 40rem;
+}
+.now-note > p {
+  margin: 0 0 1rem;
+  color: var(--text-dim);
+  font-size: 0.98rem;
+  line-height: 1.7;
+}
+.now-note blockquote {
+  margin: 0 0 1rem;
+  padding: 0 0 0 0.9rem;
+  border-left: 2px solid var(--line);
+}
+.now-note blockquote p {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  color: var(--text);
+  line-height: 1.75;
+}
+.now-note cite {
+  display: block;
+  margin-top: 0.4rem;
+  font-style: normal;
+  font-size: 0.82rem;
+  color: var(--text-faint);
+}
 .now-reading {
   list-style: none;
   margin: 0;
