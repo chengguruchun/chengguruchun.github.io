@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://chengguruchun.github.io/</loc>
-    <lastmod>2026-09-08</lastmod>
+    <lastmod>2026-09-15</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
@@ -12,7 +12,7 @@
   </url>
   <url>
     <loc>https://chengguruchun.github.io/articles/</loc>
-    <lastmod>2026-09-08</lastmod>
+    <lastmod>2026-09-15</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
@@ -62,12 +62,12 @@
   </url>
   <url>
     <loc>https://chengguruchun.github.io/bench/</loc>
-    <lastmod>2026-09-08</lastmod>
+    <lastmod>2026-09-15</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://chengguruchun.github.io/diverse/</loc>
-    <lastmod>2026-09-08</lastmod>
+    <lastmod>2026-09-15</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
@@ -102,12 +102,12 @@
   </url>
   <url>
     <loc>https://chengguruchun.github.io/projects/</loc>
-    <lastmod>2026-09-08</lastmod>
+    <lastmod>2026-09-15</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://chengguruchun.github.io/tags/</loc>
-    <lastmod>2026-09-08</lastmod>
+    <lastmod>2026-09-15</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
@@ -117,7 +117,7 @@
   </url>
   <url>
     <loc>https://chengguruchun.github.io/videos/</loc>
-    <lastmod>2026-09-08</lastmod>
+    <lastmod>2026-09-15</lastmod>
     <priority>0.8</priority>
   </url>
 </urlset>

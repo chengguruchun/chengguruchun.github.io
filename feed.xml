@@ -5,8 +5,16 @@
     <link>https://chengguruchun.github.io/</link>
     <description>chengguruchun · Blog for Agents · 知识博客（文章 / Diverse Lab 等有日期条目）</description>
     <language>zh-cn</language>
-    <lastBuildDate>Tue, 08 Sep 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 14 Sep 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://chengguruchun.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>2026-09 Week 2 · Agent 记忆架构</title>
+      <link>https://chengguruchun.github.io/times/</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/times/</guid>
+      <pubDate>Mon, 14 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Times</category>
+      <description>上下文窗口优化解决的是单次能装多少，而记忆架构决定跨会话该留下什么、遗忘什么，二者构成同一条工程主线。近期 arXiv 综述、LangGraph 官方文档与 Anthropic 工程博客密集讨论分层记忆、冲突消解与遗忘策略，社区热度与落地需求同步上升。把它作为本周热词，既延续上周主题，又把讨论从窗口容量推进到长期状态管理这一更难的工程问题。</description>
+    </item>
     <item>
       <title>推理是规模红利，知识是外挂红利</title>
       <link>https://chengguruchun.github.io/articles/reasoning-scale-knowledge-external.html</link>
