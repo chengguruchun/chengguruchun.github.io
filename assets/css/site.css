@@ -2145,6 +2145,17 @@ a.entry-card:hover {
 }
 
 .now-playing + .now-playing { margin-top: 1rem; }
+.now-playing__body--stack {
+  display: grid;
+  gap: 1rem;
+}
+.now-playing__note--lead {
+  margin: 0;
+  max-width: 40rem;
+  color: var(--text-dim);
+  font-size: 0.98rem;
+  line-height: 1.7;
+}
 .now-reading {
   list-style: none;
   margin: 0;
@@ -2269,33 +2280,6 @@ a.project-card:hover .project-card__stars {
 }
 .about-profile .callout {
   margin-top: 0.35rem;
-}
-.about-reading {
-  list-style: none;
-  margin: 1rem 0 0;
-  padding: 0;
-  display: grid;
-  gap: 0.65rem;
-}
-.about-reading li {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0.35rem 0.85rem;
-  padding: 0.75rem 0;
-  border-top: 1px solid var(--line-soft);
-}
-.about-reading a {
-  color: var(--accent);
-  text-decoration: none;
-  font-weight: 500;
-}
-.about-reading a:hover {
-  text-decoration: underline;
-}
-.about-reading__meta {
-  color: var(--text-faint);
-  font-size: 0.85rem;
 }
 
 
