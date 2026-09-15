@@ -2108,6 +2108,10 @@ a.entry-card:hover {
   justify-content: space-between;
   gap: 1rem 1.5rem;
 }
+.now-playing__body > div:first-child {
+  flex: 1 1 14rem;
+  min-width: 0;
+}
 .now-playing__track {
   margin: 0;
   font-family: var(--serif);
@@ -2127,7 +2131,13 @@ a.entry-card:hover {
   color: var(--text-faint);
   line-height: 1.55;
 }
-.now-playing__links { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+.now-playing__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-left: auto;
+  flex-shrink: 0;
+}
 .now-playing__btn {
   display: inline-flex;
   align-items: center;
