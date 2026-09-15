@@ -160,6 +160,7 @@ def build_jsonld(path_url: str, title: str, desc: str, base: str, item: dict | N
                     "Agent Infrastructure",
                     "Distributed Systems",
                     "Industrial IoT",
+                    "Parenting in the AI era",
                 ],
             },
         }
