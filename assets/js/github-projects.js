@@ -5,8 +5,8 @@
   if (!researchRoot && !personalRoot && !skillsRoot) return;
 
   var RESEARCH = ["TencentCloud/TencentDB-Agent-Memory", "cobusgreyling/loop-engineering", "deepseek-ai/deepseek-harness"];
-  var PERSONAL = ["chengguruchun/llm-trace-reuse", "chengguruchun/SecondKill"];
-  var SKILLS = ["chengguruchun/idealagent"];
+  var PERSONAL = ["chengguruchun/llm-trace-reuse", "chengguruchun/idealagent"];
+  var SKILLS = ["chengguruchun/naval-mind-skill"];
 
   function escapeHtml(s) { return String(s == null ? "" : s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
   function card(repo, kind) {
