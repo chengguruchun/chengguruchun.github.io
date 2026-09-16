@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>H-Neurons：幻觉可能藏在模型内部的稀疏神经元中 · Diverse Lab</title><meta name="description" content="H-Neurons 论文阅读：从神经元层面理解 LLM 幻觉、过度顺从与预训练起源。"><link rel="icon" href="../favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../assets/css/site.css"></head><body>
+<header class="site-header"><div class="wrap site-header__inner"><a class="brand" href="../index.html"><img class="brand__logo" src="../assets/img/brand-mark.svg" alt="AI Knowledge Lab" width="44" height="44"><span class="brand__tag">Independent Thinker · AI Agents · Complex Systems</span></a><nav class="nav"><a href="../index.html">Home</a><a href="../bench/">Agent Bench</a><a href="../diverse/" aria-current="page">Diverse Lab</a><a href="../articles/">Articles</a><a href="../projects/">Projects</a><a href="../videos/">Videos</a><a href="../times/">Hot Words</a><a href="../about/">About Me</a></nav></div></header>
+<main><header class="page-hero"><div class="wrap"><p class="page-hero__kicker">Diverse Lab · Paper Reading · 2026-09-16</p><h1>H-Neurons：幻觉可能藏在模型内部的稀疏神经元中</h1><p class="page-hero__desc">从宏观行为走向模型内部：一篇论文如何寻找与 hallucination 相关的稀疏神经元，以及它对 Agent 可靠性有什么启发。</p></div></header>
+<article class="section"><div class="wrap article-content">
+<p><strong>论文：</strong><em>H-Neurons: On the Existence, Impact, and Origin of Hallucination-Associated Neurons in LLMs</em>，Cheng Gao 等，arXiv:2512.01797。论文从 identification、behavioral impact、origin 三个角度研究 hallucination-associated neurons。citeturn0academia12</p>
+<h2>1. 这篇论文真正问了什么？</h2>
+<p>过去我们通常从数据、训练目标、RLHF、解码策略等宏观角度解释幻觉。这篇论文反过来问：<strong>如果把 LLM 打开到神经元层面，是否存在一小部分内部单元，它们的激活状态与 hallucination 稳定相关？</strong></p>
+<p>作者把这类神经元称为 <strong>H-Neurons</strong>，并进一步追问两个问题：这些神经元只是“报警器”，还是会影响模型行为？它们是在 alignment 阶段产生，还是在 pre-training 阶段就已经存在？citeturn0academia12turn0search13</p>
+<h2>2. 最核心的发现：非常少的神经元也能预测幻觉</h2>
+<p>论文发现，少于模型全部神经元 <strong>0.1%</strong> 的一个稀疏子集，就能够较可靠地预测 hallucination 的发生，并且在不同场景下具有较好的泛化能力。citeturn0academia12</p>
+<p>这个结果有意思的地方不只是“0.1% 很少”，而是它暗示：<strong>模型的某些复杂宏观行为，可能由非常稀疏的内部表征参与触发或调节。</strong></p>
+<h2>3. 作者怎么找到它们？</h2>
+<p>官方实现给出的流程大致是：多次采样模型回答 → 抽取事实性 token → 构造 balanced 的 truthful / hallucinated 样本 → 提取 neuron activations → 量化 neuron contribution → 用 sparse logistic regression 找到具有预测能力的神经元。citeturn0search1</p>
+<p>这里我觉得有一个很重要的实验思想：作者不是直接观察某个 neuron“看起来像在产生幻觉”，而是先把<strong>可观察行为标签</strong>建立起来，再反过来寻找内部 activation 与行为之间的关系。</p>
+<h2>4. 第二个发现：它不只是相关，还和“过度顺从”有关</h2>
+<p>论文进一步做了 controlled intervention。结果显示，对 H-Neurons 进行干预会影响模型的 <strong>over-compliance</strong> 行为，因此作者认为这些神经元与该行为存在因果联系，而不仅仅是一个相关性指标。citeturn0academia12turn0search4</p>
+<p>这里需要区分两件事情：论文的实验支持的是<strong>在其设置下对这些神经元进行干预会改变行为</strong>；这并不意味着已经找到了一个可以解释所有 hallucination 的“幻觉开关”。</p>
+<h2>5. 第三个发现：H-Neurons 可能在预训练阶段就形成</h2>
+<p>作者继续把这些神经元追溯到 pre-trained base model，发现它们在基础模型中仍具有 hallucination detection 的预测能力，因此论文认为这些与幻觉相关的内部机制可能在<strong>预训练阶段</strong>已经出现，而不是完全由 post-training alignment 引入。citeturn0academia12</p>
+<p>这点对理解 LLM 很重要：我们今天看到的“模型行为”，可能不是 instruction tuning 或 system prompt 单独创造出来的，而是在更早的训练阶段已经形成了一些潜在的内部结构，后续训练只是改变它们的表达和使用方式。</p>
+<h2>6. 这和我之前对“大模型要像做科学实验一样使用”的想法有什么关系？</h2>
+<p>我之前有一个判断：面对 LLM，不能只把 prompt 当成“写得更好一点”，而应该更像做实验——提出假设、控制变量、观察结果、记录反馈。</p>
+<p>H-Neurons 其实提供了一个更底层的版本：</p><pre>宏观行为
+   ↓
+定义可观察指标
+   ↓
+采样 / 对照
+   ↓
+提取内部 activation
+   ↓
+寻找相关结构
+   ↓
+干预
+   ↓
+观察行为是否改变</pre>
+<p>也就是说，LLM 的一些看似“玄学”的行为，可以逐渐被转化成<strong>可测量、可干预、可复现的实验对象</strong>。</p>
+<h2>7. 对 Agent Runtime 的启发</h2>
+<p>这篇论文让我重新思考 Agent Runtime 的“验证”应该放在哪里。</p>
+<p>我们之前讨论 Agent 时，验证主要发生在外部世界：Code Agent 跑 test，IoT Agent 看设备状态，业务 Agent 看任务结果。但 H-Neurons 提醒我们：<strong>模型内部也可能存在可以被观测的风险信号。</strong></p>
+<p>因此未来 Agent Runtime 可能出现两类 feedback：</p><ul><li><strong>External feedback：</strong>工具执行结果、测试结果、环境状态、用户确认。</li><li><strong>Internal feedback：</strong>模型 hidden state / activation 中与不可靠行为相关的信号。</li></ul>
+<p>于是 Agent 的可靠性闭环可能从：</p><pre>LLM → Tool → External Verify → Re-plan</pre><p>进一步变成：</p><pre>LLM
+ ↓
+Internal Risk Signal
+ ↓
+Tool / Action
+ ↓
+External Verification
+ ↓
+Re-plan</pre>
+<p>但这里目前只能作为研究方向，不能把 H-Neurons 直接当成生产环境里的 hallucination detector。</p>
+<h2>8. 一个更深的思考：模型能力和 Harness 能力可能要分开</h2>
+<p>这篇论文让我想到我们之前讨论过的一个问题：<strong>Agent 的可靠性究竟来自模型本身，还是来自 Runtime / Harness？</strong></p>
+<p>H-Neurons 更偏向“模型内部机制”这一侧：模型本身可能存在与不可靠行为相关的稀疏结构。</p>
+<p>而 Agent Runtime 则是另一侧：它可以通过 context engineering、tool feedback、verification、retry、checkpoint、memory 等机制，把模型内部的不确定性限制在一个可控的执行闭环里。</p>
+<p>所以我现在更倾向于把 Agent reliability 看成：</p><pre>Reliability
+= Model Internal Mechanism
++ Context / Harness
++ External Verification
++ Runtime Recovery</pre>
+<p>而不是单纯期待“换一个更强的模型”解决所有问题。</p>
+<h2>9. 需要保持的谨慎</h2>
+<p>这篇论文很有启发性，但它不应该被解读成“已经找到 hallucination 的根因”。论文研究的是特定模型、任务和实验设置下的神经元层现象；“预测幻觉”“因果影响 over-compliance”和“幻觉的完整机制”是三个不同层次的问题。</p>
+<p>尤其是 <strong>H-Neurons ≠ 一个通用的幻觉开关</strong>。真正要走向工程应用，还需要验证跨模型、跨任务、跨领域的稳定性，以及干预是否会损害模型正常能力。</p>
+<h2>10. 我的总结</h2>
+<p>我认为 H-Neurons 最有价值的地方，是它提供了一条从<strong>宏观行为 → 微观机制 → 干预验证</strong>的研究路径。</p>
+<p>过去我们说“LLM 会幻觉”，通常停留在行为层；这篇论文尝试继续往下追：</p><pre>为什么会产生这种行为？
+        ↓
+模型内部哪些 activation 与它相关？
+        ↓
+这些 activation 能否预测？
+        ↓
+干预它们会不会改变行为？
+        ↓
+这些结构什么时候形成？</pre>
+<p>这让我对 Agent 的一个判断更加明确：<strong>未来 Agent engineering 不一定只是把模型包在更多工具和 workflow 外面，也可能逐渐进入“模型内部机制 + 外部 Runtime”共同设计的阶段。</strong></p>
+<p>如果说 IoT Agent 的方向是从 <strong>Next API → Next State</strong>，那么 LLM reliability 的一个可能方向就是从 <strong>Next Token → Next Internal State → Next Verified Outcome</strong>。</p>
+<h2>参考</h2><ul><li><a href="https://arxiv.org/abs/2512.01797" rel="noopener">H-Neurons · arXiv</a></li><li><a href="https://github.com/thunlp/H-Neurons" rel="noopener">H-Neurons · Official GitHub</a></li></ul>
+</div></article></main><footer class="site-footer"><div class="wrap site-footer__inner"><div><p>© <span id="year"></span> chengguruchun · Hangzhou</p><p>Blog for Agents · 知识博客</p></div></div></footer><script src="../assets/js/site.js"></script></body></html>
