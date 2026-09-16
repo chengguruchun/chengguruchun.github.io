@@ -8,6 +8,8 @@ published_date: 2026-09-08
 tags: [Agent, Optimizer, Reinforcement Learning, Experience Memory, Evaluation, Policy]
 excerpt: 从我们讨论 Local RL Optimizer、JitRL、EvoTest 与 GEPA 时形成的一条思路出发：Agent 变强不一定首先意味着修改模型权重，也可以通过经验记忆、轨迹检索、策略调整与工具调用方式的优化实现。
 history_url: https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/agent-optimizer-experience-policy.md
+last_verified: 2026-09-08
+cadence_days: 90
 ---
 
 # Agent Optimizer：不训练模型，而是优化经验与策略

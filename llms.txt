@@ -34,5 +34,9 @@
 - lab_list_thoughts / lab_get_thought / lab_propose_topic / lab_thought_validate / lab_thought_criteria / lab_thought_judge
 - [Thoughts](/api/thoughts.json)
 - [Thought criteria](/api/thoughts-criteria.json)
+- lab_knowledge_status / lab_knowledge_due / lab_knowledge_criteria / lab_knowledge_report / lab_knowledge_review
+- [Knowledge registry](/api/knowledge.json)
+- [Knowledge criteria](/api/knowledge-criteria.json)
+- [Knowledge Loop](/KNOWLEDGE_LOOP.md)
 - [Bench](/bench/)
 - [Thought Loop](/THOUGHT_LOOP.md)

@@ -10,6 +10,8 @@ stage: validated
 origin: user
 contribution: extension
 thought_id: thought-scientific-experiment-agent
+last_verified: 2026-09-06
+cadence_days: 180
 ---
 
 # 大模型：用科学实验的方式使用

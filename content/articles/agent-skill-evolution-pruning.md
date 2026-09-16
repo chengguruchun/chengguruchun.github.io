@@ -8,6 +8,8 @@ published_date: 2026-09-08
 tags: [Agent, Procedural Memory, Skill, Runtime, Loop Engineering, Evaluation]
 excerpt: 把执行轨迹蒸馏成技能已被两代工作证明有效，但「技能如何停止增长」被留给了未来工作。剪枝的关键转换：不追踪模型为什么用一节，只测量删掉之后效果变不变。
 history_url: https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/agent-skill-evolution-pruning.md
+last_verified: 2026-09-08
+cadence_days: 90
 ---
 
 # Agent 技能演化：从轨迹回流到可剪枝的程序性记忆

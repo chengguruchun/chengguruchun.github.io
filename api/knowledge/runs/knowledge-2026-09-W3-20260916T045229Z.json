@@ -1,0 +1,69 @@
+{
+  "runId": "knowledge-2026-09-W3-20260916T045229Z",
+  "period": "2026-09-W3",
+  "phase": "checked",
+  "verdict": "ok",
+  "startedAt": "2026-09-16T04:52:29Z",
+  "finishedAt": "2026-09-16T04:52:29Z",
+  "input": {
+    "periodScheme": "YYYY-MM-WN = Nth 7-day block of the calendar month (Asia/Shanghai), not ISO week",
+    "as_of": "2026-09-16"
+  },
+  "gates": {
+    "surfaces": "pass",
+    "coverage": "pass",
+    "times_excluded": "pass",
+    "cadence": "pass",
+    "due": "pass"
+  },
+  "checks": [
+    {
+      "gate": "surfaces",
+      "ok": true,
+      "hard": true,
+      "detail": "criteria + knowledge.json present"
+    },
+    {
+      "gate": "coverage",
+      "ok": true,
+      "hard": true,
+      "detail": "all catalog Articles/Diverse are in the registry"
+    },
+    {
+      "gate": "times_excluded",
+      "ok": true,
+      "hard": true,
+      "detail": "Times/Hot Words excluded from lifecycle"
+    },
+    {
+      "gate": "cadence",
+      "ok": true,
+      "hard": true,
+      "detail": "every item has next_review"
+    },
+    {
+      "gate": "due",
+      "ok": true,
+      "hard": false,
+      "detail": "0 item(s) need review"
+    }
+  ],
+  "due": [],
+  "stale": [],
+  "changed": [],
+  "contested": [],
+  "summary": {
+    "items": 14,
+    "due": 0,
+    "stale": 0,
+    "changed": 0,
+    "contested": 0,
+    "fail": 0
+  },
+  "criteria": "/api/knowledge-criteria.json",
+  "registry": "/api/knowledge.json",
+  "publish": {
+    "url": "https://chengguruchun.github.io/api/knowledge/runs/latest.json"
+  },
+  "error": null
+}

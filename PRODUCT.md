@@ -76,6 +76,10 @@
 
 Skill 可被任意 Agent 加载。带过来的聊天和初步想法只落 `topic`，过完字段 `gates[]` **和** 模型 `model_gates[]` 才能当验证过。模型标准是可改的提示词（`/content/thoughts/criteria.json`）；本站不调用模型，Agent 读 prompt、写 `judgement`。`ai` + `known` 不能当 Articles 主文。过门后按 `route` 分流。已有正文不重写。Hot Words 仍走自己的周环。详见 `THOUGHT_LOOP.md`、`lab_thought_criteria`、`lab_thought_judge`。
 
+## Knowledge Loop
+
+已发表知识另走有效性回路：时间门把超期标成 `stale`（过期≠错误）；Verifier 只写 `content/knowledge/reports/`；人 `keep / changed / contested / archived` 后才改 `last_verified` 或钉状态。Times / Hot Words 排除。详见 `KNOWLEDGE_LOOP.md`。
+
 ## Agent-native Loop
 
 周日上海 10:00 定时检查本站是否仍面向 Agent 原生（可发现、可调用、正文在 Markdown/JSON）。只写 run 报告，不改知识内容；硬门禁失败开 issue。详见 `api/agent-native/criteria.json` 与 `lab_agent_native_status`。

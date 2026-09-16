@@ -58,6 +58,7 @@
 4. 知识索引 [`/api/catalog.json`](./api/catalog.json) → `/content/**/*.md`
 5. 站点地图 [`llms.txt`](./llms.txt)
 6. 入境是 [`topic`](./THOUGHT_LOOP.md)：聊天和初步想法先蒸馏，再看 [`/api/thoughts.json`](./api/thoughts.json) 的字段 `gates[]` 和模型 `model_gates[]`。标准在 [`/api/thoughts-criteria.json`](./api/thoughts-criteria.json)。未 `published` 的当实验，不当结论。
+7. 已发表知识另走 [`KNOWLEDGE_LOOP.md`](./KNOWLEDGE_LOOP.md)：读 [`/api/knowledge.json`](./api/knowledge.json)。`stale` 是过期，不是错误。Agent 只写报告。
 
 元工具：`lab_discover`、`lab_execute`。
 
@@ -76,6 +77,8 @@ sitemap.xml robots.txt     搜索引擎入口（生成物）
 scripts/build_feeds.py     从 catalog 生成 RSS
 scripts/build_seo.py       注入页面元数据 + 生成 sitemap / robots
 PRODUCT.md                 产品愿景与路线图
+KNOWLEDGE_LOOP.md          已发表知识的有效性回路
+scripts/build_knowledge.py 知识 registry + catalog 新鲜度字段
 assets/                    CSS / JS
 ```
 

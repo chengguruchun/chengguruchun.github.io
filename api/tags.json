@@ -1,7 +1,11 @@
 {
-  "updated": "2026-09-08",
+  "updated": "2026-09-16",
   "tags": {
     "Agent": [
+      "simuhome-paper-reading",
+      "ai-era-production-consumption-balance",
+      "iot-agent-from-automation-to-physical-infrastructure-part-ii",
+      "iot-agent-from-automation-to-physical-infrastructure",
       "reasoning-scale-knowledge-external",
       "agent-industrial-internet",
       "agent-evaluation-proxy-vs-real-outcome",
@@ -9,15 +13,28 @@
       "agent-skill-evolution-pruning",
       "agent-engineering-from-workflow-to-control-plane",
       "from-function-to-ecosystem",
+      "saas-ecommerce-agent-thinking",
+      "iot-agent-reconstruction",
       "k8s-to-agent-control-plane",
       "llm-scientific-experiment",
-      "physics-ecology-llm",
+      "physics-ecology-llm"
+    ],
+    "Agent Runtime": [
+      "h-neurons-paper-reading"
+    ],
+    "Agent 记忆架构": [
+      "times-2026-09-w2"
+    ],
+    "Architecture": [
+      "iot-agent-from-automation-to-physical-infrastructure-part-ii",
+      "iot-agent-from-automation-to-physical-infrastructure",
       "saas-ecommerce-agent-thinking",
       "iot-agent-reconstruction"
     ],
-    "Architecture": [
-      "saas-ecommerce-agent-thinking",
-      "iot-agent-reconstruction"
+    "Benchmark": [
+      "simuhome-paper-reading",
+      "iot-agent-from-automation-to-physical-infrastructure-part-ii",
+      "iot-agent-from-automation-to-physical-infrastructure"
     ],
     "Complex Systems": [
       "interpretability-rl-faithfulness",
@@ -28,13 +45,16 @@
     "Connectionism": [
       "symbolicism-vs-connectionism"
     ],
+    "Consumption": [
+      "ai-era-production-consumption-balance"
+    ],
     "Context Window Optimization": [
       "times-2026-09-w1"
     ],
     "Control Plane": [
       "agent-engineering-from-workflow-to-control-plane",
-      "k8s-to-agent-control-plane",
-      "iot-agent-reconstruction"
+      "iot-agent-reconstruction",
+      "k8s-to-agent-control-plane"
     ],
     "Cost": [
       "reasoning-scale-knowledge-external"
@@ -43,6 +63,8 @@
       "agent-industrial-internet"
     ],
     "Diverse": [
+      "simuhome-paper-reading",
+      "h-neurons-paper-reading",
       "symbolicism-vs-connectionism",
       "interpretability-rl-faithfulness",
       "from-function-to-ecosystem",
@@ -77,6 +99,9 @@
     "Feedback": [
       "agent-evaluation-proxy-vs-real-outcome"
     ],
+    "Feedback Loop": [
+      "ai-era-production-consumption-balance"
+    ],
     "Graph": [
       "agent-engineering-from-workflow-to-control-plane"
     ],
@@ -86,19 +111,27 @@
     "Grounding": [
       "symbolicism-vs-connectionism"
     ],
+    "Hallucination": [
+      "h-neurons-paper-reading"
+    ],
     "Harness": [
       "agent-engineering-from-workflow-to-control-plane"
     ],
     "Hot Words": [
+      "times-2026-09-w2",
       "times-2026-09-w1"
     ],
     "Industrial Internet": [
       "agent-industrial-internet"
     ],
     "Interpretability": [
+      "h-neurons-paper-reading",
       "interpretability-rl-faithfulness"
     ],
     "IoT": [
+      "simuhome-paper-reading",
+      "iot-agent-from-automation-to-physical-infrastructure-part-ii",
+      "iot-agent-from-automation-to-physical-infrastructure",
       "iot-agent-reconstruction"
     ],
     "Know-how": [
@@ -112,6 +145,7 @@
       "k8s-to-agent-control-plane"
     ],
     "LLM": [
+      "h-neurons-paper-reading",
       "symbolicism-vs-connectionism",
       "interpretability-rl-faithfulness",
       "from-function-to-ecosystem",
@@ -122,9 +156,12 @@
       "agent-evaluation-proxy-vs-real-outcome",
       "agent-skill-evolution-pruning",
       "agent-engineering-from-workflow-to-control-plane",
+      "saas-ecommerce-agent-thinking",
       "k8s-to-agent-control-plane",
-      "llm-scientific-experiment",
-      "saas-ecommerce-agent-thinking"
+      "llm-scientific-experiment"
+    ],
+    "MHS": [
+      "iot-agent-from-automation-to-physical-infrastructure"
     ],
     "Model Selection": [
       "reasoning-scale-knowledge-external"
@@ -141,6 +178,13 @@
     "Philosophy": [
       "symbolicism-vs-connectionism"
     ],
+    "Physical AI": [
+      "iot-agent-from-automation-to-physical-infrastructure-part-ii",
+      "iot-agent-from-automation-to-physical-infrastructure"
+    ],
+    "Physical Runtime": [
+      "simuhome-paper-reading"
+    ],
     "Physics": [
       "from-function-to-ecosystem",
       "physics-ecology-llm"
@@ -150,6 +194,9 @@
     ],
     "Procedural Memory": [
       "agent-skill-evolution-pruning"
+    ],
+    "Production": [
+      "ai-era-production-consumption-balance"
     ],
     "RL": [
       "interpretability-rl-faithfulness"
@@ -174,10 +221,14 @@
     "Small Model": [
       "reasoning-scale-knowledge-external"
     ],
+    "Smart Home": [
+      "iot-agent-from-automation-to-physical-infrastructure"
+    ],
     "Symbolicism": [
       "symbolicism-vs-connectionism"
     ],
     "Times": [
+      "times-2026-09-w2",
       "times-2026-09-w1"
     ],
     "Vertical": [

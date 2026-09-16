@@ -8,6 +8,8 @@ published_date: 2026-09-07
 tags: [Agent, SaaS, E-commerce, Architecture, Loop Engineering]
 excerpt: 从某电商 SaaS 平台出发：Agent 不是给业务系统加一个聊天入口，而是让软件从 API / Workflow 中心逐渐演化为 Goal / Capability / Feedback Loop 中心。
 history_url: https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/saas-ecommerce-agent-thinking.md
+last_verified: 2026-09-07
+cadence_days: 90
 ---
 
 # SaaS 电商平台的 Agent 思考

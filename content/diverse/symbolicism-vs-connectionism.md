@@ -7,6 +7,8 @@ thought_date: 2026-08-01
 published_date: 2026-09-08
 tags: [Diverse, Symbolicism, Connectionism, Grounding, Philosophy, LLM]
 excerpt: 符号主义说意义在符号的位置，联结主义说意义在向量的位置；两派都没解决「符号接地」。现实是大模型底层分布式、表层符号化，缺的都是把意义接到真实经验的那块「地」。
+last_verified: 2026-09-08
+cadence_days: 365
 ---
 
 # 符号主义 vs 联结主义：意义如何接地

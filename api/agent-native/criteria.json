@@ -26,6 +26,11 @@
       "ask": "Does every catalog knowledge entry point at an existing /content/**/*.md?"
     },
     {
+      "id": "page_parity",
+      "hard": true,
+      "ask": "Does every published Articles/Diverse HTML page have a catalog row and canonical Markdown?"
+    },
+    {
       "id": "catalog_index",
       "hard": true,
       "ask": "Do content/index.json and api/catalog.json share the same id order?"

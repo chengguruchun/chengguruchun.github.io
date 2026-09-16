@@ -84,3 +84,5 @@ Agent：`lab_thought_criteria` 读 prompt → 按 prompt 判断 → `lab_thought
 - Criteria: `/content/thoughts/criteria.json` → `/api/thoughts-criteria.json`
 - Page: `/bench/`（给人看的走轨：思想实验台）
 - Tools: `lab_list_thoughts` · `lab_get_thought` · `lab_propose_topic` · `lab_thought_validate` · `lab_thought_criteria` · `lab_thought_judge`
+
+发表之后的有效性见 [`KNOWLEDGE_LOOP.md`](/KNOWLEDGE_LOOP.md)。`published` 不是终身有效。

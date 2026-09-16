@@ -8,6 +8,8 @@ published_date: 2026-09-08
 tags: [Diverse, Physics, Ecology, LLM, Agent, Experiment, Complex Systems]
 excerpt: 从我们关于科学实验、物理学、生态学与 Agent 的讨论出发：大模型需要用实验思维理解，Agent 则进一步进入环境、反馈与持续调整的问题。
 history_url: https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/from-function-to-ecosystem.md
+last_verified: 2026-09-08
+cadence_days: 180
 ---
 
 # 从函数到生态系统：重新理解大模型与 Agent

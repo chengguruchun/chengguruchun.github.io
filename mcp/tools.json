@@ -1,6 +1,6 @@
 {
   "name": "ai-knowledge-lab",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Knowledge Lab tools. Agents: lab_discover then lab_execute. Add domain tools here without editing SKILL.md. Hot Words lifecycle: State → Propose → Validate → Apply → Publish → Observe.",
   "transport_today": "static-http + action urls",
   "transport_next": "mcp-stdio-or-http",
@@ -912,7 +912,168 @@
         "path": "/content/thoughts/",
         "note": "Open a PR that only updates judgement. Re-run build_thoughts.py. Never write Articles from this tool."
       }
+    },
+    {
+      "name": "lab_knowledge_status",
+      "kind": "read",
+      "description": "Read published-knowledge freshness: status, last_verified, next_review, cadence. Times/Hot Words are excluded. stale means overdue, not wrong.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Optional entry id to inspect"
+          }
+        },
+        "additionalProperties": false
+      },
+      "static": {
+        "method": "GET",
+        "path": "/api/knowledge.json",
+        "client_filter": true
+      }
+    },
+    {
+      "name": "lab_knowledge_due",
+      "kind": "read",
+      "description": "List registry items that need review (stale / changed / contested). Filter knowledge.due == true.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "static": {
+        "method": "GET",
+        "path": "/api/knowledge.json",
+        "client_filter": true
+      }
+    },
+    {
+      "name": "lab_knowledge_criteria",
+      "kind": "read",
+      "description": "Read the living post-publish verifier standard: prompt + cadence + changelog. Old reports with a different version are stale judgements, not wrong articles.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "static": {
+        "method": "GET",
+        "path": "/api/knowledge-criteria.json"
+      }
+    },
+    {
+      "name": "lab_knowledge_run_status",
+      "kind": "read",
+      "description": "Observe the latest knowledge lifecycle run manifest.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "static": {
+        "method": "GET",
+        "path": "/api/knowledge/runs/latest.json"
+      },
+      "contract": {
+        "sideEffects": [],
+        "requiresApproval": false,
+        "idempotencyKey": "runId|latest",
+        "rollback": "n/a",
+        "timeoutSeconds": 30
+      }
+    },
+    {
+      "name": "lab_knowledge_report",
+      "kind": "contribute",
+      "description": "Run the current knowledge criteria on one published entry. Write only a report under content/knowledge/reports/. Do not change article bodies, catalog stage, or last_verified.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "entry_id": {
+            "type": "string",
+            "description": "Catalog id to verify"
+          },
+          "criteria_version": {
+            "type": "string",
+            "description": "Must match /api/knowledge-criteria.json version"
+          },
+          "verdict": {
+            "type": "string",
+            "description": "unchanged | changed | insufficient | obsolete"
+          },
+          "note": {
+            "type": "string",
+            "description": "One-sentence reason"
+          },
+          "evidence": {
+            "type": "array",
+            "description": "changed/obsolete require at least one https URL",
+            "items": {
+              "type": "object",
+              "properties": {
+                "url": { "type": "string" },
+                "note": { "type": "string" }
+              },
+              "required": ["url"]
+            }
+          },
+          "proposed_change": {
+            "type": "string",
+            "description": "Optional patch description. Not the rewritten article."
+          },
+          "model": {
+            "type": "string"
+          }
+        },
+        "required": ["entry_id", "criteria_version", "verdict"],
+        "additionalProperties": false
+      },
+      "contract": {
+        "sideEffects": ["content/knowledge/reports/*.json"],
+        "requiresApproval": true,
+        "idempotencyKey": "entry_id + period",
+        "rollback": "delete the report file",
+        "timeoutSeconds": 90
+      },
+      "static": {
+        "method": "ACTION",
+        "action": "pr",
+        "path": "/content/knowledge/reports/",
+        "note": "Open a PR with a report JSON only. Run python3 scripts/knowledge_verify.py --file. Never write Articles from this tool."
+      }
+    },
+    {
+      "name": "lab_knowledge_review",
+      "kind": "contribute",
+      "description": "Human decision: keep (refresh last_verified), or pin changed / contested / archived. Does not rewrite the article body.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "decision": {
+            "type": "string",
+            "description": "keep | changed | contested | archived"
+          },
+          "note": { "type": "string" }
+        },
+        "required": ["id", "decision"],
+        "additionalProperties": false
+      },
+      "contract": {
+        "sideEffects": ["content/knowledge/overrides/{id}.json"],
+        "requiresApproval": true,
+        "idempotencyKey": "id + decision + date",
+        "rollback": "delete or edit the override",
+        "timeoutSeconds": 30
+      },
+      "static": {
+        "method": "ACTION",
+        "action": "local",
+        "command_template": "python3 scripts/knowledge_review.py --id {id} --decision {decision}",
+        "note": "Human only. Rebuilds the registry. Does not ghostwrite."
+      }
     }
   ],
-  "updated": "2026-09-08"
+  "updated": "2026-09-16"
 }

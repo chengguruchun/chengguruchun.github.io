@@ -8,6 +8,8 @@ published_date: 2026-09-08
 tags: [Agent, Reasoning, Knowledge, Small Model, Model Selection, Cost]
 excerpt: 企业为什么不全用小模型？因为「知识」和「推理」是两回事：知识天天变，该外挂（RAG/Agent）；推理难压缩，才吃规模。真正的决策变量是任务链长度——单步 95% 正确，十步只剩 60%。
 history_url: https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/reasoning-scale-knowledge-external.md
+last_verified: 2026-09-08
+cadence_days: 90
 ---
 
 # 推理是规模红利，知识是外挂红利

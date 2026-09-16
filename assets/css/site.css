@@ -1919,6 +1919,89 @@ a.entry-card:hover {
   text-decoration: underline;
 }
 
+.knowledge-status__group {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.7rem;
+}
+.knowledge-status {
+  display: inline-flex;
+  align-items: center;
+  font: 500 11px/1.2 var(--mono);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.18rem 0.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  color: var(--text-dim);
+  background: var(--bg-soft);
+  white-space: nowrap;
+}
+.knowledge-status--fresh {
+  color: var(--teal);
+  background: var(--teal-soft);
+  border-color: rgba(63, 122, 104, 0.35);
+}
+.knowledge-status--stale {
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-color: rgba(154, 116, 40, 0.35);
+}
+.knowledge-status--changed,
+.knowledge-status--contested {
+  color: var(--danger);
+  background: rgba(180, 84, 69, 0.08);
+  border-color: rgba(180, 84, 69, 0.35);
+}
+.knowledge-status--archived {
+  color: var(--text-faint);
+  background: transparent;
+}
+.knowledge-status__meta {
+  color: var(--text-faint);
+  font-family: var(--mono);
+  font-size: 0.78rem;
+}
+.knowledge-board {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line-soft);
+}
+.knowledge-board h2 {
+  margin: 0 0 0.4rem;
+  font-size: 1.15rem;
+}
+.knowledge-board__lead,
+.knowledge-board__counts {
+  color: var(--text-dim);
+  font-size: 0.92rem;
+  margin: 0 0 0.7rem;
+}
+.knowledge-board__table {
+  overflow-x: auto;
+}
+.knowledge-board table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+.knowledge-board th,
+.knowledge-board td {
+  text-align: left;
+  padding: 0.45rem 0.55rem;
+  border-bottom: 1px solid var(--line-soft);
+  vertical-align: top;
+}
+.knowledge-board th {
+  color: var(--text-faint);
+  font-family: var(--mono);
+  font-weight: 500;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
 .prose-wrap table {
   width: 100%;
   border-collapse: collapse;

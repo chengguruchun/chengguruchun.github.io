@@ -6,6 +6,8 @@ date: 2026-09-06
 thought_date: 2026-09-02
 published_date: 2026-09-06
 tags: [Diverse, Physics, Ecology, Complex Systems, LLM, Agent]
+last_verified: 2026-09-06
+cadence_days: 180
 ---
 
 # 物理学 × 生态学：对复杂系统的一个思考

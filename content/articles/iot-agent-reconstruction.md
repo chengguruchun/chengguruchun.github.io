@@ -8,6 +8,8 @@ published_date: 2026-09-07
 tags: [Agent, IoT, Architecture, Edge, Control Plane]
 excerpt: 如果说传统 IoT 平台解决的是“设备如何被连接、管理和自动化”，那么 Agent 时代真正值得思考的问题是：设备、云边能力和智能决策，能不能共同组成一个可以围绕目标持续工作的运行系统？
 history_url: https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/iot-agent-reconstruction.md
+last_verified: 2026-09-07
+cadence_days: 90
 ---
 
 # IoT 平台的 Agent 重构

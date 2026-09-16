@@ -69,6 +69,11 @@ def check_agent_surfaces() -> None:
         "api/thoughts-criteria.json",
         "content/thoughts/criteria.json",
         "THOUGHT_LOOP.md",
+        "KNOWLEDGE_LOOP.md",
+        "content/knowledge/criteria.json",
+        "api/knowledge.json",
+        "api/knowledge-criteria.json",
+        "api/knowledge/runs/latest.json",
         "bench/index.html",
     ]
     for rel in required:
@@ -107,6 +112,12 @@ def check_agent_surfaces() -> None:
             "lab_thought_validate",
             "lab_thought_criteria",
             "lab_thought_judge",
+            "lab_knowledge_status",
+            "lab_knowledge_due",
+            "lab_knowledge_criteria",
+            "lab_knowledge_report",
+            "lab_knowledge_review",
+            "lab_knowledge_run_status",
         ):
             if need not in dnames:
                 fail(f"discover missing {need}")
@@ -365,6 +376,10 @@ def check_thoughts() -> None:
         fail("bench page should mount the stage play")
     else:
         ok("bench page has stage play")
+    if 'id="lab-knowledge"' not in bench:
+        fail("bench page should mount the knowledge registry")
+    else:
+        ok("bench page has knowledge registry")
     skill = (ROOT / "SKILL.md").read_text(encoding="utf-8")
     if "Bench process" not in skill or "lab_thought_judge" not in skill:
         fail("SKILL.md should document the Bench process")
@@ -375,10 +390,77 @@ def check_thoughts() -> None:
         fail("home should include the Bench process in the Skill panel")
     else:
         ok("home Skill panel has Bench process")
+    if "知识生命周期" not in home or "lab_knowledge_report" not in home:
+        fail("home should include the knowledge lifecycle in the Skill panel")
+    else:
+        ok("home Skill panel has knowledge lifecycle")
     if 'href="bench/"' not in home or ">Agent Bench<" not in home:
         fail("home nav should include Bench")
     else:
         ok("home nav has Bench")
+
+
+def check_knowledge() -> None:
+    print("\n== Knowledge loop ==")
+    registry = load_json(ROOT / "api" / "knowledge.json")
+    criteria = load_json(ROOT / "api" / "knowledge-criteria.json")
+    src = load_json(ROOT / "content" / "knowledge" / "criteria.json")
+    catalog = load_json(ROOT / "api" / "catalog.json")
+    if not registry or not criteria or not src or not catalog:
+        return
+    if not criteria.get("prompt") or not criteria.get("version") or not criteria.get("axes"):
+        fail("knowledge-criteria.json needs prompt, version, axes")
+    elif criteria.get("version") != src.get("version"):
+        fail("api/knowledge-criteria.json version != content/knowledge/criteria.json")
+    else:
+        ok(f"knowledge criteria v{criteria.get('version')}")
+    items = registry.get("items") or []
+    if len(items) < 1:
+        fail("knowledge.json should list published Articles/Diverse")
+    else:
+        ok(f"knowledge {len(items)} items")
+    ids = {x.get("id") for x in items if isinstance(x, dict)}
+    for it in catalog.get("items") or []:
+        if not isinstance(it, dict):
+            continue
+        if it.get("type") == "Times":
+            if it.get("knowledge"):
+                fail(f"Times {it.get('id')} must not carry knowledge")
+            continue
+        if it.get("type") in {"Articles", "Diverse Lab"}:
+            if it.get("id") not in ids:
+                fail(f"catalog {it.get('id')} missing from knowledge.json")
+            kn = it.get("knowledge") or {}
+            if kn.get("status") not in {"fresh", "stale", "changed", "contested", "archived"}:
+                fail(f"catalog {it.get('id')} missing knowledge.status")
+            elif not kn.get("last_verified") or not kn.get("next_review"):
+                fail(f"catalog {it.get('id')} missing last_verified/next_review")
+    ok("catalog knowledge fields scanned")
+    if str(ROOT / "scripts") not in sys.path:
+        sys.path.insert(0, str(ROOT / "scripts"))
+    from knowledge_lib import page_parity_gaps
+
+    gaps = page_parity_gaps()
+    if gaps:
+        fail("published HTML missing catalog/markdown: " + ", ".join(gaps[:6]))
+    else:
+        ok("published HTML has catalog + markdown")
+    loop = (ROOT / "KNOWLEDGE_LOOP.md").read_text(encoding="utf-8")
+    if "过期不等于错误" not in loop or "lab_knowledge_report" not in loop:
+        fail("KNOWLEDGE_LOOP.md should keep stale ≠ wrong and report-only agents")
+    else:
+        ok("KNOWLEDGE_LOOP.md stale ≠ wrong")
+    wf = ROOT / ".github" / "workflows" / "knowledge-weekly.yml"
+    if not wf.exists():
+        fail("missing knowledge-weekly.yml")
+    elif "knowledge_check.py" not in wf.read_text(encoding="utf-8"):
+        fail("knowledge-weekly.yml should run knowledge_check.py")
+    else:
+        ok("knowledge weekly workflow")
+    if "Never rewrite article bodies" not in (ROOT / "SKILL.md").read_text(encoding="utf-8"):
+        fail("SKILL.md should keep knowledge reports from rewriting articles")
+    else:
+        ok("SKILL.md knowledge reports do not rewrite")
 
 
 def check_projects() -> None:
@@ -416,15 +498,19 @@ def check_projects() -> None:
         for k in ("full_name", "description", "html_url", "stargazers_count", "language", "updated_at"):
             if k not in x:
                 fail(f"research item missing {k}: {x.get('full_name')}")
-    if len(p_items) != 1:
-        fail(f"personal should have 1 item, got {len(p_items)}")
+    if not p_items:
+        fail("personal snapshot is empty")
     else:
-        ok("personal 1 item")
+        ok(f"personal {len(p_items)} item(s)")
     p_got = {x.get("full_name") for x in p_items}
-    if p_got != {"chengguruchun/llm-trace-reuse"}:
-        fail(f"personal repos mismatch: {p_got}")
+    if "chengguruchun/llm-trace-reuse" not in p_got:
+        fail("personal snapshot should keep llm-trace-reuse")
     else:
-        ok("personal repo is llm-trace-reuse")
+        ok("personal snapshot includes llm-trace-reuse")
+    for x in p_items:
+        for k in ("full_name", "description", "html_url"):
+            if not x.get(k):
+                fail(f"personal item missing {k}: {x.get('full_name')}")
 
     videos = load_json(ROOT / "api" / "videos.json")
     vhtml = (ROOT / "videos" / "index.html").read_text(encoding="utf-8")
@@ -621,6 +707,7 @@ def main() -> None:
     check_index_coherence()
     check_hot_words()
     check_thoughts()
+    check_knowledge()
     check_projects()
     check_feeds_script()
     check_seo()

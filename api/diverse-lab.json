@@ -2,6 +2,68 @@
   "type": "Diverse Lab",
   "items": [
     {
+      "id": "simuhome-paper-reading",
+      "type": "Diverse Lab",
+      "title": "SimuHome：从“调用设备”到“与环境闭环”",
+      "excerpt": "智能家居 Agent benchmark 的一个重要转变：从判断 API 是否调用正确，到观察环境、行动、等待状态变化并验证目标状态。",
+      "url": "/diverse/simuhome-paper-reading.html",
+      "date": "2026-09-16",
+      "tags": [
+        "Diverse",
+        "IoT",
+        "Agent",
+        "Physical Runtime",
+        "Benchmark"
+      ],
+      "thought_date": "2026-09-16",
+      "published_date": "2026-09-16",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/simuhome-paper-reading.md",
+      "content": "/content/diverse/simuhome-paper-reading.md",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-09-16",
+        "next_review": "2027-03-15",
+        "cadence_days": 180,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      }
+    },
+    {
+      "id": "h-neurons-paper-reading",
+      "type": "Diverse Lab",
+      "title": "H-Neurons：幻觉可能藏在模型内部的稀疏神经元中",
+      "excerpt": "从神经元层面理解 hallucination、over-compliance 与预训练起源，并思考内部风险信号如何进入 Agent Runtime。",
+      "url": "/diverse/h-neurons-paper-reading.html",
+      "date": "2026-09-16",
+      "tags": [
+        "Diverse",
+        "Interpretability",
+        "Hallucination",
+        "Agent Runtime",
+        "LLM"
+      ],
+      "thought_date": "2026-09-16",
+      "published_date": "2026-09-16",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/h-neurons-paper-reading.md",
+      "content": "/content/diverse/h-neurons-paper-reading.md",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-09-16",
+        "next_review": "2027-03-15",
+        "cadence_days": 180,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      }
+    },
+    {
       "id": "symbolicism-vs-connectionism",
       "type": "Diverse Lab",
       "title": "符号主义 vs 联结主义：意义如何接地",
@@ -19,7 +81,19 @@
       "thought_date": "2026-08-01",
       "published_date": "2026-09-08",
       "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/symbolicism-vs-connectionism.md",
-      "content": "/content/diverse/symbolicism-vs-connectionism.md"
+      "content": "/content/diverse/symbolicism-vs-connectionism.md",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-09-08",
+        "next_review": "2027-09-08",
+        "cadence_days": 365,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      }
     },
     {
       "id": "interpretability-rl-faithfulness",
@@ -39,7 +113,19 @@
       "thought_date": "2026-09-03",
       "published_date": "2026-09-08",
       "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/interpretability-rl-faithfulness.md",
-      "content": "/content/diverse/interpretability-rl-faithfulness.md"
+      "content": "/content/diverse/interpretability-rl-faithfulness.md",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-09-08",
+        "next_review": "2027-03-07",
+        "cadence_days": 180,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      }
     },
     {
       "id": "from-function-to-ecosystem",
@@ -60,7 +146,19 @@
       "thought_date": "2026-09-04",
       "published_date": "2026-09-08",
       "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/from-function-to-ecosystem.md",
-      "content": "/content/diverse/from-function-to-ecosystem.md"
+      "content": "/content/diverse/from-function-to-ecosystem.md",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-09-08",
+        "next_review": "2027-03-07",
+        "cadence_days": 180,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      }
     },
     {
       "id": "llm-scientific-experiment",
@@ -84,7 +182,19 @@
       "stage": "validated",
       "origin": "user",
       "contribution": "extension",
-      "thought_id": "thought-scientific-experiment-agent"
+      "thought_id": "thought-scientific-experiment-agent",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-09-06",
+        "next_review": "2027-03-05",
+        "cadence_days": 180,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      }
     },
     {
       "id": "physics-ecology-llm",
@@ -104,7 +214,19 @@
       "thought_date": "2026-09-02",
       "published_date": "2026-09-06",
       "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/physics-ecology-llm.md",
-      "content": "/content/diverse/physics-ecology-llm.md"
+      "content": "/content/diverse/physics-ecology-llm.md",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-09-06",
+        "next_review": "2027-03-05",
+        "cadence_days": 180,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      }
     }
   ]
 }

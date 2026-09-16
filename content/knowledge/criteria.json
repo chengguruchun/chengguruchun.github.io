@@ -1,0 +1,79 @@
+{
+  "id": "knowledge-lifecycle-criteria",
+  "name": "Knowledge Lifecycle · 事后验证标准",
+  "version": "2026-09-16.1",
+  "updated": "2026-09-16",
+  "note": "这是发表之后的有效性标准，不是 Thought Loop 的入库门禁。过期不等于错误。改 prompt 或轴必须升 version。",
+  "improve": "Edit prompt and/or axes here, bump version, append changelog, run python3 scripts/build_knowledge.py. Do not rewrite published article bodies to satisfy a new standard. Agent reports never auto-apply.",
+  "layers": {
+    "time": "build_knowledge.py 硬判：now > next_review 且无人钉住 CHANGED/CONTESTED/ARCHIVED → STALE。本站不调用模型。",
+    "model": "加载了 /SKILL.md 的 Agent（或 weekly Action）用下面 prompt 只写报告。人 Approve 后才 keep / 改状态。"
+  },
+  "exclude_types": ["Times"],
+  "cadence": {
+    "default_days": 90,
+    "by_type": {
+      "Articles": 90,
+      "Diverse Lab": 180
+    },
+    "by_tag": {
+      "Philosophy": 365
+    }
+  },
+  "statuses": [
+    {
+      "id": "fresh",
+      "name": "已验证",
+      "ask": "最近验证过，当前仍可当作现行知识引用。"
+    },
+    {
+      "id": "stale",
+      "name": "待复查",
+      "ask": "超过验证周期，还没有重新验证。不是错误。"
+    },
+    {
+      "id": "changed",
+      "name": "可能已变",
+      "ask": "出现了新证据，主张需要人重新审视。"
+    },
+    {
+      "id": "contested",
+      "name": "有争议",
+      "ask": "出现了不同观点或相反证据，尚未裁决。"
+    },
+    {
+      "id": "archived",
+      "name": "已归档",
+      "ask": "历史上成立，不再适合作为当前知识。"
+    }
+  ],
+  "axes": [
+    {
+      "id": "unchanged",
+      "name": "仍然成立",
+      "ask": "核心主张在现有证据下仍然成立，只需刷新 last_verified。"
+    },
+    {
+      "id": "changed",
+      "name": "外部事实变了",
+      "ask": "可核事实、接口、产品或共识已经变化，需要人改写或加注。"
+    },
+    {
+      "id": "insufficient",
+      "name": "证据不足",
+      "ask": "找不到能核验这句话的新证据，不能判断变或没变。"
+    },
+    {
+      "id": "obsolete",
+      "name": "不再适合现行引用",
+      "ask": "主张在当时成立，但不宜再当作当前最佳实践 / 当前事实。"
+    }
+  ],
+  "prompt": "你是本站 Knowledge Lifecycle 的 Verifier，不是代笔，也不是入库门禁。\n\n只根据输入判断一篇已发表知识现在是否还适合当现行结论。不要改写文章，不要改 stage / route / catalog，不要把过期当成错误。\n\n输入你会看到：id、title、type、tags、excerpt、claim、last_verified、cadence_days、published_date。\n\n只允许一个主判定：\n1. unchanged — 核心主张仍成立。\n2. changed — 有可核的新证据表明外部事实或共识变了。\n3. insufficient — 证据不够，不能判断。\n4. obsolete — 当时成立，现在不宜再当现行知识。\n\n硬规则：\n- 吃不准就 insufficient。\n- changed / obsolete 必须给出至少一条真实 https URL；编造链接记 insufficient。\n- 哲学与可反驳论题很少「过期」；领域还在争论 ≠ changed。\n- note 只能一句。proposed_change 只描述建议，不写正文。\n\n只输出 JSON：\n{\n  \"criteria_version\": \"<用你读到的当前 version>\",\n  \"model\": \"<你所用的模型名，未知则 unknown>\",\n  \"verdict\": \"unchanged|changed|insufficient|obsolete\",\n  \"note\": \"一句理由\",\n  \"evidence\": [{\"url\": \"https://...\", \"note\": \"一句\"}],\n  \"proposed_change\": \"可空；不要写全文\"\n}",
+  "changelog": [
+    {
+      "version": "2026-09-16.1",
+      "note": "首版：时间门 STALE + 模型四判定 unchanged/changed/insufficient/obsolete。Agent 只写报告。"
+    }
+  ]
+}

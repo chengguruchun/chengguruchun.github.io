@@ -6,6 +6,8 @@ date: 2026-09-08
 thought_date: 2026-09-03
 published_date: 2026-09-08
 tags: [Diverse, Interpretability, RL, Faithfulness, LLM, Complex Systems]
+last_verified: 2026-09-08
+cadence_days: 180
 ---
 
 # 可解释性 × 强化学习：让「强」和「真」对得上账

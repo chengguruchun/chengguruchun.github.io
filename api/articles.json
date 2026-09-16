@@ -2,6 +2,100 @@
   "type": "Articles",
   "items": [
     {
+      "id": "ai-era-production-consumption-balance",
+      "type": "Articles",
+      "title": "AI 时代，企业真正需要解决的不是流程，而是生产与消费的平衡",
+      "excerpt": "当 AI 让生产、执行和运营越来越便宜，企业真正需要关注的可能不再只是流程效率，而是如何缩短需求、生产、消费与反馈之间的距离。",
+      "url": "/articles/ai-era-production-consumption-balance.html",
+      "date": "2026-09-16",
+      "tags": [
+        "Agent",
+        "Feedback Loop",
+        "Production",
+        "Consumption"
+      ],
+      "thought_date": "2026-09-16",
+      "published_date": "2026-09-16",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/ai-era-production-consumption-balance.md",
+      "content": "/content/articles/ai-era-production-consumption-balance.md",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-09-16",
+        "next_review": "2026-12-15",
+        "cadence_days": 90,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      }
+    },
+    {
+      "id": "iot-agent-from-automation-to-physical-infrastructure-part-ii",
+      "type": "Articles",
+      "title": "IoT Agent 化：从自动化平台到 Physical Infrastructure（二）",
+      "excerpt": "第一篇讨论“契约留下，打包物被解包到运行时”。这一篇继续往下追：当 Agent 真正进入物理世界，IoT 平台究竟应该提供什么？",
+      "url": "/articles/iot-agent-from-automation-to-physical-infrastructure-part-ii.html",
+      "date": "2026-09-16",
+      "tags": [
+        "Agent",
+        "IoT",
+        "Physical AI",
+        "Architecture",
+        "Benchmark"
+      ],
+      "thought_date": "2026-09-16",
+      "published_date": "2026-09-16",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/iot-agent-from-automation-to-physical-infrastructure-part-ii.md",
+      "content": "/content/articles/iot-agent-from-automation-to-physical-infrastructure-part-ii.md",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-09-16",
+        "next_review": "2026-12-15",
+        "cadence_days": 90,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      }
+    },
+    {
+      "id": "iot-agent-from-automation-to-physical-infrastructure",
+      "type": "Articles",
+      "title": "IoT Agent 化：从自动化平台到 Physical Infrastructure",
+      "excerpt": "Agent 不会消灭 IoT 的基础设施，而会解构过去为了服务人类而预先打包好的应用层确定性。契约留下，打包物被解包到运行时。",
+      "url": "/articles/iot-agent-from-automation-to-physical-infrastructure.html",
+      "date": "2026-09-16",
+      "tags": [
+        "Agent",
+        "IoT",
+        "Smart Home",
+        "Benchmark",
+        "MHS",
+        "Architecture",
+        "Physical AI"
+      ],
+      "thought_date": "2026-09-16",
+      "published_date": "2026-09-16",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/iot-agent-from-automation-to-physical-infrastructure.md",
+      "content": "/content/articles/iot-agent-from-automation-to-physical-infrastructure.md",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-09-16",
+        "next_review": "2026-12-15",
+        "cadence_days": 90,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      }
+    },
+    {
       "id": "reasoning-scale-knowledge-external",
       "type": "Articles",
       "title": "推理是规模红利，知识是外挂红利",
@@ -19,7 +113,19 @@
       "thought_date": "2026-09-02",
       "published_date": "2026-09-08",
       "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/reasoning-scale-knowledge-external.md",
-      "content": "/content/articles/reasoning-scale-knowledge-external.md"
+      "content": "/content/articles/reasoning-scale-knowledge-external.md",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-09-08",
+        "next_review": "2026-12-07",
+        "cadence_days": 90,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      }
     },
     {
       "id": "agent-industrial-internet",
@@ -39,7 +145,19 @@
       "thought_date": "2026-08-19",
       "published_date": "2026-09-08",
       "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/agent-industrial-internet.md",
-      "content": "/content/articles/agent-industrial-internet.md"
+      "content": "/content/articles/agent-industrial-internet.md",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-09-08",
+        "next_review": "2026-12-07",
+        "cadence_days": 90,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      }
     },
     {
       "id": "agent-evaluation-proxy-vs-real-outcome",
@@ -63,7 +181,19 @@
       "stage": "published",
       "origin": "joint",
       "contribution": "original_candidate",
-      "thought_id": "thought-proxy-vs-outcome"
+      "thought_id": "thought-proxy-vs-outcome",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-09-08",
+        "next_review": "2026-12-07",
+        "cadence_days": 90,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      }
     },
     {
       "id": "agent-optimizer-experience-policy",
@@ -83,7 +213,19 @@
       "thought_date": "2026-09-04",
       "published_date": "2026-09-08",
       "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/agent-optimizer-experience-policy.md",
-      "content": "/content/articles/agent-optimizer-experience-policy.md"
+      "content": "/content/articles/agent-optimizer-experience-policy.md",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-09-08",
+        "next_review": "2026-12-07",
+        "cadence_days": 90,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      }
     },
     {
       "id": "agent-skill-evolution-pruning",
@@ -103,7 +245,19 @@
       "thought_date": "2026-09-01",
       "published_date": "2026-09-08",
       "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/agent-skill-evolution-pruning.md",
-      "content": "/content/articles/agent-skill-evolution-pruning.md"
+      "content": "/content/articles/agent-skill-evolution-pruning.md",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-09-08",
+        "next_review": "2026-12-07",
+        "cadence_days": 90,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      }
     },
     {
       "id": "agent-engineering-from-workflow-to-control-plane",
@@ -125,7 +279,19 @@
       "thought_date": "2026-09-04",
       "published_date": "2026-09-08",
       "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/agent-engineering-from-workflow-to-control-plane.md",
-      "content": "/content/articles/agent-engineering-from-workflow-to-control-plane.md"
+      "content": "/content/articles/agent-engineering-from-workflow-to-control-plane.md",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-09-08",
+        "next_review": "2026-12-07",
+        "cadence_days": 90,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      }
     },
     {
       "id": "saas-ecommerce-agent-thinking",
@@ -144,7 +310,19 @@
       "thought_date": "2026-09-07",
       "published_date": "2026-09-07",
       "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/saas-ecommerce-agent-thinking.md",
-      "content": "/content/articles/saas-ecommerce-agent-thinking.md"
+      "content": "/content/articles/saas-ecommerce-agent-thinking.md",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-09-07",
+        "next_review": "2026-12-06",
+        "cadence_days": 90,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      }
     },
     {
       "id": "iot-agent-reconstruction",
@@ -163,7 +341,19 @@
       "thought_date": "2026-09-07",
       "published_date": "2026-09-07",
       "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/iot-agent-reconstruction.md",
-      "content": "/content/articles/iot-agent-reconstruction.md"
+      "content": "/content/articles/iot-agent-reconstruction.md",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-09-07",
+        "next_review": "2026-12-06",
+        "cadence_days": 90,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      }
     },
     {
       "id": "k8s-to-agent-control-plane",
@@ -186,7 +376,19 @@
       "stage": "published",
       "origin": "joint",
       "contribution": "extension",
-      "thought_id": "thought-k8s-agent-control-plane"
+      "thought_id": "thought-k8s-agent-control-plane",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-09-06",
+        "next_review": "2026-12-05",
+        "cadence_days": 90,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      }
     }
   ]
 }

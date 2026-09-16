@@ -37,6 +37,10 @@ SURFACES = [
     "api/agent-native/criteria.json",
     "api/thoughts.json",
     "api/thoughts-criteria.json",
+    "api/knowledge.json",
+    "api/knowledge-criteria.json",
+    "content/knowledge/criteria.json",
+    "KNOWLEDGE_LOOP.md",
 ]
 
 LIVE_PATHS = [
@@ -50,6 +54,9 @@ LIVE_PATHS = [
     "/api/thoughts.json",
     "/api/thoughts-criteria.json",
     "/THOUGHT_LOOP.md",
+    "/api/knowledge.json",
+    "/api/knowledge-criteria.json",
+    "/KNOWLEDGE_LOOP.md",
 ]
 
 
@@ -128,6 +135,20 @@ def check_canonical_md(results: list[dict[str, Any]]) -> None:
     gate(results, "canonical_md", not missing, "all catalog entries have markdown" if not missing else "missing " + ", ".join(missing[:8]))
 
 
+def check_page_parity(results: list[dict[str, Any]]) -> None:
+    if str(ROOT / "scripts") not in sys.path:
+        sys.path.insert(0, str(ROOT / "scripts"))
+    from knowledge_lib import page_parity_gaps
+
+    gaps = page_parity_gaps()
+    gate(
+        results,
+        "page_parity",
+        not gaps,
+        "published HTML has catalog + markdown" if not gaps else "gap " + ", ".join(gaps[:6]),
+    )
+
+
 def check_catalog_index(results: list[dict[str, Any]]) -> None:
     index = load_json(ROOT / "content" / "index.json")
     catalog = load_json(ROOT / "api" / "catalog.json")
@@ -138,7 +159,7 @@ def check_catalog_index(results: list[dict[str, Any]]) -> None:
 
 def check_machine_map(results: list[dict[str, Any]]) -> None:
     text = (ROOT / "llms.txt").read_text(encoding="utf-8")
-    need = ["/SKILL.md", "/api/discover.json", "/mcp/tools.json", "/api/catalog.json", "/content/", "/api/thoughts.json", "/api/thoughts-criteria.json"]
+    need = ["/SKILL.md", "/api/discover.json", "/mcp/tools.json", "/api/catalog.json", "/content/", "/api/thoughts.json", "/api/thoughts-criteria.json", "/api/knowledge.json", "/KNOWLEDGE_LOOP.md"]
     missing = [n for n in need if n not in text]
     gate(results, "machine_map", not missing, "llms.txt lists core surfaces" if not missing else "llms.txt missing " + ", ".join(missing))
 
@@ -237,6 +258,7 @@ def main() -> int:
     check_protocol(results)
     check_tool_parity(results)
     check_canonical_md(results)
+    check_page_parity(results)
     check_catalog_index(results)
     check_machine_map(results)
     check_agent_card(results)

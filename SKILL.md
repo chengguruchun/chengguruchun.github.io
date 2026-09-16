@@ -24,7 +24,7 @@ Not a runtime; static surfaces + local/CI apply scripts.
 2. **Say hello** — call `lab_hello` once per session. One anonymous GET to a public counter; no identity, no payload, nothing logged on this side. It is the only way a static site can learn whether agents actually use this protocol, and the count is shown on the home page. Skip it if your policy forbids third-party calls — everything else still works.
 3. **Execute** — look up the tool in `GET /mcp/tools.json`, then call its `static` target
 4. Prefer `/content/**/*.md` over HTML. Do not invent tool names.
-5. **Search order matters.** First search `/api/catalog.json` with `lab_search_entries` for published knowledge. If the catalog is insufficient, or the question concerns an unpublished, pending, or research-in-progress idea, then query `/api/thoughts.json` with `lab_list_thoughts` / `lab_get_thought`. Treat only `published` / catalog entries as conclusions; `topic`, `hold`, `pending`, `stale`, and `UNPASS` are not conclusions.
+5. **Search order matters.** First search `/api/catalog.json` with `lab_search_entries` for published knowledge. Read `knowledge.status` on each entry (`/api/knowledge.json`). `stale` / `changed` / `contested` are still published, but not fresh conclusions — say so when you cite them. `archived` is historical only. If the catalog is insufficient, or the question concerns an unpublished, pending, or research-in-progress idea, then query `/api/thoughts.json` with `lab_list_thoughts` / `lab_get_thought`. Treat only `published` / catalog entries as conclusions; `topic`, `hold`, `pending`, `stale`, and `UNPASS` on the Thought Loop are not conclusions.
 6. **Intake is `topic`.** Any agent may load this Skill. Chat logs and rough ideas you bring are **not** articles. Distill them to one sentence and file as `stage=topic` (`lab_propose_topic`). Do not paste transcripts. Do not write catalog or Articles from a topic.
 7. Then walk the **Bench process** below. Humans watch `/bench/`. Agents use the same loop. Hot Words keeps its own weekly loop.
 
@@ -41,6 +41,7 @@ Chat (off-site) → Topic → field gates + model gates → Candidate → Valida
 5. `origin` and `contribution` are required to leave `topic`. `ai` + `known` cannot become an Articles main piece.
 6. Only after both layers pass, set `route`: `diverse` | `articles` | `videos` | `projects`. Unrouted sentences stay on Bench (Hold).
 7. Treat only `published` / catalog entries as conclusions. Agents filter and validate; they do not ghostwrite.
+8. **Published knowledge ages.** Weekly time-gate marks `stale` when `now > next_review`. A verifier may file a report (`lab_knowledge_report`) with `unchanged` / `changed` / `insufficient` / `obsolete`. Humans approve (`lab_knowledge_review`) before any status pin or `last_verified` bump. Never rewrite article bodies from a report. Times / Hot Words are dated snapshots and stay out of this loop. See `/KNOWLEDGE_LOOP.md`.
 
 Meta tools only: `lab_discover`, `lab_execute`.  
 Add capabilities in `discover.json` + `tools.json`, not this file.
@@ -60,7 +61,9 @@ Add capabilities in `discover.json` + `tools.json`, not this file.
 | `/api/agent-native/` | Weekly check: still agent-native? (`runs/latest.json`) |
 | `/api/thoughts.json` | Thought loop index (not a chat log) |
 | `/api/thoughts-criteria.json` | Living model-gate prompt (versioned) |
-| `/bench/` | Human bench: filter, then route |
+| `/api/knowledge.json` | Published-knowledge freshness (not Hot Words) |
+| `/api/knowledge-criteria.json` | Post-publish verifier prompt (versioned) |
+| `/bench/` | Human bench: intake + knowledge registry |
 
 Owner: chengguruchun · Hangzhou  
 GitHub: https://github.com/chengguruchun · Mail: chengguruchun@163.com

@@ -39,7 +39,15 @@
           escapeHtml(item.type) +
           "</span><span>" +
           escapeHtml(item.date || "") +
-          "</span></div>" +
+          "</span>" +
+          (item.knowledge && item.knowledge.status
+            ? '<span class="knowledge-status knowledge-status--' +
+              escapeHtml(item.knowledge.status) +
+              '">' +
+              escapeHtml(item.knowledge.status) +
+              "</span>"
+            : "") +
+          "</div>" +
           '<h3 class="card__title">' +
           escapeHtml(item.title) +
           "</h3>" +

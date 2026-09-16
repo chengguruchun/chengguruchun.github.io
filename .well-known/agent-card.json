@@ -63,6 +63,15 @@
       "outputModes": ["application/json"]
     },
     {
+      "id": "knowledge",
+      "name": "Knowledge lifecycle",
+      "description": "Post-publish freshness: stale ≠ wrong. Agents file reports; humans approve before status pins.",
+      "tags": ["knowledge", "lifecycle", "verify"],
+      "examples": ["GET /api/knowledge.json", "GET /api/knowledge-criteria.json", "GET /KNOWLEDGE_LOOP.md"],
+      "inputModes": ["text"],
+      "outputModes": ["application/json", "text/markdown"]
+    },
+    {
       "id": "agent-native",
       "name": "Agent-native check",
       "description": "Weekly observe loop: whether the Lab still has discoverable, callable surfaces.",

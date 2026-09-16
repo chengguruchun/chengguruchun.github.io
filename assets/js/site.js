@@ -39,4 +39,14 @@
 
   var y = document.getElementById("year");
   if (y) y.textContent = String(new Date().getFullYear());
+
+  if (!document.querySelector('script[src*="knowledge.js"]')) {
+    var self = document.querySelector('script[src*="site.js"]');
+    var src = self && self.getAttribute("src");
+    if (src) {
+      var s = document.createElement("script");
+      s.src = src.replace(/site\.js(\?.*)?$/, "knowledge.js$1");
+      document.body.appendChild(s);
+    }
+  }
 })();

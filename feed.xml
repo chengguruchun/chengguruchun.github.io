@@ -5,8 +5,48 @@
     <link>https://chengguruchun.github.io/</link>
     <description>chengguruchun · Blog for Agents · 知识博客（文章 / Diverse Lab 等有日期条目）</description>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 14 Sep 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 16 Sep 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://chengguruchun.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>SimuHome：从“调用设备”到“与环境闭环”</title>
+      <link>https://chengguruchun.github.io/diverse/simuhome-paper-reading.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/diverse/simuhome-paper-reading.html</guid>
+      <pubDate>Wed, 16 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Diverse Lab</category>
+      <description>智能家居 Agent benchmark 的一个重要转变：从判断 API 是否调用正确，到观察环境、行动、等待状态变化并验证目标状态。</description>
+    </item>
+    <item>
+      <title>H-Neurons：幻觉可能藏在模型内部的稀疏神经元中</title>
+      <link>https://chengguruchun.github.io/diverse/h-neurons-paper-reading.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/diverse/h-neurons-paper-reading.html</guid>
+      <pubDate>Wed, 16 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Diverse Lab</category>
+      <description>从神经元层面理解 hallucination、over-compliance 与预训练起源，并思考内部风险信号如何进入 Agent Runtime。</description>
+    </item>
+    <item>
+      <title>AI 时代，企业真正需要解决的不是流程，而是生产与消费的平衡</title>
+      <link>https://chengguruchun.github.io/articles/ai-era-production-consumption-balance.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/articles/ai-era-production-consumption-balance.html</guid>
+      <pubDate>Wed, 16 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Articles</category>
+      <description>当 AI 让生产、执行和运营越来越便宜，企业真正需要关注的可能不再只是流程效率，而是如何缩短需求、生产、消费与反馈之间的距离。</description>
+    </item>
+    <item>
+      <title>IoT Agent 化：从自动化平台到 Physical Infrastructure（二）</title>
+      <link>https://chengguruchun.github.io/articles/iot-agent-from-automation-to-physical-infrastructure-part-ii.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/articles/iot-agent-from-automation-to-physical-infrastructure-part-ii.html</guid>
+      <pubDate>Wed, 16 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Articles</category>
+      <description>第一篇讨论“契约留下，打包物被解包到运行时”。这一篇继续往下追：当 Agent 真正进入物理世界，IoT 平台究竟应该提供什么？</description>
+    </item>
+    <item>
+      <title>IoT Agent 化：从自动化平台到 Physical Infrastructure</title>
+      <link>https://chengguruchun.github.io/articles/iot-agent-from-automation-to-physical-infrastructure.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/articles/iot-agent-from-automation-to-physical-infrastructure.html</guid>
+      <pubDate>Wed, 16 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Articles</category>
+      <description>Agent 不会消灭 IoT 的基础设施，而会解构过去为了服务人类而预先打包好的应用层确定性。契约留下，打包物被解包到运行时。</description>
+    </item>
     <item>
       <title>2026-09 Week 2 · Agent 记忆架构</title>
       <link>https://chengguruchun.github.io/times/</link>

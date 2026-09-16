@@ -8,6 +8,8 @@ published_date: 2026-09-16
 tags: [Agent, IoT, Smart Home, Benchmark, MHS, Architecture, Physical AI]
 excerpt: Agent 进入 IoT 后，真正变化的可能不是 MQTT 这类连接层，而是应用层被预先打包的确定性：联动、Workflow 和功能型 App 逐渐从主交互变成执行器、约束和兜底界面。与此同时，SMH-Bench、SimuHome 与 MHS 暗示了同一条路线：设备必须变得可描述、可发现、可验证、可安全执行。
 history_url: https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/iot-agent-from-automation-to-physical-infrastructure.md
+last_verified: 2026-09-16
+cadence_days: 90
 ---
 
 # IoT Agent 化：从自动化平台到 Physical Infrastructure

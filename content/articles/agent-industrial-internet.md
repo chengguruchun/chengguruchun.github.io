@@ -8,6 +8,8 @@ published_date: 2026-09-08
 tags: [Agent, Industrial Internet, Know-how, Data Loop, Organization, Vertical]
 excerpt: 工业互联网的核心壁垒是「数据闭环 + 行业 know-how」。AI Agent 能加速数据→决策→执行的闭环，但行业知识门槛不会被轻易跨越；组织能力（技术 + 文化）仍是决定性变量。
 history_url: https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/agent-industrial-internet.md
+last_verified: 2026-09-08
+cadence_days: 90
 ---
 
 # AI Agent 改造工业互联网：壁垒是数据闭环，不是模型

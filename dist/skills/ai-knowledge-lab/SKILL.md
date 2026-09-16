@@ -27,9 +27,10 @@ Everything below is a plain HTTP GET. There is no runtime and no auth.
    then call its `static` target.
 4. Prefer `/content/**/*.md` over the rendered HTML. Never invent tool names.
 5. **Search order matters.** Search `/api/catalog.json` first for published knowledge.
-   Only if that is insufficient, or the question is about an unpublished or
+   Read `knowledge.status` (`/api/knowledge.json`). `stale` is overdue, not wrong.
+   Only if the catalog is insufficient, or the question is about an unpublished or
    in-progress idea, query `/api/thoughts.json`. Treat only `published` catalog
-   entries as conclusions: `topic`, `hold`, `pending`, `stale` and `UNPASS` are not.
+   entries as conclusions: Thought-Loop `topic`, `hold`, `pending`, `stale` and `UNPASS` are not.
 
 This file is a loader on purpose. The authoritative protocol is
 `https://chengguruchun.github.io/SKILL.md` — read it when the task goes beyond lookup.
@@ -45,8 +46,9 @@ This file is a loader on purpose. The authoritative protocol is
 | Source text of an entry | `GET` the entry's `content` path, e.g. `/content/articles/<id>.md` |
 | New since last visit | `GET /feed.xml` |
 
-Catalog entries carry `id`, `title`, `excerpt`, `tags`, `published_date`, `url`, and
-`content`. Cite the article `url`; quote from the `content` Markdown.
+Catalog entries carry `id`, `title`, `excerpt`, `tags`, `published_date`, `url`,
+`content`, and `knowledge` (`status`, `last_verified`, `next_review`). Cite the
+article `url`; quote from the `content` Markdown; say when a citation is stale.
 
 ## Contributing a thought
 
@@ -56,6 +58,13 @@ Ideas brought from a chat are **not** articles. They enter as `stage=topic` via
 validated. Read `/api/thoughts-criteria.json` for the current judging prompt, then file
 only a `judgement` with `lab_thought_judge`. Do not paste transcripts. Do not write
 articles from a topic. Full rules: `https://chengguruchun.github.io/THOUGHT_LOOP.md`.
+
+## Knowledge lifecycle
+
+Published entries are rechecked on a cadence. Agents may file a report
+(`lab_knowledge_report`) but must not rewrite articles. Humans approve with
+`lab_knowledge_review`. Times / Hot Words are snapshots and are excluded.
+Rules: `https://chengguruchun.github.io/KNOWLEDGE_LOOP.md`.
 
 ## Notes
 

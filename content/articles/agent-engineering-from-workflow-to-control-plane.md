@@ -8,6 +8,8 @@ published_date: 2026-09-08
 tags: [Agent, Workflow, Graph, Loop Engineering, Harness, Control Plane, Kubernetes, Runtime]
 excerpt: 从我们关于 Workflow、Graph、Loop、Harness、微服务、Tool Gateway 与 Kubernetes 的讨论出发：Agent 化不是推倒原有软件，而是让系统的控制方式从调用函数逐渐走向目标、反馈与持续收敛。
 history_url: https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/agent-engineering-from-workflow-to-control-plane.md
+last_verified: 2026-09-08
+cadence_days: 90
 ---
 
 # Agent Engineering：从 Workflow 到 Loop，再到 Control Plane

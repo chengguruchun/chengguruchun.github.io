@@ -3,7 +3,7 @@
   "protocol": "discover-then-execute",
   "skill": "/SKILL.md",
   "registry": "/mcp/tools.json",
-  "updated": "2026-09-08",
+  "updated": "2026-09-16",
   "meta": [
     "lab_discover",
     "lab_execute"
@@ -441,6 +441,63 @@
         "method": "ACTION",
         "action": "pr",
         "path": "/content/thoughts/"
+      }
+    },
+    {
+      "name": "lab_knowledge_status",
+      "kind": "read",
+      "description": "Read published-knowledge freshness: status, last_verified, next_review. Times/Hot Words are excluded. stale is overdue, not wrong.",
+      "invoke": {
+        "method": "GET",
+        "path": "/api/knowledge.json"
+      }
+    },
+    {
+      "name": "lab_knowledge_due",
+      "kind": "read",
+      "description": "Same registry; client-filter items where knowledge.due is true (stale / changed / contested).",
+      "invoke": {
+        "method": "GET",
+        "path": "/api/knowledge.json",
+        "client_filter": true
+      }
+    },
+    {
+      "name": "lab_knowledge_criteria",
+      "kind": "read",
+      "description": "Read the post-publish verifier prompt and cadence policy. Improve by editing content/knowledge/criteria.json and bumping version.",
+      "invoke": {
+        "method": "GET",
+        "path": "/api/knowledge-criteria.json"
+      }
+    },
+    {
+      "name": "lab_knowledge_run_status",
+      "kind": "read",
+      "description": "Observe the latest knowledge lifecycle run (due ids, gates). GET /api/knowledge/runs/latest.json.",
+      "invoke": {
+        "method": "GET",
+        "path": "/api/knowledge/runs/latest.json"
+      }
+    },
+    {
+      "name": "lab_knowledge_report",
+      "kind": "contribute",
+      "description": "File a verifier report only (unchanged/changed/insufficient/obsolete + https evidence). Never rewrite articles or bump last_verified.",
+      "invoke": {
+        "method": "ACTION",
+        "action": "pr",
+        "path": "/content/knowledge/reports/"
+      }
+    },
+    {
+      "name": "lab_knowledge_review",
+      "kind": "contribute",
+      "description": "Human decision after a report: keep / changed / contested / archived. Local script only; does not ghostwrite.",
+      "invoke": {
+        "method": "ACTION",
+        "action": "local",
+        "command_template": "python3 scripts/knowledge_review.py --id {id} --decision {decision}"
       }
     }
   ]
