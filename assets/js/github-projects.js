@@ -8,7 +8,7 @@
     "cobusgreyling/loop-engineering",
     "deepseek-ai/deepseek-harness",
   ];
-  var PERSONAL = ["chengguruchun/llm-trace-reuse"];
+  var PERSONAL = ["chengguruchun/llm-trace-reuse", "chengguruchun/idealagent"];
 
   function escapeHtml(s) {
     return String(s == null ? "" : s)
