@@ -15,6 +15,15 @@
       "updated_at": "2026-09-08T01:13:00Z"
     },
     {
+      "full_name": "chengguruchun/chengguruchun.github.io",
+      "name": "chengguruchun.github.io",
+      "description": "Agent-Native knowledge blog: humans read the pages; agents discover and call the same content via Skill, discover.json and MCP tools.",
+      "html_url": "https://github.com/chengguruchun/chengguruchun.github.io",
+      "stargazers_count": 0,
+      "language": "HTML",
+      "updated_at": "2026-09-16T00:00:00Z"
+    },
+    {
       "full_name": "chengguruchun/idealagent",
       "name": "idealagent",
       "description": "Personal Agent Skill repository.",
