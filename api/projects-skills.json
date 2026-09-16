@@ -1,0 +1,15 @@
+{
+  "type": "ProjectsSkills",
+  "section": "skills",
+  "updated": "2026-09-16",
+  "items": [
+    {
+      "full_name": "chengguruchun/idealagent",
+      "name": "idealagent",
+      "description": "个人 Agent Skill：将个人上下文、工作约定与 Agent-facing instructions 封装为可加载的 Skill。",
+      "html_url": "https://github.com/chengguruchun/idealagent",
+      "language": "Markdown",
+      "kind": "Personal Skill"
+    }
+  ]
+}
