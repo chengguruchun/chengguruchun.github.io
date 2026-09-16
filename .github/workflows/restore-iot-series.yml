@@ -1,0 +1,52 @@
+name: Restore IoT article series
+
+on:
+  push:
+    paths:
+      - .github/workflows/restore-iot-series.yml
+
+permissions:
+  contents: write
+
+jobs:
+  restore:
+    if: ${{ !contains(github.event.head_commit.message, '[iot-series-restored]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Split Part I and Part II
+        run: |
+          git fetch origin main
+          git show HEAD:articles/iot-agent-from-automation-to-physical-infrastructure.html > /tmp/part2.html
+          git show fef16b5f1351e7524ee8175b3c8fecd7615e02a6:articles/iot-agent-from-automation-to-physical-infrastructure.html > articles/iot-agent-from-automation-to-physical-infrastructure.html
+          cp /tmp/part2.html articles/iot-agent-from-automation-to-physical-infrastructure-part-ii.html
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('articles/iot-agent-from-automation-to-physical-infrastructure-part-ii.html')
+          s=p.read_text()
+          s=s.replace('IoT Agent 化：从自动化平台到 Physical Infrastructure（二）', 'IoT Agent 化：从自动化平台到 Physical Infrastructure（二）')
+          p.write_text(s)
+          idx=Path('articles/index.html')
+          s=idx.read_text()
+          old='IoT Agent 化：从自动化平台到 Physical Infrastructure'
+          link1='href="iot-agent-from-automation-to-physical-infrastructure.html"'
+          link2='href="iot-agent-from-automation-to-physical-infrastructure-part-ii.html"'
+          if link2 not in s:
+              marker='Articles'
+              # Add a small series entry before the first existing occurrence of the article title/link if present.
+              if link1 in s:
+                  pos=s.find(link1)
+                  end=s.find('</', pos)
+                  s=s[:end] + ' · <a '+link2+'>Part II</a>' + s[end:]
+              else:
+                  s += '\n<div><a '+link1+'>IoT Agent 化：从自动化平台到 Physical Infrastructure</a> · <a '+link2+'>Part II</a></div>\n'
+              idx.write_text(s)
+          PY
+          rm -f .github/workflows/restore-iot-series.yml
+          git config user.name 'chengguruchun'
+          git config user.email 'chengguruchun@163.com'
+          git add articles/iot-agent-from-automation-to-physical-infrastructure.html articles/iot-agent-from-automation-to-physical-infrastructure-part-ii.html articles/index.html .github/workflows/restore-iot-series.yml
+          git commit -m 'Restore IoT article Part I and separate Part II [iot-series-restored]' || exit 0
+          git push origin HEAD:main
