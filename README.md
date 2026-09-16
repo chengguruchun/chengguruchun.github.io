@@ -10,6 +10,12 @@
 
 **Blog for Agents** — 面向 Agent-Native 的知识博客，首页：**Discover → execute**。
 
+## 愿景
+
+一个由 AI 驱动的个人知识管理与研究平台：记录思考、验证观点、持续进化，让 AI 成为研究伙伴。不只是博客，而是面向 Agent 的个人知识基础设施。
+
+![Personal Agent Lab 愿景：从知识产生、验证到持续演化的闭环](assets/img/personal-agent-lab-vision.jpg)
+
 ## 人类阅读
 
 | 栏目 | 路径 | 作用 |
