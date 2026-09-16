@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>从 MES 到 Manufacturing Agent Runtime：当生产系统开始自己做决策 · Articles</title>
+<meta name="description" content="SHEIN 式制造的关键不是给 MES 加一个 Copilot，而是把高频、动态、组合复杂的生产决策变成 Agent Runtime 的持续闭环。核心观点：不要替代岗位，要替代决策单元。">
+<meta name="theme-color" content="#f7f5f0"><link rel="icon" href="../favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../assets/css/site.css">
+<link rel="canonical" href="https://chengguruchun.github.io/articles/from-mes-to-manufacturing-agent-runtime.html">
+<meta property="og:type" content="article"><meta property="og:site_name" content="AI Knowledge Lab"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="从 MES 到 Manufacturing Agent Runtime：当生产系统开始自己做决策"><meta property="og:description" content="SHEIN 式制造的关键不是给 MES 加一个 Copilot，而是把高频、动态、组合复杂的生产决策变成 Agent Runtime 的持续闭环。"><meta property="og:url" content="https://chengguruchun.github.io/articles/from-mes-to-manufacturing-agent-runtime.html"><meta property="og:image" content="https://chengguruchun.github.io/assets/img/og-cover.png"><meta property="article:published_time" content="2026-09-16"><meta property="article:author" content="chengguruchun">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="从 MES 到 Manufacturing Agent Runtime：当生产系统开始自己做决策"><meta name="twitter:description" content="不要替代岗位，要替代决策单元。">
+</head>
+<body>
+<header class="site-header"><div class="wrap site-header__inner"><a class="brand" href="../index.html"><img class="brand__logo" src="../assets/img/brand-mark.svg" alt="AI Knowledge Lab" width="44" height="44"><span class="brand__tag">Independent Thinker · AI Agents · Complex Systems</span></a><button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">菜单</button><nav class="nav" id="site-nav" aria-label="主导航"><a href="../index.html">Home</a><a href="../bench/">Agent Bench</a><a href="../diverse/">Diverse Lab</a><a href="../articles/" aria-current="page">Articles</a><a href="../projects/">Projects</a><a href="../videos/">Videos</a><a href="../times/">Hot Words</a><a href="../about/">About Me</a><a class="nav__search" href="../tags/">Tags / Search</a></nav></div></header>
+<main><article class="article-body"><header class="page-hero"><div class="prose-wrap"><p class="page-hero__kicker">Articles</p><h1>从 MES 到 Manufacturing Agent Runtime：当生产系统开始自己做决策</h1><p class="page-hero__desc">SHEIN 式制造的关键不是给 MES 加一个 Copilot，而是把高频、动态、组合复杂的生产决策变成 Agent Runtime 的持续闭环。</p><p class="article-meta"><span>思路 2026-09-16</span><span>发表 2026-09-16</span><span>作者 chengguruchun</span><span class="tag tag--stage">published</span><a class="tag" href="../tags/?tag=Agent">Agent</a><a class="tag" href="../tags/?tag=Manufacturing">Manufacturing</a><a class="tag" href="../tags/?tag=MES">MES</a><a class="tag" href="../tags/?tag=Agent%20Runtime">Agent Runtime</a><a class="tag" href="../tags/?tag=Control%20Plane">Control Plane</a></p></div></header>
+<div class="prose-wrap">
+<p class="lede">这篇文章来自我对 SHEIN 式制造模式、MES 和 Agent Runtime 的连续思考。这里并不是试图还原某一家公司的内部系统，而是把一种高频数字化供应链闭环抽象出来，再问：如果 Agent 真正进入制造系统，业务架构应该发生什么变化？</p>
+<blockquote><p><strong>不要替代岗位，要替代决策单元。</strong></p></blockquote>
+<p>真正的变化不是“给 MES 加一个 AI Copilot”，而是生产系统从“执行已经确定的流程”，逐渐变成“持续观察现实、做出决策、执行、验证并重新规划”的 Manufacturing Agent Runtime。</p>
+<h2>1. 传统 MES 与 Agent 化制造的区别</h2>
+<p>传统 MES 可以抽象成：</p>
+<pre><code>订单
+ ↓
+生产计划
+ ↓
+排产
+ ↓
+工单
+ ↓
+生产
+ ↓
+质检
+ ↓
+入库</code></pre>
+<p>它解决的核心问题是：如何把已经确定的生产计划数字化、透明化，并稳定执行。MES 更像一个 Workflow Engine + Data System。</p>
+<p>但当制造模式变成高频、小批量、快速反馈时，生产计划本身不再是一次性确定的输入，而变成动态决策问题：</p>
+<pre><code>用户需求
+   ↓
+小批量测试
+   ↓
+真实销售反馈
+   ↓
+重新判断需求
+   ↓
+追加生产
+   ↓
+再次反馈</code></pre>
+<h2>2. 为什么这种制造模式天然适合 Agent</h2>
+<p>如果抽象掉具体公司的业务细节，会发现它具有几个典型特征：</p>
+<pre><code>大量 SKU
++
+大量供应商
++
+大量小订单
++
+快速生产
++
+快速市场反馈
++
+快速重新生产</code></pre>
+<p>一个订单表面上只是“生产 10,000 件”，但真正的决策可能同时涉及供应商、生产线、材料、工艺、质量、交期、价格、库存、在制品、已有订单和机器状态。</p>
+<p>真正的问题变成：</p>
+<pre><code>10,000 件
+   ↓
+怎么拆？
+   ↓
+给谁？
+   ↓
+什么时候做？
+   ↓
+用什么材料？
+   ↓
+走哪条产线？
+   ↓
+如果出现延迟怎么办？</code></pre>
+<p>这已经不是简单 Workflow，而是 <strong>Combinatorial Optimization + Dynamic Decision Making</strong>。组合一多，规则数量会膨胀；状态变化一快，固定流程又容易失效。</p>
+<h2>3. Agent 化 MES：不是替代 MES，而是增加决策层</h2>
+<pre><code>                         Business Goal
+                              │
+                    ┌─────────▼─────────┐
+                    │    Control Plane   │
+                    │ Goal / Policy /    │
+                    │ Approval / Plan    │
+                    └─────────┬─────────┘
+                              ↓
+                    ┌──────────────────┐
+                    │  Agent Runtime   │
+                    │ Planner /        │
+                    │ Executor /       │
+                    │ Verifier /       │
+                    │ Optimizer        │
+                    └────────┬─────────┘
+                             ↓
+                         Event Bus
+             ┌───────────────┼───────────────┐
+             ↓               ↓               ↓
+        Demand Agent   Production Agent  Supplier Agent
+             └───────────────┼───────────────┘
+                             ↓
+                    MES / WMS / SCM / ERP
+                             ↓
+                    Factory / IoT / PLC</code></pre>
+<p><strong>Agent 不应该取代 MES。</strong> MES 继续负责确定性执行、状态记录、工艺与生产过程管理；Agent 在其上方负责动态决策。</p>
+<h2>4. 不应该先设计“岗位 Agent”，而应该先设计“决策 Agent”</h2>
+<p>一个容易走偏的方式是设计“供应商经理 Agent”“生产经理 Agent”“仓库经理 Agent”。但岗位实际上包含：</p>
+<pre><code>Routine
+Decision
+Communication
+Judgement
+Responsibility</code></pre>
+<p>Agent 最先适合接管的是 Routine + Decision，而责任、重大判断和高风险授权并不会自动消失。</p>
+<p>所以更好的拆法是：</p>
+<pre><code>Supplier Manager
+├── 找供应商
+├── 比较供应商
+├── 判断交期
+├── 监控质量
+├── 处理异常
+└── 调整订单
+
+             ↓
+
+Supplier Discovery Agent
+Supplier Matching Agent
+Supplier Monitoring Agent
+Supplier Recovery Agent</code></pre>
+<blockquote><p><strong>不是替代一个职位，而是拆解一个职位中的决策单元。</strong></p></blockquote>
+<h2>5. 哪些工作最值得 Agent 化？</h2>
+<table><thead><tr><th>工作类型</th><th>随机性</th><th>组合复杂度</th><th>可验证性</th><th>更适合的形态</th></tr></thead><tbody>
+<tr><td>数据录入</td><td>低</td><td>低</td><td>高</td><td>Automation</td></tr>
+<tr><td>固定工艺流程</td><td>低</td><td>低</td><td>高</td><td>Workflow</td></tr>
+<tr><td>生产排产</td><td>中</td><td>高</td><td>高</td><td>Agent</td></tr>
+<tr><td>供应商匹配</td><td>高</td><td>高</td><td>中高</td><td>Agent</td></tr>
+<tr><td>物料调度</td><td>高</td><td>高</td><td>高</td><td>Agent</td></tr>
+<tr><td>异常恢复</td><td>高</td><td>高</td><td>中高</td><td>Agent</td></tr>
+<tr><td>质量分析</td><td>中高</td><td>高</td><td>高</td><td>Agent + Model</td></tr>
+<tr><td>需求预测</td><td>高</td><td>高</td><td>中</td><td>Agent + Model</td></tr>
+<tr><td>重大采购/安全决策</td><td>高</td><td>高</td><td>低</td><td>Human + Agent</td></tr>
+</tbody></table>
+<blockquote><p><strong>最应该 Agent 化的，不一定是人数最多的岗位，而是“决策密度最高”的岗位。</strong></p></blockquote>
+<h2>6. 随机性与组合复杂度，是两个重要坐标轴</h2>
+<pre><code>                    Decision Complexity
+                           ↑
+        Human              │       Agent + Human
+                           │
+     战略决策              │       高风险异常
+     重大采购              │       新产品
+     安全                   │       重大质量
+                           │
+───────────────────────────┼────────────────────→ Randomness
+                           │
+     Workflow              │       Agent
+                           │
+     数据录入              │       排产
+     固定审批              │       调度
+     固定工艺              │       异常处理
+                           │       供应商匹配
+                           │       库存优化</code></pre>
+<p>最适合 Agent 的不是简单的高随机性，而是：<strong>高随机性 + 高组合复杂度 + 快速反馈 + 可验证结果。</strong></p>
+<h2>7. Agent 最有价值的地方：处理异常</h2>
+<p>现实生产中，正常路径往往并不难。真正昂贵的是订单延迟、材料缺货、机器故障、质量下降、供应商拒单、物流延迟、需求突然上涨。</p>
+<pre><code>Normal
+   ↓
+Event
+   ↓
+Re-plan
+   ↓
+Execute
+   ↓
+Verify
+   ↓
+Continue</code></pre>
+<p>因此 <strong>Exception Agent</strong> 可能比“MES Copilot”更接近制造 Agent 的核心价值。</p>
+<h2>8. Event Bus 会成为 Agent Manufacturing 的神经系统</h2>
+<pre><code>                    Event Bus
+                       │
+       ┌───────────────┼───────────────┐
+       ↓               ↓               ↓
+ Demand Agent     Production Agent   Supply Agent
+       │               │               │
+       └───────────────┼───────────────┘
+                       ↓
+                    Decision
+                       ↓
+                     Action
+                       ↓
+                  Verification
+                       ↓
+                    New Event</code></pre>
+<p>事件可以是 DemandChanged、OrderCreated、MaterialDelayed、FactoryCapacityChanged、QualityDegraded、ShipmentDelayed、InventoryLow。</p>
+<blockquote><p><strong>Event → Agent → Action → Verification → Event</strong></p></blockquote>
+<h2>9. Demand Agent：决定“应该生产多少”</h2>
+<p>Demand Agent 持续观察销量、点击、收藏、搜索、转化率、库存、历史数据、季节和营销活动。预测结果不应该只有一个数字，还应该有置信度和验证方式：</p>
+<pre><code>forecast: 3000
+confidence: 0.83
+verification:
+  - future_sales
+  - inventory_turnover</code></pre>
+<p><strong>Agent 的判断不仅要有结果，还应该有置信度和验证方式。</strong>预测不是事实，后续反馈能否证明它才重要。</p>
+<h2>10. Production Agent：决定“怎么生产”</h2>
+<p>假设需求是 3000 件，系统存在多个供应商、产能、质量、交期和成本约束。Agent 可以生成候选方案，再交给确定性的工具验证：</p>
+<pre><code>LLM
+ ↓
+生成 Plan
+ ↓
+Simulator
+ ↓
+Constraint Checker
+ ↓
+Business Rules
+ ↓
+Optimizer
+ ↓
+Execute</code></pre>
+<blockquote><p><strong>Agent 是 Planner，而不是最终真相。</strong></p></blockquote>
+<h2>11. Supplier Agent：从供应商管理走向供应商智能网络</h2>
+<p>传统系统记录供应商；Agent 可以持续维护 capacity、quality、delivery、price、response speed、historical success、current workload、machine capability，从“有哪些供应商”进一步变成“当前这个订单，在当前约束下，谁最适合生产”。</p>
+<h2>12. 人机分工：风险越高，越需要 Approval Gate</h2>
+<pre><code>Low Risk
+Agent → Execute
+
+Medium Risk
+Agent → Verify → Execute
+
+High Risk
+Agent → Proposal → Human Approval → Execute</code></pre>
+<p>重大质量事故、重大采购、重大供应商变更、安全相关操作和高额不可逆操作，不应该因为 Agent 出现就取消人工责任。</p>
+<h2>13. Manufacturing Agent Runtime：最终业务架构</h2>
+<pre><code>                         Business Goal
+                              │
+                              ↓
+                    ┌──────────────────┐
+                    │  Control Plane   │
+                    │ Demand           │
+                    │ Production       │
+                    │ Supply           │
+                    │ Inventory        │
+                    │ Policy           │
+                    │ Approval         │
+                    └────────┬─────────┘
+                             ↓
+                    ┌──────────────────┐
+                    │  Agent Runtime   │
+                    │ Planner          │
+                    │ Executor         │
+                    │ Verifier         │
+                    │ Optimizer        │
+                    │ Memory           │
+                    └────────┬─────────┘
+                             ↓
+                         Event Bus
+                             │
+          ┌──────────────────┼──────────────────┐
+          ↓                  ↓                  ↓
+     Demand Agent      Production Agent    Supplier Agent
+          ↓                  ↓                  ↓
+     Inventory Agent    Quality Agent      Logistics Agent
+          └──────────────────┼──────────────────┘
+                             ↓
+                    ┌──────────────────┐
+                    │ Execution Plane  │
+                    │ MES / WMS / ERP  │
+                    │ SCM              │
+                    └────────┬─────────┘
+                             ↓
+                    Factory / IoT / PLC
+                             │
+                             └──── Event ────→</code></pre>
+<p>MES 的位置发生变化：它仍然非常重要，但不再是整个业务决策系统的最高层。它更像 <strong>Execution Plane</strong>；Agent Runtime 成为 <strong>Decision + Reconciliation Plane</strong>。</p>
+<h2>14. K8s 类比：制造系统也可以拥有 Desired State</h2>
+<pre><code>Production Target
+      ↓
+Factory Reality
+      ↓
+Gap
+      ↓
+Agent Controller
+      ↓
+Re-plan
+      ↓
+Execute
+      ↓
+Verify
+      ↓
+Gap</code></pre>
+<p>例如一个生产目标可以表达为 SKU、数量、deadline、quality、cost 等约束。现实世界不断变化，因此制造 Agent 的核心能力之一，可以理解为持续把现实生产状态向业务目标收敛。</p>
+<h2>15. 但制造世界比 K8s 更复杂：重试不等于重启</h2>
+<p>K8s 可以重启 Pod，但生产系统里的动作可能产生不可逆副作用：已经发货、已经采购、已经投料、已经生产、已经付款。此时 Agent 发现目标没有达成，不能简单 retry，而可能需要补偿、审批升级、重新排产、回滚业务状态或停止执行。</p>
+<blockquote><p><strong>Manufacturing Agent 的 Reconciliation 必须理解业务副作用。</strong></p></blockquote>
+<h2>16. 三条环：Execute / Eval / Learn</h2>
+<pre><code>Execute Loop
+秒 → 小时
+Goal → Plan → Act → Observe → Adjust
+
+Eval Loop
+小时 → 天
+Trajectory → Outcome → Evaluation → Gate
+
+Learn Loop
+天 → 周
+Evidence → Policy → Optimization → Rollout</code></pre>
+<p>Execute Loop 解决当前订单怎么完成；Eval Loop 判断方案到底有没有真的成功；Learn Loop 把历史失败和成功证据沉淀为下一轮策略。</p>
+<h2>17. 真正值得讨论的，不是“AI 替代多少人”</h2>
+<p>如果只从岗位出发，我们会问“生产经理会不会被 Agent 替代”。更有架构意义的问题应该是：生产经理今天到底在做哪些决策？哪些决策可以被结构化？哪些决策可以被验证？哪些决策的组合空间正在爆炸？哪些决策的反馈周期足够短？</p>
+<pre><code>岗位
+ ↓
+工作
+ ↓
+决策单元
+ ↓
+Decision Agent
+ ↓
+Policy
+ ↓
+Tool
+ ↓
+Verification</code></pre>
+<p>Agent 不一定直接“替代一个人”，而可能先替代一个人的一部分决策循环。随着验证能力越来越强，这些决策循环逐渐扩大。</p>
+<h2>18. 一个暂时结论</h2>
+<pre><code>Agent
+= Manufacturing Controller
+
+MES
+= Execution System
+
+Event Bus
+= Nervous System
+
+IoT
+= Sensors
+
+Factory
+= Actuators
+
+Control Plane
+= Business Goal + Policy + Scheduling
+
+Agent Runtime
+= Observe → Decide → Act → Verify → Reconcile</code></pre>
+<p>因此未来的 Manufacturing Agent 不应该只是：</p>
+<pre><code>MES + LLM</code></pre>
+<p>更可能是：</p>
+<pre><code>MES
++
+Event System
++
+Agent Runtime
++
+Optimization
++
+Verification
++
+Human Approval</code></pre>
+<blockquote><p><strong>不要替代岗位，要替代决策单元。</strong></p></blockquote>
+<p>真正决定 Agent 是否有价值的，不是“它像不像一个人”，而是：它能不能在高频、随机、组合复杂的现实环境中，持续做出决策，并通过真实结果验证自己，再进入下一轮。</p>
+<h2>开放问题</h2>
+<ul><li>哪些制造决策的反馈周期足够短，可以形成真正的 Agent Loop？</li><li>排产、供应商匹配、库存、物流之间的 Agent 应该独立运行，还是共享一个 Planner？</li><li>什么样的 Simulator / Constraint Checker 才能成为 Agent 的“现实世界测试”？</li><li>哪些 Outcome 可以机器验证，哪些必须保留人工验收？</li><li>当一个 Agent 可以处理越来越大的决策空间时，岗位边界会如何重新组织？</li><li>Manufacturing Agent Runtime 是否最终会像 Kubernetes 一样形成自己的 Control Plane、Runtime、Scheduler、Policy、Event 与 Reconciliation 体系？</li></ul>
+</div></article></main>
+<footer class="site-footer"><div class="wrap site-footer__inner"><div><p>© <span id="year"></span> chengguruchun · Hangzhou</p><p>Blog for Agents · 知识博客</p></div></div></footer><script src="../assets/js/site.js"></script><script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+</body></html>
