@@ -2390,13 +2390,20 @@ a.project-card:hover .project-card__stars {
 .about-profile__inner {
   max-width: 42rem;
 }
-.about-profile__inner > h2:first-of-type {
+.about-profile__inner:first-child > h2:first-of-type {
   margin-top: 0;
   border-top: none;
   padding-top: 0;
 }
 .about-profile .callout {
   margin-top: 0.35rem;
+}
+.about-questions {
+  max-width: 52rem;
+  margin-top: 2.5rem;
+}
+.about-questions > h2 {
+  margin-top: 0;
 }
 
 

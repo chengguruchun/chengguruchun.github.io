@@ -79,26 +79,35 @@
             <h2 id="who-i-am">我是谁</h2>
             <p>这些年，我在电商、IoT 和工业系统中写软件，也持续观察不同领域之间的共同结构：目标如何被表达，系统如何被约束，结果如何被验证，失败如何反馈到下一轮行动。</p>
             <p>现在，我把这条经验带到 AI Agents / Infrastructure：不只讨论模型能生成什么，也关注 Agent 如何被调度、被授权、被评测，并最终在真实环境中完成任务。</p>
+          </div>
 
-            <h2 id="what-i-explore">我正在研究的三个问题</h2>
-            <div class="grid grid--3">
+          <div class="about-questions">
+            <h2 id="what-i-explore">我正在研究的四个问题</h2>
+            <div class="grid grid--2">
               <article class="card">
                 <div class="card__meta"><span>01 · Agent Infrastructure</span></div>
-                <h3 class="card__title">任务如何可靠地完成？</h3>
-                <p class="card__excerpt">关注 Control Plane、Runtime、Tool Gateway、Policy、Approval、Eval 与 Outcome。</p>
+                <h3 class="card__title">任务如何收敛到可核验的完成？</h3>
+                <p class="card__excerpt">关注 Control Plane、Runtime、Tool Gateway、Policy 与 Approval。完成靠证据，不是过程绿灯。</p>
               </article>
               <article class="card">
                 <div class="card__meta"><span>02 · Loop Engineering</span></div>
-                <h3 class="card__title">一次回答如何变成闭环？</h3>
-                <p class="card__excerpt">用 Goal → Action → Observation → Gap → Adjustment 描述会行动的智能系统。</p>
+                <h3 class="card__title">单次回答如何变成闭环？</h3>
+                <p class="card__excerpt">用 Goal → Action → Observation → Gap → Adjustment 描述反馈如何进入下一步。有环，不等于环稳定。</p>
               </article>
               <article class="card">
                 <div class="card__meta"><span>03 · Experiment Engineering</span></div>
                 <h3 class="card__title">概率性如何被研究？</h3>
                 <p class="card__excerpt">用假设、对照、评测和真实结果，替代对单次 Prompt 经验的依赖。</p>
               </article>
+              <article class="card">
+                <div class="card__meta"><span>04 · Failure Containment</span></div>
+                <h3 class="card__title">扰动下，错误会不会被闭环写成完成？</h3>
+                <p class="card__excerpt">关注补偿、熔断、幂等、不可逆动作，以及多 Agent 互相污染。</p>
+              </article>
             </div>
+          </div>
 
+          <div class="about-profile__inner">
             <h2 id="how-i-work">我如何工作</h2>
             <p>我习惯用类比建立模型，用实验检验假设，再把结论放回工程实践中观察。一个想法不是结论，而是一个需要面对反例、成本和真实结果的假设。</p>
             <div class="callout">
@@ -142,7 +151,7 @@
             </li>
             <li class="route-stop route-stop--now">
               <div class="route-stop__rail" aria-hidden="true"><span class="route-stop__dot route-stop__dot--now"></span></div>
-              <div class="route-stop__card route-stop__card--now"><p class="route-stop__phase">现在</p><h2 class="route-stop__city">What next?</h2><p class="route-stop__note">继续研究 Agent Runtime、Control Plane、Tool Gateway 和 Outcome Evaluation，把工程纪律接到 Agent 的执行与反馈闭环中。</p></div>
+              <div class="route-stop__card route-stop__card--now"><p class="route-stop__phase">现在</p><h2 class="route-stop__city">What next?</h2><p class="route-stop__note">继续研究 Agent Runtime、Control Plane、Tool Gateway 和 Outcome Evaluation，也研究扰动下错误如何被拦住，而不是被闭环写成完成。</p></div>
             </li>
           </ol>
         </div>
