@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>FDE 的新价值：识别业务复杂度，而不是简单交付 Agent · AI Knowledge Lab</title><meta name="description" content="在 Agent 时代，FDE 的核心价值可以从把产品部署到客户转向识别真实业务中的复杂决策单元，并判断哪些复杂度值得被 Agent 化。"><link rel="canonical" href="https://chengguruchun.github.io/articles/fde-agent-opportunity-discovery.html"><link rel="stylesheet" href="../assets/css/site.css"></head><body><header class="site-header"><div class="wrap site-header__inner"><a class="brand" href="../index.html"><img class="brand__logo" src="../assets/img/brand-mark.svg" alt="AI Knowledge Lab" width="44" height="44"><span class="brand__tag">AI Agents · Complex Systems</span></a><button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">菜单</button><nav class="nav" id="site-nav" aria-label="主导航"><a href="../index.html">Home</a><a href="../bench/">Agent Bench</a><a href="../diverse/">Diverse Lab</a><a href="../articles/" aria-current="page">Articles</a><a href="../projects/">Projects</a><a href="../videos/">Videos</a><a href="../times/">Hot Words</a><a href="../about/">About Me</a><a class="nav__search" href="../tags/">Tags / Search</a></nav></div></header><main><article class="section"><div class="wrap wrap--reading"><p class="page-hero__kicker">FDE · Agent Discovery · 2026-09-17</p><h1>FDE 的新价值：识别业务复杂度，而不是简单交付 Agent</h1><p class="lede">在 Agent 时代，FDE（Forward Deployed Engineer）的价值不只是把产品部署到客户，而是把真实业务中的复杂度识别出来，拆解成 Decision Units，并判断哪些复杂度值得被 Agent 化。</p><hr><h2>1. FDE 真正面对的问题</h2><p>客户可能说：“我要解决排产问题。”但 FDE 不能直接把“排产”做成一个 Agent，而应该继续追问：到底什么叫排产问题？为什么要重新排？谁在决定？依据什么？有哪些约束？异常有哪些？多久发生一次？错误的代价是什么？最后如何知道成功？</p><p>最后可能发现，客户以为需要的是“排产 Agent”，真正高价值的却是“异常恢复 Agent”。</p><blockquote>FDE 的价值，是把模糊的业务问题重新建模成可执行、可验证的决策问题。</blockquote><h2>2. 从 Business Process 到 Decision Unit</h2><pre><code>Business Reality
+       ↓
+       FDE
+       ↓
+Complexity Map
+       ↓
+Decision Units
+       ↓
+Agent Opportunity Map
+       ↓
+Runtime Design</code></pre><p>不要只按部门或岗位拆系统，而要把一个岗位继续拆成具体决策单元。例如生产管理可以拆成排产、插单、产能分配、工厂选择、物料调度、异常恢复、交期调整。</p><h2>3. 如何识别业务复杂度</h2><p>我会重点看六个维度：</p><ul><li><strong>随机性：</strong>环境是不是经常变化？</li><li><strong>组合复杂度：</strong>有多少资源、约束和方案需要组合？</li><li><strong>决策频率：</strong>这个决策多久发生一次？</li><li><strong>反馈速度：</strong>结果多久可以知道？</li><li><strong>可验证性：</strong>能不能客观判断成功或失败？</li><li><strong>错误成本：</strong>Agent 做错一次有多严重？</li></ul><p>因此，Agent 化并不是“随机性越高越好”，而更像是：</p><pre><code>高随机性
++
+高组合复杂度
++
+高决策频率
++
+快速反馈
++
+高可验证性
+
+→ Agent Opportunity</code></pre><h2>4. 不同复杂度，对应不同技术形态</h2><table><thead><tr><th>场景</th><th>特征</th><th>形态</th></tr></thead><tbody><tr><td>数据同步、状态更新</td><td>低复杂度、规则明确</td><td>Automation</td></tr><tr><td>固定审批、固定工艺</td><td>确定性强</td><td>Workflow</td></tr><tr><td>排产、调度、供应商匹配</td><td>高组合 + 动态变化 + 可验证</td><td>Agent</td></tr><tr><td>重大质量、安全、重大采购</td><td>高复杂度 + 高错误成本</td><td>Agent + Human</td></tr></tbody></table><p>因此 FDE 的工作不是见到业务就“上 Agent”，而是识别业务复杂度后做技术形态判断。</p><h2>5. 为什么组合复杂度特别重要</h2><p>制造中的一个订单可能同时涉及供应商、产线、材料、时间、物流、质量和成本。每增加一个维度，可能方案都会快速增加。</p><pre><code>订单
+× 供应商
+× 产线
+× 材料
+× 时间
+× 物流
+× 质量
+× 成本</code></pre><p>传统系统往往不断增加 Rule 1、Rule 2、Rule N。但当组合空间持续扩大时，规则系统的维护成本会越来越高。Agent 的价值则可能变成在巨大可能性空间中生成、比较和调整候选方案。</p><h2>6. 不要替代岗位，要替代决策单元</h2><p>一个岗位通常同时包含 Routine、Decision、Communication、Judgement 和 Responsibility。Agent 最先适合接管的通常是其中可结构化、可验证的 Routine + Decision，而责任和高风险授权仍然需要治理机制。</p><p>所以不要简单设计：</p><pre><code>Supplier Manager Agent
+Production Manager Agent
+Warehouse Manager Agent</code></pre><p>而应该拆成：</p><pre><code>Supplier Manager
+├── 找供应商
+├── 比较供应商
+├── 判断交期
+├── 监控质量
+├── 处理异常
+└── 调整订单
+
+        ↓
+
+Supplier Discovery Agent
+Supplier Matching Agent
+Supplier Monitoring Agent
+Supplier Recovery Agent</code></pre><blockquote>不是替代一个职位，而是拆解一个职位中的决策单元。</blockquote><h2>7. FDE 与 Agent Runtime 的连接</h2><pre><code>                 FDE
+                  │
+          Complexity Discovery
+                  │
+          Decision Unit
+                  │
+          Agent Suitability
+                  │
+          ┌───────┴────────┐
+          ↓                ↓
+       Workflow          Agent
+                           │
+                    Agent Runtime
+                           │
+                 Execute / Verify
+                           │
+                       Feedback
+                           │
+                           └────→ FDE</code></pre><p>这意味着 FDE 不是 Agent Runtime 的外围实施角色，而可能是 Runtime 的业务入口：负责发现值得被运行时接管的决策单元，并帮助建立验证闭环。</p><h2>8. 从交付工程师到复杂度发现者</h2><p>传统实施可以理解为：</p><pre><code>客户业务
+ ↓
+产品能力
+ ↓
+配置 / 开发
+ ↓
+上线</code></pre><p>Agent 时代的 FDE 更像：</p><pre><code>真实业务
+ ↓
+业务流程拆解
+ ↓
+决策单元识别
+ ↓
+复杂度分析
+ ↓
+Agent Suitability
+ ↓
+Agent Architecture
+ ↓
+Deployment
+ ↓
+Outcome Feedback</code></pre><p>所以 FDE 的核心工作从“把产品部署到客户”逐渐向“理解客户业务并重新定义产品与 Agent 的边界”移动。</p><h2>9. 一个可能的未来：Agent Discovery Agent</h2><p>随着企业数据越来越完整，这个过程本身也可能被部分 Agent 化。系统可以分析 SOP、工单、ERP/MES 数据、操作日志、异常记录和人工决策轨迹，自动发现高复杂度、高频率、高随机性的决策单元。</p><pre><code>Enterprise Data
+      ↓
+Agent Discovery
+      ↓
+Complexity Map
+      ↓
+Agent Opportunity Map
+      ↓
+FDE Validation
+      ↓
+Agent Runtime</code></pre><p>但 FDE 仍然重要，因为真实业务中的隐性约束、责任边界和组织规则，往往不能只从日志中得到。</p><h2>10. 我的暂时结论</h2><p>如果把 Agent 时代的 FDE 重新定义，我会这样描述：</p><blockquote>FDE 的核心价值不是把产品部署到客户，而是识别客户业务中的复杂决策单元，并把其中适合 Agent 化的部分转化成可验证、可运行的 Agent Runtime。</blockquote><p>这也把几个看似不同的问题连起来了：</p><pre><code>Business Complexity
+        ↓
+Decision Unit
+        ↓
+Agent Suitability
+        ↓
+Agent Architecture
+        ↓
+Agent Runtime
+        ↓
+Outcome Feedback</code></pre><p>所以未来判断一个企业是否适合 Agent 化，可能首先不是问“有没有 LLM”，也不是问“哪个岗位会被替代”，而是问：</p><blockquote>哪些业务决策已经复杂到传统 Workflow 不再经济，同时又具备 Agent 所需要的反馈与验证条件？</blockquote><h2>开放问题</h2><ul><li>能否建立一套可量化的 Business Complexity Map？</li><li>Decision Unit 的边界应该由 FDE、产品经理还是 Agent Discovery 系统共同定义？</li><li>如何判断一个复杂决策已经超过 Workflow 的经济边界？</li><li>哪些企业数据最能暴露隐藏的决策复杂度？</li><li>FDE 是否会逐渐成为 Agent Runtime 的“业务编译器”，把现实业务编译成 Agent 可执行的决策空间？</li></ul></div></article></main><footer class="site-footer"><div class="wrap"><p>AI Knowledge Lab · Independent Thinking · Agent Infrastructure</p></div></footer><script src="../assets/js/site.js"></script></body></html>
