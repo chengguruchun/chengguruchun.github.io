@@ -1,81 +1,59 @@
 {
   "id": "knowledge-lifecycle-criteria",
   "name": "Knowledge Lifecycle · 事后验证标准",
-  "version": "2026-09-16.1",
-  "updated": "2026-09-16",
-  "note": "这是发表之后的有效性标准，不是 Thought Loop 的入库门禁。过期不等于错误。改 prompt 或轴必须升 version。",
+  "version": "2026-09-17.1",
+  "updated": "2026-09-17",
+  "note": "发表之后的有效性标准 + 统一知识可信度协议。过期不等于错误；Knowledge Type、Confidence、Evidence Level 与 Quality Gates 分开表达。",
   "improve": "Edit prompt and/or axes here, bump version, append changelog, run python3 scripts/build_knowledge.py. Do not rewrite published article bodies to satisfy a new standard. Agent reports never auto-apply.",
+  "knowledge_protocol": {
+    "types": [
+      {"id": "FACT", "name": "事实", "definition": "可由公开资料、实验、代码或数据验证的陈述。"},
+      {"id": "OPINION", "name": "观点", "definition": "作者个人理解、观察或价值判断，不应伪装成外部事实。"},
+      {"id": "ENGINEERING_JUDGMENT", "name": "工程判断", "definition": "基于事实、工程经验与推理形成的设计判断，应说明依据和边界。"},
+      {"id": "FUTURE_HYPOTHESIS", "name": "未来推测", "definition": "关于未来趋势、架构或产业变化的假设，必须明确标注为推测。"}
+    ],
+    "confidence": {
+      "HIGH": "证据充分、来源可靠且近期得到验证。",
+      "MEDIUM": "有支持证据，但范围、复现性或适用边界仍有限。",
+      "LOW": "主要来自观察、间接证据或尚未充分验证的推理；不应作为确定事实引用。"
+    },
+    "evidence_levels": {
+      "L4": "Primary Evidence · 原始论文、官方 benchmark、官方规范、原始实验数据",
+      "L3": "Reproducible Evidence · 可复现实验、代码、公开 benchmark results",
+      "L2": "Secondary Evidence · 技术文章、官方博客、第三方分析",
+      "L1": "Personal Observation · 个人实践与观察",
+      "L0": "Hypothesis · 尚未验证的推测"
+    },
+    "quality_gates": [
+      {"id": "fact_check", "name": "Fact Check", "ask": "事实是否真实、时间是否正确、来源是否可靠？"},
+      {"id": "inference_check", "name": "Inference Check", "ask": "是否明确区分事实、观点、工程判断和未来推测？是否把推论写成事实？"},
+      {"id": "evidence_check", "name": "Evidence Check", "ask": "证据是否真实、相关、足以支持对应主张？"},
+      {"id": "counterexample_check", "name": "Counterexample Check", "ask": "是否存在重要反例、边界条件或使判断失效的情况？"}
+    ],
+    "required_metadata": ["knowledge.type", "knowledge.confidence", "knowledge.evidence_level", "quality.fact_check", "quality.inference_check", "quality.evidence_check", "quality.counterexample_check"]
+  },
   "layers": {
     "time": "build_knowledge.py 硬判：now > next_review 且无人钉住 CHANGED/CONTESTED/ARCHIVED → STALE。本站不调用模型。",
     "model": "加载了 /SKILL.md 的 Agent（或 weekly Action）用下面 prompt 只写报告。人 Approve 后才 keep / 改状态。"
   },
-  "exclude_types": [
-    "Times"
-  ],
-  "cadence": {
-    "default_days": 90,
-    "by_type": {
-      "Articles": 90,
-      "Diverse Lab": 180
-    },
-    "by_tag": {
-      "Philosophy": 365
-    }
-  },
+  "exclude_types": ["Times"],
+  "cadence": {"default_days": 90, "by_type": {"Articles": 90, "Diverse Lab": 180}, "by_tag": {"Philosophy": 365}},
   "statuses": [
-    {
-      "id": "fresh",
-      "name": "已验证",
-      "ask": "最近验证过，当前仍可当作现行知识引用。"
-    },
-    {
-      "id": "stale",
-      "name": "待复查",
-      "ask": "超过验证周期，还没有重新验证。不是错误。"
-    },
-    {
-      "id": "changed",
-      "name": "可能已变",
-      "ask": "出现了新证据，主张需要人重新审视。"
-    },
-    {
-      "id": "contested",
-      "name": "有争议",
-      "ask": "出现了不同观点或相反证据，尚未裁决。"
-    },
-    {
-      "id": "archived",
-      "name": "已归档",
-      "ask": "历史上成立，不再适合作为当前知识。"
-    }
+    {"id": "fresh", "name": "已验证", "ask": "最近验证过，当前仍可当作现行知识引用。"},
+    {"id": "stale", "name": "待复查", "ask": "超过验证周期，还没有重新验证。不是错误。"},
+    {"id": "changed", "name": "可能已变", "ask": "出现了新证据，主张需要人重新审视。"},
+    {"id": "contested", "name": "有争议", "ask": "出现了不同观点或相反证据，尚未裁决。"},
+    {"id": "archived", "name": "已归档", "ask": "历史上成立，不再适合作为当前知识。"}
   ],
   "axes": [
-    {
-      "id": "unchanged",
-      "name": "仍然成立",
-      "ask": "核心主张在现有证据下仍然成立，只需刷新 last_verified。"
-    },
-    {
-      "id": "changed",
-      "name": "外部事实变了",
-      "ask": "可核事实、接口、产品或共识已经变化，需要人改写或加注。"
-    },
-    {
-      "id": "insufficient",
-      "name": "证据不足",
-      "ask": "找不到能核验这句话的新证据，不能判断变或没变。"
-    },
-    {
-      "id": "obsolete",
-      "name": "不再适合现行引用",
-      "ask": "主张在当时成立，但不宜再当作当前最佳实践 / 当前事实。"
-    }
+    {"id": "unchanged", "name": "仍然成立", "ask": "核心主张在现有证据下仍然成立，只需刷新 last_verified。"},
+    {"id": "changed", "name": "外部事实变了", "ask": "可核事实、接口、产品或共识已经变化，需要人改写或加注。"},
+    {"id": "insufficient", "name": "证据不足", "ask": "找不到能核验这句话的新证据，不能判断变或没变。"},
+    {"id": "obsolete", "name": "不再适合现行引用", "ask": "主张在当时成立，但不宜再当作当前最佳实践 / 当前事实。"}
   ],
-  "prompt": "你是本站 Knowledge Lifecycle 的 Verifier，不是代笔，也不是入库门禁。\n\n只根据输入判断一篇已发表知识现在是否还适合当现行结论。不要改写文章，不要改 stage / route / catalog，不要把过期当成错误。\n\n输入你会看到：id、title、type、tags、excerpt、claim、last_verified、cadence_days、published_date。\n\n只允许一个主判定：\n1. unchanged — 核心主张仍成立。\n2. changed — 有可核的新证据表明外部事实或共识变了。\n3. insufficient — 证据不够，不能判断。\n4. obsolete — 当时成立，现在不宜再当现行知识。\n\n硬规则：\n- 吃不准就 insufficient。\n- changed / obsolete 必须给出至少一条真实 https URL；编造链接记 insufficient。\n- 哲学与可反驳论题很少「过期」；领域还在争论 ≠ changed。\n- note 只能一句。proposed_change 只描述建议，不写正文。\n\n只输出 JSON：\n{\n  \"criteria_version\": \"<用你读到的当前 version>\",\n  \"model\": \"<你所用的模型名，未知则 unknown>\",\n  \"verdict\": \"unchanged|changed|insufficient|obsolete\",\n  \"note\": \"一句理由\",\n  \"evidence\": [{\"url\": \"https://...\", \"note\": \"一句\"}],\n  \"proposed_change\": \"可空；不要写全文\"\n}",
+  "prompt": "你是本站 Knowledge Lifecycle 的 Verifier，不是代笔，也不是入库门禁。\n\n首先识别知识类型：FACT / OPINION / ENGINEERING_JUDGMENT / FUTURE_HYPOTHESIS；再检查其 Confidence 与 Evidence Level 是否匹配。然后只根据输入判断一篇已发表知识现在是否还适合当现行结论。不要改写文章，不要改 stage / route / catalog，不要把过期当成错误。\n\n质量检查必须区分四项：Fact Check、Inference Check、Evidence Check、Counterexample Check。\n\n只允许一个主判定：unchanged / changed / insufficient / obsolete。吃不准就 insufficient。changed / obsolete 必须给出至少一条真实 https URL；编造链接记 insufficient。哲学与可反驳论题很少「过期」；领域还在争论 ≠ changed。\n\n只输出 JSON：{\"criteria_version\":\"<当前 version>\",\"model\":\"<模型名，未知则 unknown>\",\"verdict\":\"unchanged|changed|insufficient|obsolete\",\"knowledge_type\":\"FACT|OPINION|ENGINEERING_JUDGMENT|FUTURE_HYPOTHESIS\",\"confidence\":\"HIGH|MEDIUM|LOW\",\"evidence_level\":\"L4|L3|L2|L1|L0\",\"quality\":{\"fact_check\":\"passed|failed|pending\",\"inference_check\":\"passed|failed|pending\",\"evidence_check\":\"passed|failed|pending\",\"counterexample_check\":\"passed|failed|pending\"},\"note\":\"一句理由\",\"evidence\":[{\"url\":\"https://...\",\"note\":\"一句\"}],\"proposed_change\":\"可空；不要写全文\"}",
   "changelog": [
-    {
-      "version": "2026-09-16.1",
-      "note": "首版：时间门 STALE + 模型四判定 unchanged/changed/insufficient/obsolete。Agent 只写报告。"
-    }
+    {"version": "2026-09-16.1", "note": "首版：时间门 STALE + 模型四判定 unchanged/changed/insufficient/obsolete。Agent 只写报告。"},
+    {"version": "2026-09-17.1", "note": "增加统一 Knowledge Protocol：Fact / Opinion / Engineering Judgment / Future Hypothesis、Confidence、Evidence Level，以及 Fact / Inference / Evidence / Counterexample 四项质量检查。"}
   ]
 }
