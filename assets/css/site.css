@@ -1100,6 +1100,19 @@ a.tag:hover { color: #8fbfab; border-color: rgba(106,158,138,0.5); }
 .video-frame--planned::after {
   content: none;
 }
+/* Published: a real <video controls> replaces the fake play affordance. */
+.video-frame--published {
+  padding: 0;
+}
+.video-frame--published::after {
+  content: none;
+}
+.video-frame--published video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: #0a1220;
+}
 
 /* Search */
 .search-box {
