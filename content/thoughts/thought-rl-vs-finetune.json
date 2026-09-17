@@ -5,6 +5,17 @@
   "status": "hold",
   "origin": "user",
   "contribution": "synthesis",
+  "knowledge": {
+    "type": "OPINION",
+    "confidence": "LOW",
+    "evidence_level": "L1"
+  },
+  "quality": {
+    "fact_check": "pending",
+    "inference_check": "pending",
+    "evidence_check": "pending",
+    "counterexample_check": "pending"
+  },
   "source": {
     "agent": "none",
     "note": "User intake. Filed contribution as synthesis (manus is not in the schema)."
@@ -20,5 +31,5 @@
   "also": [],
   "promotes_to": null,
   "published_url": null,
-  "updated": "2026-09-08"
+  "updated": "2026-09-17"
 }
