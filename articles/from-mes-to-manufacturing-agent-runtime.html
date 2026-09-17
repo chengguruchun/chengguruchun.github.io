@@ -87,7 +87,7 @@
 <main><article class="article-body"><header class="page-hero"><div class="prose-wrap"><p class="page-hero__kicker">Articles</p><h1>从 MES 到 Manufacturing Agent Runtime：当生产系统开始自己做决策</h1><p class="page-hero__desc">SHEIN 式制造的关键不是给 MES 加一个 Copilot，而是把高频、动态、组合复杂的生产决策变成 Agent Runtime 的持续闭环。</p><p class="article-meta"><span>思路 2026-09-16</span><span>发表 2026-09-16</span><span>作者 chengguruchun</span><span class="tag tag--stage">published</span><a class="tag" href="../tags/?tag=Agent">Agent</a><a class="tag" href="../tags/?tag=Manufacturing">Manufacturing</a><a class="tag" href="../tags/?tag=MES">MES</a><a class="tag" href="../tags/?tag=Agent%20Runtime">Agent Runtime</a><a class="tag" href="../tags/?tag=Control%20Plane">Control Plane</a></p></div></header>
 <div class="prose-wrap">
 <p class="lede">这篇文章来自我对 SHEIN 式制造模式、MES 和 Agent Runtime 的连续思考。这里并不是试图还原某一家公司的内部系统，而是把一种高频数字化供应链闭环抽象出来，再问：如果 Agent 真正进入制造系统，业务架构应该发生什么变化？</p>
-<blockquote><p><strong>不要替代岗位，要替代决策单元。</strong></p></blockquote>
+<blockquote><p><strong>不要替代岗位，要替代决策单元。</strong></p></blockquote><p>本文会区分三种表达：</p><ul><li><strong>已观察事实：</strong>来自现有业务系统、生产实践或可复现数据的描述。</li><li><strong>工程判断：</strong>基于这些事实提出的架构判断或设计建议。</li><li><strong>未来推测：</strong>对行业和系统形态可能如何演化的假设。</li></ul><p>后文的架构图和 Agent 分工主要属于工程判断，不等同于某一家企业已经采用的内部事实。</p>
 <p>真正的变化不是“给 MES 加一个 AI Copilot”，而是生产系统从“执行已经确定的流程”，逐渐变成“持续观察现实、做出决策、执行、验证并重新规划”的 Manufacturing Agent Runtime。</p>
 <h2>1. 传统 MES 与 Agent 化制造的区别</h2>
 <p>传统 MES 可以抽象成：</p>
@@ -104,7 +104,7 @@
 质检
  ↓
 入库</code></pre>
-<p>它解决的核心问题是：如何把已经确定的生产计划数字化、透明化，并稳定执行。MES 更像一个 Workflow Engine + Data System。</p>
+<p>它解决的核心问题是：如何把已经确定的生产计划数字化、透明化，并稳定执行。在本文的抽象中，MES 主要承担生产执行、过程追踪、状态记录和约束落地；跨订单、跨工厂、跨供应链的动态决策，通常还需要 APS、SCM、ERP 等系统共同参与。</p>
 <p>但当制造模式变成高频、小批量、快速反馈时，生产计划本身不再是一次性确定的输入，而变成动态决策问题：</p>
 <pre><code>用户需求
    ↓
@@ -117,7 +117,7 @@
 追加生产
    ↓
 再次反馈</code></pre>
-<h2>2. 为什么这种制造模式天然适合 Agent</h2>
+<h2>2. 为什么这种制造模式天然适合 Agent</h2><p><strong>已观察事实：</strong>在高频、小批量、快速反馈的制造模式中，需求、库存、产能和订单状态会持续变化，生产计划通常需要反复调整。</p><p><strong>工程判断：</strong>因此真正需要 Agent 化的，不是 MES 的所有功能，而是 MES 上方那些不断变化、需要重新组合资源的决策过程。</p>
 <p>如果抽象掉具体公司的业务细节，会发现它具有几个典型特征：</p>
 <pre><code>大量 SKU
 +
@@ -210,7 +210,7 @@ Supplier Recovery Agent</code></pre>
 <tr><td>重大采购/安全决策</td><td>高</td><td>高</td><td>低</td><td>Human + Agent</td></tr>
 </tbody></table>
 <blockquote><p><strong>最应该 Agent 化的，不一定是人数最多的岗位，而是“决策密度最高”的岗位。</strong></p></blockquote>
-<h2>6. 随机性与组合复杂度，是两个重要坐标轴</h2>
+<h2>6. 随机性与组合复杂度，是两个重要坐标轴</h2><p>前面的判断还需要补充部署条件：状态必须可观测，系统必须提供可执行接口，结果必须能够归因，权限和风险必须可控，预期收益还要覆盖模型、集成、错误补偿与治理成本。高复杂度只是必要线索，不是充分条件。</p>
 <pre><code>                    Decision Complexity
                            ↑
         Human              │       Agent + Human
@@ -228,7 +228,14 @@ Supplier Recovery Agent</code></pre>
      固定工艺              │       异常处理
                            │       供应商匹配
                            │       库存优化</code></pre>
-<p>最适合 Agent 的不是简单的高随机性，而是：<strong>高随机性 + 高组合复杂度 + 快速反馈 + 可验证结果。</strong></p>
+<p>最适合 Agent 的，不是简单的高随机性，而是：<strong>高随机性 + 高组合复杂度 + 快速反馈 + 可验证结果 + 可观测、可执行且风险可控。</strong></p><p>可以把 Agent 化的经济边界粗略写成：</p><pre><code>可获得的决策收益
++ 响应速度收益
++ 反馈闭环收益
+&gt;
+模型成本
++ 集成成本
++ 错误与补偿成本
++ 治理成本</code></pre><p>这不是精确的财务模型，但可以提醒我们：规则很多并不自动意味着 Agent 更经济。</p>
 <h2>7. Agent 最有价值的地方：处理异常</h2>
 <p>现实生产中，正常路径往往并不难。真正昂贵的是订单延迟、材料缺货、机器故障、质量下降、供应商拒单、物流延迟、需求突然上涨。</p>
 <pre><code>Normal
@@ -260,7 +267,7 @@ Continue</code></pre>
                        ↓
                     New Event</code></pre>
 <p>事件可以是 DemandChanged、OrderCreated、MaterialDelayed、FactoryCapacityChanged、QualityDegraded、ShipmentDelayed、InventoryLow。</p>
-<blockquote><p><strong>Event → Agent → Action → Verification → Event</strong></p></blockquote>
+<blockquote><p><strong>Event → Agent → Action → Verification → Event</strong></p></blockquote><p>但生产系统不能只靠事件触发和 Agent 自由协作。Runtime 还必须提供状态存储、事件溯源、幂等执行、任务优先级、权限审批、超时处理、补偿事务和决策审计，否则多个 Agent 可能重复执行、互相覆盖，甚至形成事件循环。事件总线负责传播变化，Control Plane 负责决定谁可以在什么条件下采取什么动作，Execution Plane 负责把获批动作可靠地落到业务系统。</p>
 <h2>9. Demand Agent：决定“应该生产多少”</h2>
 <p>Demand Agent 持续观察销量、点击、收藏、搜索、转化率、库存、历史数据、季节和营销活动。预测结果不应该只有一个数字，还应该有置信度和验证方式：</p>
 <pre><code>forecast: 3000
@@ -338,7 +345,7 @@ Agent → Proposal → Human Approval → Execute</code></pre>
                     Factory / IoT / PLC
                              │
                              └──── Event ────→</code></pre>
-<p>MES 的位置发生变化：它仍然非常重要，但不再是整个业务决策系统的最高层。它更像 <strong>Execution Plane</strong>；Agent Runtime 成为 <strong>Decision + Reconciliation Plane</strong>。</p>
+<p><strong>工程判断：</strong>在这套目标架构中，MES 的位置发生变化：它仍然非常重要，但不再是整个业务决策系统的最高层。它更像 <strong>Execution Plane</strong>；Agent Runtime 成为 <strong>Decision + Reconciliation Plane</strong>。</p>
 <h2>14. K8s 类比：制造系统也可以拥有 Desired State</h2>
 <pre><code>Production Target
       ↓
@@ -390,7 +397,7 @@ Verification</code></pre>
 <p>Agent 不一定直接“替代一个人”，而可能先替代一个人的一部分决策循环。随着验证能力越来越强，这些决策循环逐渐扩大。</p>
 <h2>18. 一个暂时结论</h2>
 <pre><code>Agent
-= Manufacturing Controller
+= Manufacturing Decision Controller
 
 MES
 = Execution System
@@ -409,7 +416,7 @@ Control Plane
 
 Agent Runtime
 = Observe → Decide → Act → Verify → Reconcile</code></pre>
-<p>因此未来的 Manufacturing Agent 不应该只是：</p>
+<p>这里的 Controller 指制造业务的动态决策控制层，而不是 PLC、DCS 或安全联锁意义上的实时设备控制器。实时控制和安全边界仍应由确定性的工业控制系统负责。</p><p>因此未来的 Manufacturing Agent 不应该只是：</p>
 <pre><code>MES + LLM</code></pre>
 <p>更可能是：</p>
 <pre><code>MES
