@@ -16,33 +16,6 @@
         "video",
         "Agent"
       ]
-    },
-    {
-      "id": "vid-runtime",
-      "type": "Videos",
-      "title": "对照阅读：K8s 抽象 vs Agent Runtime",
-      "excerpt": "计划用白板推演 Pod / Goal / Tool Session 三类生命周期与失败语义。",
-      "url": "/videos/#vid-runtime",
-      "date": "",
-      "stage": "planned",
-      "related_article": "/articles/k8s-to-agent-control-plane.html",
-      "tags": [
-        "video",
-        "Kubernetes"
-      ]
-    },
-    {
-      "id": "vid-registry",
-      "type": "Videos",
-      "title": "Registry：能力、契约与信任",
-      "excerpt": "计划短述：为什么 DNS 式发现不够，以及契约测试如何进入注册流程。这条还没有对应的长文。",
-      "url": "/videos/#vid-registry",
-      "date": "",
-      "stage": "planned",
-      "tags": [
-        "video",
-        "Registry"
-      ]
     }
   ]
 }
