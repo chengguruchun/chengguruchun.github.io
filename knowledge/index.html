@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Knowledge · AI Knowledge Lab</title>
+  <meta name="description" content="经典论文、模型与核心概念：构成 AI Agent 思考与实践的知识底座。">
+  <meta name="theme-color" content="#f7f5f0">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/site.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap site-header__inner">
+      <a class="brand" href="../index.html">
+        <img class="brand__logo" src="../assets/img/brand-mark.svg" alt="AI Knowledge Lab" width="44" height="44">
+        <span class="brand__tag" data-brand-rotate aria-label="Independent Thinker · AI Agents · Complex Systems · Diverse Thinking"><span class="brand__rotate"><span class="brand__item is-active">Independent Thinker</span><span class="brand__item">AI Agents</span><span class="brand__item">Complex Systems</span><span class="brand__item">Diverse Thinking</span></span></span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">菜单</button>
+      <nav class="nav" id="site-nav" aria-label="主导航">
+        <a href="../index.html">Home</a><a href="../bench/">Agent Bench</a><a href="../diverse/">Diverse Lab</a><a href="../articles/">Articles</a><a href="../projects/">Projects</a><a href="../videos/">Videos</a><a href="../times/">Hot Words</a><a href="../about/">About Me</a><a class="nav__search" href="../tags/">Tags / Search</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <header class="page-hero">
+      <div class="wrap">
+        <p class="page-hero__kicker">Knowledge</p>
+        <h1>知识底座</h1>
+        <p class="page-hero__desc">经典论文、模型与核心概念。不是资料收藏，而是理解 AI Agents 与基础设施时可以反复回到的知识坐标。</p>
+      </div>
+    </header>
+
+    <section class="section section--tight" aria-labelledby="papers">
+      <div class="wrap">
+        <h2 id="papers" class="projects-section__title">Papers · 经典论文</h2>
+        <p class="projects-section__note">从 Transformer、预训练到推理、工具调用与 Agent，记录改变技术路径的代表性工作。</p>
+        <div class="grid grid--2">
+          <a class="card" href="https://arxiv.org/abs/1706.03762" target="_blank" rel="noopener"><h3>Attention Is All You Need</h3><p>Transformer 的起点。用 self-attention 重新组织序列建模。</p><span class="tag">Transformer · 2017</span></a>
+          <a class="card" href="https://arxiv.org/abs/1810.04805" target="_blank" rel="noopener"><h3>BERT</h3><p>双向 Transformer 预训练的经典工作，影响了后续大量语言模型设计。</p><span class="tag">Pre-training · 2018</span></a>
+          <a class="card" href="https://arxiv.org/abs/1910.01108" target="_blank" rel="noopener"><h3>DistilBERT</h3><p>知识蒸馏的代表案例：在更小的模型中保留较大模型的语言能力。</p><span class="tag">Distillation · 2019</span></a>
+          <a class="card" href="https://arxiv.org/abs/2005.14165" target="_blank" rel="noopener"><h3>Language Models are Few-Shot Learners</h3><p>GPT-3 展示规模化语言模型的 in-context learning 能力。</p><span class="tag">Scaling · 2020</span></a>
+          <a class="card" href="https://arxiv.org/abs/2005.11401" target="_blank" rel="noopener"><h3>Retrieval-Augmented Generation</h3><p>把参数化模型与外部知识检索连接起来，成为 RAG 系统的重要基础。</p><span class="tag">RAG · 2020</span></a>
+          <a class="card" href="https://arxiv.org/abs/2201.11903" target="_blank" rel="noopener"><h3>Chain-of-Thought Prompting</h3><p>展示中间推理步骤如何帮助大语言模型处理复杂推理任务。</p><span class="tag">Reasoning · 2022</span></a>
+          <a class="card" href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noopener"><h3>ReAct</h3><p>把 reasoning 与 acting 交织起来，是现代 Tool-using Agent 的重要思想来源。</p><span class="tag">Agent · 2022</span></a>
+          <a class="card" href="https://arxiv.org/abs/2302.04761" target="_blank" rel="noopener"><h3>Toolformer</h3><p>探索语言模型学习调用外部工具，把模型推理与外部能力连接起来。</p><span class="tag">Tool Use · 2023</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--tight" aria-labelledby="models">
+      <div class="wrap">
+        <h2 id="models" class="projects-section__title">Models · 经典模型</h2>
+        <p class="projects-section__note">关注模型为什么出现、解决了什么问题，以及它们如何逐步走向 Agent。</p>
+        <div class="grid grid--2">
+          <article class="card"><h3>Transformer</h3><p>以 attention 为核心的架构范式，成为现代大语言模型的基础。</p><span class="tag">Architecture</span></article>
+          <article class="card"><h3>BERT</h3><p>Encoder-only 路线的代表模型，建立了预训练语言表示的重要范式。</p><span class="tag">Encoder</span></article>
+          <article class="card"><h3>DistilBERT</h3><p>BERT 的轻量化路线。它也提示了 Agent Runtime 中小模型作为专用组件的可能性。</p><span class="tag">Small Model</span></article>
+          <article class="card"><h3>GPT</h3><p>Decoder-only 自回归语言模型路线，逐渐从文本生成走向通用任务执行。</p><span class="tag">Decoder</span></article>
+          <article class="card"><h3>T5</h3><p>把不同 NLP 任务统一为 text-to-text，为任务统一建模提供了经典范式。</p><span class="tag">Unified Modeling</span></article>
+          <article class="card"><h3>Llama</h3><p>开放权重语言模型生态的重要组成部分，推动了本地模型与 Agent 工程实践。</p><span class="tag">Open Models</span></article>
+          <article class="card"><h3>DeepSeek</h3><p>关注高效训练、推理与 reasoning 路线的模型系列，也是当前 Agent 工程的重要模型基础。</p><span class="tag">Reasoning</span></article>
+          <article class="card"><h3>CLIP</h3><p>图文对齐的经典模型，代表多模态模型从单一语言空间走向共享语义空间。</p><span class="tag">Multimodal</span></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--tight" aria-labelledby="concepts">
+      <div class="wrap">
+        <h2 id="concepts" class="projects-section__title">Concepts · 核心概念</h2>
+        <p class="projects-section__note">比具体模型更稳定的抽象：理解这些概念，有助于把模型能力放进真正的 Agent 系统。</p>
+        <div class="grid grid--2">
+          <article class="card"><h3>Attention</h3><p>让模型根据上下文动态决定信息之间的关联强度。</p></article>
+          <article class="card"><h3>Knowledge Distillation</h3><p>把 teacher model 的行为或知识迁移给更小的 student model。</p></article>
+          <article class="card"><h3>In-context Learning</h3><p>不更新模型参数，仅通过上下文示例改变当前任务表现。</p></article>
+          <article class="card"><h3>RLHF</h3><p>利用人类偏好信号对语言模型行为进行对齐。</p></article>
+          <article class="card"><h3>RAG</h3><p>把模型与外部可检索知识连接，降低纯参数记忆的限制。</p></article>
+          <article class="card"><h3>Tool Use</h3><p>让模型调用搜索、代码、数据库、API 等外部能力，而不局限于生成文本。</p></article>
+          <article class="card"><h3>Context Engineering</h3><p>围绕模型当前状态组织信息、历史、工具结果与约束，让下一步生成更可靠。</p></article>
+          <article class="card"><h3>Test-time Compute</h3><p>把更多计算预算放在推理阶段，通过搜索、验证或多次采样提升任务表现。</p></article>
+          <article class="card"><h3>Agent</h3><p>模型从一次性回答走向感知、规划、行动、反馈与迭代。</p></article>
+          <article class="card"><h3>Agent Runtime</h3><p>让 Agent 像服务一样被调度、执行、观测、恢复与验证，是这里正在持续研究的系统层。</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--tight">
+      <div class="wrap">
+        <div class="agent-panel">
+          <p class="agent-panel__label">How Knowledge connects</p>
+          <p class="agent-panel__lead">Knowledge 是底座；Articles 是我的思考；Bench 是验证；Projects 是实践。</p>
+          <p>我会逐渐把论文、模型与概念和本站已有的文章、实验及项目连接起来，而不是把 Knowledge 做成孤立的百科。</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap site-footer__inner"><div><p>© <span id="year"></span> chengguruchun · Hangzhou</p><p>Blog for Agents · 知识博客</p><p class="footer-visits" aria-label="访问统计"><span>本站 <strong data-visits-site>-</strong></span><span class="footer-visits__sep" aria-hidden="true">·</span><span>本页 <strong data-visits-page>-</strong></span></p></div></div>
+  </footer>
+  <script src="../assets/js/site.js"></script><script src="../assets/js/visits.js"></script>
+</body>
+</html>
