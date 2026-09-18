@@ -8,6 +8,20 @@
     });
   }
 
+  // Keep the existing navigation unchanged and add only Knowledge after Agent Bench.
+  if (nav && !nav.querySelector('a[href*="knowledge/"]')) {
+    var benchLink = Array.prototype.slice.call(nav.querySelectorAll("a[href]")).find(function (a) {
+      return /(?:^|\/)bench\/?$/.test(a.getAttribute("href") || "");
+    });
+    if (benchLink) {
+      var knowledgeLink = document.createElement("a");
+      var base = benchLink.getAttribute("href") || "bench/";
+      knowledgeLink.href = base.replace(/bench\/?$/, "knowledge/");
+      knowledgeLink.textContent = "Knowledge";
+      benchLink.insertAdjacentElement("afterend", knowledgeLink);
+    }
+  }
+
   var path = location.pathname.replace(/\/$/, "") || "/";
   document.querySelectorAll(".nav a[href]").forEach(function (a) {
     a.removeAttribute("aria-current");
