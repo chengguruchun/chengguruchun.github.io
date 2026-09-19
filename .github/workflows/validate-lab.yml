@@ -3,6 +3,20 @@ name: Validate Lab
 on:
   push:
     branches: [main]
+    paths:
+      - "articles/**"
+      - "scripts/**"
+      - "index.html"
+      - "knowledge.html"
+      - "api/knowledge.json"
+      - "api/knowledge-criteria.json"
+      - "api/catalog.json"
+      - "api/articles.json"
+      - "api/diverse-lab.json"
+      - "content/index.json"
+      - "content/knowledge/**"
+      - ".well-known/**"
+      - ".github/workflows/validate-lab.yml"
   pull_request:
   workflow_dispatch:
 
