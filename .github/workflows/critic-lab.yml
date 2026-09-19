@@ -62,8 +62,9 @@ jobs:
       - name: Run Critic Agent
         if: steps.article.outputs.run == 'true'
         env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          OPENAI_MODEL: ${{ vars.CRITIC_MODEL || 'gpt-5.6-luna' }}
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          CRITIC_PROVIDER: deepseek
+          CRITIC_MODEL: ${{ vars.CRITIC_MODEL || 'deepseek-chat' }}
           ARTICLE_PATH: ${{ steps.article.outputs.article }}
           BEFORE_SHA: ${{ github.event.before }}
           AFTER_SHA: ${{ github.sha }}
