@@ -483,7 +483,7 @@
     {
       "name": "lab_knowledge_report",
       "kind": "contribute",
-      "description": "File a verifier report only (unchanged/changed/insufficient/obsolete + https evidence). Never rewrite articles or bump last_verified.",
+      "description": "File a report only after observing cited URLs / arXiv ids (unchanged/changed/insufficient/obsolete). Never rewrite articles or bump last_verified.",
       "invoke": {
         "method": "ACTION",
         "action": "pr",

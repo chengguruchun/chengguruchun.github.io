@@ -61,7 +61,8 @@ articles from a topic. Full rules: `https://chengguruchun.github.io/THOUGHT_LOOP
 
 ## Knowledge lifecycle
 
-Published entries are rechecked on a cadence. Agents may file a report
+Published entries are rechecked on a cadence. The Research Runtime (CI/local)
+rechecks cited URLs and arXiv ids, then agents may file a report
 (`lab_knowledge_report`) but must not rewrite articles. Humans approve with
 `lab_knowledge_review`. Times / Hot Words are snapshots and are excluded.
 Rules: `https://chengguruchun.github.io/KNOWLEDGE_LOOP.md`.

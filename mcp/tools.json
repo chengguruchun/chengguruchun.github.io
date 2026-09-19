@@ -986,7 +986,7 @@
     {
       "name": "lab_knowledge_report",
       "kind": "contribute",
-      "description": "Run the current knowledge criteria on one published entry. Write only a report under content/knowledge/reports/. Do not change article bodies, catalog stage, or last_verified.",
+      "description": "Judge one published entry after Observe (cited URL fetch + arXiv lookup). Write only a report under content/knowledge/reports/. Do not change article bodies, catalog stage, or last_verified.",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -1008,7 +1008,7 @@
           },
           "evidence": {
             "type": "array",
-            "description": "changed/obsolete require at least one https URL",
+            "description": "changed/obsolete require at least one https URL that this run observed (or that still resolves, for hand-filed reports)",
             "items": {
               "type": "object",
               "properties": {

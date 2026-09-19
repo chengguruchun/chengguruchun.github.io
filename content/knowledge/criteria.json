@@ -1,13 +1,22 @@
 {
   "id": "knowledge-lifecycle-criteria",
   "name": "Knowledge Lifecycle · 事后验证标准",
-  "version": "2026-09-16.1",
+  "version": "2026-09-16.2",
   "updated": "2026-09-16",
   "note": "这是发表之后的有效性标准，不是 Thought Loop 的入库门禁。过期不等于错误。改 prompt 或轴必须升 version。",
   "improve": "Edit prompt and/or axes here, bump version, append changelog, run python3 scripts/build_knowledge.py. Do not rewrite published article bodies to satisfy a new standard. Agent reports never auto-apply.",
   "layers": {
     "time": "build_knowledge.py 硬判：now > next_review 且无人钉住 CHANGED/CONTESTED/ARCHIVED → STALE。本站不调用模型。",
-    "model": "加载了 /SKILL.md 的 Agent（或 weekly Action）用下面 prompt 只写报告。人 Approve 后才 keep / 改状态。"
+    "observe": "knowledge_runtime.py：只复查 Markdown 里已引用的 https URL（url_fetch）和对其中 arXiv id 做 arxiv_lookup。不搜索开放网页。",
+    "judge": "有 Observe 信号（引用失效 / arXiv 更新）才能 changed。没有信号时模型只能 unchanged 或 insufficient。人 Approve 后才 keep / 改状态。"
+  },
+  "runtime": {
+    "tools": ["url_fetch", "arxiv_lookup"],
+    "budget": {
+      "url_fetch": 6,
+      "arxiv_lookup": 3
+    },
+    "note": "Observe 只用文内已有引用。不接 web search。工具失败或零引用 → insufficient。"
   },
   "exclude_types": ["Times"],
   "cadence": {
@@ -69,8 +78,12 @@
       "ask": "主张在当时成立，但不宜再当作当前最佳实践 / 当前事实。"
     }
   ],
-  "prompt": "你是本站 Knowledge Lifecycle 的 Verifier，不是代笔，也不是入库门禁。\n\n只根据输入判断一篇已发表知识现在是否还适合当现行结论。不要改写文章，不要改 stage / route / catalog，不要把过期当成错误。\n\n输入你会看到：id、title、type、tags、excerpt、claim、last_verified、cadence_days、published_date。\n\n只允许一个主判定：\n1. unchanged — 核心主张仍成立。\n2. changed — 有可核的新证据表明外部事实或共识变了。\n3. insufficient — 证据不够，不能判断。\n4. obsolete — 当时成立，现在不宜再当现行知识。\n\n硬规则：\n- 吃不准就 insufficient。\n- changed / obsolete 必须给出至少一条真实 https URL；编造链接记 insufficient。\n- 哲学与可反驳论题很少「过期」；领域还在争论 ≠ changed。\n- note 只能一句。proposed_change 只描述建议，不写正文。\n\n只输出 JSON：\n{\n  \"criteria_version\": \"<用你读到的当前 version>\",\n  \"model\": \"<你所用的模型名，未知则 unknown>\",\n  \"verdict\": \"unchanged|changed|insufficient|obsolete\",\n  \"note\": \"一句理由\",\n  \"evidence\": [{\"url\": \"https://...\", \"note\": \"一句\"}],\n  \"proposed_change\": \"可空；不要写全文\"\n}",
+  "prompt": "你是本站 Knowledge Lifecycle 的 Judge，不是代笔，也不是入库门禁。\n\n只根据输入判断一篇已发表知识现在是否还适合当现行结论。不要改写文章，不要改 stage / route / catalog，不要把过期当成错误。\n\n输入你会看到：id、title、type、tags、excerpt、claim、last_verified、cadence_days、published_date、observe。\n\nobserve 是本轮 Research Runtime 的观察结果，只包含两件事：对文内已引用 https URL 的 url_fetch，以及对其中 arXiv id 的 arxiv_lookup。没有 web search。\n\n只允许一个主判定：\n1. unchanged — 核心主张仍成立。\n2. changed — Observe 里出现了可核信号（引用失效，或 arXiv 在 last_verified 之后更新）。\n3. insufficient — 证据不够，不能判断。\n4. obsolete — 当时成立，现在不宜再当现行知识（也必须有 Observe 信号）。\n\n硬规则：\n- 吃不准就 insufficient。\n- 没有出现在 observe 里的 URL 不能当 evidence。\n- observe.citations 为空，或 fetch 全部失败 → insufficient。\n- 链接还在 ≠ 主张仍成立。没有 Observe 信号时，只允许 unchanged 或 insufficient，禁止 changed / obsolete。\n- 哲学与可反驳论题很少「过期」；领域还在争论 ≠ changed。\n- note 只能一句。proposed_change 只描述建议，不写正文。\n\n只输出 JSON：\n{\n  \"criteria_version\": \"<用你读到的当前 version>\",\n  \"model\": \"<你所用的模型名，未知则 unknown>\",\n  \"verdict\": \"unchanged|changed|insufficient|obsolete\",\n  \"note\": \"一句理由\",\n  \"evidence\": [{\"url\": \"https://...\", \"note\": \"一句\"}],\n  \"proposed_change\": \"可空；不要写全文\"\n}",
   "changelog": [
+    {
+      "version": "2026-09-16.2",
+      "note": "Research Runtime：Observe = url_fetch + arxiv_lookup，只复查文内已有引用。changed 必须有 Observe 信号。"
+    },
     {
       "version": "2026-09-16.1",
       "note": "首版：时间门 STALE + 模型四判定 unchanged/changed/insufficient/obsolete。Agent 只写报告。"

@@ -1,7 +1,8 @@
 {
-  "updated": "2026-09-16",
+  "updated": "2026-09-19",
   "tags": {
     "Agent": [
+      "domain-driven-agent-tool-design",
       "simuhome-paper-reading",
       "ai-era-production-consumption-balance",
       "iot-agent-from-automation-to-physical-infrastructure-part-ii",
@@ -26,6 +27,7 @@
       "times-2026-09-w2"
     ],
     "Architecture": [
+      "domain-driven-agent-tool-design",
       "iot-agent-from-automation-to-physical-infrastructure-part-ii",
       "iot-agent-from-automation-to-physical-infrastructure",
       "saas-ecommerce-agent-thinking",
@@ -35,6 +37,9 @@
       "simuhome-paper-reading",
       "iot-agent-from-automation-to-physical-infrastructure-part-ii",
       "iot-agent-from-automation-to-physical-infrastructure"
+    ],
+    "Code Agent": [
+      "domain-driven-agent-tool-design"
     ],
     "Complex Systems": [
       "interpretability-rl-faithfulness",
@@ -58,6 +63,9 @@
     ],
     "Cost": [
       "reasoning-scale-knowledge-external"
+    ],
+    "DDD": [
+      "domain-driven-agent-tool-design"
     ],
     "Data Loop": [
       "agent-industrial-internet"
@@ -230,6 +238,9 @@
     "Times": [
       "times-2026-09-w2",
       "times-2026-09-w1"
+    ],
+    "Tool Design": [
+      "domain-driven-agent-tool-design"
     ],
     "Vertical": [
       "agent-industrial-internet"

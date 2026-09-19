@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Write verifier reports for due knowledge. Never edits article bodies.
+"""Research Runtime: Observe cited URLs, then Judge. Never edits article bodies.
 
 Usage:
   python3 scripts/knowledge_verify.py --due
-  python3 scripts/knowledge_verify.py --id k8s-to-agent-control-plane
+  python3 scripts/knowledge_verify.py --id h-neurons-paper-reading
+  python3 scripts/knowledge_verify.py --id h-neurons-paper-reading --dry-run
   python3 scripts/knowledge_verify.py --file report.json
 """
 from __future__ import annotations
@@ -13,7 +14,6 @@ import json
 import os
 import re
 import sys
-import urllib.error
 import urllib.request
 from pathlib import Path
 
@@ -32,6 +32,13 @@ from knowledge_lib import (  # noqa: E402
     utc_now,
     validate_report,
     write_json,
+)
+from knowledge_runtime import (  # noqa: E402
+    constrain_to_observe,
+    judge_from_observe,
+    observe_entry,
+    observed_urls,
+    url_fetch,
 )
 
 DEEPSEEK = "https://api.deepseek.com/chat/completions"
@@ -62,15 +69,49 @@ def body_excerpt(item: dict, limit: int = 1800) -> str:
     return text.strip()[:limit]
 
 
-def call_deepseek(prompt: str, criteria: dict) -> dict:
+def compact_observe(observe: dict) -> dict:
+    return {
+        "observed_at": observe.get("observed_at"),
+        "used": observe.get("used"),
+        "citations": [c.get("url") for c in (observe.get("citations") or [])],
+        "fetches": [
+            {
+                "url": f.get("url"),
+                "ok": f.get("ok"),
+                "status": f.get("status"),
+                "signal": f.get("signal"),
+                "title": f.get("title"),
+                "error": f.get("error"),
+            }
+            for f in (observe.get("fetches") or [])
+        ],
+        "arxiv": [
+            {
+                "arxiv_id": a.get("arxiv_id"),
+                "ok": a.get("ok"),
+                "title": a.get("title"),
+                "updated": a.get("updated"),
+                "cited_version": a.get("cited_version"),
+                "latest_version": a.get("latest_version"),
+                "newer_than_cite": a.get("newer_than_cite"),
+                "updated_after_verified": a.get("updated_after_verified"),
+                "error": a.get("error"),
+            }
+            for a in (observe.get("arxiv") or [])
+        ],
+        "signals": observe.get("signals") or [],
+    }
+
+
+def call_deepseek(payload: dict, criteria: dict) -> dict:
     key = os.environ.get("DEEPSEEK_API_KEY", "").strip()
     if not key:
-        raise SystemExit("DEEPSEEK_API_KEY missing; write reports by hand via --file")
+        raise SystemExit("DEEPSEEK_API_KEY missing")
     body = {
         "model": "deepseek-chat",
         "messages": [
             {"role": "system", "content": "Return compact JSON only. No markdown fences."},
-            {"role": "user", "content": criteria["prompt"] + "\n\n输入：\n" + prompt},
+            {"role": "user", "content": criteria["prompt"] + "\n\n输入：\n" + dump_json(payload)},
         ],
         "temperature": 0.2,
     }
@@ -93,23 +134,8 @@ def call_deepseek(prompt: str, criteria: dict) -> dict:
     return parsed
 
 
-def url_ok(url: str) -> bool:
-    if not url.startswith("https://"):
-        return False
-    try:
-        req = urllib.request.Request(url, method="HEAD", headers={"User-Agent": "knowledge-verify"})
-        with urllib.request.urlopen(req, timeout=12) as resp:
-            return 200 <= resp.status < 400
-    except Exception:
-        try:
-            req = urllib.request.Request(url, headers={"User-Agent": "knowledge-verify"})
-            with urllib.request.urlopen(req, timeout=12) as resp:
-                return 200 <= resp.status < 400
-        except Exception:
-            return False
-
-
-def harden(report: dict) -> dict:
+def harden_file_report(report: dict) -> dict:
+    """Human/agent --file path: live-check evidence URLs. Observe is optional."""
     verdict = report.get("verdict")
     evidence = report.get("evidence") if isinstance(report.get("evidence"), list) else []
     live = []
@@ -117,8 +143,18 @@ def harden(report: dict) -> dict:
         if not isinstance(e, dict):
             continue
         url = str(e.get("url") or "").strip()
-        if url.startswith("https://") and url_ok(url):
-            live.append({"url": url, "note": e.get("note") or ""})
+        if not url.startswith("https://"):
+            continue
+        fetched = url_fetch(url)
+        if fetched.get("ok"):
+            live.append(
+                {
+                    "url": url,
+                    "note": e.get("note") or "",
+                    "tool": e.get("tool") or "url_fetch",
+                    "observed_at": fetched.get("observed_at"),
+                }
+            )
     report["evidence"] = live
     if verdict in {"changed", "obsolete"} and not live:
         report["verdict"] = "insufficient"
@@ -128,7 +164,32 @@ def harden(report: dict) -> dict:
     return report
 
 
-def write_report(entry: dict, raw: dict, criteria: dict, period: str) -> Path:
+def harden_runtime_report(report: dict, observe: dict) -> dict:
+    allowed = observed_urls(observe)
+    evidence = []
+    for e in report.get("evidence") or []:
+        if not isinstance(e, dict):
+            continue
+        url = str(e.get("url") or "").strip()
+        if url in allowed:
+            evidence.append(
+                {
+                    "url": url,
+                    "note": e.get("note") or "",
+                    "tool": e.get("tool") or "url_fetch",
+                    "observed_at": e.get("observed_at") or observe.get("observed_at"),
+                }
+            )
+    report["evidence"] = evidence
+    if report.get("verdict") in {"changed", "obsolete"} and not evidence:
+        report["verdict"] = "insufficient"
+        report["note"] = (report.get("note") or "") + "；https 证据不在本轮 Observe 里，降为 insufficient"
+    if report.get("verdict") not in VERDICTS:
+        report["verdict"] = "insufficient"
+    return report
+
+
+def write_report(entry: dict, raw: dict, criteria: dict, period: str, observe: dict | None = None) -> Path:
     payload = {
         "id": f"{entry['id']}-{period}",
         "entry_id": entry["id"],
@@ -142,7 +203,11 @@ def write_report(entry: dict, raw: dict, criteria: dict, period: str) -> Path:
         "created": utc_now(),
         "human": None,
     }
-    payload = harden(payload)
+    if observe is not None:
+        payload["observe"] = observe
+        payload = harden_runtime_report(payload, observe)
+    else:
+        payload = harden_file_report(payload)
     errors = validate_report(payload, criteria)
     if errors:
         raise SystemExit(f"{entry['id']}: " + "; ".join(errors))
@@ -159,11 +224,35 @@ def due_entries(registry: dict, eid: str | None) -> list[dict]:
         if not found:
             raise SystemExit(f"unknown knowledge id {eid}")
         return found
-    return [
-        x
-        for x in items
-        if (x.get("knowledge") or {}).get("status") == "stale"
-    ]
+    return [x for x in items if (x.get("knowledge") or {}).get("status") == "stale"]
+
+
+def verify_one(entry: dict, criteria: dict, *, use_model: bool) -> tuple[dict, dict]:
+    observe = observe_entry(entry, criteria)
+    det = judge_from_observe(observe, entry)
+    det["criteria_version"] = criteria.get("version")
+    if observe.get("signals"):
+        return observe, det
+    if not use_model:
+        return observe, det
+    kn = entry.get("knowledge") or {}
+    raw = call_deepseek(
+        {
+            "id": entry.get("id"),
+            "title": entry.get("title"),
+            "type": entry.get("type"),
+            "tags": entry.get("tags"),
+            "excerpt": entry.get("excerpt"),
+            "claim": claim_for(entry),
+            "last_verified": kn.get("last_verified"),
+            "cadence_days": kn.get("cadence_days"),
+            "published_date": entry.get("published_date"),
+            "body_excerpt": body_excerpt(entry),
+            "observe": compact_observe(observe),
+        },
+        criteria,
+    )
+    return observe, constrain_to_observe(raw, observe, det)
 
 
 def main() -> int:
@@ -173,6 +262,8 @@ def main() -> int:
     ap.add_argument("--file", default="", help="Apply a human/agent report JSON; still does not edit articles")
     ap.add_argument("--limit", type=int, default=3)
     ap.add_argument("--period", default="")
+    ap.add_argument("--dry-run", action="store_true", help="Print Observe + verdict, do not write a report")
+    ap.add_argument("--observe-only", action="store_true", help="Skip the model even if DEEPSEEK_API_KEY is set")
     args = ap.parse_args()
 
     criteria = load_criteria()
@@ -199,32 +290,30 @@ def main() -> int:
     if not targets:
         print("no stale items to verify")
         return 0
-    if not os.environ.get("DEEPSEEK_API_KEY", "").strip():
-        print("DEEPSEEK_API_KEY missing; skip model verify. File a report with --file or lab_knowledge_report.")
-        return 0
+
+    use_model = bool(os.environ.get("DEEPSEEK_API_KEY", "").strip()) and not args.observe_only
+    if not use_model:
+        print("Judge = Observe only (no model, or --observe-only)")
 
     written = 0
     for entry in targets:
-        kn = entry.get("knowledge") or {}
-        prompt = dump_json(
-            {
-                "id": entry.get("id"),
-                "title": entry.get("title"),
-                "type": entry.get("type"),
-                "tags": entry.get("tags"),
-                "excerpt": entry.get("excerpt"),
-                "claim": claim_for(entry),
-                "last_verified": kn.get("last_verified"),
-                "cadence_days": kn.get("cadence_days"),
-                "published_date": entry.get("published_date"),
-                "body_excerpt": body_excerpt(entry),
-            }
+        print(f"observe {entry['id']} …")
+        observe, raw = verify_one(entry, criteria, use_model=use_model)
+        used = observe.get("used") or {}
+        signals = observe.get("signals") or []
+        print(
+            f"  fetch={used.get('url_fetch', 0)} arxiv={used.get('arxiv_lookup', 0)} "
+            f"signals={len(signals)} verdict={raw.get('verdict')}"
         )
-        print(f"verify {entry['id']} …")
-        raw = call_deepseek(prompt, criteria)
-        path = write_report(entry, raw, criteria, period)
-        print(f"  {path.relative_to(ROOT)} verdict={raw.get('verdict')}")
+        if args.dry_run:
+            print(dump_json({"observe": compact_observe(observe), "judge": raw}))
+            continue
+        path = write_report(entry, raw, criteria, period, observe)
+        print(f"  {path.relative_to(ROOT)}")
         written += 1
+    if args.dry_run:
+        print("dry-run; no report written; no article bodies changed")
+        return 0
     print(f"wrote {written} report(s); no article bodies changed")
     return 0
 

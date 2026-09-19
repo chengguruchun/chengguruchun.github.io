@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
     inputs:
       verify:
-        description: "Run model verifier on stale items (needs DEEPSEEK_API_KEY)"
+        description: "Run Research Runtime (fetch + arXiv) on stale items"
         required: false
         type: boolean
         default: true
@@ -66,7 +66,7 @@ jobs:
           python3 scripts/knowledge_check.py --write
         continue-on-error: true
 
-      - name: Optional verifier reports
+      - name: Research runtime reports
         id: verify
         env:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}

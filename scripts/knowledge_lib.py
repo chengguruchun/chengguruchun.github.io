@@ -418,4 +418,7 @@ def validate_report(data: dict[str, Any], criteria: dict[str, Any] | None = None
     ]
     if verdict in {"changed", "obsolete"} and not https:
         errors.append("changed/obsolete requires at least one https evidence URL")
+    observe = data.get("observe")
+    if observe is not None and not isinstance(observe, dict):
+        errors.append("observe must be an object when present")
     return errors

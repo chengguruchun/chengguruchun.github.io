@@ -5,8 +5,16 @@
     <link>https://chengguruchun.github.io/</link>
     <description>chengguruchun · Blog for Agents · 知识博客（文章 / Diverse Lab 等有日期条目）</description>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 16 Sep 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 19 Sep 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://chengguruchun.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>领域驱动设计 Agent 工具：从「动作推导」到「领域对象 × 动作」</title>
+      <link>https://chengguruchun.github.io/articles/domain-driven-agent-tool-design.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/articles/domain-driven-agent-tool-design.html</guid>
+      <pubDate>Sat, 19 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Articles</category>
+      <description>设计 agent tool 的正确起点不是先枚举动作，而是先建领域模型。一句话坐标：领域对象 × 动作 = 工具；动作推导降级为完备性校验。</description>
+    </item>
     <item>
       <title>SimuHome：从“调用设备”到“与环境闭环”</title>
       <link>https://chengguruchun.github.io/diverse/simuhome-paper-reading.html</link>

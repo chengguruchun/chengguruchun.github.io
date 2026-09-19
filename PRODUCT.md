@@ -78,7 +78,7 @@ Skill 可被任意 Agent 加载。带过来的聊天和初步想法只落 `topic
 
 ## Knowledge Loop
 
-已发表知识另走有效性回路：时间门把超期标成 `stale`（过期≠错误）；Verifier 只写 `content/knowledge/reports/`；人 `keep / changed / contested / archived` 后才改 `last_verified` 或钉状态。Times / Hot Words 排除。详见 `KNOWLEDGE_LOOP.md`。
+已发表知识另走有效性回路：时间门把超期标成 `stale`（过期≠错误）；Research Runtime（CI/本地）只复查文内已引用 URL（`url_fetch` + `arxiv_lookup`），报告写入 `content/knowledge/reports/`；人 `keep / changed / contested / archived` 后才改 `last_verified` 或钉状态。不接 web search。Times / Hot Words 排除。详见 `KNOWLEDGE_LOOP.md`。
 
 ## Agent-native Loop
 

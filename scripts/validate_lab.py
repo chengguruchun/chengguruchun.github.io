@@ -448,13 +448,24 @@ def check_knowledge() -> None:
     loop = (ROOT / "KNOWLEDGE_LOOP.md").read_text(encoding="utf-8")
     if "过期不等于错误" not in loop or "lab_knowledge_report" not in loop:
         fail("KNOWLEDGE_LOOP.md should keep stale ≠ wrong and report-only agents")
+    elif "url_fetch" not in loop or "arxiv_lookup" not in loop:
+        fail("KNOWLEDGE_LOOP.md should document Observe url_fetch + arxiv_lookup")
     else:
         ok("KNOWLEDGE_LOOP.md stale ≠ wrong")
+    rt = src.get("runtime") if isinstance(src.get("runtime"), dict) else {}
+    tools = rt.get("tools") or []
+    if "url_fetch" not in tools or "arxiv_lookup" not in tools:
+        fail("knowledge criteria runtime.tools must include url_fetch and arxiv_lookup")
+    elif not (ROOT / "scripts" / "knowledge_runtime.py").exists():
+        fail("missing scripts/knowledge_runtime.py")
+    else:
+        ok("knowledge research runtime is fetch + arXiv")
     wf = ROOT / ".github" / "workflows" / "knowledge-weekly.yml"
+    wf_text = wf.read_text(encoding="utf-8") if wf.exists() else ""
     if not wf.exists():
         fail("missing knowledge-weekly.yml")
-    elif "knowledge_check.py" not in wf.read_text(encoding="utf-8"):
-        fail("knowledge-weekly.yml should run knowledge_check.py")
+    elif "knowledge_check.py" not in wf_text or "knowledge_verify.py" not in wf_text:
+        fail("knowledge-weekly.yml should run knowledge_check.py and knowledge_verify.py")
     else:
         ok("knowledge weekly workflow")
     if "Never rewrite article bodies" not in (ROOT / "SKILL.md").read_text(encoding="utf-8"):

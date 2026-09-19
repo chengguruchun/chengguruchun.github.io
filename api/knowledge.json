@@ -1,15 +1,15 @@
 {
   "name": "AI Knowledge Lab · Knowledge registry",
-  "generated": "2026-09-16T04:54:40Z",
-  "as_of": "2026-09-16",
+  "generated": "2026-09-19T00:35:31Z",
+  "as_of": "2026-09-19",
   "criteria": "/api/knowledge-criteria.json",
-  "criteria_version": "2026-09-16.1",
+  "criteria_version": "2026-09-16.2",
   "loop": "/KNOWLEDGE_LOOP.md",
   "exclude_types": [
     "Times"
   ],
   "counts": {
-    "fresh": 19,
+    "fresh": 20,
     "stale": 0,
     "changed": 0,
     "contested": 0,
@@ -17,6 +17,35 @@
   },
   "due": [],
   "items": [
+    {
+      "id": "domain-driven-agent-tool-design",
+      "type": "Articles",
+      "title": "领域驱动设计 Agent 工具：从「动作推导」到「领域对象 × 动作」",
+      "excerpt": "设计 agent tool 的正确起点不是先枚举动作，而是先建领域模型。一句话坐标：领域对象 × 动作 = 工具；动作推导降级为完备性校验。",
+      "url": "/articles/domain-driven-agent-tool-design.html",
+      "content": "/content/articles/domain-driven-agent-tool-design.md",
+      "tags": [
+        "Agent",
+        "Tool Design",
+        "DDD",
+        "Architecture",
+        "Code Agent"
+      ],
+      "published_date": "2026-09-19",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/domain-driven-agent-tool-design.md",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-09-19",
+        "next_review": "2026-12-18",
+        "cadence_days": 90,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      }
+    },
     {
       "id": "simuhome-paper-reading",
       "type": "Diverse Lab",
@@ -152,8 +181,8 @@
       "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/iot-agent-from-automation-to-physical-infrastructure.md",
       "knowledge": {
         "status": "fresh",
-        "last_verified": "2026-09-16",
-        "next_review": "2026-12-15",
+        "last_verified": "2026-09-17",
+        "next_review": "2026-12-16",
         "cadence_days": 90,
         "due": false,
         "sticky": false,
