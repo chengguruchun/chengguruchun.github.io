@@ -1,4 +1,77 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>从 Actor Model 到 Cognitive Actor：Claude Agent Teams 给 Agent Runtime 的启发 · Articles</title><meta name="description" content="从 Akka Actor、Mailbox、Supervisor、Sharding 出发，分析 Claude Agent Teams、多 Agent 通信与 Agent Runtime 的演化。"><meta name="theme-color" content="#f7f5f0"><link rel="icon" href="../favicon.svg" type="image/svg+xml"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="../assets/css/site.css"><link rel="canonical" href="https://chengguruchun.github.io/articles/agent-runtime-cognitive-actor.html"><meta property="og:type" content="article"><meta property="og:site_name" content="AI Knowledge Lab"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="从 Actor Model 到 Cognitive Actor：Claude Agent Teams 给 Agent Runtime 的启发"><meta property="og:description" content="从 Akka Actor、Mailbox、Supervisor、Sharding 出发，分析 Claude Agent Teams、多 Agent 通信与 Agent Runtime 的演化。"><meta property="og:url" content="https://chengguruchun.github.io/articles/agent-runtime-cognitive-actor.html"><meta property="article:published_time" content="2026-09-20"><meta property="article:author" content="chengguruchun"><meta property="article:tag" content="Agent"><meta property="article:tag" content="Runtime"><meta property="article:tag" content="Actor Model"><meta property="article:tag" content="Akka"><meta property="article:tag" content="Multi-Agent"><meta property="article:tag" content="Cognitive Actor"><meta name="author" content="chengguruchun"></head><body><header class="site-header"><div class="wrap site-header__inner"><a class="brand" href="../index.html"><img class="brand__logo" src="../assets/img/brand-mark.svg" alt="AI Knowledge Lab" width="44" height="44"><span class="brand__tag"><span class="brand__rotate"><span class="brand__item is-active">Independent Thinker</span><span class="brand__item">AI Agents</span><span class="brand__item">Complex Systems</span><span class="brand__item">Diverse Thinking</span></span></span></a><button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">菜单</button><nav class="nav" id="site-nav" aria-label="主导航"><a href="../index.html">Home</a><a href="../bench/">Agent Bench</a><a href="../diverse/">Diverse Lab</a><a href="../articles/" aria-current="page">Articles</a><a href="../projects/">Projects</a><a href="../videos/">Videos</a><a href="../times/">Hot Words</a><a href="../about/">About Me</a><a class="nav__search" href="../tags/">Tags / Search</a></nav></div></header><main><article class="article-body"><header class="page-hero"><div class="prose-wrap"><p class="page-hero__kicker">Articles</p><h1>从 Actor Model 到 Cognitive Actor：Claude Agent Teams 给 Agent Runtime 的启发</h1><p class="page-hero__desc">我一直觉得 Akka 很适合解释 Multi-Agent。最近看到 Claude Agent Teams 以及 Anthropic 对并行 Agent 的实践后，这个直觉变得更具体：Agent Runtime 可能正在重新组合 Actor Model 的经典原语，但把“计算”从确定性行为扩展到了认知循环。</p><p class="article-meta"><span>思路 2026-09-20</span><span>发表 2026-09-20</span><span>作者 chengguruchun</span><a class="tag" href="../tags/?tag=Agent">Agent</a><a class="tag" href="../tags/?tag=Runtime">Runtime</a><a class="tag" href="../tags/?tag=Akka">Akka</a><a class="tag" href="../tags/?tag=Actor%20Model">Actor Model</a></p></div></header><div class="prose-wrap"><p class="lede">这不是“Claude Team = Akka + LLM”的结论，而是一种架构观察：当 Agent 从一次调用变成长期运行、可并行、可协作、有状态的计算实体时，系统自然会重新遇到 Actor Model 已经解决过的一些问题——消息、调度、生命周期、监督、状态和分布式路由。Agent 的特殊之处在于，它还增加了一层传统 Actor 没有的东西：<strong>reasoning → action → observation → verification</strong> 的认知闭环。</p><h2>一、为什么我会想到 Akka</h2><p>过去讨论 Multi-Agent，重点往往是 Prompt、Planner、Graph 和 Workflow。但当 Agent 开始并行执行、互相传递任务、持续运行几个小时甚至几天以后，问题就变成：谁负责调度？Agent 如何通信？状态在哪里？失败以后怎么办？任务如何恢复？多个 Agent 如何避免互相踩踏？这些已经更像分布式计算。</p><p>Akka 的 Actor Model 给出了一个简洁抽象：Actor 拥有自己的状态和行为，通过 Mailbox 接收消息，由执行环境负责调度；Actor 之间通过消息而不是直接调用协作，并通过 supervision 处理失败。<a href="https://doc.akka.io/libraries/akka-core/current/typed/guide/actors-intro.html">Akka Actor Model</a></p><h2>二、Claude Agent Teams 为什么让我重新看到这个模型</h2><p>Anthropic 的并行 Agent 实践展示了一个明显趋势：多个 Claude 实例可以并行工作在一个复杂目标上，而不是所有事情都由一个中心 Agent 串行完成。在公开的 C Compiler 实验中，16 个 Agent 并行推进一个 Rust C Compiler；运行 harness 使用任务锁、共享代码库、Git 同步和持续测试协调工作，而且没有依赖一个中央 Orchestrator。<a href="https://www.anthropic.com/engineering/building-c-compiler">Anthropic：Building a C compiler with a team of parallel Claudes</a></p><pre>                    Goal
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>从 Actor Model 到 Cognitive Actor：Claude Agent Teams 给 Agent Runtime 的启发 · Articles</title><meta name="description" content="从 Akka Actor、Mailbox、Supervisor、Sharding 出发，分析 Claude Agent Teams、多 Agent 通信与 Agent Runtime 的演化。"><meta name="theme-color" content="#f7f5f0"><link rel="icon" href="../favicon.svg" type="image/svg+xml"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="../assets/css/site.css"><link rel="canonical" href="https://chengguruchun.github.io/articles/agent-runtime-cognitive-actor.html"><meta property="og:type" content="article"><meta property="og:site_name" content="AI Knowledge Lab"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="从 Actor Model 到 Cognitive Actor：Claude Agent Teams 给 Agent Runtime 的启发"><meta property="og:description" content="从 Akka Actor、Mailbox、Supervisor、Sharding 出发，分析 Claude Agent Teams、多 Agent 通信与 Agent Runtime 的演化。"><meta property="og:url" content="https://chengguruchun.github.io/articles/agent-runtime-cognitive-actor.html"><meta property="article:published_time" content="2026-09-20"><meta property="article:author" content="chengguruchun"><meta property="article:tag" content="Agent"><meta property="article:tag" content="Runtime"><meta property="article:tag" content="Actor Model"><meta property="article:tag" content="Akka"><meta property="article:tag" content="Multi-Agent"><meta property="article:tag" content="Cognitive Actor"><meta name="author" content="chengguruchun">  <!-- seo:begin (generated by scripts/build_seo.py — do not edit by hand) -->
+  <link rel="canonical" href="https://chengguruchun.github.io/articles/agent-runtime-cognitive-actor.html">
+  <link rel="alternate" type="application/rss+xml" title="AI Knowledge Lab" href="../feed.xml">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="AI Knowledge Lab">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:title" content="从 Actor Model 到 Cognitive Actor：Claude Agent Teams 给 Agent Runtime 的启发">
+  <meta property="og:description" content="从 Akka Actor、Mailbox、Supervisor、Sharding 出发，分析 Claude Agent Teams、多 Agent 通信与 Agent Runtime 的演化。">
+  <meta property="og:url" content="https://chengguruchun.github.io/articles/agent-runtime-cognitive-actor.html">
+  <meta property="og:image" content="https://chengguruchun.github.io/assets/img/og-cover.png">
+  <meta property="og:image:alt" content="AI Knowledge Lab">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="从 Actor Model 到 Cognitive Actor：Claude Agent Teams 给 Agent Runtime 的启发">
+  <meta name="twitter:description" content="从 Akka Actor、Mailbox、Supervisor、Sharding 出发，分析 Claude Agent Teams、多 Agent 通信与 Agent Runtime 的演化。">
+  <meta name="twitter:image" content="https://chengguruchun.github.io/assets/img/og-cover.png">
+  <meta name="author" content="chengguruchun">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "从 Actor Model 到 Cognitive Actor：Claude Agent Teams 给 Agent Runtime 的启发",
+    "description": "从 Akka Actor、Mailbox、Supervisor、Sharding 出发，分析 Claude Agent Teams、多 Agent 通信与 Agent Runtime 的演化。",
+    "url": "https://chengguruchun.github.io/articles/agent-runtime-cognitive-actor.html",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://chengguruchun.github.io/articles/agent-runtime-cognitive-actor.html"
+    },
+    "inLanguage": "zh-CN",
+    "articleSection": "Articles",
+    "author": {
+      "@type": "Person",
+      "name": "chengguruchun",
+      "url": "https://github.com/chengguruchun"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "AI Knowledge Lab",
+      "url": "https://chengguruchun.github.io/"
+    },
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "AI Knowledge Lab",
+      "url": "https://chengguruchun.github.io/"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://chengguruchun.github.io/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Articles",
+        "item": "https://chengguruchun.github.io/articles/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "从 Actor Model 到 Cognitive Actor：Claude Agent Teams 给 Agent Runtime 的启发",
+        "item": "https://chengguruchun.github.io/articles/agent-runtime-cognitive-actor.html"
+      }
+    ]
+  }
+  </script>
+  <!-- seo:end -->
+</head><body><header class="site-header"><div class="wrap site-header__inner"><a class="brand" href="../index.html"><img class="brand__logo" src="../assets/img/brand-mark.svg" alt="AI Knowledge Lab" width="44" height="44"><span class="brand__tag"><span class="brand__rotate"><span class="brand__item is-active">Independent Thinker</span><span class="brand__item">AI Agents</span><span class="brand__item">Complex Systems</span><span class="brand__item">Diverse Thinking</span></span></span></a><button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">菜单</button><nav class="nav" id="site-nav" aria-label="主导航"><a href="../index.html">Home</a><a href="../bench/">Agent Bench</a><a href="../diverse/">Diverse Lab</a><a href="../articles/" aria-current="page">Articles</a><a href="../projects/">Projects</a><a href="../videos/">Videos</a><a href="../times/">Hot Words</a><a href="../about/">About Me</a><a class="nav__search" href="../tags/">Tags / Search</a></nav></div></header><main><article class="article-body"><header class="page-hero"><div class="prose-wrap"><p class="page-hero__kicker">Articles</p><h1>从 Actor Model 到 Cognitive Actor：Claude Agent Teams 给 Agent Runtime 的启发</h1><p class="page-hero__desc">我一直觉得 Akka 很适合解释 Multi-Agent。最近看到 Claude Agent Teams 以及 Anthropic 对并行 Agent 的实践后，这个直觉变得更具体：Agent Runtime 可能正在重新组合 Actor Model 的经典原语，但把“计算”从确定性行为扩展到了认知循环。</p><p class="article-meta"><span>思路 2026-09-20</span><span>发表 2026-09-20</span><span>作者 chengguruchun</span><a class="tag" href="../tags/?tag=Agent">Agent</a><a class="tag" href="../tags/?tag=Runtime">Runtime</a><a class="tag" href="../tags/?tag=Akka">Akka</a><a class="tag" href="../tags/?tag=Actor%20Model">Actor Model</a></p></div></header><div class="prose-wrap"><p class="lede">这不是“Claude Team = Akka + LLM”的结论，而是一种架构观察：当 Agent 从一次调用变成长期运行、可并行、可协作、有状态的计算实体时，系统自然会重新遇到 Actor Model 已经解决过的一些问题——消息、调度、生命周期、监督、状态和分布式路由。Agent 的特殊之处在于，它还增加了一层传统 Actor 没有的东西：<strong>reasoning → action → observation → verification</strong> 的认知闭环。</p><h2>一、为什么我会想到 Akka</h2><p>过去讨论 Multi-Agent，重点往往是 Prompt、Planner、Graph 和 Workflow。但当 Agent 开始并行执行、互相传递任务、持续运行几个小时甚至几天以后，问题就变成：谁负责调度？Agent 如何通信？状态在哪里？失败以后怎么办？任务如何恢复？多个 Agent 如何避免互相踩踏？这些已经更像分布式计算。</p><p>Akka 的 Actor Model 给出了一个简洁抽象：Actor 拥有自己的状态和行为，通过 Mailbox 接收消息，由执行环境负责调度；Actor 之间通过消息而不是直接调用协作，并通过 supervision 处理失败。<a href="https://doc.akka.io/libraries/akka-core/current/typed/guide/actors-intro.html">Akka Actor Model</a></p><h2>二、Claude Agent Teams 为什么让我重新看到这个模型</h2><p>Anthropic 的并行 Agent 实践展示了一个明显趋势：多个 Claude 实例可以并行工作在一个复杂目标上，而不是所有事情都由一个中心 Agent 串行完成。在公开的 C Compiler 实验中，16 个 Agent 并行推进一个 Rust C Compiler；运行 harness 使用任务锁、共享代码库、Git 同步和持续测试协调工作，而且没有依赖一个中央 Orchestrator。<a href="https://www.anthropic.com/engineering/building-c-compiler">Anthropic：Building a C compiler with a team of parallel Claudes</a></p><pre>                    Goal
                      ↓
               ┌────────────┐
               │Agent Runtime│
