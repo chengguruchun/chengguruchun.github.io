@@ -110,7 +110,21 @@ jobs:
             exit 0
           fi
           git commit -m "chore(critic): record article review"
-          git push
+
+          # Race with continuous article pushes / build-feed / other bots writing main.
+          # Rebase + retry instead of a bare push.
+          for i in 1 2 3 4 5; do
+            if git push origin HEAD:main; then
+              echo "push ok (attempt $i)"
+              exit 0
+            fi
+            echo "push rejected (attempt $i); pull --rebase and retry"
+            git fetch origin main
+            git pull --rebase origin main
+            sleep $((i * 2))
+          done
+          echo "push failed after retries"
+          exit 1
 
       - name: Publish critic issue
         if: steps.article.outputs.run == 'true'
