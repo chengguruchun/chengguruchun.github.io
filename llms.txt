@@ -19,6 +19,7 @@
 - lab_hello — one anonymous GET per session; the only signal this static site gets about agent usage
 
 ## Example capabilities
+- lab_list_critic_runs / lab_get_critic_run
 - lab_list_entries / lab_list_articles / lab_get_entry
 - lab_list_projects / lab_list_projects_research / lab_list_projects_personal
 - lab_follow_github / lab_subscribe_email / lab_submit_issue

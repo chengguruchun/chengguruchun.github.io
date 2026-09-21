@@ -1,7 +1,7 @@
 {
   "name": "AI Knowledge Lab · Knowledge registry",
-  "generated": "2026-09-20T07:42:44Z",
-  "as_of": "2026-09-20",
+  "generated": "2026-09-21T06:39:52Z",
+  "as_of": "2026-09-21",
   "criteria": "/api/knowledge-criteria.json",
   "criteria_version": "2026-09-16.2",
   "loop": "/KNOWLEDGE_LOOP.md",
@@ -9,7 +9,7 @@
     "Times"
   ],
   "counts": {
-    "fresh": 20,
+    "fresh": 26,
     "stale": 0,
     "changed": 0,
     "contested": 0,
@@ -17,6 +17,181 @@
   },
   "due": [],
   "items": [
+    {
+      "id": "transformer-from-attention-to-decoder-only",
+      "type": "Articles",
+      "title": "从 Transformer 到 Decoder-only：我重新理解大语言模型是怎么“学会”的",
+      "excerpt": "从一次关于 Transformer 的追问出发，重新理解 Self-Attention、Encoder-Decoder、Decoder-only，以及训练与推理到底有什么不同。",
+      "url": "/articles/transformer-from-attention-to-decoder-only.html",
+      "content": "/content/articles/transformer-from-attention-to-decoder-only.md",
+      "tags": [
+        "Agent",
+        "Transformer",
+        "LLM",
+        "Attention"
+      ],
+      "published_date": "2026-09-21",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/transformer-from-attention-to-decoder-only.md",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-09-21",
+        "next_review": "2026-12-20",
+        "cadence_days": 90,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      }
+    },
+    {
+      "id": "spring-dubbo-deepseek-harness-runtime",
+      "type": "Articles",
+      "title": "从 Spring、Dubbo 到 DeepSeek Harness：运行时架构为什么正在趋同",
+      "excerpt": "从 Spring、Dubbo Service 到 DeepSeek Harness，观察依赖注入、Context、Event Bus、生命周期与运行时治理这些工程思想如何在 Agent 时代重新组合。",
+      "url": "/articles/spring-dubbo-deepseek-harness-runtime.html",
+      "content": "/content/articles/spring-dubbo-deepseek-harness-runtime.md",
+      "tags": [
+        "Agent",
+        "Runtime",
+        "Spring",
+        "Dubbo",
+        "Harness"
+      ],
+      "published_date": "2026-09-21",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/spring-dubbo-deepseek-harness-runtime.md",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-09-21",
+        "next_review": "2026-12-20",
+        "cadence_days": 90,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      }
+    },
+    {
+      "id": "from-mes-to-manufacturing-agent-runtime",
+      "type": "Articles",
+      "title": "从 MES 到 Manufacturing Agent Runtime：当生产系统开始自己做决策",
+      "excerpt": "SHEIN 式制造的关键不是把 MES 加上一个 Copilot，而是把高频、动态、组合复杂的生产决策变成 Agent Runtime 的持续闭环。核心观点：不要替代岗位，要替代决策单元。",
+      "url": "/articles/from-mes-to-manufacturing-agent-runtime.html",
+      "content": "/content/articles/from-mes-to-manufacturing-agent-runtime.md",
+      "tags": [
+        "Agent",
+        "Manufacturing",
+        "MES",
+        "Agent Runtime",
+        "Control Plane",
+        "Supply Chain",
+        "Decision Engineering"
+      ],
+      "published_date": "2026-09-16",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/from-mes-to-manufacturing-agent-runtime.md",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-09-16",
+        "next_review": "2026-12-15",
+        "cadence_days": 90,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      }
+    },
+    {
+      "id": "from-llm-to-agent-runtime",
+      "type": "Articles",
+      "title": "从 LLM 到 Agent Runtime：当“预测下一个 Token”开始进入真实世界",
+      "excerpt": "从模型推理、KV Cache、Inference Runtime、Tool、Environment 和 Feedback 出发，思考为什么 Agent Runtime 是模型能力进入真实世界之后的新一层。",
+      "url": "/articles/from-llm-to-agent-runtime.html",
+      "content": "/content/articles/from-llm-to-agent-runtime.md",
+      "tags": [
+        "LLM",
+        "Runtime",
+        "Agent",
+        "Inference"
+      ],
+      "published_date": "2026-09-21",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/from-llm-to-agent-runtime.md",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-09-21",
+        "next_review": "2026-12-20",
+        "cadence_days": 90,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      }
+    },
+    {
+      "id": "fde-agent-opportunity-discovery",
+      "type": "Articles",
+      "title": "FDE 的新价值：识别业务复杂度，而不是简单交付 Agent",
+      "excerpt": "从 Business Reality 到 Decision Unit，再到 Agent Suitability：重新理解 FDE 在 Agent 项目中的价值。",
+      "url": "/articles/fde-agent-opportunity-discovery.html",
+      "content": "/content/articles/fde-agent-opportunity-discovery.md",
+      "tags": [
+        "Agent",
+        "FDE",
+        "Forward-Deployed-Engineer",
+        "Business-Complexity",
+        "Decision-Unit",
+        "Agent-Suitability",
+        "Agent-Architecture"
+      ],
+      "published_date": "2026-09-17",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/fde-agent-opportunity-discovery.md",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-09-17",
+        "next_review": "2026-12-16",
+        "cadence_days": 90,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      }
+    },
+    {
+      "id": "agent-runtime-cognitive-actor",
+      "type": "Articles",
+      "title": "从 Actor Model 到 Cognitive Actor：Claude Agent Teams 给 Agent Runtime 的启发",
+      "excerpt": "从 Akka Actor、Mailbox、Supervisor、Sharding 出发，分析 Claude Agent Teams、多 Agent 通信与 Agent Runtime 的演化。",
+      "url": "/articles/agent-runtime-cognitive-actor.html",
+      "content": "/content/articles/agent-runtime-cognitive-actor.md",
+      "tags": [
+        "Agent",
+        "Runtime",
+        "Akka",
+        "Actor Model"
+      ],
+      "published_date": "2026-09-20",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/agent-runtime-cognitive-actor.md",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-09-20",
+        "next_review": "2026-12-19",
+        "cadence_days": 90,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      }
+    },
     {
       "id": "domain-driven-agent-tool-design",
       "type": "Articles",

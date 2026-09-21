@@ -7,15 +7,17 @@
       "id": "vid-control-plane",
       "type": "Videos",
       "title": "讲解：为什么 Agent 需要 Control Plane",
-      "excerpt": "计划以约 15 分钟口述，讲从服务网格到 Agent 治理的迁移路径。同一条思路已经写成长文《Kubernetes × Agent：从容器编排到目标收敛》。",
+      "excerpt": "先导片（41 秒）：AI 生成画面 + 中文旁白 + 同步字幕，讲清「单个 Agent 很简单，规模化之后为什么必须有一个 Control Plane」。约 15 分钟的完整口述版仍在计划中。",
       "url": "/videos/#vid-control-plane",
-      "date": "",
-      "stage": "planned",
+      "date": "2026-09-17",
+      "stage": "published",
       "related_article": "/articles/k8s-to-agent-control-plane.html",
       "tags": [
         "video",
         "Agent"
-      ]
+      ],
+      "duration": "41s",
+      "media": "/videos/why-agent-needs-control-plane.mp4"
     }
   ]
 }

@@ -158,7 +158,7 @@
     {
       "name": "lab_get_entry",
       "kind": "read",
-      "description": "Fetch one entry's canonical Markdown by id (prefer over HTML).",
+      "description": "Fetch one entry's canonical Markdown. Prefer the catalog item's `content` or `markdown` field (always a working path). The path_template `/content/{collection}/{id}.md` only works when id equals the file stem. Times ids look like `times-2026-09-w3` while files are `/content/times/2026-09-w3.md` — use catalog `markdown` or `slug` (e.g. slug=2026-09-w3 → /content/times/{slug}.md).",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -179,7 +179,12 @@
           "Diverse Lab": "diverse",
           "Times": "times"
         },
-        "resolve_collection_via": "/api/catalog.json"
+        "resolve_collection_via": "/api/catalog.json",
+        "prefer_catalog_fields": [
+          "content",
+          "markdown"
+        ],
+        "slug_field": "slug"
       }
     },
     {
@@ -454,20 +459,20 @@
     {
       "name": "lab_hot_words_list",
       "kind": "read",
-      "description": "List Hot Words content markdown under /content/times/.",
+      "description": "List Hot Words issues (current + history) from /api/times.json.",
       "inputSchema": {
         "type": "object",
         "properties": {}
       },
       "static": {
         "method": "GET",
-        "path": "/content/times/"
+        "path": "/api/times.json"
       }
     },
     {
       "name": "lab_hot_words_apply",
       "kind": "contribute",
-      "description": "Apply an approved Hot Words proposal to the LOCAL workspace only (scripts/hot_words_apply.py). Does NOT commit, push, or publish. Phase: Apply.",
+      "description": "Apply an approved Hot Words proposal to the LOCAL workspace only (scripts/hot_words_apply.py). Does NOT commit, push, or publish. Phase: Apply. Monday GitHub Actions auto-publishes the weekly Hot Words run; this tool only mutates the local workspace.",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -1012,10 +1017,16 @@
             "items": {
               "type": "object",
               "properties": {
-                "url": { "type": "string" },
-                "note": { "type": "string" }
+                "url": {
+                  "type": "string"
+                },
+                "note": {
+                  "type": "string"
+                }
               },
-              "required": ["url"]
+              "required": [
+                "url"
+              ]
             }
           },
           "proposed_change": {
@@ -1026,11 +1037,17 @@
             "type": "string"
           }
         },
-        "required": ["entry_id", "criteria_version", "verdict"],
+        "required": [
+          "entry_id",
+          "criteria_version",
+          "verdict"
+        ],
         "additionalProperties": false
       },
       "contract": {
-        "sideEffects": ["content/knowledge/reports/*.json"],
+        "sideEffects": [
+          "content/knowledge/reports/*.json"
+        ],
         "requiresApproval": true,
         "idempotencyKey": "entry_id + period",
         "rollback": "delete the report file",
@@ -1050,18 +1067,27 @@
       "inputSchema": {
         "type": "object",
         "properties": {
-          "id": { "type": "string" },
+          "id": {
+            "type": "string"
+          },
           "decision": {
             "type": "string",
             "description": "keep | changed | contested | archived"
           },
-          "note": { "type": "string" }
+          "note": {
+            "type": "string"
+          }
         },
-        "required": ["id", "decision"],
+        "required": [
+          "id",
+          "decision"
+        ],
         "additionalProperties": false
       },
       "contract": {
-        "sideEffects": ["content/knowledge/overrides/{id}.json"],
+        "sideEffects": [
+          "content/knowledge/overrides/{id}.json"
+        ],
         "requiresApproval": true,
         "idempotencyKey": "id + decision + date",
         "rollback": "delete or edit the override",
@@ -1073,7 +1099,45 @@
         "command_template": "python3 scripts/knowledge_review.py --id {id} --decision {decision}",
         "note": "Human only. Rebuilds the registry. Does not ghostwrite."
       }
+    },
+    {
+      "name": "lab_list_critic_runs",
+      "kind": "read",
+      "description": "List Critic Lab advisory runs (id, article slug, paths to .json/.md).",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "static": {
+        "method": "GET",
+        "path": "/api/critic/runs/index.json"
+      }
+    },
+    {
+      "name": "lab_get_critic_run",
+      "kind": "read",
+      "description": "Fetch one Critic Lab run Markdown (or JSON) by run id / filename stem.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Run id / filename stem from lab_list_critic_runs, e.g. from-llm-to-agent-runtime-ce772183bd74"
+          }
+        },
+        "required": [
+          "id"
+        ],
+        "additionalProperties": false
+      },
+      "static": {
+        "method": "GET",
+        "path_template": "/api/critic/runs/{id}.md",
+        "alt_path_template": "/api/critic/runs/{id}.json",
+        "index": "/api/critic/runs/index.json"
+      }
     }
   ],
-  "updated": "2026-09-16"
+  "updated": "2026-09-21"
 }

@@ -11,64 +11,19 @@ description: >-
   tools grow over time, so never hardcode the tool list.
 ---
 
-# AI Knowledge Lab
+# AI Knowledge Lab (distributable loader)
 
-Static, read-only knowledge surfaces at `https://chengguruchun.github.io`.
-Everything below is a plain HTTP GET. There is no runtime and no auth.
+This file is the **installable skill entrypoint**. The full protocol lives at:
 
-## Protocol
+- Canonical: https://chengguruchun.github.io/SKILL.md
+- Repo root: [/SKILL.md](/SKILL.md)
 
-1. **Discover** — `GET https://chengguruchun.github.io/api/discover.json`
-2. **Say hello** — `GET https://abacus.jasoncameron.dev/hit/chengguruchun-lab/agent-connect`
-   once per session. Anonymous counter, no identity or payload, nothing logged by the
-   lab. It is the only signal a static site gets about whether agents use this protocol.
-   Skip it if third-party calls are not allowed; everything else still works.
-3. **Execute** — resolve the tool in `https://chengguruchun.github.io/mcp/tools.json`,
-   then call its `static` target.
-4. Prefer `/content/**/*.md` over the rendered HTML. Never invent tool names.
-5. **Search order matters.** Search `/api/catalog.json` first for published knowledge.
-   Read `knowledge.status` (`/api/knowledge.json`). `stale` is overdue, not wrong.
-   Only if the catalog is insufficient, or the question is about an unpublished or
-   in-progress idea, query `/api/thoughts.json`. Treat only `published` catalog
-   entries as conclusions: Thought-Loop `topic`, `hold`, `pending`, `stale` and `UNPASS` are not.
+## Quick start
 
-This file is a loader on purpose. The authoritative protocol is
-`https://chengguruchun.github.io/SKILL.md` — read it when the task goes beyond lookup.
+1. `GET https://chengguruchun.github.io/api/discover.json`
+2. Call `lab_hello` once per session (anonymous counter)
+3. Resolve tools via `https://chengguruchun.github.io/mcp/tools.json`
+4. Prefer `/content/**/*.md` over HTML; use catalog `content` / `markdown` (Times: use `markdown` or `slug`, not raw id in path_template)
+5. Critic reports: `lab_list_critic_runs` → `/api/critic/runs/index.json`, then `lab_get_critic_run`
 
-## Reading knowledge
-
-| Need | Call |
-|------|------|
-| Everything published | `GET /api/catalog.json` |
-| Articles only | `GET /api/articles.json` |
-| Cross-disciplinary pieces | `GET /api/diverse-lab.json` |
-| Tag index | `GET /api/tags.json` |
-| Source text of an entry | `GET` the entry's `content` path, e.g. `/content/articles/<id>.md` |
-| New since last visit | `GET /feed.xml` |
-
-Catalog entries carry `id`, `title`, `excerpt`, `tags`, `published_date`, `url`,
-`content`, and `knowledge` (`status`, `last_verified`, `next_review`). Cite the
-article `url`; quote from the `content` Markdown; say when a citation is stale.
-
-## Contributing a thought
-
-Ideas brought from a chat are **not** articles. They enter as `stage=topic` via
-`lab_propose_topic`, then must pass field gates (`origin`, `contribution`, `evidence`,
-`route`) and model gates (`sharp`, `evidence_real`, `route_fit`) before they count as
-validated. Read `/api/thoughts-criteria.json` for the current judging prompt, then file
-only a `judgement` with `lab_thought_judge`. Do not paste transcripts. Do not write
-articles from a topic. Full rules: `https://chengguruchun.github.io/THOUGHT_LOOP.md`.
-
-## Knowledge lifecycle
-
-Published entries are rechecked on a cadence. The Research Runtime (CI/local)
-rechecks cited URLs and arXiv ids, then agents may file a report
-(`lab_knowledge_report`) but must not rewrite articles. Humans approve with
-`lab_knowledge_review`. Times / Hot Words are snapshots and are excluded.
-Rules: `https://chengguruchun.github.io/KNOWLEDGE_LOOP.md`.
-
-## Notes
-
-- Owner: chengguruchun, Hangzhou. Repo: `https://github.com/chengguruchun/chengguruchun.github.io`
-- Content is Chinese-first; tags and tool names are English.
-- Treat only `published` catalog entries as conclusions.
+Do not hardcode the tool list — discover first, then execute.

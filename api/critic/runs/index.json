@@ -1,0 +1,63 @@
+{
+  "name": "Critic Lab runs",
+  "kind": "read",
+  "updated": "2026-09-21T06:40:05Z",
+  "count": 5,
+  "runs": [
+    {
+      "id": "from-llm-to-agent-runtime-ce772183bd74",
+      "article": "from-llm-to-agent-runtime",
+      "article_slug": "from-llm-to-agent-runtime",
+      "status": "needs_review",
+      "summary": "The article presents a broad and largely coherent conceptual framing of Agent Runtime as the layer that turns LLM token output into verified real-world action. However, several central claims are stated as strong conclusions without being l",
+      "commit": "ce772183bd74f5ee9eef890f09730a2a2af82e51",
+      "generated_at": "2026-09-21T05:17:13.706918+00:00",
+      "json": "/api/critic/runs/from-llm-to-agent-runtime-ce772183bd74.json",
+      "markdown": "/api/critic/runs/from-llm-to-agent-runtime-ce772183bd74.md"
+    },
+    {
+      "id": "from-llm-to-agent-runtime-d88cf895990b",
+      "article": "from-llm-to-agent-runtime",
+      "article_slug": "from-llm-to-agent-runtime",
+      "status": "needs_review",
+      "summary": "The revision improves calibration by labeling several claims as hypotheses and adding boundaries for Verification and for the functional-stack framing. However, the central category distinction between Inference Runtime and Agent Runtime re",
+      "commit": "d88cf895990b7da8799e2f39c1f758e5da275cd4",
+      "generated_at": "2026-09-21T05:43:05.718112+00:00",
+      "json": "/api/critic/runs/from-llm-to-agent-runtime-d88cf895990b.json",
+      "markdown": "/api/critic/runs/from-llm-to-agent-runtime-d88cf895990b.md"
+    },
+    {
+      "id": "spring-dubbo-deepseek-harness-runtime-d365fde199d2",
+      "article": "spring-dubbo-deepseek-harness-runtime",
+      "article_slug": "spring-dubbo-deepseek-harness-runtime",
+      "status": "needs_review",
+      "summary": "This article presents a broad architectural analogy: Spring manages objects, Dubbo manages services, and Agent Runtime/Harness manages autonomous tasks, with shared patterns of complexity-offloading to a runtime. The analogy is useful as an",
+      "commit": "d365fde199d2109829bda0fc8c320da28de70bfa",
+      "generated_at": "2026-09-21T01:03:53.981695+00:00",
+      "json": "/api/critic/runs/spring-dubbo-deepseek-harness-runtime-d365fde199d2.json",
+      "markdown": "/api/critic/runs/spring-dubbo-deepseek-harness-runtime-d365fde199d2.md"
+    },
+    {
+      "id": "transformer-from-attention-to-decoder-only-ce772183bd74",
+      "article": "transformer-from-attention-to-decoder-only",
+      "article_slug": "transformer-from-attention-to-decoder-only",
+      "status": "needs_review",
+      "summary": "The article is a coherent didactic summary of the Decoder-only paradigm shift, but several formulations risk becoming universal claims where only engineering heuristics are warranted. The core distinction '训练=已知序列上的并行学习，推理=未知未来上的自回归生成' is s",
+      "commit": "ce772183bd74f5ee9eef890f09730a2a2af82e51",
+      "generated_at": "2026-09-21T05:16:50.590920+00:00",
+      "json": "/api/critic/runs/transformer-from-attention-to-decoder-only-ce772183bd74.json",
+      "markdown": "/api/critic/runs/transformer-from-attention-to-decoder-only-ce772183bd74.md"
+    },
+    {
+      "id": "transformer-from-attention-to-decoder-only-e8e40731a672",
+      "article": "transformer-from-attention-to-decoder-only",
+      "article_slug": "transformer-from-attention-to-decoder-only",
+      "status": "needs_review",
+      "summary": "The revised article is a coherent, self-aware pedagogical narrative that correctly reframes Encoder/Decoder around attention masking and adds a genuinely useful SFT/RL section. However, several mechanism-level claims are compressed or sligh",
+      "commit": "e8e40731a672ffb48dfebb741412c9913e4e38f7",
+      "generated_at": "2026-09-21T05:51:03.100163+00:00",
+      "json": "/api/critic/runs/transformer-from-attention-to-decoder-only-e8e40731a672.json",
+      "markdown": "/api/critic/runs/transformer-from-attention-to-decoder-only-e8e40731a672.md"
+    }
+  ]
+}

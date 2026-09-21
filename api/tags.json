@@ -1,7 +1,16 @@
 {
-  "updated": "2026-09-19",
+  "updated": "2026-09-21",
   "tags": {
+    "Actor Model": [
+      "agent-runtime-cognitive-actor"
+    ],
     "Agent": [
+      "transformer-from-attention-to-decoder-only",
+      "spring-dubbo-deepseek-harness-runtime",
+      "from-mes-to-manufacturing-agent-runtime",
+      "from-llm-to-agent-runtime",
+      "fde-agent-opportunity-discovery",
+      "agent-runtime-cognitive-actor",
       "domain-driven-agent-tool-design",
       "simuhome-paper-reading",
       "ai-era-production-consumption-balance",
@@ -21,10 +30,23 @@
       "physics-ecology-llm"
     ],
     "Agent Runtime": [
+      "from-mes-to-manufacturing-agent-runtime",
       "h-neurons-paper-reading"
     ],
     "Agent 记忆架构": [
       "times-2026-09-w2"
+    ],
+    "Agent 长期记忆": [
+      "times-2026-09-w3"
+    ],
+    "Agent-Architecture": [
+      "fde-agent-opportunity-discovery"
+    ],
+    "Agent-Suitability": [
+      "fde-agent-opportunity-discovery"
+    ],
+    "Akka": [
+      "agent-runtime-cognitive-actor"
     ],
     "Architecture": [
       "domain-driven-agent-tool-design",
@@ -33,10 +55,16 @@
       "saas-ecommerce-agent-thinking",
       "iot-agent-reconstruction"
     ],
+    "Attention": [
+      "transformer-from-attention-to-decoder-only"
+    ],
     "Benchmark": [
       "simuhome-paper-reading",
       "iot-agent-from-automation-to-physical-infrastructure-part-ii",
       "iot-agent-from-automation-to-physical-infrastructure"
+    ],
+    "Business-Complexity": [
+      "fde-agent-opportunity-discovery"
     ],
     "Code Agent": [
       "domain-driven-agent-tool-design"
@@ -57,6 +85,7 @@
       "times-2026-09-w1"
     ],
     "Control Plane": [
+      "from-mes-to-manufacturing-agent-runtime",
       "agent-engineering-from-workflow-to-control-plane",
       "iot-agent-reconstruction",
       "k8s-to-agent-control-plane"
@@ -70,6 +99,12 @@
     "Data Loop": [
       "agent-industrial-internet"
     ],
+    "Decision Engineering": [
+      "from-mes-to-manufacturing-agent-runtime"
+    ],
+    "Decision-Unit": [
+      "fde-agent-opportunity-discovery"
+    ],
     "Diverse": [
       "simuhome-paper-reading",
       "h-neurons-paper-reading",
@@ -78,6 +113,9 @@
       "from-function-to-ecosystem",
       "llm-scientific-experiment",
       "physics-ecology-llm"
+    ],
+    "Dubbo": [
+      "spring-dubbo-deepseek-harness-runtime"
     ],
     "E-commerce": [
       "saas-ecommerce-agent-thinking"
@@ -101,6 +139,9 @@
       "from-function-to-ecosystem",
       "llm-scientific-experiment"
     ],
+    "FDE": [
+      "fde-agent-opportunity-discovery"
+    ],
     "Faithfulness": [
       "interpretability-rl-faithfulness"
     ],
@@ -109,6 +150,9 @@
     ],
     "Feedback Loop": [
       "ai-era-production-consumption-balance"
+    ],
+    "Forward-Deployed-Engineer": [
+      "fde-agent-opportunity-discovery"
     ],
     "Graph": [
       "agent-engineering-from-workflow-to-control-plane"
@@ -123,14 +167,19 @@
       "h-neurons-paper-reading"
     ],
     "Harness": [
+      "spring-dubbo-deepseek-harness-runtime",
       "agent-engineering-from-workflow-to-control-plane"
     ],
     "Hot Words": [
+      "times-2026-09-w3",
       "times-2026-09-w2",
       "times-2026-09-w1"
     ],
     "Industrial Internet": [
       "agent-industrial-internet"
+    ],
+    "Inference": [
+      "from-llm-to-agent-runtime"
     ],
     "Interpretability": [
       "h-neurons-paper-reading",
@@ -153,6 +202,8 @@
       "k8s-to-agent-control-plane"
     ],
     "LLM": [
+      "transformer-from-attention-to-decoder-only",
+      "from-llm-to-agent-runtime",
       "h-neurons-paper-reading",
       "symbolicism-vs-connectionism",
       "interpretability-rl-faithfulness",
@@ -168,8 +219,14 @@
       "k8s-to-agent-control-plane",
       "llm-scientific-experiment"
     ],
+    "MES": [
+      "from-mes-to-manufacturing-agent-runtime"
+    ],
     "MHS": [
       "iot-agent-from-automation-to-physical-infrastructure"
+    ],
+    "Manufacturing": [
+      "from-mes-to-manufacturing-agent-runtime"
     ],
     "Model Selection": [
       "reasoning-scale-knowledge-external"
@@ -216,6 +273,9 @@
       "agent-optimizer-experience-policy"
     ],
     "Runtime": [
+      "spring-dubbo-deepseek-harness-runtime",
+      "from-llm-to-agent-runtime",
+      "agent-runtime-cognitive-actor",
       "agent-skill-evolution-pruning",
       "agent-engineering-from-workflow-to-control-plane",
       "k8s-to-agent-control-plane"
@@ -232,15 +292,25 @@
     "Smart Home": [
       "iot-agent-from-automation-to-physical-infrastructure"
     ],
+    "Spring": [
+      "spring-dubbo-deepseek-harness-runtime"
+    ],
+    "Supply Chain": [
+      "from-mes-to-manufacturing-agent-runtime"
+    ],
     "Symbolicism": [
       "symbolicism-vs-connectionism"
     ],
     "Times": [
+      "times-2026-09-w3",
       "times-2026-09-w2",
       "times-2026-09-w1"
     ],
     "Tool Design": [
       "domain-driven-agent-tool-design"
+    ],
+    "Transformer": [
+      "transformer-from-attention-to-decoder-only"
     ],
     "Vertical": [
       "agent-industrial-internet"

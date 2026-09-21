@@ -46,7 +46,8 @@ Chat (off-site) → Topic → field gates + model gates → Candidate → Valida
 5. `origin` and `contribution` are required to leave `topic`. `ai` + `known` cannot become an Articles main piece.
 6. Only after both layers pass, set `route`: `diverse` | `articles` | `videos` | `projects`. Unrouted sentences stay on Bench (Hold).
 7. Treat only `published` / catalog entries as conclusions. Agents filter and validate; they do not ghostwrite.
-8. **Published knowledge ages.** Weekly time-gate marks `stale` when `now > next_review`. The Research Runtime (CI/local) rechecks cited https URLs (`url_fetch`) and cited arXiv ids (`arxiv_lookup`), then files a report (`lab_knowledge_report`) with `unchanged` / `changed` / `insufficient` / `obsolete`. `changed` needs an Observe signal. Humans approve (`lab_knowledge_review`) before any status pin or `last_verified` bump. Never rewrite article bodies from a report. Times / Hot Words are dated snapshots and stay out of this loop. See `/KNOWLEDGE_LOOP.md`.
+8. **Published knowledge ages.** Weekly time-gate marks `stale` when `now > next_review`. The Research Runtime (CI/local) rechecks cited https URLs (`url_fetch`) and cited arXiv ids (`arxiv_lookup`), then files a report (`lab_knowledge_report
+- `lab_list_critic_runs` / `lab_get_critic_run` — Critic Lab advisory reports (`/api/critic/runs/index.json`)`) with `unchanged` / `changed` / `insufficient` / `obsolete`. `changed` needs an Observe signal. Humans approve (`lab_knowledge_review`) before any status pin or `last_verified` bump. Never rewrite article bodies from a report. Times / Hot Words are dated snapshots and stay out of this loop. See `/KNOWLEDGE_LOOP.md`.
 
 Meta tools only: `lab_discover`, `lab_execute`.  
 Add capabilities in `discover.json` + `tools.json`, not this file.

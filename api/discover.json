@@ -3,7 +3,7 @@
   "protocol": "discover-then-execute",
   "skill": "/SKILL.md",
   "registry": "/mcp/tools.json",
-  "updated": "2026-09-16",
+  "updated": "2026-09-21T06:40:05Z",
   "meta": [
     "lab_discover",
     "lab_execute"
@@ -86,7 +86,7 @@
     {
       "name": "lab_get_entry",
       "kind": "read",
-      "description": "Fetch one entry's canonical Markdown by id (prefer over HTML).",
+      "description": "Fetch one entry's canonical Markdown. Prefer the catalog item's `content` or `markdown` field (always a working path). The path_template `/content/{collection}/{id}.md` only works when id equals the file stem. Times ids look like `times-2026-09-w3` while files are `/content/times/2026-09-w3.md` — use catalog `markdown` or `slug` (e.g. slug=2026-09-w3 → /content/times/{slug}.md).",
       "invoke": {
         "method": "GET",
         "path_template": "/content/{collection}/{id}.md",
@@ -95,7 +95,13 @@
           "Diverse Lab": "diverse",
           "Times": "times"
         },
-        "resolve_collection_via": "/api/catalog.json"
+        "resolve_collection_via": "/api/catalog.json",
+        "prefer_catalog_fields": [
+          "content",
+          "markdown"
+        ],
+        "slug_field": "slug",
+        "notes": "Times: id times-YYYY-MM-wN ↔ file /content/times/YYYY-MM-wN.md via markdown or slug."
       }
     },
     {
@@ -242,10 +248,10 @@
     {
       "name": "lab_hot_words_list",
       "kind": "read",
-      "description": "List Hot Words content markdown under /content/times/.",
+      "description": "List Hot Words issues (current + history) from /api/times.json.",
       "invoke": {
         "method": "GET",
-        "path": "/content/times/"
+        "path": "/api/times.json"
       }
     },
     {
@@ -317,7 +323,7 @@
     {
       "name": "lab_hot_words_apply",
       "kind": "contribute",
-      "description": "Apply an approved Hot Words proposal to the LOCAL workspace only (scripts/hot_words_apply.py). Does NOT commit, push, or publish. Phase: Apply.",
+      "description": "Apply an approved Hot Words proposal to the LOCAL workspace only (scripts/hot_words_apply.py). Does NOT commit, push, or publish. Phase: Apply. Monday GitHub Actions auto-publishes the weekly Hot Words run; this tool only mutates the local workspace.",
       "invoke": {
         "method": "ACTION",
         "action": "local",
@@ -498,6 +504,26 @@
         "method": "ACTION",
         "action": "local",
         "command_template": "python3 scripts/knowledge_review.py --id {id} --decision {decision}"
+      }
+    },
+    {
+      "name": "lab_list_critic_runs",
+      "kind": "read",
+      "description": "List Critic Lab advisory runs (id, article slug, paths to .json/.md).",
+      "invoke": {
+        "method": "GET",
+        "path": "/api/critic/runs/index.json"
+      }
+    },
+    {
+      "name": "lab_get_critic_run",
+      "kind": "read",
+      "description": "Fetch one Critic Lab run Markdown (or JSON) by run id / filename stem.",
+      "invoke": {
+        "method": "GET",
+        "path_template": "/api/critic/runs/{id}.md",
+        "alt_path_template": "/api/critic/runs/{id}.json",
+        "index": "/api/critic/runs/index.json"
       }
     }
   ]
