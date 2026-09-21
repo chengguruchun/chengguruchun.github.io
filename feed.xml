@@ -8,6 +8,38 @@
     <lastBuildDate>Mon, 21 Sep 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://chengguruchun.github.io/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
+      <title>从 Transformer 到 Decoder-only：我重新理解大语言模型是怎么“学会”的</title>
+      <link>https://chengguruchun.github.io/articles/transformer-from-attention-to-decoder-only.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/articles/transformer-from-attention-to-decoder-only.html</guid>
+      <pubDate>Mon, 21 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Articles</category>
+      <description>从一次关于 Transformer 的追问出发，重新理解 Self-Attention、Encoder-Decoder、Decoder-only，以及训练与推理到底有什么不同。</description>
+    </item>
+    <item>
+      <title>从强化学习到博弈论：Agent Runtime 正在走向复杂系统</title>
+      <link>https://chengguruchun.github.io/diverse/reinforcement-learning-game-theory-complex-systems.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/diverse/reinforcement-learning-game-theory-complex-systems.html</guid>
+      <pubDate>Mon, 21 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Diverse Lab</category>
+      <description>从强化学习、博弈论与多智能体出发，重新思考 Agent Runtime：当 Agent 拥有目标、策略和反馈，Runtime 管理的可能不再只是执行，而是一个动态的智能生态。</description>
+    </item>
+    <item>
+      <title>从 Spring、Dubbo 到 DeepSeek Harness：运行时架构为什么正在趋同</title>
+      <link>https://chengguruchun.github.io/articles/spring-dubbo-deepseek-harness-runtime.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/articles/spring-dubbo-deepseek-harness-runtime.html</guid>
+      <pubDate>Mon, 21 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Articles</category>
+      <description>从 Spring、Dubbo Service 到 DeepSeek Harness，观察依赖注入、Context、Event Bus、生命周期与运行时治理这些工程思想如何在 Agent 时代重新组合。</description>
+    </item>
+    <item>
+      <title>从 LLM 到 Agent Runtime：当“预测下一个 Token”开始进入真实世界</title>
+      <link>https://chengguruchun.github.io/articles/from-llm-to-agent-runtime.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/articles/from-llm-to-agent-runtime.html</guid>
+      <pubDate>Mon, 21 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Articles</category>
+      <description>从模型推理、KV Cache、Inference Runtime、Tool、Environment 和 Feedback 出发，思考为什么 Agent Runtime 是模型能力进入真实世界之后的新一层。</description>
+    </item>
+    <item>
       <title>2026-09 Week 3 · Agent 长期记忆</title>
       <link>https://chengguruchun.github.io/times/</link>
       <guid isPermaLink="true">https://chengguruchun.github.io/times/</guid>
@@ -16,12 +48,36 @@
       <description>长期记忆是 Agent 从单次对话走向持续协作的分水岭，直接决定跨会话任务能否可靠延续。它既承接了上周的记忆架构讨论，又落到可实现的存储、检索与遗忘机制，工程团队能立刻在系统里验证。相比口号化的能力词，长期记忆有论文与官方文档双重证据，适合本站软件与 Agent 主线。</description>
     </item>
     <item>
+      <title>从 Actor Model 到 Cognitive Actor：Claude Agent Teams 给 Agent Runtime 的启发</title>
+      <link>https://chengguruchun.github.io/articles/agent-runtime-cognitive-actor.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/articles/agent-runtime-cognitive-actor.html</guid>
+      <pubDate>Sun, 20 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Articles</category>
+      <description>从 Akka Actor、Mailbox、Supervisor、Sharding 出发，分析 Claude Agent Teams、多 Agent 通信与 Agent Runtime 的演化。</description>
+    </item>
+    <item>
       <title>领域驱动设计 Agent 工具：从「动作推导」到「领域对象 × 动作」</title>
       <link>https://chengguruchun.github.io/articles/domain-driven-agent-tool-design.html</link>
       <guid isPermaLink="true">https://chengguruchun.github.io/articles/domain-driven-agent-tool-design.html</guid>
       <pubDate>Sat, 19 Sep 2026 00:00:00 +0000</pubDate>
       <category>Articles</category>
       <description>设计 agent tool 的正确起点不是先枚举动作，而是先建领域模型。一句话坐标：领域对象 × 动作 = 工具；动作推导降级为完备性校验。</description>
+    </item>
+    <item>
+      <title>FDE 的新价值：识别业务复杂度，而不是简单交付 Agent</title>
+      <link>https://chengguruchun.github.io/articles/fde-agent-opportunity-discovery.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/articles/fde-agent-opportunity-discovery.html</guid>
+      <pubDate>Thu, 17 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Articles</category>
+      <description>从 Business Reality 到 Decision Unit，再到 Agent Suitability：重新理解 FDE 在 Agent 项目中的价值。</description>
+    </item>
+    <item>
+      <title>从 MES 到 Manufacturing Agent Runtime：当生产系统开始自己做决策</title>
+      <link>https://chengguruchun.github.io/articles/from-mes-to-manufacturing-agent-runtime.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/articles/from-mes-to-manufacturing-agent-runtime.html</guid>
+      <pubDate>Wed, 16 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Articles</category>
+      <description>SHEIN 式制造的关键不是把 MES 加上一个 Copilot，而是把高频、动态、组合复杂的生产决策变成 Agent Runtime 的持续闭环。核心观点：不要替代岗位，要替代决策单元。</description>
     </item>
     <item>
       <title>SimuHome：从“调用设备”到“与环境闭环”</title>
