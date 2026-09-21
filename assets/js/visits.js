@@ -18,6 +18,17 @@
     }
   }
 
+  // Abacus keys must be 3–64 chars. Keep short path keys stable;
+  // hash only when the derived key would exceed the limit.
+  function fnv1a32(str) {
+    var h = 0x811c9dc5;
+    for (var i = 0; i < str.length; i++) {
+      h ^= str.charCodeAt(i);
+      h = Math.imul(h, 0x01000193);
+    }
+    return (h >>> 0).toString(16).padStart(8, "0");
+  }
+
   function pageKey() {
     var path = (location.pathname || "/")
       .replace(/\/index\.html$/i, "/")
@@ -28,7 +39,9 @@
         .replace(/^\//, "")
         .replace(/[^a-zA-Z0-9/_-]+/g, "-")
         .replace(/\//g, "_");
-    return key === "page-" ? "page-home" : key;
+    if (key === "page-") return "page-home";
+    if (key.length <= 64) return key;
+    return "page-h-" + fnv1a32(path);
   }
 
   function setNum(sel, n) {
