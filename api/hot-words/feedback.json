@@ -1,8 +1,8 @@
 {
   "name": "Hot Words feedback",
-  "generated": "2026-09-21T06:10:57Z",
-  "period": "2026-09-W3",
-  "word": "Agent 长期记忆",
+  "generated": "2026-09-21T18:26:43Z",
+  "period": "2026-09-W4",
+  "word": "Agent Memory Benchmark",
   "signals": {
     "visits": {
       "site": null,
@@ -24,8 +24,8 @@
     }
   },
   "lastRun": {
-    "runId": "hot-words-2026-09-W3-20260921T061047Z",
-    "phase": "published",
+    "runId": "hot-words-2026-09-W4-20260921T182634Z",
+    "phase": "applied",
     "gates": {
       "schema": "pass",
       "duplicate": "pass",
@@ -34,47 +34,51 @@
       "relevance": "pass",
       "consistency": "pass"
     },
-    "evidenceCount": 10,
-    "publish": {
-      "commit": "8a220d869544704a8816ef5b27bec466a904b2e6",
-      "url": "https://chengguruchun.github.io/times/",
-      "mode": "autonomous",
-      "periodScheme": "YYYY-MM-WN month block, not ISO week"
-    },
+    "evidenceCount": 14,
+    "publish": {},
     "error": null
   },
   "learnHints": {
     "recentWords": [
+      "2026-09-W4: Agent Memory Benchmark",
       "2026-09-W3: Agent 长期记忆",
       "2026-09-W2: Agent 记忆架构",
       "2026-09-W1: Context Window Optimization"
     ],
     "rejectedCandidates": [
       {
-        "word": "Agent 记忆压缩",
+        "word": "Agent Memory Poisoning",
         "reason": "not_chosen",
-        "notes": "记忆压缩是记忆架构的工程化延伸，直接决定 token 预算与召回质量，适合本站软件主线。"
+        "notes": "长期记忆一旦写入即长期生效，投毒成为记忆架构的安全对偶，适合本站从工程与安全双视角展开。"
       },
       {
-        "word": "Agent 工作流编排",
+        "word": "Sleep-Time Compute",
         "reason": "not_chosen",
-        "notes": "编排是 Agent 系统的主干，与记忆、工具、评估都耦合，能带出可点开的一手文档。"
+        "notes": "把长期记忆的整理从请求路径挪到离线路径，直接改变记忆系统的成本结构与响应延迟，是本站软件主线的可落地话题。"
       },
       {
-        "word": "Agent 状态持久化",
+        "word": "Agentic Memory",
         "reason": "not_chosen",
-        "notes": "状态持久化是记忆架构的系统侧对偶，强调可靠性与可恢复，适合工程读者。"
+        "notes": "强调记忆由 Agent 自主组织而非外部硬编码，是长期记忆从静态存储走向自管理的关键工程范式。"
       },
       {
-        "word": "Agent 记忆检索",
+        "word": "Memory Consolidation",
         "reason": "not_chosen",
-        "notes": "检索是记忆架构的入口，决定 Agent 能否在正确时刻取回正确信息，证据一手可查。"
+        "notes": "把原始交互压缩为可复用的高层记忆，是长期记忆在容量与召回之间的核心权衡，工程上对应摘要、反思与图谱整合。"
       }
     ],
     "prefer": "优先选能落到本站软件 / 系统 / Agent 主线的词，并带至少一条可点开的 https 证据。",
-    "avoid": "回避与当前词重复、口号化、以及只有空泛描述没有来源的词。 最近未入选：Agent 记忆压缩、Agent 工作流编排、Agent 状态持久化、Agent 记忆检索。"
+    "avoid": "回避与当前词重复、口号化、以及只有空泛描述没有来源的词。 最近未入选：Agent Memory Poisoning、Sleep-Time Compute、Agentic Memory、Memory Consolidation。"
   },
   "recentRuns": [
+    {
+      "runId": "hot-words-2026-09-W4-20260921T182634Z",
+      "period": "2026-09-W4",
+      "phase": "applied",
+      "word": "Agent Memory Benchmark",
+      "finishedAt": "2026-09-21T18:26:43Z",
+      "path": "/api/hot-words/runs/hot-words-2026-09-W4-20260921T182634Z.json"
+    },
     {
       "runId": "hot-words-2026-09-W3-20260921T061047Z",
       "period": "2026-09-W3",

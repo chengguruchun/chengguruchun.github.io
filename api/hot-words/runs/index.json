@@ -1,7 +1,15 @@
 {
   "name": "Hot Words run index",
-  "generated": "2026-09-21T06:10:57Z",
+  "generated": "2026-09-21T18:26:43Z",
   "items": [
+    {
+      "runId": "hot-words-2026-09-W4-20260921T182634Z",
+      "period": "2026-09-W4",
+      "phase": "applied",
+      "word": "Agent Memory Benchmark",
+      "finishedAt": "2026-09-21T18:26:43Z",
+      "path": "/api/hot-words/runs/hot-words-2026-09-W4-20260921T182634Z.json"
+    },
     {
       "runId": "hot-words-2026-09-W3-20260921T061047Z",
       "period": "2026-09-W3",

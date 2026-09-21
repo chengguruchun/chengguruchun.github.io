@@ -3,7 +3,7 @@
   "skill": "/SKILL.md",
   "product": "/PRODUCT.md",
   "llms": "/llms.txt",
-  "generated": "2026-09-21T07:00:06Z",
+  "generated": "2026-09-21T18:26:43Z",
   "base_url": "https://chengguruchun.github.io",
   "items": [
     {
@@ -870,6 +870,22 @@
           "override": null
         }
       }
+    },
+    {
+      "id": "times-2026-09-w4",
+      "type": "Times",
+      "title": "2026-09 Week 4 · Agent Memory Benchmark",
+      "excerpt": "长期记忆的讨论已从架构设计转向可度量：没有统一评测，记忆模块的取舍只能靠直觉。LOCOMO、LongMemEval、MemBench 等基准把超长对话、时间推理与知识更新变成可复现的分数，直接决定本站 Agent 记忆主线该保留哪些模块、砍掉哪些开销。选它，是把上周的架构讨论落到可回归的工程验收上。",
+      "url": "/times/",
+      "date": "2026-09-22",
+      "tags": [
+        "Times",
+        "Hot Words",
+        "Agent Memory Benchmark"
+      ],
+      "markdown": "/content/times/2026-09-w4.md",
+      "period": "2026-09-W4",
+      "word": "Agent Memory Benchmark"
     },
     {
       "id": "times-2026-09-w3",
