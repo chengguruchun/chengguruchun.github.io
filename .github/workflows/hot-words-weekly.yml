@@ -3,8 +3,14 @@ name: Hot Words Weekly
 
 on:
   schedule:
-    # Monday 01:00 UTC = Monday 09:00 Asia/Shanghai
+    # Primary: Monday 01:00 UTC = Monday 09:00 Asia/Shanghai
     - cron: "0 1 * * 1"
+    # Catch-up: Monday 13:00 UTC = Monday 21:00 Asia/Shanghai (still the same Shanghai day,
+    # so the computed period stays W3 and does not drift to W4).
+    # GitHub may delay or even drop scheduled runs. If the primary run did not publish this
+    # period, this run publishes it; if it already published, the skip logic below records a
+    # clean skipped manifest. The concurrency group + skip logic prevent duplicate publishes.
+    - cron: "0 13 * * 1"
   workflow_dispatch:
     inputs:
       force:
@@ -32,6 +38,9 @@ permissions:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    # Guard: a stuck job must not hold the hot-words-weekly concurrency group forever
+    # and block later runs. The normal run finishes in a couple of minutes.
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
         with:
