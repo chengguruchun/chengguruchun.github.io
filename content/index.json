@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-21T06:39:52Z",
+  "generated": "2026-09-21T07:00:06Z",
   "items": [
     {
       "id": "transformer-from-attention-to-decoder-only",
@@ -23,6 +23,37 @@
         "last_verified": "2026-09-21",
         "next_review": "2026-12-20",
         "cadence_days": 90,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      }
+    },
+    {
+      "id": "reinforcement-learning-game-theory-complex-systems",
+      "type": "Diverse Lab",
+      "title": "从强化学习到博弈论：Agent Runtime 正在走向复杂系统",
+      "excerpt": "从强化学习、博弈论与多智能体出发，重新思考 Agent Runtime：当 Agent 拥有目标、策略和反馈，Runtime 管理的可能不再只是执行，而是一个动态的智能生态。",
+      "url": "/diverse/reinforcement-learning-game-theory-complex-systems.html",
+      "date": "2026-09-21",
+      "tags": [
+        "Diverse",
+        "Reinforcement Learning",
+        "Game Theory",
+        "Complex Systems",
+        "Agent Runtime"
+      ],
+      "thought_date": "2026-09-21",
+      "published_date": "2026-09-21",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/reinforcement-learning-game-theory-complex-systems.md",
+      "content": "/content/diverse/reinforcement-learning-game-theory-complex-systems.md",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-09-21",
+        "next_review": "2027-03-20",
+        "cadence_days": 180,
         "due": false,
         "sticky": false,
         "source": {
@@ -189,37 +220,6 @@
       }
     },
     {
-      "id": "domain-driven-agent-tool-design",
-      "type": "Articles",
-      "title": "领域驱动设计 Agent 工具：从「动作推导」到「领域对象 × 动作」",
-      "excerpt": "设计 agent tool 的正确起点不是先枚举动作，而是先建领域模型。一句话坐标：领域对象 × 动作 = 工具；动作推导降级为完备性校验。",
-      "url": "/articles/domain-driven-agent-tool-design.html",
-      "date": "2026-09-19",
-      "tags": [
-        "Agent",
-        "Tool Design",
-        "DDD",
-        "Architecture",
-        "Code Agent"
-      ],
-      "thought_date": "2026-09-19",
-      "published_date": "2026-09-19",
-      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/domain-driven-agent-tool-design.md",
-      "content": "/content/articles/domain-driven-agent-tool-design.md",
-      "knowledge": {
-        "status": "fresh",
-        "last_verified": "2026-09-19",
-        "next_review": "2026-12-18",
-        "cadence_days": 90,
-        "due": false,
-        "sticky": false,
-        "source": {
-          "frontmatter": true,
-          "override": null
-        }
-      }
-    },
-    {
       "id": "simuhome-paper-reading",
       "type": "Diverse Lab",
       "title": "SimuHome：从“调用设备”到“与环境闭环”",
@@ -366,6 +366,37 @@
         "status": "fresh",
         "last_verified": "2026-09-17",
         "next_review": "2026-12-16",
+        "cadence_days": 90,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      }
+    },
+    {
+      "id": "domain-driven-agent-tool-design",
+      "type": "Articles",
+      "title": "领域驱动设计 Agent 工具：从「动作推导」到「领域对象 × 动作」",
+      "excerpt": "设计 agent tool 的正确起点不是先枚举动作，而是先建领域模型。一句话坐标：领域对象 × 动作 = 工具；动作推导降级为完备性校验。",
+      "url": "/articles/domain-driven-agent-tool-design.html",
+      "date": "2026-09-19",
+      "tags": [
+        "Agent",
+        "Tool Design",
+        "DDD",
+        "Architecture",
+        "Code Agent"
+      ],
+      "thought_date": "2026-09-19",
+      "published_date": "2026-09-19",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/domain-driven-agent-tool-design.md",
+      "content": "/content/articles/domain-driven-agent-tool-design.md",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-09-19",
+        "next_review": "2026-12-18",
         "cadence_days": 90,
         "due": false,
         "sticky": false,

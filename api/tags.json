@@ -11,11 +11,11 @@
       "from-llm-to-agent-runtime",
       "fde-agent-opportunity-discovery",
       "agent-runtime-cognitive-actor",
-      "domain-driven-agent-tool-design",
       "simuhome-paper-reading",
       "ai-era-production-consumption-balance",
       "iot-agent-from-automation-to-physical-infrastructure-part-ii",
       "iot-agent-from-automation-to-physical-infrastructure",
+      "domain-driven-agent-tool-design",
       "reasoning-scale-knowledge-external",
       "agent-industrial-internet",
       "agent-evaluation-proxy-vs-real-outcome",
@@ -30,6 +30,7 @@
       "physics-ecology-llm"
     ],
     "Agent Runtime": [
+      "reinforcement-learning-game-theory-complex-systems",
       "from-mes-to-manufacturing-agent-runtime",
       "h-neurons-paper-reading"
     ],
@@ -49,9 +50,9 @@
       "agent-runtime-cognitive-actor"
     ],
     "Architecture": [
-      "domain-driven-agent-tool-design",
       "iot-agent-from-automation-to-physical-infrastructure-part-ii",
       "iot-agent-from-automation-to-physical-infrastructure",
+      "domain-driven-agent-tool-design",
       "saas-ecommerce-agent-thinking",
       "iot-agent-reconstruction"
     ],
@@ -70,6 +71,7 @@
       "domain-driven-agent-tool-design"
     ],
     "Complex Systems": [
+      "reinforcement-learning-game-theory-complex-systems",
       "interpretability-rl-faithfulness",
       "from-function-to-ecosystem",
       "llm-scientific-experiment",
@@ -106,6 +108,7 @@
       "fde-agent-opportunity-discovery"
     ],
     "Diverse": [
+      "reinforcement-learning-game-theory-complex-systems",
       "simuhome-paper-reading",
       "h-neurons-paper-reading",
       "symbolicism-vs-connectionism",
@@ -153,6 +156,9 @@
     ],
     "Forward-Deployed-Engineer": [
       "fde-agent-opportunity-discovery"
+    ],
+    "Game Theory": [
+      "reinforcement-learning-game-theory-complex-systems"
     ],
     "Graph": [
       "agent-engineering-from-workflow-to-control-plane"
@@ -270,6 +276,7 @@
       "reasoning-scale-knowledge-external"
     ],
     "Reinforcement Learning": [
+      "reinforcement-learning-game-theory-complex-systems",
       "agent-optimizer-experience-policy"
     ],
     "Runtime": [

@@ -2,6 +2,37 @@
   "type": "Diverse Lab",
   "items": [
     {
+      "id": "reinforcement-learning-game-theory-complex-systems",
+      "type": "Diverse Lab",
+      "title": "从强化学习到博弈论：Agent Runtime 正在走向复杂系统",
+      "excerpt": "从强化学习、博弈论与多智能体出发，重新思考 Agent Runtime：当 Agent 拥有目标、策略和反馈，Runtime 管理的可能不再只是执行，而是一个动态的智能生态。",
+      "url": "/diverse/reinforcement-learning-game-theory-complex-systems.html",
+      "date": "2026-09-21",
+      "tags": [
+        "Diverse",
+        "Reinforcement Learning",
+        "Game Theory",
+        "Complex Systems",
+        "Agent Runtime"
+      ],
+      "thought_date": "2026-09-21",
+      "published_date": "2026-09-21",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/reinforcement-learning-game-theory-complex-systems.md",
+      "content": "/content/diverse/reinforcement-learning-game-theory-complex-systems.md",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-09-21",
+        "next_review": "2027-03-20",
+        "cadence_days": 180,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      }
+    },
+    {
       "id": "simuhome-paper-reading",
       "type": "Diverse Lab",
       "title": "SimuHome：从“调用设备”到“与环境闭环”",
