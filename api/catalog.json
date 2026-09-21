@@ -3,7 +3,7 @@
   "skill": "/SKILL.md",
   "product": "/PRODUCT.md",
   "llms": "/llms.txt",
-  "generated": "2026-09-20T07:42:44Z",
+  "generated": "2026-09-21T06:10:54Z",
   "base_url": "https://chengguruchun.github.io",
   "items": [
     {
@@ -652,6 +652,22 @@
           "override": null
         }
       }
+    },
+    {
+      "id": "times-2026-09-w3",
+      "type": "Times",
+      "title": "2026-09 Week 3 · Agent 长期记忆",
+      "excerpt": "长期记忆是 Agent 从单次对话走向持续协作的分水岭，直接决定跨会话任务能否可靠延续。它既承接了上周的记忆架构讨论，又落到可实现的存储、检索与遗忘机制，工程团队能立刻在系统里验证。相比口号化的能力词，长期记忆有论文与官方文档双重证据，适合本站软件与 Agent 主线。",
+      "url": "/times/",
+      "date": "2026-09-21",
+      "tags": [
+        "Times",
+        "Hot Words",
+        "Agent 长期记忆"
+      ],
+      "markdown": "/content/times/2026-09-w3.md",
+      "period": "2026-09-W3",
+      "word": "Agent 长期记忆"
     },
     {
       "id": "times-2026-09-w2",

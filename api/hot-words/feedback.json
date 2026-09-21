@@ -1,8 +1,8 @@
 {
   "name": "Hot Words feedback",
-  "generated": "2026-09-14T05:52:11Z",
-  "period": "2026-09-W2",
-  "word": "Agent 记忆架构",
+  "generated": "2026-09-21T06:10:54Z",
+  "period": "2026-09-W3",
+  "word": "Agent 长期记忆",
   "signals": {
     "visits": {
       "site": null,
@@ -24,8 +24,8 @@
     }
   },
   "lastRun": {
-    "runId": "hot-words-2026-09-W2-20260914T055159Z",
-    "phase": "published",
+    "runId": "hot-words-2026-09-W3-20260921T061047Z",
+    "phase": "applied",
     "gates": {
       "schema": "pass",
       "duplicate": "pass",
@@ -34,46 +34,50 @@
       "relevance": "pass",
       "consistency": "pass"
     },
-    "evidenceCount": 15,
-    "publish": {
-      "commit": "0b56290987202209776faea4be6a8036e1a2b0c7",
-      "url": "https://chengguruchun.github.io/times/",
-      "mode": "autonomous",
-      "periodScheme": "YYYY-MM-WN month block, not ISO week"
-    },
+    "evidenceCount": 10,
+    "publish": {},
     "error": null
   },
   "learnHints": {
     "recentWords": [
+      "2026-09-W3: Agent 长期记忆",
       "2026-09-W2: Agent 记忆架构",
       "2026-09-W1: Context Window Optimization"
     ],
     "rejectedCandidates": [
       {
-        "word": "Agent 评估与可观测性",
+        "word": "Agent 记忆压缩",
         "reason": "not_chosen",
-        "notes": "热度持续走高：Agent 上线后最缺的是可复现的评估与追踪，而非再堆一个提示词技巧。"
+        "notes": "记忆压缩是记忆架构的工程化延伸，直接决定 token 预算与召回质量，适合本站软件主线。"
       },
       {
-        "word": "MCP 工具生态",
+        "word": "Agent 工作流编排",
         "reason": "not_chosen",
-        "notes": "与上下文优化互补：工具描述本身占用窗口，MCP 的按需发现与资源引用可减少无效上下文注入。"
+        "notes": "编排是 Agent 系统的主干，与记忆、工具、评估都耦合，能带出可点开的一手文档。"
       },
       {
-        "word": "Agent 安全与权限边界",
+        "word": "Agent 状态持久化",
         "reason": "not_chosen",
-        "notes": "随 Agent 获得写权限与支付能力，安全边界从模型层转向系统层，成为工程团队必答题。"
+        "notes": "状态持久化是记忆架构的系统侧对偶，强调可靠性与可恢复，适合工程读者。"
       },
       {
-        "word": "推理成本优化",
+        "word": "Agent 记忆检索",
         "reason": "not_chosen",
-        "notes": "与上下文窗口优化同属效率主线，但聚焦单位任务成本与延迟，是团队预算压力下的直接抓手。"
+        "notes": "检索是记忆架构的入口，决定 Agent 能否在正确时刻取回正确信息，证据一手可查。"
       }
     ],
     "prefer": "优先选能落到本站软件 / 系统 / Agent 主线的词，并带至少一条可点开的 https 证据。",
-    "avoid": "回避与当前词重复、口号化、以及只有空泛描述没有来源的词。 最近未入选：Agent 评估与可观测性、MCP 工具生态、Agent 安全与权限边界、推理成本优化。"
+    "avoid": "回避与当前词重复、口号化、以及只有空泛描述没有来源的词。 最近未入选：Agent 记忆压缩、Agent 工作流编排、Agent 状态持久化、Agent 记忆检索。"
   },
   "recentRuns": [
+    {
+      "runId": "hot-words-2026-09-W3-20260921T061047Z",
+      "period": "2026-09-W3",
+      "phase": "applied",
+      "word": "Agent 长期记忆",
+      "finishedAt": "2026-09-21T06:10:54Z",
+      "path": "/api/hot-words/runs/hot-words-2026-09-W3-20260921T061047Z.json"
+    },
     {
       "runId": "hot-words-2026-09-W2-20260914T055159Z",
       "period": "2026-09-W2",

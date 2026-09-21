@@ -7,9 +7,20 @@
     "meaning": "Nth 7-day block of the calendar month in Asia/Shanghai (days 1–7 = W1, 8–14 = W2, …). Not an ISO 8601 week number.",
     "timezone": "Asia/Shanghai"
   },
-  "current": "2026-09-W2",
-  "updated": "2026-09-14",
+  "current": "2026-09-W3",
+  "updated": "2026-09-21",
   "issues": [
+    {
+      "id": "times-2026-09-w3",
+      "period": "2026-09-W3",
+      "cadence": "weekly",
+      "word": "Agent 长期记忆",
+      "title": "2026-09 Week 3 · Agent 长期记忆",
+      "why": "长期记忆是 Agent 从单次对话走向持续协作的分水岭，直接决定跨会话任务能否可靠延续。它既承接了上周的记忆架构讨论，又落到可实现的存储、检索与遗忘机制，工程团队能立刻在系统里验证。相比口号化的能力词，长期记忆有论文与官方文档双重证据，适合本站软件与 Agent 主线。",
+      "date": "2026-09-21",
+      "url": "/times/",
+      "markdown": "/content/times/2026-09-w3.md"
+    },
     {
       "id": "times-2026-09-w2",
       "period": "2026-09-W2",
@@ -33,5 +44,5 @@
       "markdown": "/content/times/2026-09-w1.md"
     }
   ],
-  "currentProposalHash": "bd9c361247d2274e"
+  "currentProposalHash": "97ef0966fdc8dc0d"
 }
