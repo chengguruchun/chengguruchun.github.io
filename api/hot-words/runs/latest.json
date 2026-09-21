@@ -1,9 +1,9 @@
 {
   "runId": "hot-words-2026-09-W3-20260921T061047Z",
   "period": "2026-09-W3",
-  "phase": "applied",
+  "phase": "published",
   "startedAt": "2026-09-21T06:10:47Z",
-  "finishedAt": "2026-09-21T06:10:54Z",
+  "finishedAt": "2026-09-21T06:10:57Z",
   "input": {
     "currentWord": "Agent 记忆架构",
     "recentHistory": [
@@ -145,6 +145,11 @@
       "gate": "pass"
     }
   },
-  "publish": {},
+  "publish": {
+    "commit": "8a220d869544704a8816ef5b27bec466a904b2e6",
+    "url": "https://chengguruchun.github.io/times/",
+    "mode": "autonomous",
+    "periodScheme": "YYYY-MM-WN month block, not ISO week"
+  },
   "error": null
 }
