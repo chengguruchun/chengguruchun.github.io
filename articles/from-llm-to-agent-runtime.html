@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>从 LLM 到 Agent Runtime：当“预测下一个 Token”开始进入真实世界 · Articles</title>
+<meta name="description" content="从模型推理、KV Cache、Inference Runtime、Tool、Environment 和 Feedback 出发，思考为什么 Agent Runtime 是模型能力进入真实世界之后的新一层。">
+<link rel="stylesheet" href="../assets/css/site.css">
+<link rel="canonical" href="https://chengguruchun.github.io/articles/from-llm-to-agent-runtime.html">
+</head>
+<body>
+<header class="site-header"><div class="wrap site-header__inner"><a class="brand" href="../index.html"><img class="brand__logo" src="../assets/img/brand-mark.svg" alt="AI Knowledge Lab" width="44" height="44"><span class="brand__tag"><span class="brand__rotate"><span class="brand__item is-active">Independent Thinker</span><span class="brand__item">AI Agents</span><span class="brand__item">Complex Systems</span><span class="brand__item">Diverse Thinking</span></span></span></a><button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">菜单</button><nav class="nav" id="site-nav" aria-label="主导航"><a href="../index.html">Home</a><a href="../bench/">Agent Bench</a><a href="../diverse/">Diverse Lab</a><a href="../articles/" aria-current="page">Articles</a><a href="../projects/">Projects</a><a href="../videos/">Videos</a><a href="../times/">Hot Words</a><a href="../about/">About Me</a><a class="nav__search" href="../tags/">Tags / Search</a></nav></div></header>
+<main><article class="article-body"><header class="page-hero"><div class="prose-wrap"><p class="page-hero__kicker">Articles</p><h1>从 LLM 到 Agent Runtime：当“预测下一个 Token”开始进入真实世界</h1><p class="page-hero__desc">上一篇从 Transformer 和 Decoder-only 出发，理解模型如何通过 Next Token Prediction 形成能力。这一篇继续追问：当模型开始调用工具、修改代码、访问数据库、进入沙箱并等待反馈时，模型本身之外到底多出了什么？</p><p class="article-meta"><span>思路 2026-09-21</span><span>发表 2026-09-21</span><span>作者 chengguruchun</span><a class="tag" href="../tags/?tag=LLM">LLM</a><a class="tag" href="../tags/?tag=Runtime">Runtime</a><a class="tag" href="../tags/?tag=Agent">Agent</a><a class="tag" href="../tags/?tag=Inference">Inference</a></p></div></header>
+<div class="prose-wrap">
+<p class="lede">如果把 LLM 简化成“根据上下文预测下一个 Token”，那么 Agent 的出现其实提出了一个更大的问题：<strong>这个“下一个 Token”如何变成一个真正的 Action？Action 执行以后，模型又如何知道现实世界发生了什么？</strong>我越来越觉得，Agent Runtime 正是在填补模型与真实世界之间的这层空间。</p>
+<h2>一、从模型内部走出来</h2>
+<p>Transformer 解决的是信息如何在模型内部流动；Decoder-only LLM 通过 Causal Mask 和 Next Token Prediction 形成强大的生成能力。但模型输出的本质仍然是一段 token 序列。</p>
+<pre>LLM
+ ↓
+Token
+ ↓
+文本 / Tool Call / Structured Output</pre>
+<p>当输出只是文本时，系统可以直接把它交给用户。但当输出变成“执行一个命令”“修改一个文件”“查询数据库”“部署一个服务”时，事情发生了变化。</p>
+<p>此时系统必须回答：这个 Action 能不能执行？在哪里执行？权限够不够？风险有多高？执行结果是什么？失败怎么办？下一步要不要继续？</p>
+<h2>二、我开始意识到：Inference 其实已经是一套系统工程</h2>
+<p>在模型层面，我们经常讨论 TTFT、TPOT、KV Cache、PagedAttention、量化、Batching 等问题。这些技术解决的是：<strong>如何让模型更快、更高效、更便宜地完成推理。</strong></p>
+<p>但当模型变成 Agent 后，推理不再是一次简单的 request → response：</p>
+<pre>User Goal
+   ↓
+LLM
+   ↓
+Decision
+   ↓
+Tool / Environment
+   ↓
+Observation
+   ↓
+LLM
+   ↓
+Next Decision
+   ↓
+...</pre>
+<p>模型调用开始形成一个 Loop。</p>
+<h2>三、Tool 是模型伸向世界的“手”</h2>
+<p>我现在更愿意把 Tool 理解成模型能力与现实世界之间的接口，而不是简单的“函数列表”。</p>
+<pre>LLM Capability
+      ↓
+   Tool Contract
+      ↓
+   Tool Gateway
+      ↓
+External System</pre>
+<p>模型负责提出下一步，但 Tool 需要提供明确的契约：输入是什么、输出是什么、权限是什么、失败如何表示、是否可重试、是否有副作用。</p>
+<p>这也是为什么我之前对 MCP、OpenAPI、Tool Gateway 的兴趣越来越强：<strong>模型能力要真正进入企业系统，必须经过一层可治理的能力接口。</strong></p>
+<h2>四、Sandbox：从“能调用”变成“在哪里执行”</h2>
+<p>尤其是 Code Agent 出现以后，我越来越觉得 Sandbox 是 Runtime 的重要组成部分。</p>
+<pre>LLM：我要修改代码
+        ↓
+Runtime：这是高风险 Action
+        ↓
+Sandbox：隔离环境
+        ↓
+Compile / Test / Run
+        ↓
+Result
+        ↓
+LLM：根据结果继续决策</pre>
+<p>这里出现了一个关键变化：模型不再只输出“答案”，而是提出一个需要在环境中验证的行动。</p>
+<p>因此 Runtime 必须知道什么时候启动 Sandbox、使用什么权限、允许访问哪些资源，以及什么时候需要 Human Gate。</p>
+<h2>五、Verification 比“执行成功”更重要</h2>
+<p>执行完成并不等于任务完成。</p>
+<p>一个 API 返回 200，不代表业务目标已经实现；代码编译成功，也不一定意味着用户的问题解决了。</p>
+<pre>Action
+  ↓
+Execution
+  ↓
+Observation
+  ↓
+Verification
+  ↓
+┌───────────────┐
+│ Correct?      │
+└──────┬────────┘
+   No  │  Yes
+       │
+   Replan       Done</pre>
+<p>所以我越来越倾向于把 Agent Loop 理解成<strong>不断缩小 Expected Outcome 与 Actual Outcome 之间的 Gap</strong>，而不是简单的“执行工具”。</p>
+<h2>六、为什么 Agent Runtime 不能只是一个 Orchestrator</h2>
+<p>如果 Runtime 只是把 LLM、Tool、Memory 串起来，它更像一个 Workflow Engine。</p>
+<p>真正的 Runtime 至少需要开始承担这些职责：</p>
+<ul><li><strong>Context：</strong>管理当前任务真正需要的信息。</li><li><strong>Scheduling：</strong>决定什么时候继续推理、调用什么模型、消耗多少预算。</li><li><strong>Tool Routing：</strong>根据能力、权限、风险选择工具。</li><li><strong>Sandbox：</strong>提供隔离的执行环境。</li><li><strong>Checkpoint：</strong>保存任务状态，支持 Resume。</li><li><strong>Verification：</strong>判断行动结果是否真的满足目标。</li><li><strong>Safety Gate：</strong>在执行高风险 Action 前进行拦截或人工确认。</li><li><strong>Observability：</strong>记录 reasoning/action/tool/result 的完整链路。</li></ul>
+<h2>七、从“模型错误”走向“系统错误”</h2>
+<p>在单轮 Chat 中，错误通常表现为模型回答错了。</p>
+<p>Agent 系统里的错误则可能发生在很多地方：</p>
+<pre>Model Error
+Tool Error
+Context Error
+Routing Error
+Permission Error
+Environment Error
+Verification Error
+Human Feedback Error</pre>
+<p>因此 Agent 的可靠性不能只靠换一个更强的模型解决。</p>
+<p>这也是我最近一直在想的一件事：<strong>Agent 的安全与正确性，应该逐步从“模型自己判断”转向“Runtime 在每一个关键 Action 上提供外部约束和验证”。</strong></p>
+<h2>八、模型只负责“下一步”，Runtime 负责“下一步是否真的发生”</h2>
+<p>如果把整个系统压缩成一句话，我现在会这样描述：</p>
+<pre>LLM
+负责：What should happen next?
+
+Runtime
+负责：Can it happen? Where? With what permission?
+How should it execute? Did it really work?
+What should happen after the result?</pre>
+<p>这让我重新理解了 Agent Runtime 的位置。</p>
+<p>它不是 LLM 的一个简单包装层，也不是传统 Workflow 的换皮版本。它更像是一个<strong>连接认知与执行的运行环境</strong>。</p>
+<h2>九、从模型到 Runtime，可能是一条连续的演化</h2>
+<pre>Transformer
+  ↓
+Attention
+  ↓
+LLM
+  ↓
+Inference Runtime
+  ↓
+Tool
+  ↓
+Environment
+  ↓
+Feedback
+  ↓
+Verification
+  ↓
+Agent Runtime</pre>
+<p>Transformer 让模型能够更好地理解和关联信息；LLM 把这些能力压缩进参数；Inference Runtime 让推理变得高效；Tool 让模型获得行动接口；Environment 提供真实执行空间；Feedback 和 Verification 则让系统知道行动是否有效。</p>
+<p>最终，Agent 才不再只是“会回答问题的模型”，而成为一个能够持续感知、行动、观察和修正的系统。</p>
+<h2>十、我下一步更想研究的问题</h2>
+<p>如果这个方向成立，那么下一步的问题就不再只是“哪个 Agent Framework 更好”，而是：</p>
+<ul><li>Runtime 的最小原语到底是什么？</li><li>Agent 是否应该成为一种有生命周期、有状态的计算实体？</li><li>Context、Memory 和 Checkpoint 如何分层？</li><li>Risk Gate 应该位于 Model、Tool 还是 Runtime？</li><li>Verification 能不能形成统一的 Outcome Contract？</li><li>多个 Agent 协作时，Runtime 是否会越来越像 Actor System？</li></ul>
+<p>这也是我最近从 Transformer 一直研究到 Agent Runtime 的原因：<strong>我越来越不想只理解模型“怎么想”，而是想理解一个 AI 系统“怎么真正工作”。</strong></p>
+</div></article></main>
+<script src="../assets/js/site.js"></script>
+</body></html>
