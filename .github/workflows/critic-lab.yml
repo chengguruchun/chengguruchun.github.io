@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - "articles/**"
+      - "!articles/index.html"
   workflow_dispatch:
     inputs:
       article:
@@ -45,7 +46,10 @@ jobs:
           if [ "$EVENT_NAME" = "workflow_dispatch" ] && [ -n "$INPUT_ARTICLE" ]; then
             ARTICLE="$INPUT_ARTICLE"
           else
-            ARTICLE=$(git diff --name-only "$BEFORE_SHA" "$AFTER_SHA" -- 'articles/*.html' | head -n 1 || true)
+            # Prefer real article pages; never review articles/index.html (listing page).
+            ARTICLE=$(git diff --name-only "$BEFORE_SHA" "$AFTER_SHA" -- 'articles/*.html' \
+              | grep -vE '(^|/)index\.html$' \
+              | head -n 1 || true)
           fi
           if [ -z "$ARTICLE" ]; then
             echo "No article changed; nothing to critic."
@@ -56,6 +60,14 @@ jobs:
             echo "Article not found: $ARTICLE"
             exit 1
           fi
+          # Defense in depth: reject index even if passed via workflow_dispatch.
+          case "$ARTICLE" in
+            articles/index.html|*/index.html)
+              echo "Refusing to critic listing page: $ARTICLE"
+              echo "run=false" >> "$GITHUB_OUTPUT"
+              exit 0
+              ;;
+          esac
           echo "article=$ARTICLE" >> "$GITHUB_OUTPUT"
           echo "run=true" >> "$GITHUB_OUTPUT"
 
@@ -71,10 +83,19 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p api/critic/runs
+          # workflow_dispatch has no before/after push SHAs; fall back to HEAD~1 / HEAD
+          BEFORE="${BEFORE_SHA:-}"
+          AFTER="${AFTER_SHA:-}"
+          if [ -z "$BEFORE" ] || [ "$BEFORE" = "0000000000000000000000000000000000000000" ]; then
+            BEFORE=$(git rev-parse HEAD~1 2>/dev/null || git rev-parse HEAD)
+          fi
+          if [ -z "$AFTER" ]; then
+            AFTER=$(git rev-parse HEAD)
+          fi
           python3 scripts/critic_lab.py \
             --article "$ARTICLE_PATH" \
-            --before "$BEFORE_SHA" \
-            --after "$AFTER_SHA" \
+            --before "$BEFORE" \
+            --after "$AFTER" \
             --output-dir api/critic/runs
 
       - name: Commit critic report
