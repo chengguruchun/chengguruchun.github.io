@@ -661,6 +661,44 @@ def site_path_for(rel: str) -> str:
     return "/" + rel
 
 
+
+def check_visit_counters() -> None:
+    """Every articles|diverse HTML page (except index) must ship the visit counter."""
+    print("\n== Visit counters ==")
+    missing: list[str] = []
+    checked = 0
+    for folder in ("articles", "diverse"):
+        d = ROOT / folder
+        if not d.is_dir():
+            fail(f"missing dir {folder}/")
+            continue
+        for p in sorted(d.glob("*.html")):
+            if p.name == "index.html":
+                continue
+            checked += 1
+            rel = p.relative_to(ROOT).as_posix()
+            body = p.read_text(encoding="utf-8", errors="ignore")
+            has_js = "assets/js/visits.js" in body
+            has_attrs = ("data-visits-site" in body and "data-visits-page" in body) or (
+                "footer-visits" in body
+            )
+            if not (has_js and has_attrs):
+                bits = []
+                if not has_js:
+                    bits.append("visits.js")
+                if not has_attrs:
+                    bits.append("data-visits-* / footer-visits")
+                missing.append(f"{rel} (missing {', '.join(bits)})")
+    if missing:
+        fail(
+            f"{len(missing)}/{checked} articles|diverse page(s) missing visit counter: "
+            + "; ".join(missing[:6])
+            + ("…" if len(missing) > 6 else "")
+        )
+    else:
+        ok(f"visit counters on {checked} articles|diverse pages")
+
+
 def check_seo() -> None:
     """Every page must be indexable by search engines, not just readable by agents."""
     print("\n== SEO surfaces ==")
@@ -721,6 +759,7 @@ def main() -> None:
     check_knowledge()
     check_projects()
     check_feeds_script()
+    check_visit_counters()
     check_seo()
     check_distribution()
     if args.live:
