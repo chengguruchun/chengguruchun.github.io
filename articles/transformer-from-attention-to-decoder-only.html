@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>从 Transformer 到 Decoder-only：我重新理解大语言模型是怎么“学会”的 · Articles</title>
+<meta name="description" content="从一次关于 Transformer 的追问出发，重新理解 Self-Attention、Encoder-Decoder、Decoder-only，以及训练与推理到底有什么不同。">
+<link rel="stylesheet" href="../assets/css/site.css">
+<link rel="canonical" href="https://chengguruchun.github.io/articles/transformer-from-attention-to-decoder-only.html">
+</head>
+<body>
+<header class="site-header"><div class="wrap site-header__inner"><a class="brand" href="../index.html"><img class="brand__logo" src="../assets/img/brand-mark.svg" alt="AI Knowledge Lab" width="44" height="44"><span class="brand__tag"><span class="brand__rotate"><span class="brand__item is-active">Independent Thinker</span><span class="brand__item">AI Agents</span><span class="brand__item">Complex Systems</span><span class="brand__item">Diverse Thinking</span></span></span></a><button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">菜单</button><nav class="nav" id="site-nav" aria-label="主导航"><a href="../index.html">Home</a><a href="../bench/">Agent Bench</a><a href="../diverse/">Diverse Lab</a><a href="../articles/" aria-current="page">Articles</a><a href="../projects/">Projects</a><a href="../videos/">Videos</a><a href="../times/">Hot Words</a><a href="../about/">About Me</a><a class="nav__search" href="../tags/">Tags / Search</a></nav></div></header>
+<main><article class="article-body"><header class="page-hero"><div class="prose-wrap"><p class="page-hero__kicker">Articles</p><h1>从 Transformer 到 Decoder-only：我重新理解大语言模型是怎么“学会”的</h1><p class="page-hero__desc">这篇文章不是从公式开始，而是从我自己连续追问的几个问题开始：Transformer 到底突破了什么？Encoder 和 Decoder 为什么存在？今天的大模型为什么大量采用 Decoder-only？训练和真正回答用户问题时，到底发生了什么变化？</p><p class="article-meta"><span>思路 2026-09-21</span><span>发表 2026-09-21</span><span>作者 chengguruchun</span><a class="tag" href="../tags/?tag=Transformer">Transformer</a><a class="tag" href="../tags/?tag=LLM">LLM</a><a class="tag" href="../tags/?tag=Attention">Attention</a></p></div></header>
+<div class="prose-wrap">
+<p class="lede">我原来试图把大模型理解成“训练时负责学习，线上时负责回答”的两个阶段。继续追问以后，我发现真正值得理解的不是“Encoder 负责训练、Decoder 负责推理”这样一个简单对应，而是：<strong>同一套参数化模型，如何通过 Attention 学习 token 之间的关系，又如何在生成时把这种能力转化成一次次 Next Token Prediction。</strong></p>
+<h2>一、我为什么一直追问 Encoder 和 Decoder</h2>
+<p>最开始我的直觉很自然：Encoder 像一个阅读者，负责理解输入；Decoder 像一个写作者，负责按照顺序生成输出。经典 Transformer 的 Encoder-Decoder 结构确实非常适合用机器翻译来理解：Encoder 读取源语言，Decoder 根据已经生成的内容逐步产生目标语言。</p>
+<p>但这个解释很快遇到了一个问题：今天我们熟悉的 GPT、Qwen、DeepSeek 等生成式大模型，为什么很多都不再保留完整的 Encoder-Decoder，而采用 Decoder-only？如果 Decoder 只是“生成”，它又是怎么学到语言、知识、代码以及各种世界规律的？</p>
+<p>这个问题最终把我带回了 Transformer 最核心的创新：<strong>Self-Attention。</strong></p>
+<h2>二、Transformer 真正改变的，可能不是“神经网络”，而是 token 之间建立关系的方式</h2>
+<p>在更早的序列模型里，信息更倾向于沿着序列逐步传播。Transformer 则提供了一种不同的思路：对于一个 token，可以计算它与上下文中其他 token 的关系。</p>
+<pre>Token A ─┐
+Token B ─┼──→ Attention → 当前 token 的上下文表示
+Token C ─┤
+Token D ─┘</pre>
+<p>这意味着模型不必只能依赖“前一个 token 传过来的信息”，而可以直接建立更远距离的关联。Multi-Head Attention 又把这种关系拆成多个并行的“观察角度”，不同 head 可以学习不同类型的模式。</p>
+<p>所以我现在更愿意这样理解 Transformer：<strong>它把“序列处理”转化成了“关系计算”。</strong></p>
+<h2>三、Encoder 为什么适合理解，Decoder 为什么适合生成</h2>
+<p>Encoder 的 Self-Attention 可以让一个位置利用完整输入上下文，因此天然适合做表征学习、分类、匹配等任务。一个句子输入以后，每个 token 都可以结合整个句子的语境形成表示。</p>
+<p>Decoder 则引入了 Causal Mask。简单说，在预测当前位置时，模型不能看到未来 token：</p>
+<pre>A B C D E
+↑ ↑ ↑ ↑ ↑
+每个位置只能使用它左侧已经出现的信息</pre>
+<p>这并不是说 Decoder 没有 Attention，而恰恰相反：<strong>Attention 仍然是 Decoder 的核心，只是未来的信息被 mask 掉。</strong></p>
+<h2>四、我曾经把“预训练”和“推理”理解成 Encoder 与 Decoder 的切换</h2>
+<p>这是我在讨论过程中反复确认的地方。最初我的理解是：预训练时模型需要看到完整句子、学习前后关系，所以应该使用 Encoder；真正回答用户问题时，再切换到 Decoder，用掩码注意力预测下一个 token。</p>
+<p>继续追问后，我发现这个模型不适用于今天主流的 Decoder-only LLM。</p>
+<p>对于 Decoder-only LLM，<strong>预训练阶段本身就使用 Causal Mask</strong>。模型学习的目标就是：给定前面的 token，预测下一个 token。</p>
+<p>因此更准确的图应该是：</p>
+<pre>海量训练数据
+     ↓
+Decoder-only Transformer
++ Causal Mask
+     ↓
+Next Token Prediction
+     ↓
+不断更新参数
+     ↓
+得到模型能力
+
+真实用户输入
+     ↓
+同样的 Decoder-only 结构
++ Causal Mask
+     ↓
+逐步预测下一个 Token
+     ↓
+生成回答</pre>
+<h2>五、那么训练和推理到底有什么不同？</h2>
+<p>结构可以相同，但计算过程并不相同。</p>
+<p>训练时，完整的训练序列已经存在，因此 GPU 可以同时计算大量位置上的 next-token prediction。虽然每个位置仍然不能“偷看未来”，但不同位置的计算可以高度并行。</p>
+<p>推理时，未来 token 并不存在。模型先生成一个 token，把它加入上下文，再生成下一个 token。因此生成过程天然具有自回归特征：</p>
+<pre>A → 预测 B
+A B → 预测 C
+A B C → 预测 D
+A B C D → 预测 E</pre>
+<p>所以真正重要的区别不是“训练使用 Encoder、推理使用 Decoder”，而是：</p>
+<p><strong>训练是在已知序列上并行学习 Next Token Prediction；推理是在未知未来上逐步执行 Next Token Prediction。</strong></p>
+<h2>六、“训练集 → 真实问题”这个类比，我为什么仍然觉得有价值</h2>
+<p>严格来说，用户线上请求不能直接等同于机器学习意义上的 test set。真正的测试集通常是独立保留的数据，用于评估泛化能力。</p>
+<p>但我的原始直觉仍然有价值：模型在训练阶段从历史数据中形成参数化能力，部署以后面对的是新的、真实的上下文，需要验证这种能力能否泛化到真实问题。</p>
+<p>因此我更愿意把它表达成：</p>
+<pre>训练：从历史数据中学习规律
+        ↓
+参数：把学习结果压缩进模型
+        ↓
+推理：在新的上下文中调用这些能力
+        ↓
+真实结果：检验泛化是否成立</pre>
+<p>这也为我后面理解 Agent 打下了一个很重要的基础：<strong>模型拥有能力，不等于系统已经完成任务。</strong></p>
+<h2>七、从“Attention”继续往下追：为什么长 Context 仍然会成为问题？</h2>
+<p>我在讨论中又遇到了一个新的疑问：既然 Attention 可以建立 token 之间的关系，为什么长上下文里仍然会出现信息利用不充分的问题？为什么重要信息的位置、上下文组织方式，会影响模型表现？</p>
+<p>这让我意识到，“Context Window 很长”和“模型能有效利用所有 Context”不是一回事。Attention 是关系计算机制，但并不意味着每条信息都会被同等有效地利用。</p>
+<p>这也正好连接到了我一直在研究的 Context Engineering：真正的工程问题开始从“模型有多大的窗口”，转向“哪些信息应该进入上下文、如何组织、什么时候更新，以及哪些信息应该交给外部系统”。</p>
+<h2>八、我现在对 Transformer 和 LLM 的一个阶段性理解</h2>
+<p>如果把今天的理解压缩成几句话：</p>
+<ul><li><strong>Transformer 的核心突破：</strong>用 Self-Attention 高效建立 token 之间的关系。</li><li><strong>Encoder：</strong>更适合利用完整输入上下文形成表征。</li><li><strong>Decoder：</strong>通过 Causal Mask 保持自回归生成。</li><li><strong>Decoder-only LLM：</strong>把大量能力统一到 Next Token Prediction 这个训练目标上。</li><li><strong>训练：</strong>已知序列上的并行学习。</li><li><strong>推理：</strong>未知未来上的自回归生成。</li></ul>
+<p>而最让我感兴趣的是最后一步：如果 LLM 的基本动作仍然是“预测下一个 Token”，为什么它已经可以表现出复杂的推理、规划和工具使用能力？</p>
+<p>这个问题把我自然带到了下一篇文章。</p>
+<h2>下一步：模型之外发生了什么？</h2>
+<p>如果说 Transformer 解决的是“模型如何处理信息”，LLM 解决的是“根据上下文生成下一步”，那么当模型真正进入现实系统之后，还需要解决另一个问题：</p>
+<p><strong>生成出来的下一步，如何真正作用于世界，并获得反馈？</strong></p>
+<p>这就从 Model 走向了 Inference Runtime、Tool、Environment、Verification 和 Agent Runtime。</p>
+</div></article></main>
+<script src="../assets/js/site.js"></script>
+</body></html>
