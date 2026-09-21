@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>从 Spring、Dubbo 到 DeepSeek Harness：运行时架构为什么正在趋同 · Articles</title>
+<meta name="description" content="从 Spring、Dubbo Service 到 DeepSeek Harness，观察依赖注入、Context、Event Bus、生命周期与运行时治理这些工程思想如何在 Agent 时代重新组合。">
+<meta name="theme-color" content="#f7f5f0"><link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/site.css">
+<link rel="canonical" href="https://chengguruchun.github.io/articles/spring-dubbo-deepseek-harness-runtime.html">
+<meta property="og:type" content="article"><meta property="og:site_name" content="AI Knowledge Lab"><meta property="og:locale" content="zh_CN">
+<meta property="og:title" content="从 Spring、Dubbo 到 DeepSeek Harness：运行时架构为什么正在趋同">
+<meta property="og:description" content="从 Spring、Dubbo Service 到 DeepSeek Harness，观察依赖注入、Context、Event Bus、生命周期与运行时治理这些工程思想如何在 Agent 时代重新组合。">
+<meta property="og:url" content="https://chengguruchun.github.io/articles/spring-dubbo-deepseek-harness-runtime.html">
+<meta property="article:published_time" content="2026-09-21"><meta property="article:author" content="chengguruchun">
+<meta property="article:tag" content="Agent"><meta property="article:tag" content="Runtime"><meta property="article:tag" content="Spring"><meta property="article:tag" content="Dubbo"><meta property="article:tag" content="Harness">
+<meta name="author" content="chengguruchun">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","headline":"从 Spring、Dubbo 到 DeepSeek Harness：运行时架构为什么正在趋同","description":"从 Spring、Dubbo Service 到 DeepSeek Harness，观察依赖注入、Context、Event Bus、生命周期与运行时治理这些工程思想如何在 Agent 时代重新组合。","url":"https://chengguruchun.github.io/articles/spring-dubbo-deepseek-harness-runtime.html","datePublished":"2026-09-21","inLanguage":"zh-CN","articleSection":"Articles","author":{"@type":"Person","name":"chengguruchun","url":"https://github.com/chengguruchun"},"publisher":{"@type":"Organization","name":"AI Knowledge Lab","url":"https://chengguruchun.github.io/"}}
+</script>
+</head>
+<body>
+<header class="site-header"><div class="wrap site-header__inner"><a class="brand" href="../index.html"><img class="brand__logo" src="../assets/img/brand-mark.svg" alt="AI Knowledge Lab" width="44" height="44"><span class="brand__tag"><span class="brand__rotate"><span class="brand__item is-active">Independent Thinker</span><span class="brand__item">AI Agents</span><span class="brand__item">Complex Systems</span><span class="brand__item">Diverse Thinking</span></span></span></a><button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">菜单</button><nav class="nav" id="site-nav" aria-label="主导航"><a href="../index.html">Home</a><a href="../bench/">Agent Bench</a><a href="../diverse/">Diverse Lab</a><a href="../articles/" aria-current="page">Articles</a><a href="../projects/">Projects</a><a href="../videos/">Videos</a><a href="../times/">Hot Words</a><a href="../about/">About Me</a><a class="nav__search" href="../tags/">Tags / Search</a></nav></div></header>
+<main><article class="article-body">
+<header class="page-hero"><div class="prose-wrap">
+<p class="page-hero__kicker">Articles</p>
+<h1>从 Spring、Dubbo 到 DeepSeek Harness：运行时架构为什么正在趋同</h1>
+<p class="page-hero__desc">我越来越觉得，Agent Runtime 并没有凭空发明一套全新的工程思想。依赖注入、Context 管理、生命周期、Event Bus、扩展点、适配层，这些在 Spring、Dubbo Service 等成熟系统里早已存在。真正变化的是：运行时管理的对象，从 Object、Service，开始变成能够自主决策的 Agent Task。</p>
+<p class="article-meta"><span>思路 2026-09-21</span><span>发表 2026-09-21</span><span>作者 chengguruchun</span><a class="tag" href="../tags/?tag=Agent">Agent</a><a class="tag" href="../tags/?tag=Runtime">Runtime</a><a class="tag" href="../tags/?tag=Spring">Spring</a><a class="tag" href="../tags/?tag=Dubbo">Dubbo</a><a class="tag" href="../tags/?tag=Harness">Harness</a></p>
+</div></header>
+<div class="prose-wrap">
+
+<p class="lede">如果把 Spring、Dubbo 和 DeepSeek Harness 放在同一张架构图里，我看到的并不是三个完全不同的世界，而是一条很有意思的工程演进线：<strong>把复杂性不断下沉到 Runtime，让上层只面对稳定的抽象和契约。</strong>不同之处在于，Spring 更偏向确定性的对象装配，Dubbo 更偏向确定性的服务调用，而 Harness 开始面对一个本质不同的问题：任务执行过程中，下一步到底应该做什么。</p>
+
+<h2>一、先把三个东西放在同一张图里</h2>
+<pre>Spring
+  Object / Bean
+       ↓
+  Container Runtime
+  DI / Context / Lifecycle
+       ↓
+  Business Code
+
+Dubbo
+  Service
+       ↓
+  Service Runtime
+  Discovery / Routing / Protocol / Load Balance
+       ↓
+  Consumer / Provider
+
+DeepSeek Harness / Agent Runtime
+  Agent Task
+       ↓
+  Cognitive Runtime
+  Context / Tools / Safety / Sandbox / Verification
+       ↓
+  Action → Observation → Next Decision</pre>
+
+<p>三个系统的管理对象不一样，但有一个共同的架构方向：</p>
+<p><strong>上层表达“我要什么”，Runtime 负责解决“怎么提供、怎么运行、怎么治理”。</strong></p>
+
+<h2>二、共同的思想，其实比表面上的技术更重要</h2>
+
+<h3>1. DI：把“依赖什么”与“怎么提供”分离</h3>
+<p>Spring 的依赖注入是最直观的例子。业务对象声明自己需要什么依赖，而容器负责创建、装配和管理具体实现。</p>
+<pre>Business
+   │
+   ├── depends on → Interface
+   │
+   ↓
+Spring Container
+   │
+   ├── Implementation A
+   └── Implementation B</pre>
+<p>Agent Runtime 也出现了类似的问题。Agent 不应该把某个具体模型、工具或者执行环境硬编码进去，而应该依赖能力契约：</p>
+<pre>Agent
+  │
+  ├── needs → LLM
+  ├── needs → Tool
+  ├── needs → Memory
+  └── needs → Sandbox
+          ↓
+     Agent Runtime
+          ↓
+  Provider / Tool / Environment</pre>
+<p>因此可以把它理解成一种“能力注入”。模型厂商、工具实现、Sandbox 都可以被 Runtime 隔离在适配层后面。</p>
+
+<h3>2. Context：从对象上下文走向任务上下文</h3>
+<p>Spring 有 ApplicationContext；Agent Runtime 也必须有自己的 Context，只是 Context 的内容发生了变化。</p>
+<table><thead><tr><th>传统 Runtime</th><th>Agent Runtime</th></tr></thead>
+<tbody>
+<tr><td>Bean / Service</td><td>Agent / Task</td></tr>
+<tr><td>Dependency</td><td>Capability / Tool / Model</td></tr>
+<tr><td>Application Context</td><td>Task Context / Cognitive Context</td></tr>
+<tr><td>Configuration</td><td>Policy / Goal / Constraint</td></tr>
+<tr><td>Runtime State</td><td>Plan / Memory / Artifact / Observation</td></tr>
+</tbody></table>
+<p>因此，Agent Context 并不只是 Prompt。它更像一个持续变化的运行时状态容器。</p>
+
+<h3>3. Event Bus：从系统事件走向认知事件</h3>
+<p>Event Bus 并不是 Agent 时代才出现的技术。传统系统早就使用事件来解耦模块、传播状态变化和驱动异步处理。</p>
+<p>Agent Runtime 只是把事件的语义进一步扩展：</p>
+<pre>TaskCreated
+ToolCalled
+ToolResult
+ObservationReceived
+VerificationFailed
+PlanUpdated
+HumanFeedback
+RiskEscalated
+TaskCompleted</pre>
+<p>因此 Agent 的执行过程本身就可以被看成一个 Event Stream。Runtime 通过事件驱动状态变化，而不是让所有组件互相直接调用。</p>
+
+<h2>三、真正的差异：Spring 是 Workflow，Harness 开始是动态决策</h2>
+<p>这里是我觉得最值得讨论的地方。</p>
+<p>Spring 并不是严格意义上的 Workflow Engine，但从应用开发者的视角看，它通常服务于<strong>相对确定的程序流程</strong>：对象被创建、依赖被注入、方法被调用、事务被提交、生命周期被管理。</p>
+<p>即使运行时很复杂，业务流程本身通常还是开发者预先定义的。</p>
+<pre>Developer
+    ↓
+Fixed Program
+    ↓
+Spring Runtime
+    ↓
+Execution</pre>
+<p>Agent Harness 的结构则不同：</p>
+<pre>User Goal
+    ↓
+Agent
+    ↓
+Reason
+    ↓
+Choose Action
+    ↓
+Observe Result
+    ↓
+Verify
+    ↓
+Should I continue?
+   ↙       ↘
+ Re-plan    Finish
+    ↓
+ Next Action</pre>
+<p>这里出现了一个 Spring 世界里并不核心的东西：<strong>下一步并没有完全写死。</strong></p>
+<p>Runtime 不只是执行流程，而是要承载一个持续的“目标 → 行动 → 观察 → 验证 → 决策”循环。</p>
+
+<h2>四、所以 Harness 更像“自主 AI 编排”</h2>
+<p>Workflow 的核心问题是：</p>
+<pre>What are the predefined steps?</pre>
+<p>Agent Harness 的核心问题则更接近：</p>
+<pre>Given the goal and current state,
+what should happen next?</pre>
+<p>这两个问题看起来只差一点，架构上却完全不同。</p>
+<p>Workflow 可以把大量逻辑提前编码；Agent Harness 必须允许 Runtime 在执行过程中根据 Observation、Verification 和 Policy 重新决定路径。</p>
+
+<h2>五、第二张图：从固定编排到动态编排</h2>
+<pre>                Spring / Workflow
+                       │
+                 Predefined Flow
+                       │
+              ┌────────┴────────┐
+              ↓                 ↓
+           Step A             Step B
+              ↓                 ↓
+           Step C             Step D
+
+
+             Agent Harness
+                  │
+                Goal
+                  ↓
+             Current State
+                  ↓
+             LLM Decision
+                  ↓
+        ┌─────────┼─────────┐
+        ↓         ↓         ↓
+      Tool      Sandbox    Agent
+        │         │         │
+        └─────────┼─────────┘
+                  ↓
+             Observation
+                  ↓
+             Verification
+                  ↓
+          ┌───────┴────────┐
+          ↓                ↓
+       Re-plan           Finish</pre>
+<p><strong>图 2：固定 Workflow 与动态 Agent Harness 的核心差异。</strong>前者主要执行已经定义好的路径；后者需要不断根据实际结果重新计算下一步。</p>
+
+<h2>六、第三个变化：生命周期从“创建/销毁对象”变成“生成/复用/销毁能力”</h2>
+<p>这也是我觉得 Agent Runtime 很有意思的地方。</p>
+<p>Spring 中，Bean 有明确的生命周期：创建、初始化、使用、销毁。Runtime 可以统一管理它。</p>
+<p>到了 Agent 时代，Runtime 可能进一步管理“能力”的生命周期。</p>
+<pre>Agent discovers capability gap
+              ↓
+       Generate / Load Skill
+              ↓
+       Validate in Sandbox
+              ↓
+            Execute
+              ↓
+          Observe Result
+              ↓
+        ┌─────┴─────┐
+        ↓           ↓
+      Reuse       Dispose
+        ↓           ↓
+     Cache /      Destroy
+     Registry</pre>
+<p>例如一个 Code Agent 在执行任务时发现缺少某个转换能力，它可以生成一个临时插件或 Skill，在 Sandbox 中验证并使用。任务结束后，这个能力不一定永久存在：Runtime 可以根据复用价值、风险、成本和依赖关系决定缓存、升级或者销毁。</p>
+<p>这里和 Spring 的生命周期思想是相似的，但管理对象已经从<strong>“对象”扩展到了“动态能力”</strong>。</p>
+
+<h2>七、可替代性：为什么“加一层”仍然是经典答案</h2>
+<p>计算机工程里有一个非常朴素、但长期有效的思想：<strong>当系统出现一类变化时，加一层适配，把变化隔离起来。</strong></p>
+<p>Spring 用容器隔离对象创建和依赖实现；Dubbo 用 RPC 抽象、代理、注册发现和协议层隔离服务调用细节；Agent Runtime 则可以用 Model Gateway、Tool Gateway、Provider Adapter 等隔离模型和能力提供方。</p>
+<pre>Application
+     │
+Stable Contract
+     │
+Runtime / Adapter Layer
+     │
+┌────┼────────┬────────┐
+↓    ↓        ↓        ↓
+GPT Claude  DeepSeek  Local Model</pre>
+<p>这也是 Agent Runtime 真正重要的原因之一：<strong>不要让上层 Agent 被某一家模型、工具或者执行环境绑定。</strong></p>
+
+<h2>八、但 Agent 的“替代性”比 Bean 更难</h2>
+<p>这里不能简单地说“模型都有统一接口，所以可以随便替换”。模型的 API 可以统一，但行为未必统一。</p>
+<table><thead><tr><th>维度</th><th>Spring Bean</th><th>Agent Model / Capability</th></tr></thead>
+<tbody>
+<tr><td>接口</td><td>通常稳定</td><td>可以标准化，但行为存在差异</td></tr>
+<tr><td>执行</td><td>确定性较强</td><td>概率性、上下文相关</td></tr>
+<tr><td>状态</td><td>Runtime 管理</td><td>Context + Memory + Task State</td></tr>
+<tr><td>失败</td><td>Exception</td><td>Runtime / Tool / Semantic / Verification Failure</td></tr>
+<tr><td>替换</td><td>实现可替换</td><td>模型可替换，但能力表现需要重新验证</td></tr>
+</tbody></table>
+<p>所以真正的可替代性，不是“接口一样”这么简单，而是 Runtime 能否把不同提供方的差异吸收掉，并通过验证机制知道替换以后结果是否仍然满足目标。</p>
+
+<h2>九、Harness 的新核心：决策循环 + 验证</h2>
+<p>传统 Runtime 更多关注：</p>
+<pre>Can I execute this?</pre>
+<p>Agent Runtime 还必须关注：</p>
+<pre>Did this action move me closer to the goal?</pre>
+<p>因此它需要一个更完整的闭环：</p>
+<pre>Goal
+ ↓
+Plan
+ ↓
+Action
+ ↓
+Observation
+ ↓
+Verification
+ ↓
+Gap Analysis
+ ↓
+Re-plan / Optimize
+ ↓
+Next Action</pre>
+<p>这也是我认为 Harness 与普通 Workflow 最根本的差别之一：<strong>验证不是流程末尾的一个 check，而是驱动下一次决策的输入。</strong></p>
+
+<h2>十、热更新也会变得不同</h2>
+<p>传统系统的热更新通常是在不中断服务的情况下替换代码、配置或者实例。</p>
+<p>Agent Runtime 的热更新可能更接近：</p>
+<pre>Running Agent
+     ↓
+Context / Policy Update
+     ↓
+Tool / Skill Update
+     ↓
+Runtime Re-evaluates
+     ↓
+Continue from Current State</pre>
+<p>因为 Agent 是一个持续运行的决策过程，所以真正有价值的热更新不是简单“替换进程”，而是<strong>不中断任务地改变它接下来可以使用的能力、策略和上下文</strong>。</p>
+
+<h2>十一、把三者放到一条演进线上</h2>
+<pre>              Runtime Complexity
+                     ↑
+                     │
+                     │                  Agent Runtime
+                     │               ┌─────────────────┐
+                     │               │ Dynamic Decision│
+                     │               │ Context         │
+                     │               │ Tools           │
+                     │               │ Verification    │
+                     │               │ Recovery        │
+                     │               └─────────────────┘
+                     │
+                     │        Dubbo Service Runtime
+                     │      ┌─────────────────────┐
+                     │      │ Discovery / Routing │
+                     │      │ Protocol / LB       │
+                     │      └─────────────────────┘
+                     │
+                     │  Spring Container
+                     │ ┌────────────────────────┐
+                     │ │ DI / Context / Lifecycle│
+                     │ └────────────────────────┘
+                     └────────────────────────────────→
+                           Managed Entity
+
+                     Object → Service → Agent Task</pre>
+<p><strong>图 1：从 Object → Service → Agent Task 的运行时演进。</strong>这里并不是说 Spring 必然“进化成” Dubbo，更不是说 Dubbo 必然“进化成” Agent Runtime，而是三类系统在解决不同问题时，出现了越来越相似的 Runtime 抽象。</p>
+
+<h2>十二、我的判断：不是思想变高级了，而是管理对象变了</h2>
+<p>如果把很多 AI Agent 的架构术语拆开，我反而觉得没有那么神秘。</p>
+<ul>
+<li>DI → 能力注入</li>
+<li>Context → 任务与认知状态管理</li>
+<li>Event Bus → 执行事件与反馈传播</li>
+<li>Lifecycle → Agent / Skill / Sandbox 生命周期</li>
+<li>Adapter → Model / Tool / Provider 适配</li>
+<li>Scheduler → Agent / Model / Compute 调度</li>
+<li>Supervisor → 失败恢复 + 决策恢复</li>
+<li>Hot Reload → 动态更新 Context、Policy、Skill</li>
+</ul>
+<p>这些思想并不是突然出现的。变化的是：<strong>Runtime 开始管理一个会自主决策、会改变执行路径、会生成临时能力的计算实体。</strong></p>
+
+<h2>十三、最终的架构抽象</h2>
+<pre>                    User Goal
+                       ↓
+                 ┌───────────┐
+                 │   Agent   │
+                 │ Reasoning │
+                 └─────┬─────┘
+                       ↓
+              ┌──────────────────┐
+              │   Agent Runtime  │
+              │                  │
+              │ Context          │
+              │ DI / Capability  │
+              │ Scheduler        │
+              │ Event Bus        │
+              │ Safety / Policy  │
+              │ Sandbox          │
+              │ Verification     │
+              │ Lifecycle        │
+              │ Recovery         │
+              └───────┬──────────┘
+                      ↓
+       ┌──────────────┼───────────────┐
+       ↓              ↓               ↓
+    Model          Tools           Agents
+       ↓              ↓               ↓
+   Provider       Gateway         Runtime
+       │              │               │
+       └──────────────┼───────────────┘
+                      ↓
+                 Environment
+                      ↓
+                 Observation
+                      ↓
+                 Verification
+                      ↓
+                  Next State</pre>
+<p>如果一定要用一句话概括，我会这样描述：</p>
+<blockquote><p><strong>Spring 管对象，Dubbo 管服务，而 Agent Runtime / Harness 开始管理“会自己决定下一步做什么的任务”。</strong></p></blockquote>
+
+<h2>十四、开放问题</h2>
+<ul>
+<li>Agent Runtime 是否最终会形成类似 Spring Container 的统一基础抽象？</li>
+<li>Model、Tool、Skill 是否会像 Bean 一样拥有标准生命周期和依赖关系？</li>
+<li>Agent 的动态 Skill 是否应该由 Runtime 自动回收？</li>
+<li>如何判断一个替换后的模型仍然满足原来的 Capability Contract？</li>
+<li>Verification 是否会成为 Agent Runtime 像 Transaction、Retry 一样的基础原语？</li>
+<li>当 Agent 可以动态生成能力时，Runtime 的安全边界应该放在哪里？</li>
+</ul>
+
+<p>我现在更倾向于把 Agent Runtime 看成一种<strong>“动态软件系统运行时”</strong>。它继承了过去几十年基础软件里的很多工程实践，但因为管理对象从 Object、Service 变成了 Agent Task，Runtime 第一次必须把<strong>决策、反馈、验证和动态能力生命周期</strong>纳入基础设施本身。</p>
+
+<p>这可能才是 Spring、Dubbo 与 Agent Harness 真正有意思的连接点：<strong>技术形式在变，Runtime 把复杂性吸收掉的思想没有变。</strong></p>
+
+</div></article></main>
+<footer class="site-footer"><div class="wrap site-footer__inner"><div><p>© <span id="year"></span> chengguruchun · Hangzhou</p><p>Blog for Agents · 知识博客</p><p class="footer-visits" aria-label="访问统计"><span>本站 <strong data-visits-site>-</strong></span><span class="footer-visits__sep" aria-hidden="true">·</span><span>本页 <strong data-visits-page>-</strong></span></p></div></div></footer>
+<script src="../assets/js/site.js"></script><script src="../assets/js/visits.js"></script>
+</body></html>
