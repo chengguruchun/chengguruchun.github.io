@@ -1,0 +1,131 @@
+{
+  "status": "needs_review",
+  "summary": "The revised article is a coherent, self-aware pedagogical narrative that correctly reframes Encoder/Decoder around attention masking and adds a genuinely useful SFT/RL section. However, several mechanism-level claims are compressed or slightly over-confident: attention masking is presented as the sole determinant of Encoder/Decoder behavior while positional encoding, cross-attention, and pretraining objectives are omitted; Teacher Forcing parallelism and 'errors never re-enter training' are overstated for long sequences; and tool/instruction-following is attributed somewhat narrowly to alignment. A reader could come away with an accurate high-level picture but an oversimplified causal story. The requested Domain Object × Action review is not actually present in this article, so that portion cannot be assessed from the provided text.",
+  "logic": [
+    {
+      "severity": "medium",
+      "claim": "真正决定行为差异的是 Mask 模式，而不是块的标签。",
+      "issue": "Attention masking is necessary but not sufficient. Encoder/Decoder also differ in cross-attention, positional encoding, and pretraining objective. The sentence risks turning a useful teaching heuristic into a near-definitional claim.",
+      "why_it_matters": "A reader who takes 'mask = Encoder/Decoder' literally will misunderstand hybrid architectures and why Decoder-only models can still perform representation-like tasks (e.g., embedding models, classification heads).",
+      "test_or_fix": "Add one sentence: 'Mask 是主要差异，但不是唯一差异；Cross-Attention、位置编码与预训练目标也会改变行为。' Then give a concrete non-mask example (e.g., cross-attention in translation)."
+    },
+    {
+      "severity": "medium",
+      "claim": "训练时即使某个位置预测错了，错误也不会进入下一轮训练输入。",
+      "issue": "This is true for one forward pass under standard next-token cross-entropy, but not true across training: errors affect gradient updates and therefore future parameters. It is also not strictly true for scheduled sampling or some sequence-level objectives.",
+      "why_it_matters": "Omitting the gradient path makes the contrast with exposure bias sound clean and absolute, which can mislead readers about why training stability matters.",
+      "test_or_fix": "Distinguish input contamination from gradient contamination: '错误不会进入同一 forward pass 的输入，但会通过梯度影响后续参数。' Add one caveat about scheduled sampling."
+    },
+    {
+      "severity": "medium",
+      "claim": "指令跟随和工具调用的格式，正是对齐阶段显式教给模型的。",
+      "issue": "Alignment strongly shapes instruction following and tool-call formatting, but base models already possess latent formatting and tool-use patterns from pretraining. Treating this as primarily an alignment artifact is an over-strong attribution.",
+      "why_it_matters": "This matters for engineering: if teams believe tool use is purely alignment-learned, they may underestimate base-model capability and over-rely on SFT data, or conversely assume any aligned model can use arbitrary tools.",
+      "test_or_fix": "Soften to '主要在对齐阶段被稳定激发和塑形' and add a test: compare base-model few-shot tool-call formatting vs. SFT model formatting."
+    },
+    {
+      "severity": "low",
+      "claim": "推理时每一步的前缀来自模型自己的采样——一旦某个 token 生成偏了，错误会进入下一轮输入并被放大，这就是 Exposure Bias。",
+      "issue": "Exposure bias is a training-inference distribution mismatch; it is not identical to 'errors are amplified.' Properly, exposure bias can cause error accumulation, but the two should not be equated without qualification.",
+      "why_it_matters": "Conflating the definition with the consequence weakens precision in a section that is otherwise careful.",
+      "test_or_fix": "Rephrase as: '训练与推理的输入分布不一致，这被称为 exposure bias；它可能导致误差累积。'"
+    }
+  ],
+  "counterexamples": [
+    {
+      "severity": "medium",
+      "thesis": "Encoder 使用双向注意力，Decoder 使用因果注意力，因此 Mask 模式决定行为差异。",
+      "counterexample": "T5 的 Encoder-Decoder 中，Decoder 同时包含因果 self-attention 和 cross-attention；而 BERT 是 Encoder-only 双向模型。但一些 Decoder-only 模型在嵌入或分类任务上也使用双向注意力。Mask 是重要轴，但不是唯一轴。",
+      "boundary": "在纯自回归生成场景下，Mask 差异最直接；在表征、检索、分类场景，目标和位置编码可能更重要。"
+    },
+    {
+      "severity": "medium",
+      "thesis": "训练并行、推理自回归。",
+      "counterexample": "推测解码（speculative decoding）在推理时并行验证多个候选 token；chunked prefill 在推理时并行处理一段前缀。训练在长序列上也会因显存限制而使用梯度累积/序列并行，并非无限并行。",
+      "boundary": "该区分在标准 teacher-forcing 训练和朴素自回归推理下成立，但不是工程上的绝对二分。文章末尾已部分承认，建议前移。"
+    },
+    {
+      "severity": "low",
+      "thesis": "预训练基座模型不会自动以'回答问题'的方式输出。",
+      "counterexample": "足够大的基座模型在 few-shot prompt 下可以表现出一定指令跟随和问答行为，且部分模型在预训练后已具备格式模仿能力。'不会自动'应理解为'默认不稳定、不可靠'，而非'完全不具备'。",
+      "boundary": "在无 prompt 工程或 small model 下更接近文章描述；在 large model + in-context examples 下会明显减弱。"
+    }
+  ],
+  "novelty": [
+    {
+      "claim": "用 Attention Mask 而不是块名称来解释 Encoder/Decoder。",
+      "assessment": "common_combination",
+      "basis": "这是 Transformer 教材和课程的标准解释，文章以第一人称追问方式重新组织，教学价值高，但概念本身不是新主张。"
+    },
+    {
+      "claim": "将 Decoder-only 的优势限定在开放域对话/指令跟随，并承认 Encoder-Decoder 在翻译、ASR 中仍常见。",
+      "assessment": "common_combination",
+      "basis": "这是当前领域共识，文章将其明确写出，属于良好的边界说明，而非新发现。"
+    },
+    {
+      "claim": "把预训练、SFT、RLHF/DPO 串成'会续写→会回答'的链条。",
+      "assessment": "established",
+      "basis": "这是 InstructGPT/RLHF 和 DPO 论文后的标准叙事，文章用图表和中文表达重新组织。"
+    }
+  ],
+  "facts": [
+    {
+      "severity": "medium",
+      "claim": "DPO 直接利用偏好数据优化，不再需要单独的奖励模型。",
+      "reason_to_verify": "DPO 确实避免了显式 reward model，但其与 RLHF/PPO 的相对效果、适用条件和对超参数的敏感性存在争议，且新版方法（如 iterative DPO、online DPO）仍在演化。",
+      "preferred_source": "primary"
+    },
+    {
+      "severity": "medium",
+      "claim": "面向推理的强化学习（用可验证的奖励来优化思考过程）也在进一步强化模型的推理能力。",
+      "reason_to_verify": "这是 2024-2025 年的快速演进领域，具体方法、可验证奖励的范围和泛化效果高度依赖模型和任务版本。",
+      "preferred_source": "multiple_independent"
+    },
+    {
+      "severity": "low",
+      "claim": "训练时不同位置的计算可以高度并行。",
+      "reason_to_verify": "并行度受显存、序列长度、attention 实现（FlashAttention 等）和 batch 策略影响；'高度并行'需要限定。",
+      "preferred_source": "official"
+    }
+  ],
+  "missing_points": [
+    {
+      "severity": "high",
+      "point": "位置编码（positional encoding / RoPE / ALiBi）在序列建模中的作用。",
+      "why_it_matters": "文章把'关系计算'作为核心，但没有位置编码，Self-Attention 本身是置换不变的。缺少这一环会让读者无法理解长上下文、外推和位置偏移问题。"
+    },
+    {
+      "severity": "medium",
+      "point": "Cross-Attention 在 Encoder-Decoder 中的角色。",
+      "why_it_matters": "如果只说 Mask 差异，就无法解释翻译模型里 Decoder 如何利用 Encoder 输出。这对理解'架构不是单一维度'很关键。"
+    },
+    {
+      "severity": "medium",
+      "point": "长上下文问题的具体机制：注意力稀释、中间丢失（lost-in-the-middle）、检索增强 vs 长窗口。",
+      "why_it_matters": "第八节提出了好问题，但没有给出机制层面的候选解释，读者可能仍然只停留在'窗口长不等于用得好'。"
+    },
+    {
+      "severity": "medium",
+      "point": "Tokenization 对'Next Token Prediction'的表征边界。",
+      "why_it_matters": "如果基本动作是预测 token，那么 tokenizer 的分词方式会直接影响模型能多容易组织答案、调用工具和处理多语言。这一点在 Agent 语境下尤其重要。"
+    },
+    {
+      "severity": "low",
+      "point": "聊天模型线上服务通常还包含系统提示、模板、安全过滤和工具层，不只是权重经过对齐。",
+      "why_it_matters": "'结构相同但权重不同'在工程上还要加上推理时的上下文包装，否则读者会低估 runtime 的作用。"
+    }
+  ],
+  "recommended_changes": [
+    "将'Mask 是唯一决定因素'软化为'Mask 是主要机制差异之一'，并补一句 cross-attention / 位置编码 / 预训练目标的作用。",
+    "在 Teacher Forcing 段落区分输入污染与梯度污染，并提一句 scheduled sampling 作为边界情形。",
+    "把'指令跟随和工具调用格式是对齐阶段教给模型的'改为'主要在对齐阶段被稳定激发和塑形'，并保留基座模型已有潜在能力的空间。",
+    "将'训练并行、推理自回归'的工程模糊性说明从文末前移或在该节直接标注，避免读者先形成绝对二分。",
+    "增加一小段位置编码，否则'关系计算'的叙事缺少一个关键前提。",
+    "在'后训练'链条中补一句系统提示与对话模板的作用，避免把线上行为全部归因于权重对齐。"
+  ],
+  "evidence_level": "E2",
+  "article": "articles/transformer-from-attention-to-decoder-only.html",
+  "commit": "e8e40731a672ffb48dfebb741412c9913e4e38f7",
+  "generated_at": "2026-09-21T05:51:03.100163+00:00",
+  "model": "deepseek-chat"
+}
