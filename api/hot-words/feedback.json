@@ -1,6 +1,6 @@
 {
   "name": "Hot Words feedback",
-  "generated": "2026-09-21T18:26:43Z",
+  "generated": "2026-09-21T18:26:46Z",
   "period": "2026-09-W4",
   "word": "Agent Memory Benchmark",
   "signals": {
@@ -25,7 +25,7 @@
   },
   "lastRun": {
     "runId": "hot-words-2026-09-W4-20260921T182634Z",
-    "phase": "applied",
+    "phase": "published",
     "gates": {
       "schema": "pass",
       "duplicate": "pass",
@@ -35,7 +35,12 @@
       "consistency": "pass"
     },
     "evidenceCount": 14,
-    "publish": {},
+    "publish": {
+      "commit": "8a99c73957c4e42d6c700a467727f80be86001c2",
+      "url": "https://chengguruchun.github.io/times/",
+      "mode": "autonomous",
+      "periodScheme": "YYYY-MM-WN month block, not ISO week"
+    },
     "error": null
   },
   "learnHints": {
@@ -74,9 +79,9 @@
     {
       "runId": "hot-words-2026-09-W4-20260921T182634Z",
       "period": "2026-09-W4",
-      "phase": "applied",
+      "phase": "published",
       "word": "Agent Memory Benchmark",
-      "finishedAt": "2026-09-21T18:26:43Z",
+      "finishedAt": "2026-09-21T18:26:45Z",
       "path": "/api/hot-words/runs/hot-words-2026-09-W4-20260921T182634Z.json"
     },
     {
