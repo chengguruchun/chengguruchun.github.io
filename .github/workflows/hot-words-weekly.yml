@@ -174,6 +174,19 @@ jobs:
                   f"- rejected: {learn.get('rejectedCandidates')!r}\n"
               )
 
+          # Hard ban: current word + recent published words. The previous soft wording
+          # ("avoid duplicating unless continuity is strongly justified") let DeepSeek
+          # re-pick the current word by arguing continuity; make it a hard constraint.
+          banned = []
+          if current_word:
+              banned.append(current_word)
+          for it in issues[:3]:
+              if isinstance(it, dict) and it.get("word"):
+                  w = str(it.get("word") or "").strip()
+                  if w and w not in banned:
+                      banned.append(w)
+          banned_txt = f"BANNED (hard, do not choose): {', '.join(banned)}\n" if banned else ""
+
           input_state = {
               "currentWord": current_word,
               "recentHistory": hist,
@@ -226,8 +239,11 @@ jobs:
               f"Current word: {current_word or '(none)'}.\n"
               f"Recent: {'; '.join(hist) or '(none)'}\n\n"
               f"{learn_txt}"
+              f"{banned_txt}"
               "Pick ONE new weekly hot word for AI/Agent engineering (Chinese or common English term). "
-              "Avoid duplicating the current word unless continuity is strongly justified.\n"
+              "HARD RULE: chosen.word MUST NOT equal any BANNED word. Continuity or extension of a banned "
+              "topic is not a valid justification for choosing it; if your best candidate is banned, "
+              "pick a different word.\n"
               "Return JSON only with keys:\n"
               '  "candidates": [{"word":"...","evidence":[{"title","url","sourceType","publishedAt","claim"}],"notes":"..."}, ...] (3-5),\n'
               '  "chosen": {"word","why"}\n'
