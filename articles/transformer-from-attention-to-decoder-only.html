@@ -87,7 +87,7 @@
 <p class="lede">我原来试图把大模型理解成“训练时负责学习，线上时负责回答”的两个阶段。继续追问以后，我发现真正值得理解的不是“Encoder 负责训练、Decoder 负责推理”这样一个简单对应，而是：<strong>同一套参数化模型，如何通过 Attention 学习 token 之间的关系，又如何在生成时把这种能力转化成一次次 Next Token Prediction。</strong></p>
 <h2>一、我为什么一直追问 Encoder 和 Decoder</h2>
 <p>最开始我的直觉很自然：Encoder 像一个阅读者，负责理解输入；Decoder 像一个写作者，负责按照顺序生成输出。经典 Transformer 的 Encoder-Decoder 结构确实非常适合用机器翻译来理解：Encoder 读取源语言，Decoder 根据已经生成的内容逐步产生目标语言。</p>
-<p>但这个解释很快遇到了一个问题：今天我们熟悉的 GPT、Qwen、DeepSeek 等生成式大模型，为什么很多都不再保留完整的 Encoder-Decoder，而采用 Decoder-only？如果 Decoder 只是“生成”，它又是怎么学到语言、知识、代码以及各种世界规律的？</p>
+<p>但这个解释很快遇到了一个问题：今天我们熟悉的 GPT、Qwen、DeepSeek 等生成式大模型，为什么很多都不再保留完整的 Encoder-Decoder，而采用 Decoder-only？如果 Decoder 只是“生成”，它又是怎么学到语言、知识、代码以及各种世界规律的？更准确地说，Decoder-only 是在“开放域对话、指令跟随”这类任务上胜出的选择——机器翻译（T5、BART）、语音识别（Whisper）等场景里，Encoder-Decoder 至今仍然很常见。</p>
 <p>这个问题最终把我带回了 Transformer 最核心的创新：<strong>Self-Attention。</strong></p>
 <h2>二、Transformer 真正改变的，可能不是“神经网络”，而是 token 之间建立关系的方式</h2>
 <p>在更早的序列模型里，信息更倾向于沿着序列逐步传播。Transformer 则提供了一种不同的思路：对于一个 token，可以计算它与上下文中其他 token 的关系。</p>
@@ -97,13 +97,15 @@ Token C ─┤
 Token D ─┘</pre>
 <p>这意味着模型不必只能依赖“前一个 token 传过来的信息”，而可以直接建立更远距离的关联。Multi-Head Attention 又把这种关系拆成多个并行的“观察角度”，不同 head 可以学习不同类型的模式。</p>
 <p>所以我现在更愿意这样理解 Transformer：<strong>它把“序列处理”转化成了“关系计算”。</strong></p>
-<h2>三、Encoder 为什么适合理解，Decoder 为什么适合生成</h2>
-<p>Encoder 的 Self-Attention 可以让一个位置利用完整输入上下文，因此天然适合做表征学习、分类、匹配等任务。一个句子输入以后，每个 token 都可以结合整个句子的语境形成表示。</p>
-<p>Decoder 则引入了 Causal Mask。简单说，在预测当前位置时，模型不能看到未来 token：</p>
+<h2>三、Encoder 与 Decoder 的真正区别：Attention Mask，而不是“块的名字”</h2>
+<p>回到最初的直觉：Encoder 像一个阅读者，Decoder 像一个写作者。这个直觉在机器翻译里确实好用，但追问到机制层面，真正起作用的不是“它叫 Encoder 还是 Decoder”，而是 Attention 的 Mask 模式。</p>
+<p>Encoder 使用<strong>双向注意力</strong>：每个位置都可以利用完整输入上下文，因此天然适合做表征学习、分类、匹配等任务。一个句子输入以后，每个 token 都可以结合整个句子的语境形成表示。</p>
+<p>Decoder 则使用<strong>因果注意力（Causal Mask）</strong>。简单说，在预测当前位置时，模型不能看到未来 token：</p>
 <pre>A B C D E
 ↑ ↑ ↑ ↑ ↑
 每个位置只能使用它左侧已经出现的信息</pre>
 <p>这并不是说 Decoder 没有 Attention，而恰恰相反：<strong>Attention 仍然是 Decoder 的核心，只是未来的信息被 mask 掉。</strong></p>
+<p>所以 Encoder / Decoder 这两个名字，更多是原版 Transformer 论文为“翻译”任务留下的历史命名；真正决定行为差异的是 Mask 模式，而不是块的标签。理解了这一点，后面 Decoder-only 为什么能成为主流，就不再是意外。</p>
 <h2>四、我曾经把“预训练”和“推理”理解成 Encoder 与 Decoder 的切换</h2>
 <p>这是我在讨论过程中反复确认的地方。最初我的理解是：预训练时模型需要看到完整句子、学习前后关系，所以应该使用 Encoder；真正回答用户问题时，再切换到 Decoder，用掩码注意力预测下一个 token。</p>
 <p>继续追问后，我发现这个模型不适用于今天主流的 Decoder-only LLM。</p>
@@ -114,11 +116,11 @@ Token D ─┘</pre>
 Decoder-only Transformer
 + Causal Mask
      ↓
-Next Token Prediction
+Next Token Prediction（预训练）
      ↓
-不断更新参数
+后训练 / 对齐（SFT、RLHF/DPO）
      ↓
-得到模型能力
+得到可对话、可遵循指令的模型
 
 真实用户输入
      ↓
@@ -128,10 +130,11 @@ Next Token Prediction
 逐步预测下一个 Token
      ↓
 生成回答</pre>
+<p>这里补上了一个我原先忽略的环节：<strong>后训练（对齐）</strong>。预训练产出的基座模型并不会天然以“回答问题”的方式输出，真正让模型学会跟随指令、按用户期望组织回答的，是后续的 SFT、RLHF/DPO 等对齐阶段。所以“结构相同”是对的，但“同一份权重”并不完全成立——线上服务的 chat 模型通常是经过对齐的版本。</p>
 <h2>五、那么训练和推理到底有什么不同？</h2>
 <p>结构可以相同，但计算过程并不相同。</p>
-<p>训练时，完整的训练序列已经存在，因此 GPU 可以同时计算大量位置上的 next-token prediction。虽然每个位置仍然不能“偷看未来”，但不同位置的计算可以高度并行。</p>
-<p>推理时，未来 token 并不存在。模型先生成一个 token，把它加入上下文，再生成下一个 token。因此生成过程天然具有自回归特征：</p>
+<p>训练时，完整的训练序列已经存在，因此 GPU 可以同时计算大量位置上的 next-token prediction。虽然每个位置仍然不能“偷看未来”，但不同位置的计算可以高度并行。这里的关键机制是 Teacher Forcing：训练时每个位置的前缀都来自真实数据，所以可以放心并行；即使某个位置预测错了，错误也不会进入下一轮训练输入。</p>
+<p>推理时，未来 token 并不存在。模型先生成一个 token，把它加入上下文，再生成下一个 token。因此生成过程天然具有自回归特征，而且每一步的前缀来自模型自己的采样——一旦某个 token 生成偏了，错误会进入下一轮输入并被放大，这就是 Exposure Bias：</p>
 <pre>A → 预测 B
 A B → 预测 C
 A B C → 预测 D
@@ -157,7 +160,8 @@ A B C D → 预测 E</pre>
 <h2>八、我现在对 Transformer 和 LLM 的一个阶段性理解</h2>
 <p>如果把今天的理解压缩成几句话：</p>
 <ul><li><strong>Transformer 的核心突破：</strong>用 Self-Attention 高效建立 token 之间的关系。</li><li><strong>Encoder：</strong>更适合利用完整输入上下文形成表征。</li><li><strong>Decoder：</strong>通过 Causal Mask 保持自回归生成。</li><li><strong>Decoder-only LLM：</strong>把大量能力统一到 Next Token Prediction 这个训练目标上。</li><li><strong>训练：</strong>已知序列上的并行学习。</li><li><strong>推理：</strong>未知未来上的自回归生成。</li></ul>
-<p>而最让我感兴趣的是最后一步：如果 LLM 的基本动作仍然是“预测下一个 Token”，为什么它已经可以表现出复杂的推理、规划和工具使用能力？</p>
+<p>以上是我目前的阶段性理解，其中几处表述需要标明边界：比如“Decoder-only 更优”应限定在开放域对话 / 指令跟随这类任务上；又比如“训练并行、推理自回归”的区分，在推测解码、chunked prefill 等工程优化下会变得模糊——并行度是工程后果，不是定义。</p>
+<p>而最让我感兴趣的是最后一步：如果 LLM 的基本动作仍然是“预测下一个 Token”，为什么它已经可以表现出复杂的推理、规划和工具使用能力？这个问题一半的答案在模型内部——后训练（对齐）让模型学会遵循指令、按任务组织输出；另一半才轮到模型之外的系统去回答。</p>
 <p>这个问题把我自然带到了下一篇文章。</p>
 <h2>下一步：模型之外发生了什么？</h2>
 <p>如果说 Transformer 解决的是“模型如何处理信息”，LLM 解决的是“根据上下文生成下一步”，那么当模型真正进入现实系统之后，还需要解决另一个问题：</p>
