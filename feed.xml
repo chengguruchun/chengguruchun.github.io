@@ -5,8 +5,16 @@
     <link>https://chengguruchun.github.io/</link>
     <description>chengguruchun · Blog for Agents · 知识博客（文章 / Diverse Lab 等有日期条目）</description>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 21 Sep 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 22 Sep 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://chengguruchun.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>2026-09 Week 4 · Agent Memory Benchmark</title>
+      <link>https://chengguruchun.github.io/times/</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/times/</guid>
+      <pubDate>Tue, 22 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Times</category>
+      <description>长期记忆的讨论已从架构设计转向可度量：没有统一评测，记忆模块的取舍只能靠直觉。LOCOMO、LongMemEval、MemBench 等基准把超长对话、时间推理与知识更新变成可复现的分数，直接决定本站 Agent 记忆主线该保留哪些模块、砍掉哪些开销。选它，是把上周的架构讨论落到可回归的工程验收上。</description>
+    </item>
     <item>
       <title>从 Transformer 到 Decoder-only：我重新理解大语言模型是怎么“学会”的</title>
       <link>https://chengguruchun.github.io/articles/transformer-from-attention-to-decoder-only.html</link>
