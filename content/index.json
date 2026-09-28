@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-27T08:04:10Z",
+  "generated": "2026-09-28T19:58:58Z",
   "items": [
     {
       "id": "transformer-from-attention-to-decoder-only",
@@ -865,6 +865,22 @@
           "override": null
         }
       }
+    },
+    {
+      "id": "times-2026-09-w5",
+      "type": "Times",
+      "title": "2026-09 Week 5 · Agentic RAG",
+      "excerpt": "Agentic RAG 是本周最值得展开的工程热词：它把 RAG 从静态检索升级为 Agent 自主规划、工具调用与自我纠错的知识获取流程，与近期记忆架构讨论形成互补而非重复。多篇论文与厂商文档在近月集中出现，证据链完整，适合作为 AI Agent 知识博客的下一周主线。",
+      "url": "/times/",
+      "date": "2026-09-29",
+      "tags": [
+        "Times",
+        "Hot Words",
+        "Agentic RAG"
+      ],
+      "markdown": "/content/times/2026-09-w5.md",
+      "period": "2026-09-W5",
+      "word": "Agentic RAG"
     },
     {
       "id": "times-2026-09-w4",

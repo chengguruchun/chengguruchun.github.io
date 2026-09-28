@@ -7,9 +7,20 @@
     "meaning": "Nth 7-day block of the calendar month in Asia/Shanghai (days 1–7 = W1, 8–14 = W2, …). Not an ISO 8601 week number.",
     "timezone": "Asia/Shanghai"
   },
-  "current": "2026-09-W4",
-  "updated": "2026-09-22",
+  "current": "2026-09-W5",
+  "updated": "2026-09-29",
   "issues": [
+    {
+      "id": "times-2026-09-w5",
+      "period": "2026-09-W5",
+      "cadence": "weekly",
+      "word": "Agentic RAG",
+      "title": "2026-09 Week 5 · Agentic RAG",
+      "why": "Agentic RAG 是本周最值得展开的工程热词：它把 RAG 从静态检索升级为 Agent 自主规划、工具调用与自我纠错的知识获取流程，与近期记忆架构讨论形成互补而非重复。多篇论文与厂商文档在近月集中出现，证据链完整，适合作为 AI Agent 知识博客的下一周主线。",
+      "date": "2026-09-29",
+      "url": "/times/",
+      "markdown": "/content/times/2026-09-w5.md"
+    },
     {
       "id": "times-2026-09-w4",
       "period": "2026-09-W4",
@@ -58,5 +69,5 @@
       "slug": "2026-09-w1"
     }
   ],
-  "currentProposalHash": "c33dde912298a48d"
+  "currentProposalHash": "e749783c21600619"
 }
