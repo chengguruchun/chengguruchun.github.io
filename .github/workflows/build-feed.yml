@@ -9,27 +9,50 @@ on:
       - "scripts/build_feeds.py"
       - "scripts/build_seo.py"
       - "scripts/sync_articles_index.py"
+      - "scripts/validate_lab.py"
+      - "scripts/build_knowledge.py"
       - "**/*.html"
   workflow_dispatch:
 
 permissions:
   contents: write
 
+concurrency:
+  group: publish-generated-state
+  cancel-in-progress: false
+
 jobs:
-  feeds:
+  publish:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+
+      # All derived artifacts are generated from the checked-out source first.
       - name: Sync Articles index
         run: python3 scripts/sync_articles_index.py
+
       - name: Build feed.xml and api/feeds.json
         run: python3 scripts/build_feeds.py
+
       - name: Rebuild page metadata, sitemap and robots
         run: python3 scripts/build_seo.py
-      - name: Commit if changed
+
+      # Validate the complete generated state before creating a commit.
+      # This avoids Validate Lab racing the generator workflow on the same push.
+      - name: Check SEO metadata
+        run: python3 scripts/build_seo.py --check
+
+      - name: Check knowledge registry
+        run: python3 scripts/build_knowledge.py --check
+
+      - name: Run validate_lab
+        run: python3 scripts/validate_lab.py
+
+      - name: Commit generated state if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
