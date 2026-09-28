@@ -4,7 +4,6 @@ on:
   push:
     branches: [main]
     paths:
-      - "articles/**"
       - "scripts/**"
       - "index.html"
       - "knowledge.html"
