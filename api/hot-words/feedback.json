@@ -1,6 +1,6 @@
 {
   "name": "Hot Words feedback",
-  "generated": "2026-09-28T19:58:58Z",
+  "generated": "2026-09-28T19:59:00Z",
   "period": "2026-09-W5",
   "word": "Agentic RAG",
   "signals": {
@@ -25,7 +25,7 @@
   },
   "lastRun": {
     "runId": "hot-words-2026-09-W5-20260928T195850Z",
-    "phase": "applied",
+    "phase": "published",
     "gates": {
       "schema": "pass",
       "duplicate": "pass",
@@ -35,7 +35,12 @@
       "consistency": "pass"
     },
     "evidenceCount": 15,
-    "publish": {},
+    "publish": {
+      "commit": "3bdc679acd5bf918fdfd1906c0a3becea7a258a0",
+      "url": "https://chengguruchun.github.io/times/",
+      "mode": "autonomous",
+      "periodScheme": "YYYY-MM-WN month block, not ISO week"
+    },
     "error": null
   },
   "learnHints": {
@@ -75,9 +80,9 @@
     {
       "runId": "hot-words-2026-09-W5-20260928T195850Z",
       "period": "2026-09-W5",
-      "phase": "applied",
+      "phase": "published",
       "word": "Agentic RAG",
-      "finishedAt": "2026-09-28T19:58:58Z",
+      "finishedAt": "2026-09-28T19:59:00Z",
       "path": "/api/hot-words/runs/hot-words-2026-09-W5-20260928T195850Z.json"
     },
     {

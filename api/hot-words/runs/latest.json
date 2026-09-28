@@ -1,9 +1,9 @@
 {
   "runId": "hot-words-2026-09-W5-20260928T195850Z",
   "period": "2026-09-W5",
-  "phase": "applied",
+  "phase": "published",
   "startedAt": "2026-09-28T19:58:50Z",
-  "finishedAt": "2026-09-28T19:58:58Z",
+  "finishedAt": "2026-09-28T19:59:00Z",
   "input": {
     "currentWord": "Agent Memory Benchmark",
     "recentHistory": [
@@ -182,6 +182,11 @@
       "gate": "pass"
     }
   },
-  "publish": {},
+  "publish": {
+    "commit": "3bdc679acd5bf918fdfd1906c0a3becea7a258a0",
+    "url": "https://chengguruchun.github.io/times/",
+    "mode": "autonomous",
+    "periodScheme": "YYYY-MM-WN month block, not ISO week"
+  },
   "error": null
 }
