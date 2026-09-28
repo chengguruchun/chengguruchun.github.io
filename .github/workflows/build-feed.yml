@@ -1,4 +1,4 @@
-name: Rebuild feeds and SEO
+name: Rebuild feeds, Articles index and SEO
 
 on:
   push:
@@ -8,6 +8,7 @@ on:
       - "api/articles.json"
       - "scripts/build_feeds.py"
       - "scripts/build_seo.py"
+      - "scripts/sync_articles_index.py"
       - "**/*.html"
   workflow_dispatch:
 
@@ -22,6 +23,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Sync Articles index
+        run: python3 scripts/sync_articles_index.py
       - name: Build feed.xml and api/feeds.json
         run: python3 scripts/build_feeds.py
       - name: Rebuild page metadata, sitemap and robots
@@ -30,10 +33,10 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add feed.xml api/feeds.json sitemap.xml robots.txt "*.html"
+          git add feed.xml api/feeds.json sitemap.xml robots.txt "*.html" articles/index.html
           if git diff --staged --quiet; then
-            echo "No feed or SEO changes"
+            echo "No generated changes"
           else
-            git commit -m "chore: regenerate RSS feed and page metadata"
+            git commit -m "chore: regenerate feeds, Articles index and page metadata"
             git push
           fi
