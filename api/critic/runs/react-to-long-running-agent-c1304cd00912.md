@@ -1,0 +1,126 @@
+## 🤖 Critic Lab Report
+
+Article: `articles/react-to-long-running-agent.html`
+Commit: `c1304cd009124535571c5650f6436110964f1a20`
+Model: `deepseek-chat`
+Status: **needs_review**
+
+文章把 ReAct → Harness → Runtime 的演化讲得清晰，三层循环与「任务状态可连续、Agent/Context 可替换」的核心判断是有价值的工程直觉。但多处把工程启发式写成趋势/结论（『第二增长曲线』『必然变得重要』），Harness 与 Runtime 的边界界定含糊（同一表格把两者混列，第八节又强行分层），2025/2026 的 Anthropic/LangChain 主张属于时间敏感、来源依赖的强断言，引用格式也疑似损坏；『State Loop』『Runtime 像操作系统』等隐喻缺少成本/失败边界的讨论。建议按假设标注、补充分层判据与反例，并核实引用。
+
+## 1. Logic
+
+- **HIGH** — 第五节表格用『Harness / Runtime 的对应能力』把 task 拆解、compaction、State、Checkpoint、Verification、HITL、Durable Execution、Sandbox、Observability 混在一起，第八节又把 Harness（Prompt/Tools/Skills/Loop/Task Strategy）与 Runtime（Durable Execution/Memory/Scheduling/HITL/Sandbox/Observability）严格分层。
+  - Issue: 同一篇文章里 Harness 和 Runtime 既被当同义词合写，又被当两个不同层，且 HITL、Sandbox、Observability、State/Checkpoint 在两张清单中同时出现，分层判据不明。
+  - Why it matters: 分层如果没有可操作的判据（例如：谁拥有持久状态？谁决定重试语义？谁定义 tool 契约？），读者无法判断某能力应落在 Harness 还是 Runtime，最终会退化成命名之争而非架构判断。
+  - Test / fix: 为分层给出一个判据（建议：Harness 拥有『围绕模型的组织策略与工具契约』，无跨进程持久状态；Runtime 拥有『跨 session 的持久状态、调度、隔离与恢复语义』）。用该判据重新归类第五节表格的每一行，并显式说明 HITL、Sandbox、Observability 为什么被同时列入两层（还是应归其一）。
+
+- **HIGH** — 『Harness 开始成为 Agent 的第二增长曲线』『当任务足够长时，如何组织 Agent 的工作过程就会显著影响最终结果』。
+  - Issue: 第一个是趋势断言缺少量化或对照；第二个是弱化到几乎不可反驳的表述（『足够长』『显著』都没有阈值），接近不可证伪的启发式被写成观察结论。
+  - Why it matters: 如果『第二增长曲线』要成立，必须能说明在什么任务分布下 harness 带来的收益超过扩大模型/上下文带来的收益，否则读者会误把它当作普适优先级去投入工程资源。
+  - Test / fix: 改成假设并给出可测形式：在固定模型与工具集的前提下，对比 (a) 单循环 + 大 context，(b) 单循环 + 结构化状态/上下文重置，(c) 多 session + checkpoint + evaluator，在相同任务上的完成率、恢复成功率、单位任务成本。明确阈值（任务时长/步数）再下结论。
+
+- **MEDIUM** — 『ReAct 解决下一步；Harness 让 Agent 走很远；Runtime 让 Agent 活很久』这句话在正文中被当作分层定义使用。
+  - Issue: 『走很远』和『活很久』既没有清晰的操作定义，又隐含了两者是不同维度——但『很远』指的是任务步数/复杂度，『活很久』指的是墙钟时间，二者常常正相关，并不天然分层。
+  - Why it matters: 两个维度混用会让后续架构判断漂移：一个任务可能很久但每步都独立（如长时等待+单次动作），也可能很短但步数极多（不需要 durable execution）。
+  - Test / fix: 明确两个正交轴：步数/搜索深度 vs 墙钟时长/是否需跨进程恢复。举一个反例即可：3 天等待外部审批但只需 2 次 action 的任务，Harness 判断几乎无用，Runtime 判断才是核心。
+
+- **MEDIUM** — 第十节『Agent Runtime 开始像一个操作系统』用 Process/Scheduler/Memory/Filesystem/Device/Isolation/Supervisor/Observability 一一映射。
+  - Issue: 比喻式映射容易被读成结构等价，但该段自己也承认『不是功能一一对应』，却没有给出这几个子系统在 Agent 场景与 OS 场景的关键差异（例如：OS 有硬中断和 MMU 隔离，Agent 的『Process』没有一致的指令流语义）。
+  - Why it matters: 如果读者按 OS 的对偶去做设计，容易做出过度工程（例如为一次性 agent 引入调度器）。
+  - Test / fix: 把该小节明确标为『隐喻』，并写出映射在哪里失效（至少 1 条，例如：OS 的 state 是字节可复制的，Agent 的 state 含语义/意图，需要 artifact 表示）。
+
+- **LOW** — 第十一节时间轴：2023 Prompt Engineering → 2024 Context Engineering → 2025 Harness Engineering → 2026 Long-Running Agent。
+  - Issue: 线性阶段模型隐含着『后者取代前者』，而正文又说『它们开始成为更大系统中的一层』，两处轻微冲突。此外各年边界是作者主观分期，不是公认分期。
+  - Why it matters: 分层（同一时期并存多层）与分期（逐年递进）是两种不同的主张，混用会让读者以为 2025 之后 Prompt Engineering 过时。
+  - Test / fix: 改成『分层/重心转移』的表述，并明确标注这是作者的主观分期，不是行业共识。
+
+## 2. Counterexamples
+
+- **HIGH** — Thesis: 『Context Window ≠ Long-Horizon Capability』，长任务应走 Artifact → Checkpoint → Context Reset 模式。
+  - Counterexample: 长时研究/写作类任务中，很多判断依赖跨段落的隐性语境（语气、隐含约束、读者画像）。强制 context reset + artifact 传递，会丢掉这些不可结构化信息，导致后续 session 输出风格/约束漂移，反而比长 context 更差。
+  - Boundary: 该模式在『状态可外化为 artifact』的任务（如代码迁移、可枚举 issue 修复）中成立；在『隐性语境主导』的任务中未必成立，是否成立取决于 artifact schema 能否覆盖关键隐性信息。
+
+- **MEDIUM** — Thesis: Agent 可以重新启动、Context 可 reset、模型可更换，只要 Goal/State/Evidence 不丢。
+  - Counterexample: 需要与外部系统保持实时会话一致性的场景（长事务、状态在远端服务端累积的流程，如支付/订单/长连接协议）。重启本地 agent 也许不丢 state，但远端 session 可能已经被对端回收或改变语义。
+  - Boundary: 『Agent 可替换』的前提是：环境侧可以做到幂等的 resume 语义。如果环境不具备，agent 侧的 checkpoint 无济于事。
+
+- **MEDIUM** — Thesis: Verification 可用『独立 evaluator、测试、真实环境反馈』判断完成。
+  - Counterexample: 许多企业任务的『完成』是主观的（业务方同意、客户满意）。这时 evaluator 只能给 proxy 分数，和真实 outcome 的差异可能大到使整个 verification 层给错误信号。
+  - Boundary: Verification 层在『有客观 ground truth』的域（编译/测试/replay）有效；在『目标本身需要协商』的域，只能作为信号之一，需要 human-in-the-loop 作为最终判定。
+
+- **LOW** — Thesis: 长周期 Agent 的问题从『下一步』转为『我现在在哪里』。
+  - Counterexample: 长任务中很多失败并非来自状态丢失，而是局部决策错误累积（如早期架构选择错误），此时『知道在哪里』反而会稳定地走向错误方向。Checkpoint 会让错误决策更持久。
+  - Boundary: 『先保证状态连续』是必要的，但不足以覆盖『状态本身可能是错的』这一类问题；需要一个可以回滚/重规划（而非仅 checkpoint）的机制。
+
+## 3. Novelty
+
+- **common_combination** — Harness 与 Runtime 的分层是本文提出的核心区分。
+  - Basis: 本文自己引用的 LangChain 2026 文章已明确做此区分（Harness = prompt/tools/skills/loop；Runtime = durable execution/memory/HITL/observability/sandbox/scheduled jobs）。当前讨论在多篇 agent 工程文章中也频繁出现 harness vs runtime 的二分。是否为作者独立提出、以及是否给出比现有更清晰的判据，需要外部核对；本评估为初步判断。
+
+- **potentially_distinctive** — 『从 Action Loop 走向 State Loop』作为命名。
+  - Basis: 把 ReAct 描述为 action loop、把持久任务描述为 state/生命周期，是工程共识式的观察；但把它命名为一个可对立的概念对（Action Loop vs State Loop），在当前本地语料中与『从 Workflow 到 Loop 到 Control Plane』『从 Actor Model 到 Cognitive Actor』同属一条演化叙事线，命名本身是否有新增分析力需与这些文章互相对照后判断，暂无外部核对。
+
+- **established** — Runtime 与操作系统的结构性映射（Process/Scheduler/Memory/Filesystem/...）。
+  - Basis: 把 agent runtime 类比为 OS 是常见比喻，Kubernetes/Actor Model 与 agent runtime 的映射在本地已有专文（k8s-to-agent-control-plane.html、agent-runtime-cognitive-actor.html）。本文新增的是把映射表写出来，但结构本身并不新。
+
+- **unknown** — 『第二增长曲线』的表述。
+  - Basis: 缺少可比较的基线或量化，无法判断该措辞与已有的 harness 重要性讨论相比是否构成新主张。作为工程叙事用语，是否具分析价值取决于后续能否给出量化对照。
+
+## 4. Facts
+
+- **HIGH** — 『Anthropic 在 2025 年关于 long-running agents 的工程实践……initializer、增量执行、结构化 artifacts 和跨 session 的 context handoff』
+  - Why verify: 涉及具体年份、具体概念清单与来源归属，属时间敏感、来源依赖的归因性断言。若该文章发布年份或概念清单与所述不同，会直接影响正文的论据强度。
+  - Preferred source: `primary`
+
+- **HIGH** — 『到 2026 年，Anthropic 又进一步尝试 context reset、planner / generator / evaluator 等结构』
+  - Why verify: 牵涉 2026 年（未来）的文章、具体组件命名与意图。命名在不同来源可能不一致，且属未来时间点、版本敏感信息。
+  - Preferred source: `primary`
+
+- **HIGH** — 『LangChain 在 2026 年对生产 Deep Agents 的总结中明确区分了 Harness 与 Runtime……』
+  - Why verify: 归因、年份、以及具体分层内容都需要原文核对；把 Harness 与 Runtime 的划分当作已确立的实践分层会放大论据，需要确认该来源的原文措辞与适用范围（是针对 Deep Agents 的具体栈，还是普遍分层）。
+  - Preferred source: `primary`
+
+- **MEDIUM** — 正文引用块中出现的 `urlAnthropic：...urlhttps://...` 形式的伪引用标记。
+  - Why verify: 这不是标准 HTML/Markdown 引用标记，疑似生成过程残留。是否在渲染后显示异常需要实际打开页面确认；如果残留可见，会损害可信度。
+  - Preferred source: `primary`
+
+- **MEDIUM** — 『1M Context ≠ 1M tokens 的有效工作记忆』中的 1M。
+  - Why verify: 1M 是针对特定模型/版本的量级数字（如某些模型宣称的 1M 上下文），随模型版本而变。作为示例没问题，但若被读作通用上限则需注明来源。
+  - Preferred source: `multiple_independent`
+
+## 5. Missing Points
+
+- **HIGH** — Harness 与 Runtime 划分的可操作判据（谁拥有持久状态、谁定义重试语义、谁拥有 tool 契约）。
+  - Why it matters: 没有判据，第五节与第八节的分层就只能在名词上自洽。这是本文最容易在工程使用中被误用的一点。
+
+- **HIGH** — 长周期 agent 的失败模式分类：状态丢失、状态错误、验证错误、环境漂移、成本失控。
+  - Why it matters: 本文隐含把长周期问题主要归为『状态不连续』，但真实工程中最贵的往往是『状态连续但错误持续累积』或『验证信号错误使错误状态被 checkpoint 固化』。这直接影响要不要在 Harness 层加回滚/重规划，而不是只加 checkpoint。
+
+- **MEDIUM** — Context reset 与 artifact 抽象的成本：压缩/重建 artifact、重建隐性语境、跨 session 一致性维护的工程代价。
+  - Why it matters: 『Agent 可替换、Context 可 reset』是一个吸引人的方向，但如果没有成本模型，读者会低估实现难度并把 reset 当默认方案。
+
+- **MEDIUM** — 何时不该走 long-running 路线：短任务、强实时、强一致性、外部事务不可恢复的场景下，harness/runtime 的引入可能净负收益。
+  - Why it matters: 文章是单向前进的叙事，缺少适用边界，容易诱导过度工程（例如给单次调用 agent 加上调度器）。
+
+- **MEDIUM** — Verification 在『主观完成』任务中的降级路径：如果 ground truth 不存在，Harness 应该怎么组织人和模型。
+  - Why it matters: 第七节点到了『企业任务里真正的困难』但没有给出任何处理方式，读者读完不知道该做什么，只能反复引用『需要独立 evaluator』。
+
+- **LOW** — Harness 中 tool 契约的稳定性问题：tool schema 变更如何影响已有 checkpoint/artifact 的可重放性。
+  - Why it matters: 跨 session 恢复能否成功，很大程度取决于 tool/skill 契约是否向后兼容。缺这一条会让『任务状态连续』显得过于乐观；也关系到 Harness 与 Runtime 的边界（谁负责 tool 版本）。
+
+## 6. Recommended Changes
+
+- 把『Harness 成为第二增长曲线』『Harness 开始变得重要』明确标注为作者假设，并给出可测的对照设置（固定模型/工具，比较纯长 context vs 结构化状态+reset+checkpoint）。
+- 为 Harness vs Runtime 给出单一判据（建议：跨 session 持久状态、调度、隔离、恢复语义归 Runtime；围绕模型的组织策略与工具契约归 Harness），并用该判据重排第五节表格的每一行。
+- 把第五节表格拆成两张表（Harness 表 / Runtime 表），或明确标注哪些是两栖能力（如 HITL、Observability）以及归层理由。
+- 把第十节『Runtime 像操作系统』明确写为隐喻，并补一条映射失效点，避免被读作结构等价。
+- 核实并规范化三处引用的年份、概念清单与原文措辞；修复或删除正文中 `urlAnthropic：...urlhttps://...` 形式的伪引用文本块，确保引用只在参考区以标准链接出现。
+- 补一节『什么时候不该用 long-running/harness/runtime』，给出至少 3 个具体反例（短任务、强实时、外部事务不可恢复等）。
+- 补一节失败模式分类（状态丢失 / 状态错误 / 验证错误 / 环境漂移 / 成本失控），并说明 Harness 与 Runtime 分别负责哪几类。
+- 在第六节补一段成本讨论：artifact 抽象、隐性语境重建、跨 session 一致性维护的开销，避免把 context reset 读成免费方案。
+- 把第十一节时间轴从『取代式分期』改写为『重心转移 + 分层共存』，并明确这是作者主观分期。
+- 在第七节补一个主观完成任务的降级路径（例如 evaluator 只作为信号之一 + 业务方签收 gate），否则该节仅提出问题而无处理方式。
+
+Evidence level: `E2`
+
+> Critic Lab is advisory. It does not modify the article or decide whether a finding should be accepted.
