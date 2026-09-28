@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ReAct 只是内循环：长周期 Agent 为什么开始需要 Harness 与 Runtime · Articles</title>
+  <meta name="description" content="从 ReAct 出发，区分 Action Loop、Task Loop 与 System Loop，理解 2025 年以后长周期 Agent 为什么越来越依赖 Harness、Durable Execution、Checkpoint、Verification 与 Runtime。">
+  <meta name="theme-color" content="#f7f5f0">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="../assets/css/site.css">
+  <link rel="canonical" href="https://chengguruchun.github.io/articles/react-is-the-inner-loop-long-running-agent-harness-runtime.html">
+  <link rel="alternate" type="application/rss+xml" title="AI Knowledge Lab" href="../feed.xml">
+  <meta property="og:type" content="article"><meta property="og:site_name" content="AI Knowledge Lab"><meta property="og:locale" content="zh_CN">
+  <meta property="og:title" content="ReAct 只是内循环：长周期 Agent 为什么开始需要 Harness 与 Runtime">
+  <meta property="og:description" content="从 ReAct 出发，区分 Action Loop、Task Loop 与 System Loop，理解长周期 Agent 的 Harness 与 Runtime。">
+  <meta property="og:url" content="https://chengguruchun.github.io/articles/react-is-the-inner-loop-long-running-agent-harness-runtime.html">
+  <meta property="og:image" content="https://chengguruchun.github.io/assets/img/og-cover.png"><meta property="og:image:alt" content="AI Knowledge Lab">
+  <meta property="article:published_time" content="2026-09-28"><meta property="article:author" content="chengguruchun">
+  <meta property="article:tag" content="Agent"><meta property="article:tag" content="ReAct"><meta property="article:tag" content="Harness"><meta property="article:tag" content="Runtime"><meta property="article:tag" content="Long-Running Agent"><meta property="article:tag" content="Loop Engineering">
+  <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="ReAct 只是内循环：长周期 Agent 为什么开始需要 Harness 与 Runtime"><meta name="twitter:description" content="从 ReAct 出发，理解长周期 Agent 的 Harness 与 Runtime。"><meta name="twitter:image" content="https://chengguruchun.github.io/assets/img/og-cover.png"><meta name="author" content="chengguruchun">
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org","@type":"BlogPosting",
+    "headline":"ReAct 只是内循环：长周期 Agent 为什么开始需要 Harness 与 Runtime",
+    "description":"从 ReAct 出发，区分 Action Loop、Task Loop 与 System Loop，理解长周期 Agent 为什么越来越依赖 Harness 与 Runtime。",
+    "url":"https://chengguruchun.github.io/articles/react-is-the-inner-loop-long-running-agent-harness-runtime.html",
+    "mainEntityOfPage":{"@type":"WebPage","@id":"https://chengguruchun.github.io/articles/react-is-the-inner-loop-long-running-agent-harness-runtime.html"},
+    "inLanguage":"zh-CN","articleSection":"Articles",
+    "author":{"@type":"Person","name":"chengguruchun","url":"https://github.com/chengguruchun"},
+    "publisher":{"@type":"Organization","name":"AI Knowledge Lab","url":"https://chengguruchun.github.io/"},
+    "datePublished":"2026-09-28","dateModified":"2026-09-28",
+    "keywords":"Agent, ReAct, Harness, Runtime, Long-Running Agent, Loop Engineering"
+  }
+  </script>
+</head>
+<body>
+<header class="site-header"><div class="wrap site-header__inner"><a class="brand" href="../index.html"><img class="brand__logo" src="../assets/img/brand-mark.svg" alt="AI Knowledge Lab" width="44" height="44"><span class="brand__tag"><span class="brand__rotate"><span class="brand__item is-active">Independent Thinker</span><span class="brand__item">AI Agents</span><span class="brand__item">Complex Systems</span><span class="brand__item">Diverse Thinking</span></span></span></a><button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">菜单</button><nav class="nav" id="site-nav" aria-label="主导航"><a href="../index.html">Home</a><a href="../bench/">Agent Bench</a><a href="../diverse/">Diverse Lab</a><a href="../articles/" aria-current="page">Articles</a><a href="../projects/">Projects</a><a href="../videos/">Videos</a><a href="../times/">Hot Words</a><a href="../about/">About Me</a><a class="nav__search" href="../tags/">Tags / Search</a></nav></div></header>
+<main><article class="article-body"><header class="page-hero"><div class="prose-wrap"><p class="page-hero__kicker">Articles</p><h1>ReAct 只是内循环：长周期 Agent 为什么开始需要 Harness 与 Runtime</h1><p class="page-hero__desc">从一个看似简单的问题出发：ReAct 已经能让 Agent 不断 Thought → Action → Observation，为什么长周期任务仍然需要大量新的工程能力？我的理解是：ReAct 解决的是“下一步做什么”，而长周期 Agent 要解决的是“整个任务如何持续活下去”。</p><p class="article-meta"><span>思路 2026-09-28</span><span>发表 2026-09-28</span><span>作者 chengguruchun</span><a class="tag" href="../tags/?tag=Agent">Agent</a><a class="tag" href="../tags/?tag=ReAct">ReAct</a><a class="tag" href="../tags/?tag=Harness">Harness</a><a class="tag" href="../tags/?tag=Runtime">Runtime</a><a class="tag" href="../tags/?tag=Loop%20Engineering">Loop Engineering</a></p></div></header>
+<div class="prose-wrap">
+<p class="lede">我最近越来越倾向于把 Agent 的 Loop 分成不同层次：ReAct 是最底层的 Action Loop；Harness 开始承担 Task Loop；Runtime 则承担更长生命周期的 System Loop。这样看，2025 年以后 Agent 的进步就不只是模型变强，而是“模型 × Harness × Runtime × Environment”共同变强。</p>
+
+<h2>一、ReAct 解决的其实是一个很局部的问题</h2>
+<p>ReAct 的核心非常清楚：</p>
+<pre>Thought
+  ↓
+Action
+  ↓
+Observation
+  ↓
+Thought
+  ↓
+Action
+  ↓
+Observation
+  ↺</pre>
+<p>它回答的是一个非常重要的问题：</p>
+<blockquote><p><strong>“根据我现在看到的世界，我下一步应该做什么？”</strong></p></blockquote>
+<p>因此 ReAct 是一个 <strong>Action Loop</strong>。它让模型不再一次性生成最终答案，而是可以通过工具行动、获得环境反馈，再决定下一步。</p>
+<p>例如一个 Code Agent 可以这样工作：</p>
+<pre>读取 pom.xml
+   ↓
+修改 dependency
+   ↓
+运行编译
+   ↓
+Observation：编译失败
+   ↓
+分析错误
+   ↓
+修改代码
+   ↓
+重新编译</pre>
+<p>这已经非常强了。但如果任务从十分钟变成三天，问题马上发生变化。</p>
+
+<h2>二、长周期 Agent 的问题不是“下一步”，而是“我现在在哪里”</h2>
+<p>假设一个任务需要连续工作三天：</p>
+<pre>Day 1
+分析项目 → 修改代码 → 测试 → checkpoint
+
+Day 2
+恢复状态 → 继续修改 → 发现新的失败 → checkpoint
+
+Day 3
+恢复状态 → 回归测试 → 验证结果 → 完成</pre>
+<p>这里真正困难的问题已经不是 ReAct 本身，而是：</p>
+<pre>我完成了什么？
+我还剩什么？
+上一次为什么失败？
+当前环境是什么状态？
+哪些结果已经被验证？
+如果进程挂掉，怎么继续？
+如果 Context 换了，新的 Agent 怎么接班？</pre>
+<p>因此，长周期 Agent 的核心对象开始从 <strong>Action</strong> 变成 <strong>State</strong>。</p>
+
+<h2>三、我更愿意把 Agent Loop 分成三层</h2>
+<table><thead><tr><th>层次</th><th>核心问题</th><th>典型能力</th></tr></thead><tbody>
+<tr><td>Action Loop</td><td>下一步做什么？</td><td>ReAct、Tool Calling、Observation</td></tr>
+<tr><td>Task Loop</td><td>整个任务如何持续推进？</td><td>Planning、Decomposition、Verification、Context Handoff</td></tr>
+<tr><td>System Loop</td><td>任务如何跨进程、跨时间稳定运行？</td><td>Checkpoint、Resume、Retry、Scheduling、HITL、Observability</td></tr>
+</tbody></table>
+<p>这样看，ReAct 并没有被长周期 Agent 淘汰。恰恰相反，它更像是长周期系统里面最核心的一层“内循环”。</p>
+<pre>Long-Running Agent
+        │
+        ├── Harness / Task Loop
+        │       └── ReAct / Action Loop
+        │               └── Tool → Observation
+        │
+        └── Runtime / System Loop
+                ├── State
+                ├── Checkpoint
+                ├── Resume
+                ├── Retry
+                └── Scheduling</pre>
+
+<h2>四、所以 Harness 开始变得重要</h2>
+<p>2025 年 Anthropic 针对 long-running agents 的实践已经非常直接：仅仅让模型在多个 context window 中持续循环并不够。它需要 initializer、结构化 feature list、progress artifacts、git history、测试与 session handoff，让下一次 session 能够知道上一次发生了什么。citeturn0search1</p>
+<p>这里我觉得有一个重要的概念变化：</p>
+<pre>Prompt
+  ↓
+让模型知道“应该做什么”
+
+Harness
+  ↓
+让模型知道“怎么持续做”</pre>
+<p>Harness 不只是一个 prompt wrapper。它开始决定：</p>
+<ul>
+<li>给模型哪些工具和 Skills；</li>
+<li>Context 如何组织、压缩和重置；</li>
+<li>任务如何拆分成可验证的工作单元；</li>
+<li>每个 session 如何留下结构化状态；</li>
+<li>什么时候必须验证，而不是相信模型说“完成了”；</li>
+<li>多个 Agent 如何分工和交接。</li>
+</ul>
+<p>2026 年 Anthropic 又进一步把 planner、generator、evaluator 组合起来，用结构化 handoff 和独立 evaluator 支撑多小时的自主开发。这说明 Harness 已经从“辅助模型”逐渐变成了 Agent 能力的一部分。citeturn0search3</p>
+
+<h2>五、但 Harness 还不是 Runtime</h2>
+<p>这里是我觉得特别容易混淆的一层。</p>
+<pre>Harness
+= prompts + tools + skills + loop + task-specific logic
+
+Runtime
+= durable execution + state + memory + scheduling
+  + retry + HITL + observability + sandbox + tenancy</pre>
+<p>一个 Harness 可以让 Agent 在某个任务上表现得更好；但当它进入生产环境以后，还会遇到完全不同的问题：</p>
+<pre>进程挂了怎么办？
+机器重启怎么办？
+部署升级怎么办？
+人三天以后才审批怎么办？
+任务运行几个小时怎么办？
+多个任务怎么并发？
+状态保存在哪里？
+谁有权限执行这个 Tool？
+执行结果怎么追踪？</pre>
+<p>这已经不是 prompt engineering，而是典型的 Runtime Engineering。</p>
+<p>LangChain 在 2026 年对生产 Agent Runtime 的总结也把 durable execution、memory、human-in-the-loop、multi-tenancy、observability、sandbox 和 scheduled jobs 等能力放到了 Harness 之下的 Runtime 层。citeturn0search0</p>
+
+<h2>六、长周期 Agent 最关键的一个能力：Durable Execution</h2>
+<p>传统 HTTP 请求往往是：</p>
+<pre>Request → Process → Response</pre>
+<p>而 Agent 可能是：</p>
+<pre>Run
+ ↓
+Tool
+ ↓
+LLM
+ ↓
+Tool
+ ↓
+等待人工审批
+ ↓
+……三天后……
+ ↓
+Resume
+ ↓
+继续执行</pre>
+<p>因此，Agent Runtime 必须把“执行”从一个短生命周期进程中解耦出来。</p>
+<p>这也是为什么 Checkpoint / Resume 越来越像 Agent Runtime 的基础原语：</p>
+<pre>Action
+ ↓
+State Update
+ ↓
+Checkpoint
+ ↓
+Process Dies
+ ↓
+New Worker
+ ↓
+Restore State
+ ↓
+Continue</pre>
+<p>这时候，Agent 就开始有点像一个真正的长期计算实体，而不是一次 API request。</p>
+
+<h2>七、Context Window 变大，不等于任务 Horizon 变长</h2>
+<p>一个直觉很容易出现：</p>
+<blockquote><p>既然 Context 越来越大，那就把所有历史都塞进去，Agent 不就能做更长的任务了吗？</p></blockquote>
+<p>但我认为这是两个不同的问题。</p>
+<pre>Context Window
+     ≠
+Task Horizon</pre>
+<p>Context window 解决的是“这一轮模型能看到多少信息”；Task Horizon 解决的是“系统能否跨越很多轮行动仍然保持正确的状态”。</p>
+<p>因此长周期系统可能反而需要：</p>
+<pre>工作一段时间
+ ↓
+保存 Artifact / State
+ ↓
+Context Reset
+ ↓
+加载必要状态
+ ↓
+新的 Agent Session
+ ↓
+继续工作</pre>
+<p>Anthropic 的 long-running agent 实践也显示，context compaction 并不能单独解决跨 session 的问题，结构化 artifacts、progress tracking 和 context reset 都可能成为 Harness 的重要组成部分。citeturn0search1turn0search2</p>
+
+<h2>八、Verification 把“我做完了”变成“结果真的成立”</h2>
+<p>长任务还有一个特殊问题：错误会累积。</p>
+<pre>错误 1
+ ↓
+错误 2
+ ↓
+错误 3
+ ↓
+错误 4
+ ↓
+最后才发现整个方向错了</pre>
+<p>所以长周期 Agent 必须不断形成反馈闭环：</p>
+<pre>Goal
+ ↓
+Action
+ ↓
+Environment
+ ↓
+Verification
+ ↓
+Evidence
+ ↓
+State Update
+ ↺</pre>
+<p>这也是我之前一直强调的 <strong>verify → optimize</strong>。真正可靠的 Agent，不应该仅仅记录“Tool Call 成功”，而应该尽可能记录“目标结果是否成立”。</p>
+<p>于是 Evaluation 也开始进入 Harness：generator 负责产生结果，evaluator 负责判断结果。这比让同一个 Agent 自己宣布“完成”更容易形成独立反馈。Anthropic 2026 年的长周期应用实验就采用了 planner / generator / evaluator 的结构。citeturn0search3</p>
+
+<h2>九、ReAct、Harness、Runtime 的边界可以这样理解</h2>
+<table><thead><tr><th>层</th><th>核心问题</th><th>一句话</th></tr></thead><tbody>
+<tr><td>ReAct</td><td>下一步做什么？</td><td>让 Agent 会“走一步”</td></tr>
+<tr><td>Harness</td><td>整个任务怎么推进？</td><td>让 Agent 能“走很远”</td></tr>
+<tr><td>Runtime</td><td>任务怎么长期稳定运行？</td><td>让 Agent 能“活很久”</td></tr>
+</tbody></table>
+<p>我觉得这比简单讨论“ReAct 是否过时”更准确。</p>
+<p><strong>ReAct 没有过时，它只是被放进了更大的系统。</strong></p>
+
+<h2>十、这也解释了为什么 2025 年以后 Harness 开始成为独立的工程对象</h2>
+<p>如果 Agent 只是一次 LLM + Tool Calling，模型能力自然是最大的变量。但当任务开始跨越多个 context、多个 session、多个 worker，甚至跨越几天以后，模型已经不是唯一变量。</p>
+<pre>Agent Performance
+        ≈
+Model
+× Harness
+× Runtime
+× Environment
+× Feedback</pre>
+<p>2026 年的工程实践正在明显朝这个方向发展：Anthropic 持续研究 long-running harness，LangChain 则明确区分 harness 与 production runtime，并把 durable execution、memory、HITL、observability 等能力下沉到 runtime。citeturn0search0turn0search3</p>
+<p>甚至可以看到一个很有意思的趋势：随着模型越来越强，Harness 中一些原本必要的“脚手架”可能会逐渐被删掉；反过来，模型无法稳定解决的问题，又会被 Runtime 或 Harness 显式工程化。Anthropic 也明确指出，Harness 中的假设会随着模型能力提升而过时，因此需要持续验证哪些组件真正有价值。citeturn0search2turn0search3</p>
+
+<h2>十一、我现在对 Agent Runtime 的一个更强理解</h2>
+<p>如果沿着这条线继续往下走，我觉得 Agent Runtime 的核心已经不是“帮 LLM 调工具”。</p>
+<p>它更像是在管理一种新的长期计算实体：</p>
+<pre>Goal
+ ↓
+Agent
+ ↓
+Action Loop / ReAct
+ ↓
+Environment
+ ↓
+Feedback
+ ↓
+State
+ ↓
+Checkpoint
+ ↓
+Resume / Replan
+ ↺</pre>
+<p>因此我越来越愿意把它和传统系统中的 Process、Actor、Kubernetes Controller 放在一起思考。</p>
+<p>它们的共同点不是“都能执行代码”，而是：</p>
+<blockquote><p><strong>它们都需要让一个持续变化的计算实体，在不确定的现实环境中保持自己的状态，并不断向某个目标推进。</strong></p></blockquote>
+
+<h2>十二、最后：从 Action Loop 到 Lifecycle</h2>
+<p>如果把整个 Agent Engineering 再压缩一次，我现在会这样理解：</p>
+<pre>ReAct
+  ↓
+Action Loop
+  ↓
+Harness
+  ↓
+Task Loop
+  ↓
+Runtime
+  ↓
+Lifecycle
+  ↓
+Environment
+  ↓
+Feedback
+  ↺</pre>
+<p>所以，Agent 的下一阶段可能并不是简单地让 LLM “想得更久”，而是让系统能够：</p>
+<ul>
+<li>把一个长期目标拆成可推进的状态；</li>
+<li>让不同 session / Agent 之间可靠交接；</li>
+<li>在失败后从 checkpoint 恢复，而不是重新开始；</li>
+<li>用真实环境验证结果，而不是只看模型输出；</li>
+<li>在必要时暂停、等待、重新唤醒；</li>
+<li>让 Harness 随模型能力演进，而 Runtime 保持稳定的基础设施边界。</li>
+</ul>
+<p>这也是我最近越来越关注 <strong>Agent Runtime</strong> 的原因：<strong>ReAct 解决了 Agent 如何行动的问题，而 Runtime 开始解决 Agent 如何作为一个长期存在的计算实体运行的问题。</strong></p>
+
+<h2>参考</h2>
+<ul>
+<li>Anthropic, <em>Effective harnesses for long-running agents</em>, 2025-11-26。</li>
+<li>Anthropic, <em>Harness design for long-running application development</em>, 2026-03-24。</li>
+<li>Anthropic, <em>Scaling Managed Agents: Decoupling the brain from the hands</em>, 2026-04-08。</li>
+<li>LangChain, <em>The Runtime Behind Production Deep Agents</em>, 2026-04-20。</li>
+</ul>
+</div></article></main>
+<script src="../assets/js/site.js"></script>
+</body>
+</html>
