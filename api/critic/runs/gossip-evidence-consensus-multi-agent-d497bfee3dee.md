@@ -1,0 +1,105 @@
+## 🤖 Critic Lab Report
+
+Article: `articles/gossip-evidence-consensus-multi-agent.html`
+Commit: `d497bfee3deee973f8f675e7431f226084d65b5d`
+Model: `deepseek-chat`
+Status: **needs_review**
+
+The article offers a useful architectural layering (Gossip → Evidence/Trust → Consensus → Execution) and explicitly frames itself as an evolving hypothesis. However, several core terms—'Evidence', 'Trust', 'Consensus', and 'Task State Consensus'—are underspecified, making the claimed separation between them partly circular. Feasibility arguments are missing on cost, latency, failure modes, and evaluation. The novelty appears to be a synthesis of established distributed-systems ideas (gossip/epidemic protocols, Byzantine fault tolerance, trust/reputation systems, CRDTs) rather than a new mechanism. The strongest testable claim—that Agents should exchange 'evidence' rather than messages—needs concrete protocol and metrics before it can be validated.
+
+## 1. Logic
+
+- **HIGH** — Evidence is 'why I believe this'; Consensus is 'which common state we adopt'.
+  - Issue: The distinction is asserted but not operationalized. In systems that require a shared task state, consensus is itself a form of evidence ('a majority agreed that X is true'), so the two categories can collapse into each other. The article never defines what makes an observation count as Evidence versus a Consensus signal.
+  - Why it matters: Without a clear definition, the proposed four-layer architecture cannot be implemented or falsified; layers risk becoming diagram labels rather than separable engineering modules.
+  - Test / fix: Define a minimal Evidence schema (e.g., {source, timestamp, claim, confidence, provenance, verification_method}) and specify when a set of Evidence transitions into a Consensus proposal. Then test whether the system behaves differently when Evidence and Consensus are merged into one layer.
+
+- **MEDIUM** — Gossip propagates Evidence; Evidence/Trust judges it; Consensus forms common state only when needed.
+  - Issue: The workflow is presented as a pipeline, but the article also says Trust/Evidence can influence what should be gossiped (e.g., excluding stale evidence). This creates a feedback loop that is not acknowledged; the layering is not strictly hierarchical.
+  - Why it matters: In real Agent Runtime, trust decisions affect propagation (e.g., rate-limiting untrusted sources) and propagation affects trust (e.g., repeated exposure increases perceived credibility). Ignoring this risk of circular trust inflation leads to the exact 'majority impression' problem the article later warns about.
+  - Test / fix: Model the interaction explicitly. For example, run a simulation where Agent A gossips the same evidence 100 times and check whether the Trust layer correctly discounts repetition. If it does not, the layer separation is not effective.
+
+- **MEDIUM** — Task State Consensus is needed when task state triggers actions; World/Evidence Consensus does not require strong consistency.
+  - Issue: This boundary is drawn along action-triggering, but the article does not address how to handle conflicting world/evidence consensus that then feeds into task state. If agents hold different world models, task consensus may be impossible without first resolving evidence conflicts.
+  - Why it matters: In practice, task state consensus often depends on agreeing about external state (e.g., 'tests passed'). If evidence about external state is inconsistent, task state consensus becomes a deadlock or requires a conflict-resolution protocol not described.
+  - Test / fix: Construct a scenario where two agents disagree about a test result due to different evidence freshness. Show how the architecture resolves it without falling back to a centralized arbiter.
+
+- **LOW** — Raft's majority is for state-machine safety; Evidence/Trust majority is for belief.
+  - Issue: This is a useful intuition but not a complete argument. Raft's quorum is a safety mechanism under crash-fault assumptions; Evidence/Trust under Byzantine or malicious agents needs different quorum rules (e.g., BFT-style thresholds). The article later introduces security concerns but does not connect them back to the consensus model.
+  - Why it matters: If malicious agents are in scope, using Raft-style majority for Consensus is unsafe. The article's security section should be linked to a revised consensus threshold model.
+  - Test / fix: Clarify whether the proposed Consensus layer assumes crash faults or Byzantine faults. If Byzantine faults are in scope, replace 'majority' with a concrete quorum rule (e.g., 2f+1) and test with f malicious agents.
+
+## 2. Counterexamples
+
+- **HIGH** — Thesis: Gossip is a good layer for propagating runtime Evidence among many Agents.
+  - Counterexample: A 100-agent swarm where gossip about a transient tool failure is propagated faster than the failure is resolved. Agents act on stale evidence and cascade the failure, as seen in epidemic routing and gossip-based cache invalidation.
+  - Boundary: Gossip works best for slowly changing, non-safety-critical observations. For rapidly changing or safety-critical evidence, an anti-entropy or push-pull hybrid with explicit invalidation may be required.
+
+- **MEDIUM** — Thesis: Evidence/Trust can be separated from Consensus.
+  - Counterexample: In a CRDT-based multi-agent system for task state, each agent's updates are merged without consensus, and 'trust' is encoded in the merge semantics. There is no separate Evidence layer; evidence is the operation itself.
+  - Boundary: For collaborative, monotonic state, consensus may be unnecessary. The proposed Evidence/Consensus split may only apply to non-commutative or conflicting operations.
+
+- **MEDIUM** — Thesis: Agent Runtime should include an Evidence/Trust Gateway alongside Tool Gateway.
+  - Counterexample: A small team of 3–5 agents with full mutual observability does not need gossip or a trust gateway; direct sharing via a shared blackboard is simpler and faster. The overhead of signature verification and reputation scoring may dominate.
+  - Boundary: The architecture may only be justified above a scale or heterogeneity threshold (e.g., >20 agents, multiple trust domains, or Byzantine risk).
+
+- **LOW** — Thesis: Security is needed because gossip is cheap to spread.
+  - Counterexample: An internal multi-agent system with trusted, authenticated agents and no external exposure may not need anti-fraud measures; adding them increases latency and complexity without a clear threat model.
+  - Boundary: Security mechanisms should be risk-driven. Without a defined adversary model, the suggestion is a heuristic, not a requirement.
+
+## 3. Novelty
+
+- **common_combination** — Combining Gossip + Evidence/Trust + Consensus for Multi-Agent collective cognition.
+  - Basis: Each component is well-established separately: Gossip/Epidemic protocols, trust/reputation systems, and distributed consensus. The combination for AI agent runtimes is a plausible synthesis but not a new mechanism. Preliminary assessment without external browsing.
+
+- **potentially_distinctive** — Task State Consensus as a distinct concept in Agent Runtime.
+  - Basis: While task state is common in workflow engines, framing it as a consensus problem for autonomous agents that must jointly decide when to advance may be a useful repackaging. It is unclear if this is novel without a broader literature check.
+
+- **unknown** — Evidence/Trust Gateway as a standard component of Agent Runtime.
+  - Basis: Similar gateways exist in zero-trust architectures and data provenance systems; whether this specific adaptation to agent runtimes is distinctive requires comparison with existing agent-specific proposals (e.g., MCP security, A2A trust models).
+
+## 4. Facts
+
+- **MEDIUM** — Raft's majority is for state-machine safety.
+  - Why verify: The description is broadly correct but omits timing assumptions and the fact that Raft assumes crash faults, not Byzantine. This matters when the article later discusses malicious agents.
+  - Preferred source: `primary`
+
+- **LOW** — Gossip protocols ultimately have all nodes with the same or approximate information.
+  - Why verify: Gossip guarantees eventual consistency under specific assumptions (e.g., connected graph, non-Byzantine). The phrase 'ultimately' is time-sensitive and may not hold for partitioned or large-scale networks.
+  - Preferred source: `primary`
+
+- **MEDIUM** — A2A and MCP are current protocols for agent communication.
+  - Why verify: Both are evolving standards; their capabilities and maturity may change. The article treats them as established baselines.
+  - Preferred source: `multiple_independent`
+
+## 5. Missing Points
+
+- **HIGH** — Cost and latency of Evidence/Trust scoring and gossip.
+  - Why it matters: In a multi-agent system, every gossip round and trust computation adds overhead. Without performance estimates, the architecture may be impractical for real-time tasks.
+
+- **HIGH** — Conflict resolution protocol when Task State Consensus fails.
+  - Why it matters: The article mentions conflict resolution but does not specify what happens when agents cannot agree. A fallback (e.g., escalate to a central planner, timeout, or voting) is needed for a usable system.
+
+- **MEDIUM** — Evaluation metrics for 'trustworthy collective cognition'.
+  - Why it matters: The article claims improved credibility but does not propose how to measure it. Without metrics, the hypothesis cannot be validated or compared to alternatives.
+
+- **MEDIUM** — Interaction with existing Agent Runtime components (memory, planning).
+  - Why it matters: Evidence and trust may need to feed into memory retrieval and planning; the article does not discuss how these layers integrate, making the architecture diagram incomplete.
+
+- **MEDIUM** — Failure modes of gossip (e.g., message storms, stale evidence persistence).
+  - Why it matters: Gossip's scalability is often touted, but without damping or TTL mechanisms, it can cause network congestion and decision paralysis. The article should address these operational concerns.
+
+## 6. Recommended Changes
+
+- Explicitly label the core architectural proposal as an early hypothesis and separate it from established distributed-systems facts.
+- Define a minimal Evidence schema and a decision function for converting Evidence into a Consensus proposal; provide a concrete example simulation.
+- Clarify the fault model (crash vs Byzantine) and adjust the Consensus discussion accordingly, especially in the security section.
+- Provide rough estimates or complexity bounds for gossip and trust computation in a 100-agent system; discuss when the approach becomes impractical.
+- Add a section on conflict resolution when Task State Consensus cannot be reached, including fallback strategies.
+- Propose evaluation metrics (e.g., time-to-consensus, trust accuracy, robustness to malicious agents) to make the hypothesis testable.
+- Differentiate between domain boundaries and runtime/risk/verification boundaries when discussing Agent Runtime components; avoid conflating them in the architecture diagram.
+- Clarify whether the discussed mechanisms are intended for a specific scale or trust domain, and note that they are not universal laws.
+
+Evidence level: `E1`
+
+> Critic Lab is advisory. It does not modify the article or decide whether a finding should be accepted.
