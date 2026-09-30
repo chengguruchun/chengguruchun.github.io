@@ -1,0 +1,139 @@
+{
+  "status": "needs_review",
+  "summary": "这篇短文是一份有价值的、以类比为主的架构观察草稿：把 Claude Agent Teams 的并行实践映射到 Actor Model 的经典原语上，并加上认知闭环这一差异点。文章内部逻辑大体自洽，且作者已主动把核心结论标注为“架构观察/开放假设”，这是优点。主要风险有三类：一是若干关键术语（Semantic Mailbox、Cognitive Scheduler、Decision Recovery）只是被命名，没有被定义到可工程化的程度，可能掩盖“语义路由本身不可靠”这一根本困难；二是外部证据高度依赖单个 Anthropic C Compiler 实验和产品方向（A2A、MCP），这类时间敏感、版本敏感的说法需要核验；三是文章在“Actor 确定性/Agent 概率性”的对立上略微过强，且把 runtime、risk、verification 边界与 domain 边界混在一起讨论。整体处在 E1–E2 之间的概念性文章水平。",
+  "logic": [
+    {
+      "severity": "high",
+      "claim": "“Mailbox 正在变成 Semantic Mailbox”，应理解优先级、依赖、风险和语义相关性。",
+      "issue": "这是全文最强的工程主张，但只有命名没有机制。语义相关性判断本身需要模型推理，而推理是有成本、会失败、可能不可复现的。把路由决策从确定性队列换成 LLM/embedding 判断，等于把“消息会不会被正确处理”变成概率事件，却没有讨论 head-of-line blocking、优先级反转、幂等性、死信/重试语义。",
+      "why_it_matters": "如果 Semantic Mailbox 无法给出确定的投递语义（at-least-once / at-most-once、顺序保证），下游所有长任务恢复和 checkpoint 的正确性都失去依据。这是 Agent Runtime 与成熟消息中间件之间最实质的差距。",
+      "test_or_fix": "给出一个可验证的对比实验：在 C Compiler 类似任务上，用 FIFO mailbox 与 semantic mailbox 各跑一次，度量任务完成时间分布、错误重试次数、消息误投率。若语义路由不能显著降低冲突或提升吞吐，则该主张应降级为“值得探索”而非“正在变成”。"
+    },
+    {
+      "severity": "high",
+      "claim": "“Agent Supervisor 还需要解决 Decision Recovery”，即从进程存活升级到判断决策是否仍在轨道上。",
+      "issue": "“决策是否在正确轨道上”缺少可操作判据。文中把 Runtime Failure / Tool Failure / Semantic Failure / Verification Failure / Security Failure 并列，但这些类别的边界重叠：语义失败往往表现为验证失败，验证失败又可能是工具或环境问题。分类不清会导致 supervisor 做出错误的恢复动作（例如把环境问题误判为语义问题而触发 replan，浪费预算）。",
+      "why_it_matters": "Supervision 是运行时可靠性的核心，错误分类会直接放大成本或掩盖真实故障。文中给出的是故障清单，不是可判定的故障分类树。",
+      "test_or_fix": "为每类失败给出一个可观测信号（如 exit code、schema 校验、测试通过率、权限拒绝码），并说明分类歧义时默认走哪条恢复路径。至少说明 Semantic Failure 与 Verification Failure 的判定顺序。"
+    },
+    {
+      "severity": "medium",
+      "claim": "“Actor 的 Behavior 通常是确定性的程序逻辑；Agent 的 Behavior 是概率性的认知过程。”",
+      "issue": "对立过强。Actor 行为并非天然确定：它可以发起外部 IO、依赖时钟/随机数、接收不可预期的消息序列，因而在系统层面同样表现出非确定性。真正有区分度的不是“确定性 vs 概率性”，而是“单步行为是否由可复现的显式逻辑决定，还是由统计模型采样决定”。",
+      "why_it_matters": "若把区别定位在“确定性”，会让人误以为 Actor 系统不需要处理非确定性和重放问题，从而低估 Actor Model 已有的工具（事件溯源、确定性重放、幂等消息）对 Agent 的可复用价值——而本文恰恰想强调这种可复用性。",
+      "test_or_fix": "把表述改为：Agent 的单个决策步骤由采样过程产生，因而需要显式的可复现性机制（seed、轨迹记录、确定性回放）；Actor 的确定性重放技术因此更有迁移价值。"
+    },
+    {
+      "severity": "low",
+      "claim": "“成熟的 Agent Team 很可能不是‘只用 Message’，而是 Direct Message + Event Bus + Shared Workspace + Task State + Artifacts”。",
+      "issue": "这是一个组合式结论，但没有说明这四类通道何时应当使用哪一种，存在把解决方案堆砌成清单的倾向。若四者同时存在，仍需回答“真值源是哪个”，否则会出现状态不一致。",
+      "why_it_matters": "多通道并存会引入一致性问题；C Compiler 实验中 Git 是事实源、锁是协调机制，这暗示各通道有明确分工，文章应把这种分工显式化。",
+      "test_or_fix": "补充一条规则：谁是权威状态（source of truth）、消息通道是否允许携带可写状态、冲突时以谁为准。"
+    }
+  ],
+  "counterexamples": [
+    {
+      "severity": "high",
+      "thesis": "共享世界（Shared World / Shared Workspace）比共享上下文更重要，且可扩展到大规模 Agent Team。",
+      "counterexample": "当任务本身高度依赖隐性上下文（设计意图、口头的隐含约束、模糊的业务规则）时，外部可验证世界无法承载这些信息。此时要么重新引入大量上下文传递，要么引入人类在环，二者都会削弱“只共享事实”的优势。",
+      "boundary": "该主张在“目标可被外部工件精确定义、验证廉价”的场景（编译器、测试驱动任务）成立；在需求模糊、验证标准主观或昂贵的场景（产品设计、策略制定）容易失效。"
+    },
+    {
+      "severity": "medium",
+      "thesis": "没有中央 Orchestrator 的自组织协调可以工作。",
+      "counterexample": "16 个 Agent 的 C Compiler 实验规模有限，且任务是高度可分解、有快速客观反馈（测试）的。若任务分解本身需要全局优化，或模块间存在强耦合与竞争资源，无中心协调会退化为反复冲突、活锁或长尾收敛。",
+      "boundary": "自组织协调的可扩展性大约受制于“冲突可被廉价检测并快速解决”的程度；一旦冲突检测依赖昂贵的语义判断，中心协调（或分层协调）会重新占优。"
+    },
+    {
+      "severity": "medium",
+      "thesis": "Agent 更像有身份、有状态、有生命周期的计算实体（相对无状态微服务）。",
+      "counterexample": "主流微服务之所以无状态，是为了可水平扩展、快速替换和低成本恢复。给 Agent 强身份和长生命周期，会把故障恢复和容量规划复杂化；很多 Agent 任务（一次性查询、批处理）恰恰更适合无状态 worker + 外部状态。",
+      "boundary": "身份化更适合长期协作型 Agent（需要积累记忆和权限），而非全部 Agent。文章宜区分“长生命周期协作 Agent”与“无状态执行 Agent”两类形态。"
+    }
+  ],
+  "novelty": [
+    {
+      "claim": "用 Actor Model 的 Mailbox/Dispatcher/Supervisor/Sharding/Persistence 原语来映射 Agent Runtime。",
+      "assessment": "common_combination",
+      "basis": "把已有并发模型类比到新的计算形态是常见分析路径；本文的价值在于逐项对照（表格），而非提出新机制。不确定是否存在更早的公开同类系统化对照。"
+    },
+    {
+      "claim": "Cognitive Actor / Semantic Mailbox / Cognitive Scheduler / Decision Recovery 这组术语。",
+      "assessment": "potentially_distinctive",
+      "basis": "术语的命名组合看起来较新，但目前每个术语都只停留在直觉层面，没有形式化定义、成本模型或可判定判据；因此只能说“可能具有区分度”，不能判定独创性。"
+    },
+    {
+      "claim": "“Agent Runtime 是 Cognitive Actor System 的早期形态，而不是 Workflow Engine 的下一版”。",
+      "assessment": "potentially_distinctive",
+      "basis": "该表述作为假设是清晰的，但与本知识库中“从 Workflow 到 Loop、再到 Control Plane”“K8s 到 Agent Control Plane”等文章立场相近，可能属于同一主题的不同侧面而非独立新论点。"
+    }
+  ],
+  "facts": [
+    {
+      "severity": "high",
+      "claim": "Anthropic C Compiler 实验：16 个并行 Agent、任务锁、共享代码库、Git 同步、持续测试、无中央 Orchestrator。",
+      "reason_to_verify": "具体数字（16）、机制清单和“无中央 Orchestrator”的表述属于从一手材料转述的事实性主张，容易被误读或过度概括。",
+      "preferred_source": "primary"
+    },
+    {
+      "severity": "high",
+      "claim": "Google A2A 协议的范围：capability discovery、task lifecycle、message、artifact、长任务状态同步。",
+      "reason_to_verify": "协议仍处演化阶段，能力清单和状态同步语义可能随版本变化；引用需绑定版本或时间点。",
+      "preferred_source": "official"
+    },
+    {
+      "severity": "medium",
+      "claim": "Akka supervision 语义（restart/stop/resume/escalate）与 Cluster Sharding 的“调用方只知逻辑 Entity ID”。",
+      "reason_to_verify": "Akka 存在多语言实现（Scala/Java）和版本差异，且 Akka 相关许可与生态近年有变化；应确认表述与目标版本一致。",
+      "preferred_source": "official"
+    },
+    {
+      "severity": "medium",
+      "claim": "文章发布日期为 2026-09-20（未来日期），且多处使用“正在”“可能”“更适合”等趋势性表述。",
+      "reason_to_verify": "日期与趋势性判断具有强时间敏感性，需确认是预写稿还是占位日期；否则读者会误判信息时效。",
+      "preferred_source": "primary"
+    }
+  ],
+  "missing_points": [
+    {
+      "severity": "high",
+      "point": "语义路由/验证的可行性与成本模型。",
+      "why_it_matters": "全文多处依赖“系统能判断语义相关性、决策是否正确”，但没有讨论这一判断本身由谁做、花多少 token、失败率多高。若语义判断成本高于收益，Semantic Mailbox 和 Cognitive Scheduler 可能不划算。"
+    },
+    {
+      "severity": "high",
+      "point": "幂等性与上下文/轨迹重放的工程细节。",
+      "why_it_matters": "长任务 checkpoint → suspend → resume 要求 Agent 动作可重放或可幂等；工具调用、外部副作用（写 Git、改数据库）如何处理重复执行，是决定 Persistence/Sharding 是否可用的关键，文中完全未涉及。"
+    },
+    {
+      "severity": "medium",
+      "point": "验证边界与领域边界的区分。",
+      "why_it_matters": "文章把 Verification 放在认知闭环里，又把 Risk 放进 Router/Scheduler，但未说明哪些验证属于领域约束（业务正确性）、哪些属于运行时约束（资源/安全）。二者混淆会导致把业务校验错误地放在 runtime 层，或反之。"
+    },
+    {
+      "severity": "medium",
+      "point": "人类在环（Human Instruction）的位置与延迟。",
+      "why_it_matters": "Mailbox 列出了 Human Instruction，但长生命周期 Agent 需要明确人工介入是同步阻塞还是异步事件；这直接影响调度器和 supervision 的设计。"
+    },
+    {
+      "severity": "low",
+      "point": "多 Agent 通信中的观测性（trace/correlation id）与死锁检测。",
+      "why_it_matters": "Direct Message + Event + Shared State 组合下，缺少 trace 语义会使故障定位几乎不可能；这是 Agent Runtime 从原型走向基础设施的必要条件。"
+    }
+  ],
+  "recommended_changes": [
+    "把所有类比性术语（Semantic Mailbox、Cognitive Scheduler、Decision Recovery）明确标注为“待定义的工作假设”，并为每个术语补一句可判定的工程判据或可度量的指标。",
+    "为 Semantic Mailbox 主张增加一个最小可证伪实验设计（FIFO vs 语义路由的对比指标），否则将措辞从“正在变成”降级为“是否值得探索”。",
+    "把 Decision Recovery 的故障清单改写为带可观测信号与判定顺序的分类树，明确分类歧义时的默认恢复路径。",
+    "将“确定性 vs 概率性”的表述修正为“显式逻辑驱动 vs 采样驱动”，并指出 Actor 的确定性重放/事件溯源机制对 Agent 的迁移价值。",
+    "补充幂等性、副作用与上下文重放的处理策略，作为 Persistence 和 Sharding 章节的前置条件。",
+    "明确区分领域验证边界与 runtime/risk 安全边界，说明各自归属哪一层。",
+    "为 C Compiler 实验、A2A 协议、Akka 语义三类外部事实加上版本/时间标注，或加入核验提示。",
+    "确认 2026-09-20 发布日期是否为占位，避免读者误判时效性。"
+  ],
+  "evidence_level": "E1",
+  "article": "articles/agent-runtime-cognitive-actor.html",
+  "commit": "fe1881d23cdc78794d29248ffa5845085bd027cd",
+  "generated_at": "2026-09-30T01:57:06.887187+00:00",
+  "model": "deepseek-chat"
+}

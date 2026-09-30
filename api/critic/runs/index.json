@@ -1,9 +1,20 @@
 {
   "name": "Critic Lab runs",
   "kind": "read",
-  "updated": "2026-09-30T01:42:58Z",
-  "count": 12,
+  "updated": "2026-09-30T01:57:06Z",
+  "count": 13,
   "runs": [
+    {
+      "id": "agent-runtime-cognitive-actor-fe1881d23cdc",
+      "article": "agent-runtime-cognitive-actor",
+      "article_slug": "agent-runtime-cognitive-actor",
+      "status": "needs_review",
+      "summary": "这篇短文是一份有价值的、以类比为主的架构观察草稿：把 Claude Agent Teams 的并行实践映射到 Actor Model 的经典原语上，并加上认知闭环这一差异点。文章内部逻辑大体自洽，且作者已主动把核心结论标注为“架构观察/开放假设”，这是优点。主要风险有三类：一是若干关键术语（Semantic Mailbox、Cognitive Scheduler、Decision Recovery）只是被命名，没有被定义到可工程化...",
+      "commit": "fe1881d23cdc78794d29248ffa5845085bd027cd",
+      "generated_at": "2026-09-30T01:57:06.887187+00:00",
+      "json": "/api/critic/runs/agent-runtime-cognitive-actor-fe1881d23cdc.json",
+      "markdown": "/api/critic/runs/agent-runtime-cognitive-actor-fe1881d23cdc.md"
+    },
     {
       "id": "agent-runtime-model-learning-runtime-cd2ea8988fde",
       "article": "agent-runtime-model-learning-runtime",
