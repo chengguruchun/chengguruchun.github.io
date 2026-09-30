@@ -14,8 +14,111 @@
     "model": "An agent runs the criteria prompt and files thought.judgement."
   },
   "note": "Inbound is topic, not a conclusion. Agents filter and validate. They do not ghostwrite. Field PASS is not enough to publish.",
-  "generated": "2026-09-08T07:59:24Z",
+  "generated": "2026-09-30T02:17:48Z",
   "items": [
+    {
+      "id": "thought-agent-runtime-model",
+      "thought": "Runtime 不必把每次工具选择、重试和升级都交回大模型：同一类任务的轨迹、验证和反馈，可以训练出 Runtime 自己的执行策略。",
+      "stage": "topic",
+      "status": "hold",
+      "origin": "user",
+      "contribution": "original_candidate",
+      "knowledge": {
+        "type": "HYPOTHESIS",
+        "confidence": "LOW",
+        "evidence_level": "L1"
+      },
+      "quality": {
+        "fact_check": "pending",
+        "inference_check": "pending",
+        "evidence_check": "pending",
+        "counterexample_check": "pending"
+      },
+      "source": {
+        "agent": "none",
+        "note": "Distilled from the Runtime Model draft. Filed as topic. Not a catalog entry and not a Bench long page."
+      },
+      "critiques": [
+        "这是可反驳的主张，但还没有可核证据，模型门禁也还没判。长文不能代替这一句，也不能绕过 topic。"
+      ],
+      "comparisons": [
+        "这和先把基础模型训得更大不是一条路：对象是执行策略，不是模型参数。"
+      ],
+      "evidence": [],
+      "route": null,
+      "also": [],
+      "promotes_to": null,
+      "published_url": null,
+      "updated": "2026-09-30",
+      "gates": [
+        {
+          "id": "origin",
+          "name": "Origin",
+          "pass": true,
+          "required_from": "candidate"
+        },
+        {
+          "id": "contribution",
+          "name": "Contribution",
+          "pass": true,
+          "required_from": "candidate"
+        },
+        {
+          "id": "articles_ok",
+          "name": "¬ ai+known",
+          "pass": true,
+          "required_from": "article_candidate"
+        },
+        {
+          "id": "evidence",
+          "name": "Evidence",
+          "pass": false,
+          "required_from": "validated"
+        },
+        {
+          "id": "route",
+          "name": "Route",
+          "pass": false,
+          "required_from": "validated"
+        },
+        {
+          "id": "published",
+          "name": "Published",
+          "pass": false,
+          "required_from": "published"
+        }
+      ],
+      "model_gates": [
+        {
+          "id": "sharp",
+          "name": "句子够尖",
+          "kind": "model",
+          "pass": false,
+          "status": "pending",
+          "required_from": "candidate",
+          "criteria_version": null
+        },
+        {
+          "id": "evidence_real",
+          "name": "证据真相关",
+          "kind": "model",
+          "pass": false,
+          "status": "pending",
+          "required_from": "validated",
+          "criteria_version": null
+        },
+        {
+          "id": "route_fit",
+          "name": "分流匹配",
+          "kind": "model",
+          "pass": false,
+          "status": "pending",
+          "required_from": "validated",
+          "criteria_version": null
+        }
+      ],
+      "content": "/content/thoughts/thought-agent-runtime-model.json"
+    },
     {
       "id": "thought-rl-vs-finetune",
       "thought": "微调是教模型怎么回答，强化学习是用奖惩让行为变得更好；固定知识、格式或风格优先微调，实践上常先微调再强化学习。",
@@ -23,6 +126,17 @@
       "status": "hold",
       "origin": "user",
       "contribution": "synthesis",
+      "knowledge": {
+        "type": "OPINION",
+        "confidence": "LOW",
+        "evidence_level": "L1"
+      },
+      "quality": {
+        "fact_check": "pending",
+        "inference_check": "pending",
+        "evidence_check": "pending",
+        "counterexample_check": "pending"
+      },
       "source": {
         "agent": "none",
         "note": "User intake. Filed contribution as synthesis (manus is not in the schema)."
@@ -38,7 +152,7 @@
       "also": [],
       "promotes_to": null,
       "published_url": null,
-      "updated": "2026-09-08",
+      "updated": "2026-09-17",
       "gates": [
         {
           "id": "origin",

@@ -63,7 +63,7 @@ def strip_html(raw: str) -> str:
 
 def article_catalog(current: str) -> list[str]:
     items = []
-    pages = list(Path("articles").glob("*.html")) + list(Path("bench").glob("*.html"))
+    pages = list(Path("articles").glob("*.html"))
     for p in sorted(pages):
         if p.name == "index.html" or str(p) == current:
             continue
@@ -76,11 +76,6 @@ def article_catalog(current: str) -> list[str]:
     return items[:100]
 
 
-MOVED_ARTICLES = {
-    "articles/agent-runtime-model-learning-runtime.html": "bench/agent-runtime-model-learning-runtime.html",
-}
-
-
 def rebuild_index(out: Path) -> None:
     """Rewrite api/critic/runs/index.json from the JSON reports on disk."""
     runs = []
@@ -89,15 +84,6 @@ def rebuild_index(out: Path) -> None:
             continue
         data = json.loads(path.read_text(encoding="utf-8"))
         article = str(data.get("article") or "")
-        moved = MOVED_ARTICLES.get(article)
-        if moved and not Path(article).exists() and Path(moved).exists():
-            data["article"] = moved
-            path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-            md_path = path.with_suffix(".md")
-            if md_path.exists():
-                md = md_path.read_text(encoding="utf-8")
-                md_path.write_text(md.replace(f"Article: `{article}`", f"Article: `{moved}`"), encoding="utf-8")
-            article = moved
         slug = Path(article).stem if article.endswith(".html") else path.stem.rsplit("-", 1)[0]
         summary = re.sub(r"\s+", " ", str(data.get("summary") or "")).strip()
         if len(summary) > 220:

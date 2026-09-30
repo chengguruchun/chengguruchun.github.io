@@ -77,15 +77,6 @@ def load_catalog() -> tuple[str, dict[str, dict]]:
     return base, by_url
 
 
-def load_bench_items() -> dict[str, dict]:
-    """SEO metadata for Bench experiments. These rows are not catalog conclusions."""
-    path = ROOT / "api" / "bench.json"
-    if not path.exists():
-        return {}
-    data = json.loads(path.read_text(encoding="utf-8"))
-    return {item["url"]: item for item in data.get("items", []) if isinstance(item, dict) and item.get("url")}
-
-
 def html_files() -> list[Path]:
     out = []
     for p in sorted(ROOT.rglob("*.html")):
@@ -342,7 +333,7 @@ def content_date(item: dict | None) -> str | None:
 
 
 def lastmod_for(url: str, item: dict | None, by_url: dict[str, dict]) -> str | None:
-    """Date taken only from committed catalog and bench metadata.
+    """Date taken only from committed catalog metadata.
 
     `git log` is not a stable clock here. Validate Lab checks out with the
     default fetch-depth of 1, so a shallow clone has no parent and every
@@ -462,17 +453,12 @@ def main() -> int:
     if not base:
         print("FAIL catalog.json has no base_url")
         return 1
-    # Bench experiments are not catalog conclusions, but their pages still need
-    # the same BlogPosting / breadcrumb metadata as other long-form essays.
-    seo_items = dict(by_url)
-    for url, item in load_bench_items().items():
-        seo_items.setdefault(url, item)
 
     changed = 0
     for path in html_files():
-        if apply_to_file(path, base, seo_items, args.check):
+        if apply_to_file(path, base, by_url, args.check):
             changed += 1
-    if build_sitemap(base, seo_items, args.check):
+    if build_sitemap(base, by_url, args.check):
         changed += 1
     if build_robots(base, args.check):
         changed += 1

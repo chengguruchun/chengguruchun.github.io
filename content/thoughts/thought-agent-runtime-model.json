@@ -1,0 +1,35 @@
+{
+  "id": "thought-agent-runtime-model",
+  "thought": "Runtime 不必把每次工具选择、重试和升级都交回大模型：同一类任务的轨迹、验证和反馈，可以训练出 Runtime 自己的执行策略。",
+  "stage": "topic",
+  "status": "hold",
+  "origin": "user",
+  "contribution": "original_candidate",
+  "knowledge": {
+    "type": "HYPOTHESIS",
+    "confidence": "LOW",
+    "evidence_level": "L1"
+  },
+  "quality": {
+    "fact_check": "pending",
+    "inference_check": "pending",
+    "evidence_check": "pending",
+    "counterexample_check": "pending"
+  },
+  "source": {
+    "agent": "none",
+    "note": "Distilled from the Runtime Model draft. Filed as topic. Not a catalog entry and not a Bench long page."
+  },
+  "critiques": [
+    "这是可反驳的主张，但还没有可核证据，模型门禁也还没判。长文不能代替这一句，也不能绕过 topic。"
+  ],
+  "comparisons": [
+    "这和先把基础模型训得更大不是一条路：对象是执行策略，不是模型参数。"
+  ],
+  "evidence": [],
+  "route": null,
+  "also": [],
+  "promotes_to": null,
+  "published_url": null,
+  "updated": "2026-09-30"
+}

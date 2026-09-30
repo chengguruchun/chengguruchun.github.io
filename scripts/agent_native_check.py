@@ -40,7 +40,6 @@ SURFACES = [
     "api/thoughts-criteria.json",
     "api/knowledge.json",
     "api/knowledge-criteria.json",
-    "api/bench.json",
     "content/knowledge/criteria.json",
     "KNOWLEDGE_LOOP.md",
 ]
@@ -168,17 +167,17 @@ def check_page_parity(results: list[dict[str, Any]]) -> None:
     )
 
 
-def check_bench_index(results: list[dict[str, Any]]) -> None:
+def check_bench_loop(results: list[dict[str, Any]]) -> None:
     if str(ROOT / "scripts") not in sys.path:
         sys.path.insert(0, str(ROOT / "scripts"))
-    from knowledge_lib import bench_index_gaps
+    from knowledge_lib import bench_loop_gaps
 
-    gaps = bench_index_gaps()
+    gaps = bench_loop_gaps()
     gate(
         results,
-        "bench_index",
+        "bench_loop",
         not gaps,
-        "bench essays are markdown non-conclusions" if not gaps else "gap " + ", ".join(gaps[:6]),
+        "bench ideas are Thought Loop sentences" if not gaps else "gap " + ", ".join(gaps[:6]),
     )
 
 
@@ -292,7 +291,7 @@ def main() -> int:
     check_tool_parity(results)
     check_canonical_md(results)
     check_page_parity(results)
-    check_bench_index(results)
+    check_bench_loop(results)
     check_catalog_index(results)
     check_machine_map(results)
     check_agent_card(results)
