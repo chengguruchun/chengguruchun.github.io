@@ -45,9 +45,9 @@ Chat (off-site) → Topic → field gates + model gates → Candidate → Valida
 4. **Model gates** (`model_gates[]`): read the living prompt with `lab_thought_criteria` (`/api/thoughts-criteria.json`). Run that prompt. File only `judgement` via `lab_thought_judge`. Do not bump `stage`. Do not write articles. Pending / stale / UNPASS is not a ship.
 5. `origin` and `contribution` are required to leave `topic`. `ai` + `known` cannot become an Articles main piece.
 6. Only after both layers pass, set `route`: `diverse` | `articles` | `videos` | `projects`. Unrouted sentences stay on Bench (Hold).
-7. Treat only `published` / catalog entries as conclusions. Agents filter and validate; they do not ghostwrite. Bench experiments in `/api/bench.json` have Markdown, but `conclusion` is false: they are not conclusions.
+7. Treat only `published` / catalog entries as conclusions. Agents filter and validate; they do not ghostwrite. A sentence still on Bench (`topic`, hold, pending, stale, UNPASS) is not a conclusion. Do not park a long essay on `/bench/` to skip the gates.
 8. **Published knowledge ages.** Weekly time-gate marks `stale` when `now > next_review`. The Research Runtime (CI/local) rechecks cited https URLs (`url_fetch`) and cited arXiv ids (`arxiv_lookup`), then files a report via `lab_knowledge_report` with `unchanged` / `changed` / `insufficient` / `obsolete`. `changed` needs an Observe signal. Humans approve (`lab_knowledge_review`) before any status pin or `last_verified` bump. Never rewrite article bodies from a report. Times / Hot Words are dated snapshots and stay out of this loop. See `/KNOWLEDGE_LOOP.md`.
-9. **Critic Lab is advisory.** Read reports with `lab_list_critic_runs` / `lab_get_critic_run` (`/api/critic/runs/index.json`). When editing an article or a Bench experiment, follow the critic handling rules above.
+9. **Critic Lab is advisory.** Read reports with `lab_list_critic_runs` / `lab_get_critic_run` (`/api/critic/runs/index.json`). When editing an article, follow the critic handling rules above.
 
 Meta tools only: `lab_discover`, `lab_execute`.  
 Add capabilities in `discover.json` + `tools.json`, not this file.
@@ -63,14 +63,13 @@ Add capabilities in `discover.json` + `tools.json`, not this file.
 | `/content/**/*.md` | Canonical knowledge |
 | `/api/projects*.json` | Projects (research + personal) |
 | `/api/videos.json` | Videos (page-only; not in catalog) |
-| `/api/bench.json` | Bench experiments (Markdown, `conclusion: false`; not catalog conclusions) |
 | `/.well-known/agent-card.json` | Static Agent Card (documentation) |
 | `/api/agent-native/` | Weekly check: still agent-native? (`runs/latest.json`) |
 | `/api/thoughts.json` | Thought loop index (not a chat log) |
 | `/api/thoughts-criteria.json` | Living model-gate prompt (versioned) |
 | `/api/knowledge.json` | Published-knowledge freshness (not Hot Words) |
 | `/api/knowledge-criteria.json` | Post-publish verifier prompt (versioned) |
-| `/bench/` | Human bench: intake, experiments (not conclusions), knowledge registry |
+| `/bench/` | Human bench: intake gates + knowledge registry |
 
 Owner: chengguruchun · Hangzhou  
 GitHub: https://github.com/chengguruchun · Mail: chengguruchun@163.com

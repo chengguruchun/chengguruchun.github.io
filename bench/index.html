@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Agent Bench · AI Knowledge Lab</title>
-  <meta name="description" content="上面是入境走轨，一句想法先过门禁。中间是思想实验，尚未定型，不能当结论。下面是已发表知识的有效性，和入境门禁分开。">
+  <meta name="description" content="入境门禁在上面。已发表知识的有效性在下面，两条轴分开。">
   <meta name="theme-color" content="#f7f5f0">
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,13 +18,13 @@
   <meta property="og:site_name" content="AI Knowledge Lab">
   <meta property="og:locale" content="zh_CN">
   <meta property="og:title" content="Agent Bench">
-  <meta property="og:description" content="上面是入境走轨，一句想法先过门禁。中间是思想实验，尚未定型，不能当结论。下面是已发表知识的有效性，和入境门禁分开。">
+  <meta property="og:description" content="入境门禁在上面。已发表知识的有效性在下面，两条轴分开。">
   <meta property="og:url" content="https://chengguruchun.github.io/bench/">
   <meta property="og:image" content="https://chengguruchun.github.io/assets/img/og-cover.png">
   <meta property="og:image:alt" content="AI Knowledge Lab">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Agent Bench">
-  <meta name="twitter:description" content="上面是入境走轨，一句想法先过门禁。中间是思想实验，尚未定型，不能当结论。下面是已发表知识的有效性，和入境门禁分开。">
+  <meta name="twitter:description" content="入境门禁在上面。已发表知识的有效性在下面，两条轴分开。">
   <meta name="twitter:image" content="https://chengguruchun.github.io/assets/img/og-cover.png">
   <meta name="author" content="chengguruchun">
   <script type="application/ld+json">
@@ -34,7 +34,7 @@
     "name": "Agent Bench",
     "headline": "Agent Bench",
     "url": "https://chengguruchun.github.io/bench/",
-    "description": "上面是入境走轨，一句想法先过门禁。中间是思想实验，尚未定型，不能当结论。下面是已发表知识的有效性，和入境门禁分开。",
+    "description": "入境门禁在上面。已发表知识的有效性在下面，两条轴分开。",
     "inLanguage": "zh-CN",
     "isPartOf": {
       "@type": "WebSite",
@@ -57,11 +57,11 @@
     </div>
   </header>
   <main>
-    <header class="page-hero">
+    <header class="page-hero page-hero--bench">
       <div class="wrap">
         <p class="page-hero__kicker">Agent Bench</p>
         <h1>思想实验台</h1>
-        <p class="page-hero__desc">上面是入境走轨，一句想法先过门禁。中间是思想实验，尚未定型，不能当结论。下面是已发表知识的有效性，和入境门禁分开。</p>
+        <p class="page-hero__desc">入境门禁在上面。已发表知识的有效性在下面，两条轴分开。</p>
       </div>
     </header>
     <section class="section" style="padding-top:0">
@@ -71,19 +71,8 @@
           <div id="lab-thoughts" data-src="../api/thoughts.json" data-mode="stage" hidden></div>
         </div>
 
-        <h2 id="bench-experiments" class="projects-section__title">思想实验</h2>
-        <p class="projects-section__note">尚未过门的长文。有 Markdown，但不是结论，不进 catalog。</p>
-        <div class="grid grid--2">
-          <a class="card" href="agent-runtime-model-learning-runtime.html" data-tags="Agent Runtime Learning Runtime Thought Experiment">
-            <div class="card__meta"><span>实验 2026-09-30</span><span>Agent Runtime · Learning Runtime</span></div>
-            <h2 class="card__title">Agent Runtime Model：让 Runtime 本身成为可学习的系统</h2>
-            <p class="card__excerpt">这不是一篇已经定型的架构文章，而是放在实验台上的思想实验：Runtime 能不能从执行结果里学习自己的策略。</p>
-            <div class="card__tags"><span class="tag">Agent Runtime</span><span class="tag">Learning Runtime</span><span class="tag">Thought Experiment</span></div>
-          </a>
-        </div>
-
-        <section class="knowledge-board" aria-label="已发表知识">
-          <h2>已发表知识</h2>
+        <section class="knowledge-board" aria-label="Knowledge registry">
+          <h2>Knowledge registry</h2>
           <div id="lab-knowledge" data-src="../api/knowledge.json"></div>
         </section>
       </div>

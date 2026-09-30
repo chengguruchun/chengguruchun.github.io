@@ -401,43 +401,33 @@ def page_parity_gaps() -> list[str]:
     return gaps
 
 
-def bench_index_gaps() -> list[str]:
-    """Long-form Bench HTML must be indexed as a non-conclusion, never catalogued.
+def bench_loop_gaps() -> list[str]:
+    """Bench is the Thought Loop rail, not a parallel non-conclusion catalog.
 
-    Thought Loop routes are diverse|articles|videos|projects. A Bench essay is an
-    experiment: canonical Markdown plus /api/bench.json, and not a catalog row.
+    An idea stays one sentence in content/thoughts until field gates and model
+    gates pass, then it leaves by route (diverse|articles|videos|projects).
+    A long HTML/Markdown page under bench/, or an api/bench.json index, skips
+    those gates.
     """
-    index_path = ROOT / "api" / "bench.json"
-    if not index_path.exists():
-        return ["api/bench.json:missing"]
-    data = load_json(index_path)
-    items = [x for x in (data.get("items") or []) if isinstance(x, dict)]
-    by_url = {str(x.get("url") or ""): x for x in items}
-    catalog_urls = {str(x.get("url") or "") for x in catalog_items()}
     gaps: list[str] = []
+    if (ROOT / "api" / "bench.json").exists():
+        gaps.append("api/bench.json:parallel-non-conclusion-index")
     bench_root = ROOT / "bench"
-    pages = sorted(bench_root.glob("*.html")) if bench_root.exists() else []
-    seen: set[str] = set()
-    for path in pages:
-        if path.name == "index.html":
-            continue
-        url = "/" + path.relative_to(ROOT).as_posix()
-        seen.add(url)
-        item = by_url.get(url)
-        if not item:
-            gaps.append(f"{url}:not-in-bench-index")
-            continue
-        if item.get("conclusion") is not False:
-            gaps.append(f"{url}:not-marked-non-conclusion")
-        rel = item.get("content") or item.get("markdown")
-        if not rel or not (ROOT / str(rel).lstrip("/")).exists():
-            gaps.append(f"{url}:missing-markdown")
-        if url in catalog_urls:
-            gaps.append(f"{url}:in-catalog")
-    for item in items:
-        url = str(item.get("url") or "")
-        if url not in seen:
-            gaps.append(f"{url}:index-without-html")
+    if bench_root.exists():
+        for path in sorted(bench_root.glob("*.html")):
+            if path.name == "index.html":
+                continue
+            gaps.append("/" + path.relative_to(ROOT).as_posix() + ":ungated-long-form")
+    content_bench = ROOT / "content" / "bench"
+    if content_bench.exists():
+        for path in sorted(content_bench.rglob("*")):
+            if path.is_file():
+                gaps.append("/" + path.relative_to(ROOT).as_posix() + ":ungated-markdown")
+    page = ROOT / "bench" / "index.html"
+    if page.exists():
+        text = page.read_text(encoding="utf-8")
+        if "尚未过门的长文" in text or 'id="bench-experiments"' in text:
+            gaps.append("bench/index.html:ungated-experiment-section")
     return gaps
 
 

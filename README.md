@@ -54,9 +54,7 @@
 
 正文以 `content/**/*.md` 为权威源，HTML 是渲染层。
 
-**Thought Loop**（人看 [`/bench/`](./bench/)）：任意 Agent 加载 Skill 后，聊天/初步想法只落 `topic`，过字段 `gates[]` 和模型 `model_gates[]` 再分流。模型标准是可改提示词。已有文章正文不重写。Hot Words 仍走周环。索引：[`/api/thoughts.json`](./api/thoughts.json) · [`/api/thoughts-criteria.json`](./api/thoughts-criteria.json) · [`THOUGHT_LOOP.md`](./THOUGHT_LOOP.md)
-
-**Bench 思想实验**（不是结论）：[`/api/bench.json`](./api/bench.json) 指向 `content/bench/*.md`，`conclusion: false`，不进 catalog。
+**Thought Loop**（人看 [`/bench/`](./bench/)）：任意 Agent 加载 Skill 后，聊天/初步想法只落 `topic`，过字段 `gates[]` 和模型 `model_gates[]` 再分流。模型标准是可改提示词。已有文章正文不重写。Hot Words 仍走周环。未过门的想法是一句 thought，不是 `/bench/` 上的长文。索引：[`/api/thoughts.json`](./api/thoughts.json) · [`/api/thoughts-criteria.json`](./api/thoughts-criteria.json) · [`THOUGHT_LOOP.md`](./THOUGHT_LOOP.md)
 
 ## For Agents
 
@@ -65,7 +63,7 @@
 3. schema 在 [`/mcp/tools.json`](./mcp/tools.json)，再 `lab_execute`
 4. 知识索引 [`/api/catalog.json`](./api/catalog.json) → `/content/**/*.md`
 5. 站点地图 [`llms.txt`](./llms.txt)
-6. 入境是 [`topic`](./THOUGHT_LOOP.md)：聊天和初步想法先蒸馏，再看 [`/api/thoughts.json`](./api/thoughts.json) 的字段 `gates[]` 和模型 `model_gates[]`。标准在 [`/api/thoughts-criteria.json`](./api/thoughts-criteria.json)。未 `published` 的当实验，不当结论。Bench 长文看 [`/api/bench.json`](./api/bench.json)（`conclusion: false`）。
+6. 入境是 [`topic`](./THOUGHT_LOOP.md)：聊天和初步想法先蒸馏成一句，再看 [`/api/thoughts.json`](./api/thoughts.json) 的字段 `gates[]` 和模型 `model_gates[]`。标准在 [`/api/thoughts-criteria.json`](./api/thoughts-criteria.json)。未 `published` 的当实验，不当结论，也不另开 Bench 长文索引。
 7. 已发表知识另走 [`KNOWLEDGE_LOOP.md`](./KNOWLEDGE_LOOP.md)：读 [`/api/knowledge.json`](./api/knowledge.json)。`stale` 是过期，不是错误。Agent 只写报告。
 
 元工具：`lab_discover`、`lab_execute`。

@@ -26,7 +26,7 @@ from knowledge_lib import (  # noqa: E402
     load_criteria,
     load_json,
     merge_indexes,
-    bench_index_gaps,
+    bench_loop_gaps,
     page_parity_gaps,
     rebuild_tags,
     seed_frontmatter,
@@ -69,12 +69,12 @@ def check(registry: dict, criteria: dict) -> int:
         fails += 1
     else:
         print("  OK  published HTML has catalog + markdown")
-    bench_gaps = bench_index_gaps()
+    bench_gaps = bench_loop_gaps()
     if bench_gaps:
-        print("FAIL bench HTML missing non-conclusion index: " + ", ".join(bench_gaps[:8]))
+        print("FAIL bench skipped Thought Loop gates: " + ", ".join(bench_gaps[:8]))
         fails += 1
     else:
-        print("  OK  bench experiments indexed as non-conclusions")
+        print("  OK  bench stays on the Thought Loop")
     if load_json(CRITERIA_OUT).get("version") != criteria.get("version"):
         print("FAIL api/knowledge-criteria.json version drifted")
         fails += 1

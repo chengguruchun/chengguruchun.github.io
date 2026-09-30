@@ -5,9 +5,7 @@ on:
     branches: [main]
     paths:
       - "articles/**"
-      - "bench/**"
       - "!articles/index.html"
-      - "!bench/index.html"
   workflow_dispatch:
     inputs:
       article:
@@ -49,7 +47,7 @@ jobs:
             ARTICLE="$INPUT_ARTICLE"
           else
             # Prefer real article pages; never review articles/index.html (listing page).
-            ARTICLE=$(git diff --name-only "$BEFORE_SHA" "$AFTER_SHA" -- 'articles/*.html' 'bench/*.html' \
+            ARTICLE=$(git diff --name-only "$BEFORE_SHA" "$AFTER_SHA" -- 'articles/*.html' \
               | grep -vE '(^|/)index\.html$' \
               | head -n 1 || true)
           fi

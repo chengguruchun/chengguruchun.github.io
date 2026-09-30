@@ -1,6 +1,6 @@
 {
   "name": "AI Knowledge Lab · Agent-native criteria",
-  "version": "1.1",
+  "version": "1.2",
   "periodScheme": "YYYY-MM-WN = Nth 7-day block of the calendar month (Asia/Shanghai), not ISO week",
   "loop": "State → Check → Publish report → Observe",
   "meaning": "The Lab is agent-native when an external agent can discover capabilities, resolve schemas, and fetch canonical Markdown/JSON without scraping HTML or inventing tool names.",
@@ -31,9 +31,9 @@
       "ask": "Does every published Articles/Diverse HTML page have a catalog row and canonical Markdown?"
     },
     {
-      "id": "bench_index",
+      "id": "bench_loop",
       "hard": true,
-      "ask": "Does every long-form Bench HTML page have canonical Markdown in /api/bench.json, marked non-conclusion, and stay out of the catalog?"
+      "ask": "Do Bench ideas stay on the Thought Loop (one sentence, gates on /api/thoughts.json) instead of ungated long-form HTML or a non-conclusion index?"
     },
     {
       "id": "catalog_index",
