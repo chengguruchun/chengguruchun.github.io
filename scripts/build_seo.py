@@ -13,7 +13,6 @@ import json
 import re
 import subprocess
 import sys
-from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -102,7 +101,29 @@ def extract(pattern: str, text: str) -> str | None:
     return m.group(1).strip() if m else None
 
 
+def git_shallow() -> bool:
+    """True when this clone has no parents for the tip commit.
+
+    `actions/checkout` defaults to fetch-depth 1. That shallow root has no
+    parent, so `git log -- path` reports the tip date for every file, and
+    sitemap lastmod no longer matches a full clone.
+    """
+    try:
+        out = subprocess.run(
+            ["git", "rev-parse", "--is-shallow-repository"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            timeout=10,
+        )
+    except (OSError, subprocess.SubprocessError):
+        return False
+    return out.stdout.strip() == "true"
+
+
 def git_date(path: Path) -> str | None:
+    if git_shallow():
+        return None
     try:
         out = subprocess.run(
             ["git", "log", "-1", "--format=%cs", "--", str(path)],
@@ -349,16 +370,25 @@ def apply_to_file(path: Path, base: str, by_url: dict[str, dict], check: bool) -
 
 
 def build_sitemap(base: str, by_url: dict[str, dict], check: bool) -> bool:
+    if git_shallow():
+        fail(
+            "sitemap.xml lastmod needs full git history — a shallow checkout "
+            "dates every page as the tip commit. Checkout with fetch-depth: 0, "
+            "then run `python3 scripts/build_seo.py`"
+        )
+        return False
+
     entries = []
     for path in html_files():
         rel = path.relative_to(ROOT).as_posix()
         url = site_path(rel)
         item = by_url.get(url)
+        # Catalog dates are stable. Landing pages fall back to the last commit
+        # that touched the file. Never use "today": that changes every run.
         lastmod = (
             (item or {}).get("published_date")
             or (item or {}).get("date")
             or git_date(path)
-            or datetime.now(timezone.utc).strftime("%Y-%m-%d")
         )
         if url == "/":
             priority = "1.0"
@@ -373,7 +403,8 @@ def build_sitemap(base: str, by_url: dict[str, dict], check: bool) -> bool:
     for url, lastmod, priority in sorted(entries):
         lines.append("  <url>")
         lines.append(f"    <loc>{esc(url)}</loc>")
-        lines.append(f"    <lastmod>{lastmod}</lastmod>")
+        if lastmod:
+            lines.append(f"    <lastmod>{lastmod}</lastmod>")
         lines.append(f"    <priority>{priority}</priority>")
         lines.append("  </url>")
     lines.append("</urlset>")
