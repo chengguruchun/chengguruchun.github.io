@@ -27,6 +27,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # lastmod is `git log` of each page. Depth 1 has no parents, so every
+          # file looks edited in the tip commit and sitemap.xml looks stale.
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"

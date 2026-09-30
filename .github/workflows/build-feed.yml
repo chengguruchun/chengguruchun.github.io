@@ -27,6 +27,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Same reason as Validate Lab: sitemap lastmod comes from git history.
+          fetch-depth: 0
 
       - uses: actions/setup-python@v5
         with:
