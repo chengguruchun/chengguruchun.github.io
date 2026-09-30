@@ -11,9 +11,7 @@ import argparse
 import html
 import json
 import re
-import subprocess
 import sys
-from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -100,21 +98,6 @@ def html_files() -> list[Path]:
 def extract(pattern: str, text: str) -> str | None:
     m = re.search(pattern, text, re.DOTALL | re.IGNORECASE)
     return m.group(1).strip() if m else None
-
-
-def git_date(path: Path) -> str | None:
-    try:
-        out = subprocess.run(
-            ["git", "log", "-1", "--format=%cs", "--", str(path)],
-            cwd=ROOT,
-            capture_output=True,
-            text=True,
-            timeout=10,
-        )
-    except (OSError, subprocess.SubprocessError):
-        return None
-    stamp = out.stdout.strip()
-    return stamp or None
 
 
 def esc(value: str) -> str:
@@ -348,18 +331,48 @@ def apply_to_file(path: Path, base: str, by_url: dict[str, dict], check: bool) -
     return True
 
 
+def content_date(item: dict | None) -> str | None:
+    if not item:
+        return None
+    for key in ("published_date", "date"):
+        value = item.get(key)
+        if isinstance(value, str) and value.strip():
+            return value.strip()
+    return None
+
+
+def lastmod_for(url: str, item: dict | None, by_url: dict[str, dict]) -> str | None:
+    """Date taken only from committed catalog and bench metadata.
+
+    `git log` is not a stable clock here. Validate Lab checks out with the
+    default fetch-depth of 1, so a shallow clone has no parent and every
+    path's last commit is the tip. A squash merge also rewrites which commit
+    last touched a file. Either one makes a sitemap generated on a full
+    checkout disagree with CI. The wall clock is worse: it changes overnight.
+    """
+    own = content_date(item)
+    if own:
+        return own
+    dates: list[str] = []
+    for child_url, child in by_url.items():
+        if url == "/":
+            if child_url == "/":
+                continue
+        elif not (url.endswith("/") and child_url.startswith(url) and child_url != url):
+            continue
+        found = content_date(child)
+        if found:
+            dates.append(found)
+    return max(dates) if dates else None
+
+
 def build_sitemap(base: str, by_url: dict[str, dict], check: bool) -> bool:
     entries = []
     for path in html_files():
         rel = path.relative_to(ROOT).as_posix()
         url = site_path(rel)
         item = by_url.get(url)
-        lastmod = (
-            (item or {}).get("published_date")
-            or (item or {}).get("date")
-            or git_date(path)
-            or datetime.now(timezone.utc).strftime("%Y-%m-%d")
-        )
+        lastmod = lastmod_for(url, item, by_url)
         if url == "/":
             priority = "1.0"
         elif url in COLLECTIONS or url in ("/about/", "/bench/", "/times/", "/now/"):
@@ -370,10 +383,11 @@ def build_sitemap(base: str, by_url: dict[str, dict], check: bool) -> bool:
 
     lines = ['<?xml version="1.0" encoding="UTF-8"?>']
     lines.append('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">')
-    for url, lastmod, priority in sorted(entries):
+    for url, lastmod, priority in sorted(entries, key=lambda row: row[0]):
         lines.append("  <url>")
         lines.append(f"    <loc>{esc(url)}</loc>")
-        lines.append(f"    <lastmod>{lastmod}</lastmod>")
+        if lastmod:
+            lines.append(f"    <lastmod>{lastmod}</lastmod>")
         lines.append(f"    <priority>{priority}</priority>")
         lines.append("  </url>")
     lines.append("</urlset>")
