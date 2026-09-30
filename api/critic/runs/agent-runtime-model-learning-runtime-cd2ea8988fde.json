@@ -1,0 +1,155 @@
+{
+  "status": "needs_review",
+  "summary": "The article is a coherent, appropriately hedged conceptual sketch of a 'Runtime Model' as a learnable execution-policy layer, and its claims are mostly framed as hypotheses, which is appropriate. The main weaknesses are internal: the split between 'LLM 解决任务 / Runtime 执行任务 / Runtime Model 学习如何运行' is asserted rather than derived, the Tool A 42% vs Tool B 91% example is a textbook confounding problem presented as a learning signal, the verification threshold diagram mixes three different quantities (confidence, evidence, incompleteness) under one axis, and the policy-family list has no stated interaction or arbitration model. The review prompt's specific concern — 'Domain Object × Action = Tool' — does not appear in this article at all, so that question is answered by noting its absence rather than reviewing it.",
+  "logic": [
+    {
+      "severity": "medium",
+      "claim": "『LLM 负责解决任务，Agent Runtime 负责执行任务，而 Runtime Model 负责学习如何更好地运行 Agent』——三条职责被当作清晰的切分。",
+      "issue": "边界是循环定义的：'解决任务'与'执行任务'在文中没有可操作判据。文章自己列出的决策（是否重试、是否验证、何时结束）在多数现有 Agent 中正是由 LLM 在推理时做出的，也就是说这一层现实上属于 LLM，而不是一个独立主体。把它划给 Runtime Model 是一次架构主张，不是一次观察。",
+      "why_it_matters": "如果这条切分不成立，后面六节的 Policy Family 就只是'把 prompt 里的启发式拆成小模型'，而非一个新的系统层级，整篇文章的价值主张会显著缩水，也会误导读者以为可以直接照搬拆分。",
+      "test_or_fix": "给出一个可判定的分界测试：对任一决策，问'该决策是否能在不读取任务语义的情况下，仅凭 Runtime 可见信号（历史成功率、成本、延迟、错误码）做出？'能→Runtime Model；不能→必须留在 LLM。用 3–5 个具体决策（如'是否重试 503''是否切换工具''本任务是否已完成'）跑一遍这个测试，并把结果写进文章。"
+    },
+    {
+      "severity": "medium",
+      "claim": "『某类任务使用 Tool A 的成功率只有 42%，而 Tool B 达到 91%，经过足够多的真实轨迹之后，Runtime Model 可以学习在类似任务中优先选择 Tool B。』",
+      "issue": "这是把相关性当成可学策略的典型例子。42%/91% 的差异可能来自任务难度分层（难任务被路由到 Tool A）、工具可用性时段、上下文长度分布或用户群体差异，而不是工具本身。文中没有提到任何分层、随机化或因果识别。",
+      "why_it_matters": "这正是 Learning Runtime 最容易翻车的地方：如果学习的是混杂的观测策略（off-policy 数据），模型会放大既有偏差——越用 A 越显得 A 差，形成自我实现的路径依赖，且上线后难以发现。",
+      "test_or_fix": "至少要求两点：其一，报告分层后的成功率（按 Task Fingerprint 分桶）而非全局均值；其二，保留一个小的随机探索比例（如 5–10%）以获得反事实样本。文中应把例子改写为'需要先通过分层/探索排除混杂，才可能学到 Tool B 更优'。"
+    },
+    {
+      "severity": "low",
+      "claim": "Verification 的判定块：confidence > threshold → finish；confidence < threshold → verify；confidence very low → re-plan / human。",
+      "issue": "三个分支挂在同一个 'confidence' 标量上，但正文说的是比较 'Expected Outcome、Actual Outcome 和 Evidence'——这是三个不同来源的量（模型自评置信度、外部证据强度、目标-结果差距）。把证据强度压缩成模型自评的 confidence，等于让被验证者自己打分。",
+      "why_it_matters": "验证层是整篇文章唯一带真实工程后果的环节；如果验证信号来自被验证的模型，Runtime 的'可靠性'主张就退化成自我确认，工业场景（该知识库中有多篇 MES/IoT 文章）无法接受。",
+      "test_or_fix": "把 confidence 拆开：evidence_sufficiency（外部可检验）、outcome_gap（Expected vs Actual 的可度量差）、model_confidence（自评，仅作参考）。并给出一个具体反例：LLM 自评 confidence=0.95 但没有任何外部 evidence 时，应走 verify 而不是 finish。"
+    },
+    {
+      "severity": "medium",
+      "claim": "『规则引擎负责确定性的边界，小模型负责高频策略判断，大模型负责复杂推理，而 Runtime 负责把它们组织成可靠的执行闭环。』",
+      "issue": "列举了四种执行者，但没有给出它们之间的仲裁规则（优先级、冲突、状态共享）。'组织成闭环'是一句覆盖性描述，不是机制。",
+      "why_it_matters": "这是 Runtime Model 作为工程方案的核心可行性问题：多 Policy 共用一条轨迹时，Retry Policy 想重试、Risk Model 想升级人工、Cost Optimizer 想放弃，谁赢？没有仲裁规则，Policy Family 就只是一个模块清单。",
+      "test_or_fix": "补一张极小化的决策优先级表或仲裁函数（例如：安全类策略可否决成本类策略；Verification 失败是否强制触发 Re-plan），并说明各 Policy 读取的是同一份 Runtime State 还是各自快照。"
+    },
+    {
+      "severity": "low",
+      "claim": "标题与结语将 Runtime 定位为'操作系统'，Runtime Model 为'操作系统中的学习型控制层'。",
+      "issue": "类比本身没问题，但'学习型控制层'与成熟的自治控制理论（闭环反馈、控制稳定性）之间没有任何映射，读者无法判断这里的'学习'是否包含稳定性保证。",
+      "why_it_matters": "控制类比会诱导读者期待收敛性与可预测性，而文中描述的基于轨迹的策略更新恰恰可能引入震荡（策略更新→数据分布变化→策略再更新）。",
+      "test_or_fix": "明确这是一处修辞类比，或补一句：策略更新频率应与数据分布漂移速度挂钩，并说明是否会做离线评估后再上线（与知识库中 Evaluation 文章对接）。"
+    }
+  ],
+  "counterexamples": [
+    {
+      "severity": "high",
+      "thesis": "Runtime Model 适合学习重复性高、反馈信号明确的执行策略。",
+      "counterexample": "长尾工具集（如企业内 200+ 内网 API）中，单个工具调用频次极低，学不到稳定统计；此时小 Policy Model 的样本量低于冷启动阈值，反而不如让大模型直接推理。",
+      "boundary": "Runtime Model 的有效范围应限定在'同 Task Fingerprint 下轨迹数 ≥ N'的头部决策；文章需要给出对长尾的退路（回落到 LLM 或默认策略）。"
+    },
+    {
+      "severity": "high",
+      "thesis": "『不一定需要修改基础大模型的参数，先优化 Runtime Policy』是一条更廉价的优化路径。",
+      "counterexample": "如果失败主因是模型不理解任务（能力缺口），而不是运行策略不佳，那么优化 Runtime Policy 只能改变失败方式：Retry 更多次、更早升级人工、更保守地拒绝任务。指标（如人工介入率）会变好，真实任务成功率不会。",
+      "boundary": "该路径只在'模型能力足够、失败集中于执行层'时成立；文章缺少对失败归因（能力 vs 策略）的诊断环节。"
+    },
+    {
+      "severity": "medium",
+      "thesis": "Verification 是 Runtime Model 的重要入口，可由 Expected/Actual/Evidence 比较驱动。",
+      "counterexample": "开放式任务（写一份市场分析、重构一段代码）没有可比的 Expected Outcome，Evidence 也没有 ground truth；此时 Verification Policy 只能退化为规则检查或人工抽检，无法形成可训练标签。",
+      "boundary": "Verification 可学习性依赖结果可外部检验；应明确区分可验证任务与不可验证任务，并指出后者只能依赖 Proxy（参见知识库中 Proxy Metric ≠ Real Outcome）。"
+    },
+    {
+      "severity": "medium",
+      "thesis": "未来 Runtime Model 更可能是一组 Policy Model Family。",
+      "counterexample": "若 7 个 Policy 各自独立训练，它们的目标函数会相互冲突：Cost Optimizer 奖励更少调用，Verification Model 奖励更多调用。分别最优不等于系统最优。",
+      "boundary": "Policy Family 需要共享目标或明确层级，否则模块化会带来局部最优陷阱；文章未处理这一点。"
+    }
+  ],
+  "novelty": [
+    {
+      "claim": "Agent Runtime 需要一个独立于 LLM 的、可学习的决策层。",
+      "assessment": "potentially_distinctive",
+      "basis": "初步判断（未做外部检索）：'LLM 之外还有一层策略'在路线图层面常见，但把该层明确命名为 Runtime Model 并给出 Task→Trajectory→Outcome 数据契约，是本知识库中相对少见的组合方式，与本库 Agent Optimizer、Control Plane 等文章形成呼应。"
+    },
+    {
+      "claim": "Runtime Model 不是单一模型，而是一组围绕 Tool Router / Context Selector / Retry Policy / Risk Model / Verification Model / Cost Optimizer / Human Escalation Policy 的政策家族。",
+      "assessment": "common_combination",
+      "basis": "这些组件在 Agent 工程与推荐系统／风控实践中已分别存在（路由、重试、风险评分、升级策略），将其打包成一个族属组合式表述，其价值取决于是否给出交互机制。"
+    },
+    {
+      "claim": "从 Feedback 到 Runtime Learning 的闭环流程图。",
+      "assessment": "established",
+      "basis": "感知-决策-反馈闭环在控制论与强化学习中属既有范式；此处是应用映射，不构成新机制。"
+    },
+    {
+      "claim": "Task Fingerprint + Context + Available Tools + Action + Observation + Failure/Recovery + Final Outcome + Cost/Latency + Human Feedback 作为 Runtime Experience 的字段集。",
+      "assessment": "unknown",
+      "basis": "字段清单本身看起来是常见工程埋点集合的合并；是否是本库已有字段的重新编排，无法在不检索本库其他文章的情况下判断，建议与 agent-skill-evolution-pruning、agent-optimizer-experience-policy 对齐后再宣称贡献。"
+    }
+  ],
+  "facts": [
+    {
+      "severity": "medium",
+      "claim": "文中未出现具体模型、版本或厂商，但隐含假设当前 Agent 系统把 Tool Routing / Retry / Verification 都交给大模型。",
+      "reason_to_verify": "该假设对 2025–2026 年各家 Agent 框架（含知识库提到的 Harness / Runtime 类系统）是否成立，取决于具体实现在这些环节是否已内置规则或小模型；若多数系统早已把其中一部分做成确定性逻辑，文章的'新问题'叙述会被削弱。",
+      "preferred_source": "official"
+    },
+    {
+      "severity": "low",
+      "claim": "示例数字：Tool A 42%、Tool B 91%。",
+      "reason_to_verify": "这两个数字没有任何来源或实验设置，应视为示意值；读者可能误当作实测基线。",
+      "preferred_source": "multiple_independent"
+    },
+    {
+      "severity": "low",
+      "claim": "文章日期标注为 2026-09-30。",
+      "reason_to_verify": "日期晚于当前常见阅读时间，若为计划发布日期应标明；若已发布需确认元数据一致性。",
+      "preferred_source": "primary"
+    }
+  ],
+  "missing_points": [
+    {
+      "severity": "high",
+      "point": "缺少'失败归因'环节：先判断失败源于模型能力还是运行策略，再决定是否值得训练 Runtime Model。",
+      "why_it_matters": "没有归因，Runtime Learning 会把能力缺口错记为策略问题，指标改善但任务成功率不变，且掩盖真正需要升级模型的信号。"
+    },
+    {
+      "severity": "medium",
+      "point": "未讨论样本量与冷启动：每个 Policy 需要多少条同类轨迹才可训练、置信区间如何。",
+      "why_it_matters": "决定该架构在中小规模部署中是否可行；否则 Policy Family 只在超大规模场景成立，与'Agent Infrastructure'的普适主张不符。"
+    },
+    {
+      "severity": "medium",
+      "point": "未讨论策略更新与数据分布的耦合（off-policy 漂移、反馈回灌偏差、策略震荡）。",
+      "why_it_matters": "Learning Runtime 的核心风险在此；缺少这部分，闭环图看起来比实际更安全。"
+    },
+    {
+      "severity": "medium",
+      "point": "关于边界混淆：用户评审提示中的 'Domain Object × Action = Tool' 在本文中完全未出现，本文也没有讨论 tool consolidation 引起的参数膨胀（每个 Domain Object × Action 组合都可能引入独立工具、参数模式与权限）。",
+      "why_it_matters": "若这是知识库关注的问题，本文错失了与 domain-driven-agent-tool-design 的对接点；同时 Tool Router 的有效性高度依赖工具集合的规模与重叠度，参数膨胀会直接决定路由是否可学。"
+    },
+    {
+      "severity": "medium",
+      "point": "未明确 Runtime 边界与领域边界、风险边界、验证边界的区别。",
+      "why_it_matters": "Risk Model 与 Human Escalation Policy 通常由领域/合规定义，而非 Runtime 自行学习；若不区分，读者会误以为风险阈值可由轨迹自动优化，这在受监管场景中不可接受。"
+    },
+    {
+      "severity": "low",
+      "point": "未提及 Human Feedback 的采集成本与非平稳性（用户偏好漂移、标注噪声）。",
+      "why_it_matters": "Human Feedback 被列为字段之一，但其质量直接决定 Policy 上限。"
+    }
+  ],
+  "recommended_changes": [
+    "加入一节'能力失败 vs 策略失败'的诊断方法，并给出归因判据，把 Runtime Model 的适用范围限定为策略型失败。",
+    "把 Tool A/B 示例改写为需要分层与探索才能成立的因果推断示例，并补充冷启动／样本量门槛。",
+    "将 Verification 的 confidence 拆分为 evidence_sufficiency、outcome_gap、model_confidence，并明确 finish/verify/re-plan 各由哪个量主导。",
+    "为 Policy Family 增加一个最小仲裁规则（优先级或共享目标），说明冲突时谁否决谁。",
+    "补充一节边界说明：Runtime 边界 ≠ 领域边界 ≠ 风险/合规边界 ≠ 验证边界，风险阈值与人工升级规则通常不由轨迹自动学习。",
+    "若知识库确实关注 'Domain Object × Action = Tool' 与工具合并导致的参数膨胀问题，应在本文增加与 domain-driven-agent-tool-design 的显式对照，讨论工具集合规模对 Tool Router 可学性的影响。",
+    "将全文标为 evolving hypothesis，并在闭环图旁注明策略更新频率需与数据漂移速度匹配、并经过离线评估再上线。"
+  ],
+  "evidence_level": "E0",
+  "article": "articles/agent-runtime-model-learning-runtime.html",
+  "commit": "cd2ea8988fdea46ef443535453e01c8a04c92d26",
+  "generated_at": "2026-09-30T00:24:09.366997+00:00",
+  "model": "deepseek-chat"
+}
