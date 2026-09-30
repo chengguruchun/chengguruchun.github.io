@@ -128,7 +128,7 @@ python3 scripts/build_seo.py --check   # CI：校验产物是否最新，不写�
 
 - `canonical`、`og:*`、`twitter:*`、全站 RSS `<link rel="alternate">`
 - JSON-LD：文章 `BlogPosting`（含 `datePublished` / `keywords`）+ `BreadcrumbList`；栏目页 `CollectionPage`；首页 `WebSite`；About `ProfilePage`
-- `sitemap.xml`（`lastmod` 取自 catalog 日期，缺失时回退到 git 提交日期）
+- `sitemap.xml`（`lastmod` 只取 catalog / bench 里提交的 `published_date` 或 `date`；首页和栏目页取该范围最新一篇。没有仓库里的内容日期就不写 `lastmod`，不读 git 历史，也不用当前时钟）
 - `robots.txt`（显式放行 GPTBot / ClaudeBot / PerplexityBot 等模型抓取器，并声明 sitemap）
 
 分享卡片：`assets/img/og-cover.svg` 是源，PNG 是产物。改完 SVG 重新光栅化：
