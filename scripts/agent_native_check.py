@@ -11,6 +11,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import sys
 import urllib.error
 import urllib.request
@@ -39,6 +40,7 @@ SURFACES = [
     "api/thoughts-criteria.json",
     "api/knowledge.json",
     "api/knowledge-criteria.json",
+    "api/bench.json",
     "content/knowledge/criteria.json",
     "KNOWLEDGE_LOOP.md",
 ]
@@ -92,16 +94,33 @@ def check_surfaces(results: list[dict[str, Any]]) -> None:
 
 def check_protocol(results: list[dict[str, Any]]) -> None:
     skill = (ROOT / "SKILL.md").read_text(encoding="utf-8")
+    knowledge_lines = [ln for ln in skill.splitlines() if "lab_knowledge_report" in ln]
+    critic_lines = [ln for ln in skill.splitlines() if "lab_list_critic_runs" in ln]
+    knowledge_intact = bool(knowledge_lines) and all(
+        "lab_list_critic_runs" not in ln and "unchanged" in ln and "obsolete" in ln
+        for ln in knowledge_lines
+    )
+    critic_intact = bool(critic_lines) and all("lab_get_critic_run" in ln for ln in critic_lines)
     ok = (
         "Blog for Agents" in skill
         and "discover" in skill.lower()
         and "execute" in skill.lower()
         and "lab_discover" in skill
         and "lab_execute" in skill
+        and knowledge_intact
+        and critic_intact
+        and "/api/critic/runs/index.json" in skill
+        and "not conclusions" in skill
+        and not re.search(r"lab_knowledge_report\s*\n", skill)
     )
     disc = load_json(ROOT / "api" / "discover.json")
     proto = disc.get("protocol") == "discover-then-execute"
-    gate(results, "protocol", ok and proto, "SKILL + discover.json use discover-then-execute" if ok and proto else "protocol drift in SKILL.md or discover.json")
+    detail = "SKILL + discover.json use discover-then-execute"
+    if not ok or not proto:
+        detail = "protocol drift in SKILL.md or discover.json"
+        if not knowledge_intact or re.search(r"lab_knowledge_report\s*\n", skill):
+            detail = "SKILL.md knowledge-report sentence is truncated or merged with Critic tools"
+    gate(results, "protocol", ok and proto, detail)
 
 
 def check_tool_parity(results: list[dict[str, Any]]) -> None:
@@ -146,6 +165,20 @@ def check_page_parity(results: list[dict[str, Any]]) -> None:
         "page_parity",
         not gaps,
         "published HTML has catalog + markdown" if not gaps else "gap " + ", ".join(gaps[:6]),
+    )
+
+
+def check_bench_index(results: list[dict[str, Any]]) -> None:
+    if str(ROOT / "scripts") not in sys.path:
+        sys.path.insert(0, str(ROOT / "scripts"))
+    from knowledge_lib import bench_index_gaps
+
+    gaps = bench_index_gaps()
+    gate(
+        results,
+        "bench_index",
+        not gaps,
+        "bench essays are markdown non-conclusions" if not gaps else "gap " + ", ".join(gaps[:6]),
     )
 
 
@@ -259,6 +292,7 @@ def main() -> int:
     check_tool_parity(results)
     check_canonical_md(results)
     check_page_parity(results)
+    check_bench_index(results)
     check_catalog_index(results)
     check_machine_map(results)
     check_agent_card(results)

@@ -82,7 +82,8 @@ Agent：`lab_thought_criteria` 读 prompt → 按 prompt 判断 → `lab_thought
 - Source: `content/thoughts/*.json`
 - Index: `/api/thoughts.json`（`python3 scripts/build_thoughts.py`，含 `gates` + `model_gates`）
 - Criteria: `/content/thoughts/criteria.json` → `/api/thoughts-criteria.json`
-- Page: `/bench/`（给人看的走轨：思想实验台）
+- Page: `/bench/`（给人看的走轨：上面入境，中间思想实验，下面已发表知识）
+- Experiments: `/api/bench.json`（长文 Markdown，`conclusion: false`，不进 catalog，不当结论）
 - Tools: `lab_list_thoughts` · `lab_get_thought` · `lab_propose_topic` · `lab_thought_validate` · `lab_thought_criteria` · `lab_thought_judge`
 
 发表之后的有效性见 [`KNOWLEDGE_LOOP.md`](/KNOWLEDGE_LOOP.md)。`published` 不是终身有效。

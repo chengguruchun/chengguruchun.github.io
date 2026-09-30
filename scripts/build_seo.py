@@ -39,12 +39,14 @@ COLLECTIONS = {
     "/projects/": "Projects",
     "/videos/": "Videos",
     "/tags/": "Tags / Search",
+    "/bench/": "Agent Bench",
 }
 
 # `<title>` carries a section suffix for humans; headlines and share cards should not.
 TITLE_SUFFIXES = (
     " · Articles",
     " · Diverse Lab",
+    " · Agent Bench",
     " · AI Knowledge Lab",
     " · Hot Words",
 )
@@ -75,6 +77,15 @@ def load_catalog() -> tuple[str, dict[str, dict]]:
     base = data.get("base_url", "").rstrip("/")
     by_url = {item["url"]: item for item in data.get("items", [])}
     return base, by_url
+
+
+def load_bench_items() -> dict[str, dict]:
+    """SEO metadata for Bench experiments. These rows are not catalog conclusions."""
+    path = ROOT / "api" / "bench.json"
+    if not path.exists():
+        return {}
+    data = json.loads(path.read_text(encoding="utf-8"))
+    return {item["url"]: item for item in data.get("items", []) if isinstance(item, dict) and item.get("url")}
 
 
 def html_files() -> list[Path]:
@@ -177,7 +188,12 @@ def build_jsonld(path_url: str, title: str, desc: str, base: str, item: dict | N
             "isPartOf": {"@type": "WebSite", "name": SITE_NAME, "url": base + "/"},
         }
 
-    section = "Articles" if path_url.startswith("/articles/") else "Diverse Lab"
+    if path_url.startswith("/articles/"):
+        section = "Articles"
+    elif path_url.startswith("/bench/"):
+        section = "Agent Bench"
+    else:
+        section = "Diverse Lab"
     published = (item or {}).get("published_date") or (item or {}).get("date")
     node: dict = {
         "@context": "https://schema.org",
@@ -205,6 +221,8 @@ def breadcrumbs(path_url: str, title: str, base: str) -> dict | None:
         section, section_url = "Articles", "/articles/"
     elif path_url.startswith("/diverse/") and path_url != "/diverse/":
         section, section_url = "Diverse Lab", "/diverse/"
+    elif path_url.startswith("/bench/") and path_url != "/bench/":
+        section, section_url = "Agent Bench", "/bench/"
     else:
         return None
     return {
@@ -272,9 +290,17 @@ BLOCK_RE = re.compile(
     r"[ \t]*" + re.escape(BEGIN.strip()) + r".*?" + re.escape(END.strip()) + r"[ \t]*\n?",
     re.DOTALL,
 )
-# A hand-written RSS link would duplicate the one this script manages.
-STRAY_RSS_RE = re.compile(
-    r"[ \t]*<link[^>]+application/rss\+xml[^>]*>\n?", re.IGNORECASE
+# Hand-written social tags outside the seo markers would duplicate the block this
+# script owns. Strip them from <head> after the managed block is removed.
+STRAY_OWNED_RE = re.compile(
+    r"""(?ix)
+    <link\b[^>]*\brel=["']canonical["'][^>]*>\s*
+    | <link\b[^>]*application/rss\+xml[^>]*>\s*
+    | <meta\b[^>]*(?:property|name)=["'](?:og:|article:|twitter:)[^"']*["'][^>]*>\s*
+    | <meta\b[^>]*\bname=["']author["'][^>]*>\s*
+    | <script\b[^>]*\btype=["']application/ld\+json["'][^>]*>.*?</script>\s*
+    """,
+    re.DOTALL,
 )
 
 
@@ -283,7 +309,11 @@ def apply_to_file(path: Path, base: str, by_url: dict[str, dict], check: bool) -
     original = path.read_text(encoding="utf-8")
 
     stripped = BLOCK_RE.sub("", original)
-    stripped = STRAY_RSS_RE.sub("", stripped)
+
+    def _strip_head(match: re.Match[str]) -> str:
+        return STRAY_OWNED_RE.sub("", match.group(0))
+
+    stripped = re.sub(r"<head\b[^>]*>.*?</head>", _strip_head, stripped, count=1, flags=re.DOTALL | re.IGNORECASE)
 
     title = extract(r"<title>(.*?)</title>", stripped)
     # Attribute values cannot contain a raw quote, so stop at the first one rather
@@ -418,12 +448,17 @@ def main() -> int:
     if not base:
         print("FAIL catalog.json has no base_url")
         return 1
+    # Bench experiments are not catalog conclusions, but their pages still need
+    # the same BlogPosting / breadcrumb metadata as other long-form essays.
+    seo_items = dict(by_url)
+    for url, item in load_bench_items().items():
+        seo_items.setdefault(url, item)
 
     changed = 0
     for path in html_files():
-        if apply_to_file(path, base, by_url, args.check):
+        if apply_to_file(path, base, seo_items, args.check):
             changed += 1
-    if build_sitemap(base, by_url, args.check):
+    if build_sitemap(base, seo_items, args.check):
         changed += 1
     if build_robots(base, args.check):
         changed += 1

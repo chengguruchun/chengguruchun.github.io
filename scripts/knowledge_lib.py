@@ -401,6 +401,46 @@ def page_parity_gaps() -> list[str]:
     return gaps
 
 
+def bench_index_gaps() -> list[str]:
+    """Long-form Bench HTML must be indexed as a non-conclusion, never catalogued.
+
+    Thought Loop routes are diverse|articles|videos|projects. A Bench essay is an
+    experiment: canonical Markdown plus /api/bench.json, and not a catalog row.
+    """
+    index_path = ROOT / "api" / "bench.json"
+    if not index_path.exists():
+        return ["api/bench.json:missing"]
+    data = load_json(index_path)
+    items = [x for x in (data.get("items") or []) if isinstance(x, dict)]
+    by_url = {str(x.get("url") or ""): x for x in items}
+    catalog_urls = {str(x.get("url") or "") for x in catalog_items()}
+    gaps: list[str] = []
+    bench_root = ROOT / "bench"
+    pages = sorted(bench_root.glob("*.html")) if bench_root.exists() else []
+    seen: set[str] = set()
+    for path in pages:
+        if path.name == "index.html":
+            continue
+        url = "/" + path.relative_to(ROOT).as_posix()
+        seen.add(url)
+        item = by_url.get(url)
+        if not item:
+            gaps.append(f"{url}:not-in-bench-index")
+            continue
+        if item.get("conclusion") is not False:
+            gaps.append(f"{url}:not-marked-non-conclusion")
+        rel = item.get("content") or item.get("markdown")
+        if not rel or not (ROOT / str(rel).lstrip("/")).exists():
+            gaps.append(f"{url}:missing-markdown")
+        if url in catalog_urls:
+            gaps.append(f"{url}:in-catalog")
+    for item in items:
+        url = str(item.get("url") or "")
+        if url not in seen:
+            gaps.append(f"{url}:index-without-html")
+    return gaps
+
+
 def validate_report(data: dict[str, Any], criteria: dict[str, Any] | None = None) -> list[str]:
     errors: list[str] = []
     if not data.get("entry_id"):

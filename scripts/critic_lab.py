@@ -63,16 +63,66 @@ def strip_html(raw: str) -> str:
 
 def article_catalog(current: str) -> list[str]:
     items = []
-    for p in sorted(Path("articles").glob("*.html")):
-        if str(p) == current:
+    pages = list(Path("articles").glob("*.html")) + list(Path("bench").glob("*.html"))
+    for p in sorted(pages):
+        if p.name == "index.html" or str(p) == current:
             continue
         try:
             text = p.read_text(encoding="utf-8", errors="ignore")
             m = re.search(r"<h1[^>]*>(.*?)</h1>", text, flags=re.I | re.S)
-            items.append(f"{p}: {strip_html(m.group(1)) if m else p.stem}")
+            items.append(f"{p.as_posix()}: {strip_html(m.group(1)) if m else p.stem}")
         except OSError:
             pass
     return items[:100]
+
+
+MOVED_ARTICLES = {
+    "articles/agent-runtime-model-learning-runtime.html": "bench/agent-runtime-model-learning-runtime.html",
+}
+
+
+def rebuild_index(out: Path) -> None:
+    """Rewrite api/critic/runs/index.json from the JSON reports on disk."""
+    runs = []
+    for path in sorted(out.glob("*.json")):
+        if path.name == "index.json" or path.name.startswith("."):
+            continue
+        data = json.loads(path.read_text(encoding="utf-8"))
+        article = str(data.get("article") or "")
+        moved = MOVED_ARTICLES.get(article)
+        if moved and not Path(article).exists() and Path(moved).exists():
+            data["article"] = moved
+            path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+            md_path = path.with_suffix(".md")
+            if md_path.exists():
+                md = md_path.read_text(encoding="utf-8")
+                md_path.write_text(md.replace(f"Article: `{article}`", f"Article: `{moved}`"), encoding="utf-8")
+            article = moved
+        slug = Path(article).stem if article.endswith(".html") else path.stem.rsplit("-", 1)[0]
+        summary = re.sub(r"\s+", " ", str(data.get("summary") or "")).strip()
+        if len(summary) > 220:
+            summary = summary[:217] + "..."
+        runs.append({
+            "id": path.stem,
+            "article": slug,
+            "article_slug": slug,
+            "status": data.get("status"),
+            "summary": summary,
+            "commit": data.get("commit"),
+            "generated_at": data.get("generated_at"),
+            "json": f"/api/critic/runs/{path.name}",
+            "markdown": f"/api/critic/runs/{path.stem}.md",
+        })
+    runs.sort(key=lambda row: str(row.get("generated_at") or ""), reverse=True)
+    payload = {
+        "name": "Critic Lab runs",
+        "kind": "read",
+        "updated": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "count": len(runs),
+        "runs": runs,
+    }
+    (out / "index.json").write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print(f"critic index {len(runs)} runs")
 
 
 def clean_json(text: str) -> dict:
@@ -166,11 +216,17 @@ def render_markdown(report: dict, article: str, sha: str, model: str) -> str:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--article", required=True)
-    parser.add_argument("--before", required=True)
-    parser.add_argument("--after", required=True)
-    parser.add_argument("--output-dir", required=True)
+    parser.add_argument("--article")
+    parser.add_argument("--before")
+    parser.add_argument("--after")
+    parser.add_argument("--output-dir", default="api/critic/runs")
+    parser.add_argument("--reindex", action="store_true", help="Rebuild index.json from reports on disk")
     args = parser.parse_args()
+    if args.reindex:
+        rebuild_index(Path(args.output_dir))
+        return 0
+    if not args.article or not args.before or not args.after:
+        parser.error("--article, --before, and --after are required unless --reindex")
     article_path = Path(args.article)
     article_text = strip_html(article_path.read_text(encoding="utf-8"))
     try: diff = run(["git", "diff", args.before, args.after, "--", args.article])
@@ -200,6 +256,7 @@ runtime/risk/verification boundaries are being conflated with domain boundaries.
     stem = f"{article_path.stem}-{args.after[:12]}"
     (out / f"{stem}.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     (out / f"{stem}.md").write_text(render_markdown(report, args.article, args.after, model), encoding="utf-8")
+    rebuild_index(out)
     print(json.dumps({"status": report.get("status"), "article": args.article, "model": model}, ensure_ascii=False))
     return 0
 

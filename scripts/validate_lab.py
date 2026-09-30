@@ -445,6 +445,13 @@ def check_knowledge() -> None:
         fail("published HTML missing catalog/markdown: " + ", ".join(gaps[:6]))
     else:
         ok("published HTML has catalog + markdown")
+    from knowledge_lib import bench_index_gaps
+
+    bench_gaps = bench_index_gaps()
+    if bench_gaps:
+        fail("bench HTML missing non-conclusion index: " + ", ".join(bench_gaps[:6]))
+    else:
+        ok("bench experiments indexed as non-conclusions")
     loop = (ROOT / "KNOWLEDGE_LOOP.md").read_text(encoding="utf-8")
     if "过期不等于错误" not in loop or "lab_knowledge_report" not in loop:
         fail("KNOWLEDGE_LOOP.md should keep stale ≠ wrong and report-only agents")

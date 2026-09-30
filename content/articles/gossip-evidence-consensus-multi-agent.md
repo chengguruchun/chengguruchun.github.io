@@ -1,0 +1,331 @@
+---
+id: gossip-evidence-consensus-multi-agent
+type: Articles
+title: 从 Gossip 到 Consensus：Multi-Agent 如何形成可信的集体认知
+date: 2026-09-30
+thought_date: 2026-09-30
+published_date: 2026-09-30
+tags: [Agent, Runtime, Multi-Agent]
+excerpt: Gossip 负责传播，Evidence/Trust 负责判断，Consensus 负责必要的全局一致：从分布式系统重新思考 Multi-Agent 协作与 Agent Runtime。
+history_url: https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/gossip-evidence-consensus-multi-agent.md
+last_verified: 2026-09-30
+cadence_days: 90
+---
+
+# 从 Gossip 到 Consensus：Multi-Agent 如何形成可信的集体认知
+
+我最近重新想到一个很传统的分布式系统问题：当系统里不再只有一个 Agent，而是几十、几百甚至更多 Agent 时，它们如何知道“别人最近发生了什么”？更进一步：如果多个 Agent 对同一个任务有不同判断，系统又如何形成一个足够可信、可以继续执行的结论？
+
+我的一个初步答案是：**不要让一个协议承担所有事情。**可以把它拆成四层：Gossip 负责传播 Evidence，Evidence/Trust 层负责判断可信度，Consensus 在确实需要全局一致时负责形成共同状态，Security 则负责防止错误或恶意信息污染系统。
+
+## 一、Gossip 解决的是“大家怎么知道”
+
+传统 Gossip / Epidemic Protocol 的核心思想并不复杂：节点不需要通过一个中心节点把所有信息广播给所有人，而是随机或按策略选择少量邻居传播信息。信息经过多轮交换后，最终在整个集群中扩散。
+
+```text
+Agent A
+  │ gossip
+  ↓
+Agent B ──gossip──→ Agent C
+  │                    │
+  └──────→ Agent D ←──┘
+
+局部信息 → 多轮传播 → 集群逐渐获得相同或近似的信息
+```
+
+放到 Multi-Agent 中，我认为最有价值的并不是传播聊天内容，而是传播**运行时 Evidence**：
+
+- 某个 Agent 最近完成某类任务的结果如何；
+
+- 某个 Tool / MCP 是否稳定；
+
+- 某条路径最近的延迟、失败率如何；
+
+- 某个方案是否经过测试或用户确认；
+
+- 某个 Agent 对某类任务是否积累了新的经验。
+
+因此，Gossip 更像是 Multi-Agent 的**集体经验传播层**，而不是任务执行协议。
+
+## 二、Evidence 和 Consensus 不是一回事
+
+这是我觉得最容易混淆的地方。
+
+**Evidence 是“我为什么相信这件事”。Consensus 是“大家最终采用哪个共同状态”。**
+
+例如三个 Agent 分别观察到：
+
+```text
+A：Tool X 最近 20 次调用成功 19 次
+B：Tool X 最近 10 次调用成功 10 次
+C：Tool X 最近出现 3 次 timeout
+```
+
+Gossip 可以把这些观察传播给其他 Agent。但传播并不会自动产生“Tool X 一定可靠”的结论。Runtime 还需要一个 Evidence / Trust 层去判断：
+
+```text
+Evidence
+  ↓
+来源身份 / 签名
+时间新鲜度
+历史可靠度
+样本量
+来源独立性
+交叉验证
+任务上下文
+  ↓
+Trust / Evidence Score
+  ↓
+本地决策
+```
+
+这里的“可信度”不是简单多数投票。一个 Agent 重复传播 100 次，不应该等于 100 个独立 Agent 的观察。
+
+## 三、它和 Raft 很像，但目标不同
+
+我一开始想到 Raft，是因为两者都存在“多数”的味道。但仔细看，它们解决的问题其实不同。
+
+机制核心问题结果
+Gossip信息如何扩散更多节点获得信息
+Evidence / Trust这个信息有多可信形成局部可信判断
+Raft / Consensus集群采用哪个共同状态形成一致状态
+
+Raft 的多数派是为了保证一个复制状态机的安全性和一致性；Evidence 层的多源支持，则更像是在回答“这个观察是否值得被相信”。它可以是加权的，也可以考虑时间、独立性、历史表现和验证结果。
+
+所以我更愿意把它理解成：
+
+```text
+Gossip       → 传播事实/观察
+Evidence     → 判断证据质量
+Consensus    → 必要时确定共同状态
+Execution    → 按共同状态行动
+```
+
+## 四、真正有意思的是：任务本身也需要“共识”
+
+如果只把 Consensus 用在数据库状态或 Leader Election 上，Multi-Agent 其实没有真正利用它。
+
+复杂任务本身就存在一个问题：**多个 Agent 最终要为了同一个目标收敛。**
+
+例如让一个 Agent 团队完成一次复杂代码变更：
+
+```text
+Goal
+ ↓
+A：分析架构
+B：修改代码
+C：写测试
+D：安全检查
+ ↓
+各自产生 Evidence
+ ↓
+Gossip / shared task state
+ ↓
+Task Consensus
+ ↓
+“当前方案可以进入下一阶段”
+ ↓
+执行 / 验证
+```
+
+这里的共识不是“大家意见一样”这么简单，而是让系统形成一个**可继续推进的任务状态**：
+
+- 哪些子任务已经完成？
+
+- 哪些结果经过验证？
+
+- 哪些结论存在冲突？
+
+- 是否满足 Definition of Done？
+
+- 是否允许进入下一阶段？
+
+这其实非常接近 Agent Runtime 中的 **Task State Consensus**。
+
+## 五、因此 Multi-Agent 里可能存在两种共识
+
+### 1. World / Evidence Consensus
+
+大家对外部世界或运行环境形成足够可信的判断，例如“某个服务当前不可用”。它通常不需要强一致，允许不同 Agent 在短时间内持有略有不同的判断。
+
+### 2. Task State Consensus
+
+大家对任务状态形成共同认识，例如“代码已经通过测试，可以发布”。这类状态如果会触发后续动作，就需要更严格的验证甚至显式共识。
+
+于是可以得到一个很有意思的分层：
+
+```text
+Collective Agent Runtime
+                         │
+          ┌──────────────┴──────────────┐
+          │                             │
+   World / Evidence                Task State
+          │                             │
+      Gossip                        Consensus
+          │                             │
+   Trust / Verify                 Commit State
+          │                             │
+          └──────────────┬──────────────┘
+                         ↓
+                     Execute
+                         ↓
+                     Feedback
+                         ↓
+                      Gossip
+```
+
+## 六、为什么还必须有 Security / Anti-Fraud
+
+Gossip 最大的问题恰恰来自它的优点：传播成本低。
+
+如果一个恶意 Agent 可以制造虚假的 Evidence，那么它可能通过网络不断扩散错误认知：
+
+```text
+Malicious Agent
+      ↓
+ fake evidence
+      ↓
+Agent B → Agent C → Agent D → ...
+      ↓
+错误信息获得“多数人的印象”
+```
+
+所以 Multi-Agent 的 Evidence 层不能只做计数，而应该至少考虑：
+
+- **Identity**：Evidence 来自谁；
+
+- **Provenance**：Evidence 是怎么产生的；
+
+- **Signature**：信息有没有被篡改；
+
+- **Freshness**：信息是不是已经过期；
+
+- **Independence**：多个 Evidence 是否其实来自同一个源；
+
+- **Verification**：能不能通过测试、执行结果或其他 Agent 重新验证；
+
+- **Reputation**：该来源过去的判断是否可靠。
+
+这也是为什么我认为未来的 Agent Runtime 不应该只有 Tool Gateway，还需要某种 **Evidence / Trust Gateway**。
+
+## 七、这套机制如何真正运行？
+
+可以把一次复杂任务看成一个持续闭环：
+
+```text
+Task
+ ↓
+Agent 执行
+ ↓
+Observation / Result
+ ↓
+Verification
+ ↓
+Evidence
+ ↓
+Gossip
+ ↓
+其他 Agent 获得 Evidence
+ ↓
+Trust / Conflict Resolution
+ ↓
+Task State Consensus（必要时）
+ ↓
+下一步 Action
+ ↓
+Feedback
+ └──────────────→ 新 Evidence
+```
+
+这里最关键的变化是：**Agent 不再只是交换消息，而是在交换“经过执行产生的证据”。**
+
+## 八、这和 Agent Runtime 的关系
+
+如果把我之前一直讨论的 Agent Runtime 再往前推一步，它可能不只是“运行 Agent 的地方”，而是一个小型的分布式认知系统：
+
+```text
+Control Plane
+  ├── Registry
+  ├── Policy
+  └── Global Configuration
+
+Agent Runtime
+  ├── Planner
+  ├── Memory
+  ├── Execution
+  ├── Verification
+  ├── Evidence / Trust
+  ├── Gossip
+  └── Consensus
+
+Tools / Environment
+  ├── MCP
+  ├── Sandbox
+  └── External Systems
+```
+
+这时候，Agent Runtime 和传统分布式系统的关系就变得很有意思：传统系统解决的是**状态、消息、故障和一致性**；Agent Runtime 还要解决**认知、证据、决策和验证**。
+
+## 九、我现在更倾向于一个“Evidence First”的 Multi-Agent 架构
+
+过去设计 Multi-Agent，很容易从“怎么让 Agent 互相调用”开始。但我越来越觉得，真正的问题应该变成：
+
+**Agent 之间究竟应该共享什么？**
+
+如果共享的是原始消息，系统会越来越吵；如果共享的是任务指令，系统会越来越耦合；如果共享的是**带来源、时间、验证状态和上下文的 Evidence**，那么整个系统才有机会形成一种可积累的集体认知。
+
+所以我现在更倾向于这样理解 Multi-Agent：
+
+```text
+A2A / MCP
+    ↓
+“我能帮你做什么”
+
+Gossip
+    ↓
+“我最近观察到了什么”
+
+Evidence / Trust
+    ↓
+“这个观察值得相信多少”
+
+Consensus
+    ↓
+“在这个任务里，我们现在采用什么共同状态”
+
+Runtime
+    ↓
+“下一步怎么执行”
+
+Feedback
+    ↓
+“执行结果是否证明我们刚才的判断”
+```
+
+## 十、一个开放问题：Agent 是否正在从“调用模型”走向“构建集体”
+
+如果这个方向成立，那么 Multi-Agent 的下一阶段可能不只是更多 Agent，而是出现一种新的系统抽象：
+
+**Individual Agent → Agent Runtime → Collective Agent System**
+
+Individual Agent 解决“我怎么思考”；Runtime 解决“我怎么持续执行”；而 Collective Agent System 要解决的是：
+
+- 信息如何传播？
+
+- 证据如何形成？
+
+- 不同 Agent 如何判断可信度？
+
+- 冲突如何解决？
+
+- 什么时候需要全局一致？
+
+- 如何防止错误信息扩散？
+
+- 任务如何在多个自治实体之间最终收敛？
+
+这让我重新看待 Gossip。它可能不是 Multi-Agent 的“通信协议”，而只是更大系统中的一层：**集体经验传播层**。
+
+而真正值得继续研究的，也许是 Gossip + Evidence/Trust + Consensus + Verification 组合起来之后，能不能形成一种面向 Agent 的**Collective Runtime**。
+
+这还不是一个成熟的标准答案，但我觉得这是一个值得继续探索的架构问题。

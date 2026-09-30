@@ -185,6 +185,71 @@ PAGES = [
         "html": ROOT / "articles" / "transformer-from-attention-to-decoder-only.html",
         "content": "/content/articles/transformer-from-attention-to-decoder-only.md",
     },
+    {
+        "id": "software-design-universal-patterns",
+        "type": "Diverse Lab",
+        "title": "软件工程的隐形语法：从“加一层”到“广进严出”",
+        "excerpt": "把软件工程里反复出现的设计思想放在一起：间接层、分而治之、粗到精、缓存、批处理、异步、隔离、一致性、反馈与控制，以及它们背后的共同结构。",
+        "url": "/diverse/software-design-universal-patterns.html",
+        "date": "2026-09-23",
+        "thought_date": "2026-09-23",
+        "published_date": "2026-09-23",
+        "tags": ["Diverse", "Software Design", "Architecture", "Complex Systems", "Design Patterns"],
+        "html": ROOT / "diverse" / "software-design-universal-patterns.html",
+        "content": "/content/diverse/software-design-universal-patterns.md",
+    },
+    {
+        "id": "react-to-long-running-agent",
+        "type": "Articles",
+        "title": "从 ReAct 到 Long-Running Agent：Harness 为什么开始成为 Agent 的第二增长曲线",
+        "excerpt": "ReAct 解决一步怎么走，Harness 让 Agent 能走很远，Runtime 让 Agent 能活很久。重新理解 2025 年以后长周期 Agent 的能力演进。",
+        "url": "/articles/react-to-long-running-agent.html",
+        "date": "2026-09-28",
+        "thought_date": "2026-09-28",
+        "published_date": "2026-09-28",
+        "tags": ["Agent", "ReAct", "Harness", "Runtime", "Long-Running Agent"],
+        "html": ROOT / "articles" / "react-to-long-running-agent.html",
+        "content": "/content/articles/react-to-long-running-agent.md",
+    },
+    {
+        "id": "react-is-the-inner-loop-long-running-agent-harness-runtime",
+        "type": "Articles",
+        "title": "ReAct 只是内循环：长周期 Agent 为什么开始需要 Harness 与 Runtime",
+        "excerpt": "从 ReAct 出发，区分 Action Loop、Task Loop 与 System Loop，理解 2025 年以后长周期 Agent 为什么越来越依赖 Harness、Durable Execution、Checkpoint、Verification 与 Runtime。",
+        "url": "/articles/react-is-the-inner-loop-long-running-agent-harness-runtime.html",
+        "date": "2026-09-28",
+        "thought_date": "2026-09-28",
+        "published_date": "2026-09-28",
+        "tags": ["Agent", "ReAct", "Harness", "Runtime", "Long-Running Agent", "Loop Engineering"],
+        "html": ROOT / "articles" / "react-is-the-inner-loop-long-running-agent-harness-runtime.html",
+        "content": "/content/articles/react-is-the-inner-loop-long-running-agent-harness-runtime.md",
+    },
+    {
+        "id": "iot-agent-from-device-to-physical-world-runtime",
+        "type": "Articles",
+        "title": "IoT Agent 化：从设备能力到 Physical World Runtime",
+        "excerpt": "从设备能力标准化、Agent 模组、IoT Core 到 SaaS/PaaS，重新思考 IoT Agent 化：设备如何进入 Agent 世界，IoT 平台如何成为 Physical World Runtime。",
+        "url": "/articles/iot-agent-from-device-to-physical-world-runtime.html",
+        "date": "2026-09-29",
+        "thought_date": "2026-09-29",
+        "published_date": "2026-09-29",
+        "tags": ["Agent", "IoT", "Capability", "Agent Module", "IoT Core", "SaaS", "PaaS", "Physical World Runtime"],
+        "html": ROOT / "articles" / "iot-agent-from-device-to-physical-world-runtime.html",
+        "content": "/content/articles/iot-agent-from-device-to-physical-world-runtime.md",
+    },
+    {
+        "id": "gossip-evidence-consensus-multi-agent",
+        "type": "Articles",
+        "title": "从 Gossip 到 Consensus：Multi-Agent 如何形成可信的集体认知",
+        "excerpt": "Gossip 负责传播，Evidence/Trust 负责判断，Consensus 负责必要的全局一致：从分布式系统重新思考 Multi-Agent 协作与 Agent Runtime。",
+        "url": "/articles/gossip-evidence-consensus-multi-agent.html",
+        "date": "2026-09-30",
+        "thought_date": "2026-09-30",
+        "published_date": "2026-09-30",
+        "tags": ["Agent", "Runtime", "Multi-Agent"],
+        "html": ROOT / "articles" / "gossip-evidence-consensus-multi-agent.html",
+        "content": "/content/articles/gossip-evidence-consensus-multi-agent.md",
+    },
 ]
 
 
@@ -201,6 +266,7 @@ class BodyParser(HTMLParser):
         self.href = ""
         self.buf = ""
         self.list_open = False
+        self.div_class: list[str] = []
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         attrs_d = dict(attrs)
@@ -222,6 +288,8 @@ class BodyParser(HTMLParser):
             self.list_open = True
         if tag == "br":
             self.buf += "\n"
+        if tag == "div":
+            self.div_class.append(cls)
         self.stack.append(tag)
 
     def handle_endtag(self, tag: str) -> None:
@@ -236,7 +304,8 @@ class BodyParser(HTMLParser):
         if self.stack and self.stack[-1] == tag:
             self.stack.pop()
         if tag in self.BLOCK:
-            self.flush(tag)
+            cls = self.div_class.pop() if tag == "div" and self.div_class else ""
+            self.flush(tag, cls)
         if tag == "a":
             self.href = ""
         if tag == "ul":
@@ -264,7 +333,7 @@ class BodyParser(HTMLParser):
             return
         self.buf += text
 
-    def flush(self, tag: str = "p") -> None:
+    def flush(self, tag: str = "p", cls: str = "") -> None:
         text = self.buf.strip()
         self.buf = ""
         if not text:
@@ -277,15 +346,13 @@ class BodyParser(HTMLParser):
             self.parts.append(f"### {text}")
         elif tag == "h4":
             self.parts.append(f"#### {text}")
-        elif tag == "pre":
+        elif tag == "pre" or (tag == "div" and ("architecture" in cls or "┌" in text or "↓" in text)):
             self.parts.append("```text\n" + text + "\n```")
         elif tag == "blockquote":
             quoted = "\n".join("> " + line if line else ">" for line in text.splitlines())
             self.parts.append(quoted)
         elif tag == "li":
             self.parts.append(f"- {text}")
-        elif tag == "div" and ("architecture" in text or "┌" in text or "↓" in text):
-            self.parts.append("```text\n" + text + "\n```")
         else:
             if tag == "div" and len(text) < 40 and text in {"Articles", "Diverse Lab"}:
                 return
@@ -320,8 +387,11 @@ def catalog_row(meta: dict) -> dict:
 
 
 def upsert(path: Path, row: dict, wrap_catalog: bool = False) -> None:
+    """Insert a catalog row when its id is missing. Leave existing rows in place."""
     data = load_json(path) if path.exists() else {}
-    items = [x for x in (data.get("items") or []) if isinstance(x, dict) and x.get("id") != row["id"]]
+    items = [x for x in (data.get("items") or []) if isinstance(x, dict)]
+    if any(x.get("id") == row["id"] for x in items):
+        return
     non_times = [x for x in items if x.get("type") != "Times"]
     times = [x for x in items if x.get("type") == "Times"]
     data["items"] = [row] + non_times + times
