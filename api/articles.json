@@ -2,6 +2,132 @@
   "type": "Articles",
   "items": [
     {
+      "id": "gossip-evidence-consensus-multi-agent",
+      "type": "Articles",
+      "title": "从 Gossip 到 Consensus：Multi-Agent 如何形成可信的集体认知",
+      "excerpt": "Gossip 负责传播，Evidence/Trust 负责判断，Consensus 负责必要的全局一致：从分布式系统重新思考 Multi-Agent 协作与 Agent Runtime。",
+      "url": "/articles/gossip-evidence-consensus-multi-agent.html",
+      "date": "2026-09-30",
+      "tags": [
+        "Agent",
+        "Runtime",
+        "Multi-Agent"
+      ],
+      "thought_date": "2026-09-30",
+      "published_date": "2026-09-30",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/gossip-evidence-consensus-multi-agent.md",
+      "content": "/content/articles/gossip-evidence-consensus-multi-agent.md",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-09-30",
+        "next_review": "2026-12-29",
+        "cadence_days": 90,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      }
+    },
+    {
+      "id": "iot-agent-from-device-to-physical-world-runtime",
+      "type": "Articles",
+      "title": "IoT Agent 化：从设备能力到 Physical World Runtime",
+      "excerpt": "从设备能力标准化、Agent 模组、IoT Core 到 SaaS/PaaS，重新思考 IoT Agent 化：设备如何进入 Agent 世界，IoT 平台如何成为 Physical World Runtime。",
+      "url": "/articles/iot-agent-from-device-to-physical-world-runtime.html",
+      "date": "2026-09-29",
+      "tags": [
+        "Agent",
+        "IoT",
+        "Capability",
+        "Agent Module",
+        "IoT Core",
+        "SaaS",
+        "PaaS",
+        "Physical World Runtime"
+      ],
+      "thought_date": "2026-09-29",
+      "published_date": "2026-09-29",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/iot-agent-from-device-to-physical-world-runtime.md",
+      "content": "/content/articles/iot-agent-from-device-to-physical-world-runtime.md",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-09-29",
+        "next_review": "2026-12-28",
+        "cadence_days": 90,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      }
+    },
+    {
+      "id": "react-is-the-inner-loop-long-running-agent-harness-runtime",
+      "type": "Articles",
+      "title": "ReAct 只是内循环：长周期 Agent 为什么开始需要 Harness 与 Runtime",
+      "excerpt": "从 ReAct 出发，区分 Action Loop、Task Loop 与 System Loop，理解 2025 年以后长周期 Agent 为什么越来越依赖 Harness、Durable Execution、Checkpoint、Verification 与 Runtime。",
+      "url": "/articles/react-is-the-inner-loop-long-running-agent-harness-runtime.html",
+      "date": "2026-09-28",
+      "tags": [
+        "Agent",
+        "ReAct",
+        "Harness",
+        "Runtime",
+        "Long-Running Agent",
+        "Loop Engineering"
+      ],
+      "thought_date": "2026-09-28",
+      "published_date": "2026-09-28",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/react-is-the-inner-loop-long-running-agent-harness-runtime.md",
+      "content": "/content/articles/react-is-the-inner-loop-long-running-agent-harness-runtime.md",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-09-28",
+        "next_review": "2026-12-27",
+        "cadence_days": 90,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      }
+    },
+    {
+      "id": "react-to-long-running-agent",
+      "type": "Articles",
+      "title": "从 ReAct 到 Long-Running Agent：Harness 为什么开始成为 Agent 的第二增长曲线",
+      "excerpt": "ReAct 解决一步怎么走，Harness 让 Agent 能走很远，Runtime 让 Agent 能活很久。重新理解 2025 年以后长周期 Agent 的能力演进。",
+      "url": "/articles/react-to-long-running-agent.html",
+      "date": "2026-09-28",
+      "tags": [
+        "Agent",
+        "ReAct",
+        "Harness",
+        "Runtime",
+        "Long-Running Agent"
+      ],
+      "thought_date": "2026-09-28",
+      "published_date": "2026-09-28",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/react-to-long-running-agent.md",
+      "content": "/content/articles/react-to-long-running-agent.md",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-09-28",
+        "next_review": "2026-12-27",
+        "cadence_days": 90,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      }
+    },
+    {
       "id": "transformer-from-attention-to-decoder-only",
       "type": "Articles",
       "title": "从 Transformer 到 Decoder-only：我重新理解大语言模型是怎么“学会”的",

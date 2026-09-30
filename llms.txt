@@ -40,4 +40,5 @@
 - [Knowledge criteria](/api/knowledge-criteria.json)
 - [Knowledge Loop](/KNOWLEDGE_LOOP.md)
 - [Bench](/bench/)
+- [Bench experiments](/api/bench.json) (Markdown, conclusion=false; not catalog conclusions)
 - [Thought Loop](/THOUGHT_LOOP.md)

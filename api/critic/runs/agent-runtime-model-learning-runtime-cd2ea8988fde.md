@@ -1,6 +1,6 @@
 ## 🤖 Critic Lab Report
 
-Article: `articles/agent-runtime-model-learning-runtime.html`
+Article: `bench/agent-runtime-model-learning-runtime.html`
 Commit: `cd2ea8988fdea46ef443535453e01c8a04c92d26`
 Model: `deepseek-chat`
 Status: **needs_review**

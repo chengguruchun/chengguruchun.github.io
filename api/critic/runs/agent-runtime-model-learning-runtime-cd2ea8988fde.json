@@ -148,7 +148,7 @@
     "将全文标为 evolving hypothesis，并在闭环图旁注明策略更新频率需与数据漂移速度匹配、并经过离线评估再上线。"
   ],
   "evidence_level": "E0",
-  "article": "articles/agent-runtime-model-learning-runtime.html",
+  "article": "bench/agent-runtime-model-learning-runtime.html",
   "commit": "cd2ea8988fdea46ef443535453e01c8a04c92d26",
   "generated_at": "2026-09-30T00:24:09.366997+00:00",
   "model": "deepseek-chat"

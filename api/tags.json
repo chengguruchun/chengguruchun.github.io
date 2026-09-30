@@ -1,10 +1,14 @@
 {
-  "updated": "2026-09-21",
+  "updated": "2026-09-30",
   "tags": {
     "Actor Model": [
       "agent-runtime-cognitive-actor"
     ],
     "Agent": [
+      "gossip-evidence-consensus-multi-agent",
+      "iot-agent-from-device-to-physical-world-runtime",
+      "react-is-the-inner-loop-long-running-agent-harness-runtime",
+      "react-to-long-running-agent",
       "transformer-from-attention-to-decoder-only",
       "spring-dubbo-deepseek-harness-runtime",
       "from-mes-to-manufacturing-agent-runtime",
@@ -29,6 +33,12 @@
       "llm-scientific-experiment",
       "physics-ecology-llm"
     ],
+    "Agent Memory Benchmark": [
+      "times-2026-09-w4"
+    ],
+    "Agent Module": [
+      "iot-agent-from-device-to-physical-world-runtime"
+    ],
     "Agent Runtime": [
       "reinforcement-learning-game-theory-complex-systems",
       "from-mes-to-manufacturing-agent-runtime",
@@ -46,10 +56,14 @@
     "Agent-Suitability": [
       "fde-agent-opportunity-discovery"
     ],
+    "Agentic RAG": [
+      "times-2026-09-w5"
+    ],
     "Akka": [
       "agent-runtime-cognitive-actor"
     ],
     "Architecture": [
+      "software-design-universal-patterns",
       "iot-agent-from-automation-to-physical-infrastructure-part-ii",
       "iot-agent-from-automation-to-physical-infrastructure",
       "domain-driven-agent-tool-design",
@@ -67,10 +81,14 @@
     "Business-Complexity": [
       "fde-agent-opportunity-discovery"
     ],
+    "Capability": [
+      "iot-agent-from-device-to-physical-world-runtime"
+    ],
     "Code Agent": [
       "domain-driven-agent-tool-design"
     ],
     "Complex Systems": [
+      "software-design-universal-patterns",
       "reinforcement-learning-game-theory-complex-systems",
       "interpretability-rl-faithfulness",
       "from-function-to-ecosystem",
@@ -107,7 +125,11 @@
     "Decision-Unit": [
       "fde-agent-opportunity-discovery"
     ],
+    "Design Patterns": [
+      "software-design-universal-patterns"
+    ],
     "Diverse": [
+      "software-design-universal-patterns",
       "reinforcement-learning-game-theory-complex-systems",
       "simuhome-paper-reading",
       "h-neurons-paper-reading",
@@ -173,10 +195,14 @@
       "h-neurons-paper-reading"
     ],
     "Harness": [
+      "react-is-the-inner-loop-long-running-agent-harness-runtime",
+      "react-to-long-running-agent",
       "spring-dubbo-deepseek-harness-runtime",
       "agent-engineering-from-workflow-to-control-plane"
     ],
     "Hot Words": [
+      "times-2026-09-w5",
+      "times-2026-09-w4",
       "times-2026-09-w3",
       "times-2026-09-w2",
       "times-2026-09-w1"
@@ -192,10 +218,14 @@
       "interpretability-rl-faithfulness"
     ],
     "IoT": [
+      "iot-agent-from-device-to-physical-world-runtime",
       "simuhome-paper-reading",
       "iot-agent-from-automation-to-physical-infrastructure-part-ii",
       "iot-agent-from-automation-to-physical-infrastructure",
       "iot-agent-reconstruction"
+    ],
+    "IoT Core": [
+      "iot-agent-from-device-to-physical-world-runtime"
     ],
     "Know-how": [
       "agent-industrial-internet"
@@ -217,7 +247,12 @@
       "llm-scientific-experiment",
       "physics-ecology-llm"
     ],
+    "Long-Running Agent": [
+      "react-is-the-inner-loop-long-running-agent-harness-runtime",
+      "react-to-long-running-agent"
+    ],
     "Loop Engineering": [
+      "react-is-the-inner-loop-long-running-agent-harness-runtime",
       "agent-evaluation-proxy-vs-real-outcome",
       "agent-skill-evolution-pruning",
       "agent-engineering-from-workflow-to-control-plane",
@@ -237,6 +272,9 @@
     "Model Selection": [
       "reasoning-scale-knowledge-external"
     ],
+    "Multi-Agent": [
+      "gossip-evidence-consensus-multi-agent"
+    ],
     "Optimizer": [
       "agent-optimizer-experience-policy"
     ],
@@ -245,6 +283,9 @@
     ],
     "Outcome": [
       "agent-evaluation-proxy-vs-real-outcome"
+    ],
+    "PaaS": [
+      "iot-agent-from-device-to-physical-world-runtime"
     ],
     "Philosophy": [
       "symbolicism-vs-connectionism"
@@ -255,6 +296,9 @@
     ],
     "Physical Runtime": [
       "simuhome-paper-reading"
+    ],
+    "Physical World Runtime": [
+      "iot-agent-from-device-to-physical-world-runtime"
     ],
     "Physics": [
       "from-function-to-ecosystem",
@@ -272,6 +316,10 @@
     "RL": [
       "interpretability-rl-faithfulness"
     ],
+    "ReAct": [
+      "react-is-the-inner-loop-long-running-agent-harness-runtime",
+      "react-to-long-running-agent"
+    ],
     "Reasoning": [
       "reasoning-scale-knowledge-external"
     ],
@@ -280,6 +328,9 @@
       "agent-optimizer-experience-policy"
     ],
     "Runtime": [
+      "gossip-evidence-consensus-multi-agent",
+      "react-is-the-inner-loop-long-running-agent-harness-runtime",
+      "react-to-long-running-agent",
       "spring-dubbo-deepseek-harness-runtime",
       "from-llm-to-agent-runtime",
       "agent-runtime-cognitive-actor",
@@ -288,6 +339,7 @@
       "k8s-to-agent-control-plane"
     ],
     "SaaS": [
+      "iot-agent-from-device-to-physical-world-runtime",
       "saas-ecommerce-agent-thinking"
     ],
     "Skill": [
@@ -299,6 +351,9 @@
     "Smart Home": [
       "iot-agent-from-automation-to-physical-infrastructure"
     ],
+    "Software Design": [
+      "software-design-universal-patterns"
+    ],
     "Spring": [
       "spring-dubbo-deepseek-harness-runtime"
     ],
@@ -309,6 +364,8 @@
       "symbolicism-vs-connectionism"
     ],
     "Times": [
+      "times-2026-09-w5",
+      "times-2026-09-w4",
       "times-2026-09-w3",
       "times-2026-09-w2",
       "times-2026-09-w1"

@@ -1,0 +1,26 @@
+{
+  "name": "AI Knowledge Lab · Bench experiments",
+  "type": "Bench",
+  "url": "/bench/",
+  "note": "Long-form experiments on /bench/. conclusion is false: not catalog knowledge, not a Thought Loop published route.",
+  "items": [
+    {
+      "id": "agent-runtime-model-learning-runtime",
+      "type": "Bench",
+      "title": "Agent Runtime Model：让 Runtime 本身成为可学习的系统",
+      "excerpt": "这不是一篇“已经定型”的架构文章，而是一个放进 Agent Bench 的思想实验：如果 Runtime 每天都在执行 Agent，它能不能像一个系统一样，从执行结果中学习自己的策略？",
+      "url": "/bench/agent-runtime-model-learning-runtime.html",
+      "date": "2026-09-30",
+      "thought_date": "2026-09-30",
+      "published_date": "2026-09-30",
+      "tags": [
+        "Agent Runtime",
+        "Learning Runtime",
+        "Thought Experiment"
+      ],
+      "content": "/content/bench/agent-runtime-model-learning-runtime.md",
+      "conclusion": false,
+      "stage": "experiment"
+    }
+  ]
+}

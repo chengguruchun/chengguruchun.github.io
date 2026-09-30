@@ -1,5 +1,108 @@
 <!DOCTYPE html>
-<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>IoT Agent 化：从设备能力到 Physical World Runtime · AI Knowledge Lab</title><meta name="description" content="从设备能力标准化、Agent 模组、IoT Core 到 SaaS/PaaS，重新思考 IoT Agent 化：设备如何进入 Agent 世界，IoT 平台如何成为 Physical World Runtime。"><meta name="theme-color" content="#f7f5f0"><link rel="icon" href="../favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../assets/css/site.css"><style>.article-hero{padding:72px 0 48px}.article-kicker{font:500 13px/1.5 "IBM Plex Mono",monospace;letter-spacing:.08em;text-transform:uppercase}.article-hero h1{max-width:900px;margin:14px 0 18px}.article-sub{max-width:820px;font-size:20px;line-height:1.8}.article-meta{margin-top:24px;color:var(--muted,#777);font:13px/1.6 "IBM Plex Mono",monospace}.article-body{max-width:820px;padding-bottom:88px}.article-body h2{margin:56px 0 18px}.article-body h3{margin:36px 0 14px}.article-body p,.article-body li{font-size:17px;line-height:1.95}.article-body ul{padding-left:24px}.architecture{margin:28px 0;padding:24px;border:1px solid rgba(0,0,0,.12);border-radius:14px;background:rgba(255,255,255,.45);font:14px/1.8 "IBM Plex Mono",monospace;white-space:pre-wrap}.callout{margin:32px 0;padding:22px 24px;border-left:3px solid currentColor;background:rgba(0,0,0,.035)}.article-body table{width:100%;border-collapse:collapse;margin:28px 0}.article-body th,.article-body td{padding:12px;border-bottom:1px solid rgba(0,0,0,.12);text-align:left;vertical-align:top}.evidence{font-size:15px!important;color:var(--muted,#666)}</style><link rel="canonical" href="https://chengguruchun.github.io/articles/iot-agent-from-device-to-physical-world-runtime.html"><meta property="og:type" content="article"><meta property="og:site_name" content="AI Knowledge Lab"><meta property="og:locale" content="zh_CN"><meta property="og:title" content="IoT Agent 化：从设备能力到 Physical World Runtime"><meta property="og:description" content="从设备能力标准化、Agent 模组、IoT Core 到 SaaS/PaaS，重新思考 IoT Agent 化：设备如何进入 Agent 世界，IoT 平台如何成为 Physical World Runtime。"><meta property="og:url" content="https://chengguruchun.github.io/articles/iot-agent-from-device-to-physical-world-runtime.html"><meta property="og:image" content="https://chengguruchun.github.io/assets/img/og-cover.png"><meta property="article:published_time" content="2026-09-29"><meta name="author" content="chengguruchun"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="IoT Agent 化：从设备能力到 Physical World Runtime"><meta name="twitter:description" content="从设备能力标准化、Agent 模组、IoT Core 到 SaaS/PaaS，重新思考 IoT Agent 化：设备如何进入 Agent 世界，IoT 平台如何成为 Physical World Runtime。"><meta name="twitter:image" content="https://chengguruchun.github.io/assets/img/og-cover.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"IoT Agent 化：从设备能力到 Physical World Runtime","description":"从设备能力标准化、Agent 模组、IoT Core 到 SaaS/PaaS，重新思考 IoT Agent 化：设备如何进入 Agent 世界，IoT 平台如何成为 Physical World Runtime。","url":"https://chengguruchun.github.io/articles/iot-agent-from-device-to-physical-world-runtime.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://chengguruchun.github.io/articles/iot-agent-from-device-to-physical-world-runtime.html"},"inLanguage":"zh-CN","articleSection":"Articles","author":{"@type":"Person","name":"chengguruchun","url":"https://github.com/chengguruchun"},"publisher":{"@type":"Organization","name":"AI Knowledge Lab","url":"https://chengguruchun.github.io/"},"datePublished":"2026-09-29","dateModified":"2026-09-29","keywords":"Agent, IoT, Capability, Agent Module, IoT Core, SaaS, PaaS, Physical World Runtime"}</script><script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://chengguruchun.github.io/"},{"@type":"ListItem","position":2,"name":"Articles","item":"https://chengguruchun.github.io/articles/"},{"@type":"ListItem","position":3,"name":"IoT Agent 化：从设备能力到 Physical World Runtime","item":"https://chengguruchun.github.io/articles/iot-agent-from-device-to-physical-world-runtime.html"}]}</script></head><body><header class="site-header"><div class="wrap site-header__inner"><a class="brand" href="../index.html"><img class="brand__logo" src="../assets/img/brand-mark.svg" alt="AI Knowledge Lab" width="44" height="44"><span class="brand__tag">AI Agents · Complex Systems</span></a><button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">菜单</button><nav class="nav" id="site-nav" aria-label="主导航"><a href="../index.html">Home</a><a href="../bench/">Agent Bench</a><a href="../diverse/">Diverse Lab</a><a href="../articles/" aria-current="page">Articles</a><a href="../projects/">Projects</a><a href="../videos/">Videos</a><a href="../times/">Hot Words</a><a href="../about/">About Me</a><a href="../tags/">Tags / Search</a></nav></div></header><main><header class="article-hero"><div class="wrap"><p class="article-kicker">Articles · IoT · Agent · 2026-09-29</p><h1>IoT Agent 化：从设备能力到 Physical World Runtime</h1><p class="article-sub">IoT Agent 化的终点可能不是“每个设备内置一个 Agent”，而是让 IoT 从 Device-centric Architecture 演进为 Environment-centric Architecture：设备提供能力，IoT Core 提供可观察的物理世界，Agent Runtime 负责围绕目标持续行动。</p><p class="article-meta">思路 2026-09-29 · 基于近期关于 IoT Agent、Agent 模组、能力标准化与 IoT Core 的连续讨论</p></div></header><section class="section" style="padding-top:0"><div class="wrap"><article class="article-body"><h2>先说结论</h2><div class="callout"><strong>我的核心判断：</strong>IoT Agent 化不是给传统设备简单加一个 LLM，而是重新定义 IoT 的应用层。设备仍然负责感知、执行和连接；Agent Runtime 负责目标、规划、闭环与治理；IoT Core 则逐渐从“设备连接平台”升级为“可被 Agent 操作的 Physical World Interface”。</div><p>如果这个方向成立，那么产业链也会发生变化：设备厂商提供物理能力，Agent Module/SDK 负责把设备接入 Agent 世界，IoT Core 把能力、状态和事件标准化，Runtime 负责自主执行，上层 SaaS/PaaS 再围绕家庭、制造、能源等领域构建具体场景。</p><h2>1. 从 Device-centric 到 Environment-centric</h2><p>传统 IoT 的核心范式是“设备控制”。用户发出指令，App 或规则引擎调用设备 API，设备完成动作。大量产品价值被预先打包成按钮、场景和 Workflow。</p><div class="architecture">传统 IoT
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IoT Agent 化：从设备能力到 Physical World Runtime · Articles</title>
+  <meta name="description" content="从设备能力标准化、Agent 模组、IoT Core 到 SaaS/PaaS，重新思考 IoT Agent 化：设备如何进入 Agent 世界，IoT 平台如何成为 Physical World Runtime。">
+  <meta name="theme-color" content="#f7f5f0">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/site.css">
+  <!-- seo:begin (generated by scripts/build_seo.py — do not edit by hand) -->
+  <link rel="canonical" href="https://chengguruchun.github.io/articles/iot-agent-from-device-to-physical-world-runtime.html">
+  <link rel="alternate" type="application/rss+xml" title="AI Knowledge Lab" href="../feed.xml">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AI Knowledge Lab">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:title" content="IoT Agent 化：从设备能力到 Physical World Runtime">
+  <meta property="og:description" content="从设备能力标准化、Agent 模组、IoT Core 到 SaaS/PaaS，重新思考 IoT Agent 化：设备如何进入 Agent 世界，IoT 平台如何成为 Physical World Runtime。">
+  <meta property="og:url" content="https://chengguruchun.github.io/articles/iot-agent-from-device-to-physical-world-runtime.html">
+  <meta property="og:image" content="https://chengguruchun.github.io/assets/img/og-cover.png">
+  <meta property="og:image:alt" content="AI Knowledge Lab">
+  <meta property="article:published_time" content="2026-09-29">
+  <meta property="article:author" content="chengguruchun">
+  <meta property="article:tag" content="Agent">
+  <meta property="article:tag" content="IoT">
+  <meta property="article:tag" content="Capability">
+  <meta property="article:tag" content="Agent Module">
+  <meta property="article:tag" content="IoT Core">
+  <meta property="article:tag" content="SaaS">
+  <meta property="article:tag" content="PaaS">
+  <meta property="article:tag" content="Physical World Runtime">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="IoT Agent 化：从设备能力到 Physical World Runtime">
+  <meta name="twitter:description" content="从设备能力标准化、Agent 模组、IoT Core 到 SaaS/PaaS，重新思考 IoT Agent 化：设备如何进入 Agent 世界，IoT 平台如何成为 Physical World Runtime。">
+  <meta name="twitter:image" content="https://chengguruchun.github.io/assets/img/og-cover.png">
+  <meta name="author" content="chengguruchun">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "IoT Agent 化：从设备能力到 Physical World Runtime",
+    "description": "从设备能力标准化、Agent 模组、IoT Core 到 SaaS/PaaS，重新思考 IoT Agent 化：设备如何进入 Agent 世界，IoT 平台如何成为 Physical World Runtime。",
+    "url": "https://chengguruchun.github.io/articles/iot-agent-from-device-to-physical-world-runtime.html",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://chengguruchun.github.io/articles/iot-agent-from-device-to-physical-world-runtime.html"
+    },
+    "inLanguage": "zh-CN",
+    "articleSection": "Articles",
+    "author": {
+      "@type": "Person",
+      "name": "chengguruchun",
+      "url": "https://github.com/chengguruchun"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "AI Knowledge Lab",
+      "url": "https://chengguruchun.github.io/"
+    },
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "AI Knowledge Lab",
+      "url": "https://chengguruchun.github.io/"
+    },
+    "datePublished": "2026-09-29",
+    "dateModified": "2026-09-29",
+    "keywords": "Agent, IoT, Capability, Agent Module, IoT Core, SaaS, PaaS, Physical World Runtime"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://chengguruchun.github.io/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Articles",
+        "item": "https://chengguruchun.github.io/articles/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "IoT Agent 化：从设备能力到 Physical World Runtime",
+        "item": "https://chengguruchun.github.io/articles/iot-agent-from-device-to-physical-world-runtime.html"
+      }
+    ]
+  }
+  </script>
+  <!-- seo:end -->
+</head>
+<body>
+<header class="site-header"><div class="wrap site-header__inner"><a class="brand" href="../index.html"><img class="brand__logo" src="../assets/img/brand-mark.svg" alt="AI Knowledge Lab" width="44" height="44"><span class="brand__tag" data-brand-rotate aria-label="Independent Thinker · AI Agents · Complex Systems · Diverse Thinking"><span class="brand__rotate"><span class="brand__item is-active">Independent Thinker</span><span class="brand__item">AI Agents</span><span class="brand__item">Complex Systems</span><span class="brand__item">Diverse Thinking</span></span></span></a><button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">菜单</button><nav class="nav" id="site-nav" aria-label="主导航"><a href="../index.html">Home</a><a href="../bench/">Agent Bench</a><a href="../diverse/">Diverse Lab</a><a href="../articles/" aria-current="page">Articles</a><a href="../projects/">Projects</a><a href="../videos/">Videos</a><a href="../times/">Hot Words</a><a href="../about/">About Me</a><a class="nav__search" href="../tags/">Tags / Search</a></nav></div></header>
+<main><article class="article-body"><header class="page-hero"><div class="prose-wrap"><p class="page-hero__kicker">Articles</p><h1>IoT Agent 化：从设备能力到 Physical World Runtime</h1><p class="page-hero__desc">IoT Agent 化的终点可能不是“每个设备内置一个 Agent”，而是让 IoT 从 Device-centric Architecture 演进为 Environment-centric Architecture：设备提供能力，IoT Core 提供可观察的物理世界，Agent Runtime 负责围绕目标持续行动。</p><p class="article-meta"><span>思路 2026-09-29</span><span>发表 2026-09-29</span><span>作者 chengguruchun</span><a class="tag" href="../tags/?tag=Agent">Agent</a><a class="tag" href="../tags/?tag=IoT">IoT</a><a class="tag" href="../tags/?tag=Capability">Capability</a><a class="tag" href="../tags/?tag=Agent%20Module">Agent Module</a><a class="tag" href="../tags/?tag=IoT%20Core">IoT Core</a><a class="tag" href="../tags/?tag=SaaS">SaaS</a><a class="tag" href="../tags/?tag=PaaS">PaaS</a><a class="tag" href="../tags/?tag=Physical%20World%20Runtime">Physical World Runtime</a></p></div></header>
+<div class="prose-wrap">
+<h2>先说结论</h2><p><strong>我的核心判断：</strong>IoT Agent 化不是给传统设备简单加一个 LLM，而是重新定义 IoT 的应用层。设备仍然负责感知、执行和连接；Agent Runtime 负责目标、规划、闭环与治理；IoT Core 则逐渐从“设备连接平台”升级为“可被 Agent 操作的 Physical World Interface”。</p><p>如果这个方向成立，那么产业链也会发生变化：设备厂商提供物理能力，Agent Module/SDK 负责把设备接入 Agent 世界，IoT Core 把能力、状态和事件标准化，Runtime 负责自主执行，上层 SaaS/PaaS 再围绕家庭、制造、能源等领域构建具体场景。</p><h2>1. 从 Device-centric 到 Environment-centric</h2><p>传统 IoT 的核心范式是“设备控制”。用户发出指令，App 或规则引擎调用设备 API，设备完成动作。大量产品价值被预先打包成按钮、场景和 Workflow。</p><pre>传统 IoT
 User → App → Rule / Workflow → Device → MQTT / Protocol
 
 Agentic IoT
@@ -10,14 +113,14 @@ Agent Runtime
 Plan → Action → Observation → Verification
     ↓
 IoT Environment
-    ↺</div><p>变化的关键不是 MQTT 会不会消失，而是控制范式从“调用一个设备动作”转向“让物理环境逐渐逼近目标状态”。例如“帮我准备一个适合睡觉的环境”，目标不再是某一个 API，而是温度、灯光、窗帘、空气质量和安全状态的组合。</p><h2>2. IoT Agent 和 Code Agent，其实是同一种闭环</h2><p>Code Agent 在电脑环境中工作：修改代码、运行测试、观察错误、修复，再次验证。IoT Agent 在物理环境中工作：控制设备、观察传感器、验证状态、处理异常，再次行动。</p><div class="architecture">Code Agent
+    ↺</pre><p>变化的关键不是 MQTT 会不会消失，而是控制范式从“调用一个设备动作”转向“让物理环境逐渐逼近目标状态”。例如“帮我准备一个适合睡觉的环境”，目标不再是某一个 API，而是温度、灯光、窗帘、空气质量和安全状态的组合。</p><h2>2. IoT Agent 和 Code Agent，其实是同一种闭环</h2><p>Code Agent 在电脑环境中工作：修改代码、运行测试、观察错误、修复，再次验证。IoT Agent 在物理环境中工作：控制设备、观察传感器、验证状态、处理异常，再次行动。</p><pre>Code Agent
 Goal → Plan → Edit → Run → Test → Observe → Fix ↺
 
 IoT Agent
 Goal → Plan → Control → Observe → Verify → Correct ↺
 
 共同抽象
-Goal → Action → Environment → Observation → Verification → Re-plan</div><p>因此 IoT Agent 的核心不是“聊天”，而是闭环。API 调用成功不等于任务成功：设备可能执行失败、状态没有达到预期、环境发生变化，或者多个设备之间产生冲突。</p><h2>3. 设备指令：标准化，但不要把设备做成一样</h2><p>如果每个厂商都定义自己的 API，Agent 会重新面对 IoT 长期存在的碎片化问题；但如果把所有设备都压缩到一套最低公分母指令，又会抹掉厂商创新。</p><p>更合理的方式是：<strong>标准化语义与基础 Capability，保留 Vendor Extension。</strong></p><div class="architecture">AirConditioner
+Goal → Action → Environment → Observation → Verification → Re-plan</pre><p>因此 IoT Agent 的核心不是“聊天”，而是闭环。API 调用成功不等于任务成功：设备可能执行失败、状态没有达到预期、环境发生变化，或者多个设备之间产生冲突。</p><h2>3. 设备指令：标准化，但不要把设备做成一样</h2><p>如果每个厂商都定义自己的 API，Agent 会重新面对 IoT 长期存在的碎片化问题；但如果把所有设备都压缩到一套最低公分母指令，又会抹掉厂商创新。</p><p>更合理的方式是：<strong>标准化语义与基础 Capability，保留 Vendor Extension。</strong></p><pre>AirConditioner
 ├── Standard Capability
 │   ├── power
 │   ├── temperature
@@ -31,7 +134,7 @@ Goal → Action → Environment → Observation → Verification → Re-plan</di
 └── Vendor Extension
     ├── sleep_curve
     ├── AI_comfort
-    └── energy_optimizer</div><p>因此标准化的对象不应该只是 Command，而应该逐渐覆盖：</p><ul><li><strong>Identity</strong>：设备是谁、型号、固件和身份凭证；</li><li><strong>Capability</strong>：设备能做什么；</li><li><strong>State</strong>：设备当前是什么状态；</li><li><strong>Action</strong>：允许执行哪些动作；</li><li><strong>Event</strong>：发生了什么；</li><li><strong>Telemetry</strong>：持续产生什么观测数据；</li><li><strong>Constraint / Permission / Risk</strong>：在什么条件下可以执行。</li></ul><p>这比简单定义一个“unlock()”或“set_temperature()”更接近 Agent 真正需要的设备模型。</p><h2>4. Agent Module：设备进入 Agent 世界的“网卡”</h2><p>大量存量 IoT 设备不会因为 Agent 出现就重新设计 MCU、固件和整套通信栈。真正可能推动规模化的产品形态，是一个薄的 Agent Module / SDK。</p><div class="architecture">┌─────────────────────┐
+    └── energy_optimizer</pre><p>因此标准化的对象不应该只是 Command，而应该逐渐覆盖：</p><ul><li><strong>Identity</strong>：设备是谁、型号、固件和身份凭证；</li><li><strong>Capability</strong>：设备能做什么；</li><li><strong>State</strong>：设备当前是什么状态；</li><li><strong>Action</strong>：允许执行哪些动作；</li><li><strong>Event</strong>：发生了什么；</li><li><strong>Telemetry</strong>：持续产生什么观测数据；</li><li><strong>Constraint / Permission / Risk</strong>：在什么条件下可以执行。</li></ul><p>这比简单定义一个“unlock()”或“set_temperature()”更接近 Agent 真正需要的设备模型。</p><h2>4. Agent Module：设备进入 Agent 世界的“网卡”</h2><p>大量存量 IoT 设备不会因为 Agent 出现就重新设计 MCU、固件和整套通信栈。真正可能推动规模化的产品形态，是一个薄的 Agent Module / SDK。</p><pre>┌─────────────────────┐
 │     Agent Module    │
 │                     │
 │ Device Adapter      │
@@ -42,7 +145,7 @@ Goal → Action → Environment → Observation → Verification → Re-plan</di
 │ OTA / Lifecycle     │
 └──────────┬──────────┘
            │
-        Device / MCU</div><p>它更像“Agent 网卡”，而不是“大模型模组”。第一代 Agent Module 甚至可以完全没有 LLM：它只负责把传统设备的能力、状态、事件和安全边界暴露成 Agent 可理解的接口。</p><p>这样，设备厂商只需要实现 Device Adapter；复杂的 Planning、Harness、Memory 和大模型推理仍然放在云端或边缘 Runtime。</p><h2>5. MQTT 只是连接层，Agent 真正需要的是设备语义</h2><p>MQTT 很重要，但它解决的是消息传输。Agent 要解决的问题更高一层：我控制的是谁？它有什么能力？当前状态是什么？这个动作有什么风险？动作完成以后如何验证？</p><div class="architecture">Agent
+        Device / MCU</pre><p>它更像“Agent 网卡”，而不是“大模型模组”。第一代 Agent Module 甚至可以完全没有 LLM：它只负责把传统设备的能力、状态、事件和安全边界暴露成 Agent 可理解的接口。</p><p>这样，设备厂商只需要实现 Device Adapter；复杂的 Planning、Harness、Memory 和大模型推理仍然放在云端或边缘 Runtime。</p><h2>5. MQTT 只是连接层，Agent 真正需要的是设备语义</h2><p>MQTT 很重要，但它解决的是消息传输。Agent 要解决的问题更高一层：我控制的是谁？它有什么能力？当前状态是什么？这个动作有什么风险？动作完成以后如何验证？</p><pre>Agent
   ↓
 Agent Runtime
   ↓
@@ -58,7 +161,7 @@ IoT Protocols
   ├── Wi-Fi
   └── 其他设备协议
   ↓
-Physical Device</div><p>因此 MCP 更像 Agent 与能力之间的接口层，而不是 IoT 设备标准本身。IoT 仍然需要自己的 Capability / State / Event 语义模型。</p><h2>6. IoT Core 的交付物会发生变化</h2><p>传统 IoT Core 最重要的能力是“把设备连上来、管起来、采集数据”。Agent 时代，我认为它应该进一步成为“物理世界的能力底座”。</p><div class="architecture">IoT Core
+Physical Device</pre><p>因此 MCP 更像 Agent 与能力之间的接口层，而不是 IoT 设备标准本身。IoT 仍然需要自己的 Capability / State / Event 语义模型。</p><h2>6. IoT Core 的交付物会发生变化</h2><p>传统 IoT Core 最重要的能力是“把设备连上来、管起来、采集数据”。Agent 时代，我认为它应该进一步成为“物理世界的能力底座”。</p><pre>IoT Core
 ├── Device Identity
 ├── Capability
 ├── State
@@ -67,7 +170,7 @@ Physical Device</div><p>因此 MCP 更像 Agent 与能力之间的接口层，�
 ├── Digital Twin
 ├── Permission / Policy
 ├── Device Lifecycle / OTA
-└── Agent Interface</div><p>换句话说，IoT Core 不只是 Device Cloud，而开始成为一个<strong>可被软件和 Agent 消费的 Physical World API</strong>。</p><h2>7. 在 IoT Core 之上构建 SaaS / PaaS</h2><p>当设备能力被标准化以后，上层就不需要重复解决“怎么连接空调、怎么读取设备状态”。开发者可以直接围绕行业目标构建 PaaS 和 SaaS。</p><div class="architecture">                    Industry SaaS
+└── Agent Interface</pre><p>换句话说，IoT Core 不只是 Device Cloud，而开始成为一个<strong>可被软件和 Agent 消费的 Physical World API</strong>。</p><h2>7. 在 IoT Core 之上构建 SaaS / PaaS</h2><p>当设备能力被标准化以后，上层就不需要重复解决“怎么连接空调、怎么读取设备状态”。开发者可以直接围绕行业目标构建 PaaS 和 SaaS。</p><pre>Industry SaaS
              ┌────────┼────────┐
              ↓        ↓        ↓
           Home      Factory   Energy
@@ -78,7 +181,7 @@ Physical Device</div><p>因此 MCP 更像 Agent 与能力之间的接口层，�
                       ↓
                    IoT Core
                       ↓
-           Devices / Sensors / Actuators</div><p>例如制造场景，IoT Core 提供机器温度、振动、功率、状态和报警等能力；Manufacturing Agent 在上面进一步组合生产、质量、维护和能源能力。这样，底层能力可以复用，而上层业务模型可以完全不同。</p><p>这也意味着 IoT 平台可能从“卖设备连接”逐渐走向“卖 Capability / Skill / Agent Runtime”。</p><h2>8. SaaS 也会从 Workflow 走向 Goal</h2><p>传统工业 SaaS 更像：用户进入页面，创建计划，执行 Workflow，再查看结果。Agentic SaaS 则可以让用户直接表达目标：“今天产线延迟了，尽量追回交付时间。”</p><div class="architecture">Goal
+           Devices / Sensors / Actuators</pre><p>例如制造场景，IoT Core 提供机器温度、振动、功率、状态和报警等能力；Manufacturing Agent 在上面进一步组合生产、质量、维护和能源能力。这样，底层能力可以复用，而上层业务模型可以完全不同。</p><p>这也意味着 IoT 平台可能从“卖设备连接”逐渐走向“卖 Capability / Skill / Agent Runtime”。</p><h2>8. SaaS 也会从 Workflow 走向 Goal</h2><p>传统工业 SaaS 更像：用户进入页面，创建计划，执行 Workflow，再查看结果。Agentic SaaS 则可以让用户直接表达目标：“今天产线延迟了，尽量追回交付时间。”</p><pre>Goal
  ↓
 Domain Agent
  ↓
@@ -92,7 +195,7 @@ Domain Agent
  ↓
 持续观察
  ↓
-重新规划</div><p>因此 IoT Core 提供的是“世界”，Agent Runtime 提供的是“行动”，SaaS/PaaS 提供的是“领域目标”。</p><h2>9. 但物理世界让 Runtime 比软件 Agent 更重要</h2><p>Agent 在物理世界里行动，安全边界会比普通软件任务严格得多。“调灯光”和“开门”显然不是同一种风险；“关闭报警器”和“读取温度”也不能拥有相同权限。</p><div class="architecture">Action
+重新规划</pre><p>因此 IoT Core 提供的是“世界”，Agent Runtime 提供的是“行动”，SaaS/PaaS 提供的是“领域目标”。</p><h2>9. 但物理世界让 Runtime 比软件 Agent 更重要</h2><p>Agent 在物理世界里行动，安全边界会比普通软件任务严格得多。“调灯光”和“开门”显然不是同一种风险；“关闭报警器”和“读取温度”也不能拥有相同权限。</p><pre>Action
   ↓
 Risk Assessment
   ↓
@@ -102,7 +205,7 @@ Human Gate / Execute / Reject
   ↓
 Physical Feedback
   ↓
-Verification</div><p>所以 IoT Agent Runtime 需要把 Policy、Risk、Permission、Verification 和 Audit 变成一等能力。Agent 越自主，Runtime 越不能只是一个 Tool Caller。</p><h2>10. 最终架构：Agentic IoT 的五层</h2><div class="architecture">┌──────────────────────────────────────┐
+Verification</pre><p>所以 IoT Agent Runtime 需要把 Policy、Risk、Permission、Verification 和 Audit 变成一等能力。Agent 越自主，Runtime 越不能只是一个 Tool Caller。</p><h2>10. 最终架构：Agentic IoT 的五层</h2><pre>┌──────────────────────────────────────┐
 │           Industry SaaS              │
 │ MES / Energy / Smart Home / Retail   │
 └──────────────────┬───────────────────┘
@@ -126,4 +229,9 @@ Verification</div><p>所以 IoT Agent Runtime 需要把 Policy、Risk、Permissi
 ┌──────────────────▼───────────────────┐
 │       Agent Module / Edge / Device   │
 │ MQTT / Matter / BLE / Sensors / MCU  │
-└──────────────────────────────────────┘</div><h2>11. 最值得继续追问的问题</h2><p>如果这个架构成立，真正值得研究的就不再是“给 IoT 加不加一个 Agent 功能”，而是三个更底层的问题：</p><ul><li><strong>设备标准：</strong>什么应该成为跨厂商的 Capability / State / Event 标准，什么必须保留差异化？</li><li><strong>Agent Module：</strong>它会不会像今天的 Wi-Fi、Bluetooth 或其他设备 SDK 一样，成为设备进入 Agent 生态的标准基础组件？</li><li><strong>IoT Core：</strong>它最终还是 Device Cloud，还是会升级成一个真正的 Physical World Runtime / Control Plane？</li></ul><div class="callout"><strong>我的当前判断：</strong>Agent 不会消灭 IoT 的底层连接、设备协议和数字孪生；真正发生变化的是应用层的控制方式。过去 IoT 把物理能力预先打包成 App、规则和 Workflow，未来这些“打包物”可能逐渐被解包成 Capability、State、Event 和 Skill，由 Agent Runtime 在目标驱动下动态组合。</div><p>如果这条路线最终成立，那么 IoT Agent 化就不是“智能音箱再加一个聊天机器人”，而是一次从 <strong>Device → Capability → Environment → Goal</strong> 的架构迁移。</p></article></div></section></main><footer class="site-footer"><div class="wrap site-footer__inner"><div><p>© <span id="year"></span> chengguruchun · Hangzhou</p><p>Blog for Agents · 知识博客</p><p class="footer-visits" aria-label="访问统计"><span>本站 <strong data-visits-site>-</strong></span><span class="footer-visits__sep" aria-hidden="true">·</span><span>本页 <strong data-visits-page>-</strong></span></p></div></div></footer><script src="../assets/js/site.js"></script><script src="../assets/js/visits.js"></script></body></html>
+└──────────────────────────────────────┘</pre><h2>11. 最值得继续追问的问题</h2><p>如果这个架构成立，真正值得研究的就不再是“给 IoT 加不加一个 Agent 功能”，而是三个更底层的问题：</p><ul><li><strong>设备标准：</strong>什么应该成为跨厂商的 Capability / State / Event 标准，什么必须保留差异化？</li><li><strong>Agent Module：</strong>它会不会像今天的 Wi-Fi、Bluetooth 或其他设备 SDK 一样，成为设备进入 Agent 生态的标准基础组件？</li><li><strong>IoT Core：</strong>它最终还是 Device Cloud，还是会升级成一个真正的 Physical World Runtime / Control Plane？</li></ul><p><strong>我的当前判断：</strong>Agent 不会消灭 IoT 的底层连接、设备协议和数字孪生；真正发生变化的是应用层的控制方式。过去 IoT 把物理能力预先打包成 App、规则和 Workflow，未来这些“打包物”可能逐渐被解包成 Capability、State、Event 和 Skill，由 Agent Runtime 在目标驱动下动态组合。</p><p>如果这条路线最终成立，那么 IoT Agent 化就不是“智能音箱再加一个聊天机器人”，而是一次从 <strong>Device → Capability → Environment → Goal</strong> 的架构迁移。</p>
+</div></article></main>
+<footer class="site-footer"><div class="wrap site-footer__inner"><div><p>© <span id="year"></span> chengguruchun · Hangzhou</p><p>Blog for Agents · 知识博客</p><p class="footer-visits" aria-label="访问统计"><span>本站 <strong data-visits-site>-</strong></span><span class="footer-visits__sep" aria-hidden="true">·</span><span>本页 <strong data-visits-page>-</strong></span></p></div></div></footer>
+<script src="../assets/js/site.js"></script><script src="../assets/js/visits.js"></script>
+</body>
+</html>

@@ -2,6 +2,37 @@
   "type": "Diverse Lab",
   "items": [
     {
+      "id": "software-design-universal-patterns",
+      "type": "Diverse Lab",
+      "title": "软件工程的隐形语法：从“加一层”到“广进严出”",
+      "excerpt": "把软件工程里反复出现的设计思想放在一起：间接层、分而治之、粗到精、缓存、批处理、异步、隔离、一致性、反馈与控制，以及它们背后的共同结构。",
+      "url": "/diverse/software-design-universal-patterns.html",
+      "date": "2026-09-23",
+      "tags": [
+        "Diverse",
+        "Software Design",
+        "Architecture",
+        "Complex Systems",
+        "Design Patterns"
+      ],
+      "thought_date": "2026-09-23",
+      "published_date": "2026-09-23",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/software-design-universal-patterns.md",
+      "content": "/content/diverse/software-design-universal-patterns.md",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-09-23",
+        "next_review": "2027-03-22",
+        "cadence_days": 180,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      }
+    },
+    {
       "id": "reinforcement-learning-game-theory-complex-systems",
       "type": "Diverse Lab",
       "title": "从强化学习到博弈论：Agent Runtime 正在走向复杂系统",

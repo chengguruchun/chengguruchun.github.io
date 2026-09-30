@@ -36,9 +36,9 @@
 
 | 类型 | 数量 | 入口 |
 |------|------|------|
-| Articles | 9 | [`/articles/`](https://chengguruchun.github.io/articles/) |
-| Diverse Lab | 5 | [`/diverse/`](https://chengguruchun.github.io/diverse/) |
-| Hot Words | 1 | [`/times/`](https://chengguruchun.github.io/times/) |
+| Articles | 23 | [`/articles/`](https://chengguruchun.github.io/articles/) |
+| Diverse Lab | 9 | [`/diverse/`](https://chengguruchun.github.io/diverse/) |
+| Hot Words | 5 | [`/times/`](https://chengguruchun.github.io/times/) |
 
 **Projects** (page + API only; not in catalog search)
 
@@ -46,7 +46,7 @@
 
 **Videos** (page only; not in catalog search)
 
-- `/videos/` · 3 cards · `api/videos.json`（全部为 `stage=planned`，尚未录制；`validate_lab.py` 会确保未录制的条目不被渲染成可播放视频）
+- `/videos/` · 讲解页，不进 catalog。`api/videos.json` 记录已发布条目；`validate_lab.py` 会拦住把 `stage=planned` 渲染成可播放视频。
 
 **Hot Words / Times** (in catalog)
 
@@ -56,6 +56,8 @@
 
 **Thought Loop**（人看 [`/bench/`](./bench/)）：任意 Agent 加载 Skill 后，聊天/初步想法只落 `topic`，过字段 `gates[]` 和模型 `model_gates[]` 再分流。模型标准是可改提示词。已有文章正文不重写。Hot Words 仍走周环。索引：[`/api/thoughts.json`](./api/thoughts.json) · [`/api/thoughts-criteria.json`](./api/thoughts-criteria.json) · [`THOUGHT_LOOP.md`](./THOUGHT_LOOP.md)
 
+**Bench 思想实验**（不是结论）：[`/api/bench.json`](./api/bench.json) 指向 `content/bench/*.md`，`conclusion: false`，不进 catalog。
+
 ## For Agents
 
 1. 读 [`SKILL.md`](./SKILL.md)（只定义 discover → execute）
@@ -63,7 +65,7 @@
 3. schema 在 [`/mcp/tools.json`](./mcp/tools.json)，再 `lab_execute`
 4. 知识索引 [`/api/catalog.json`](./api/catalog.json) → `/content/**/*.md`
 5. 站点地图 [`llms.txt`](./llms.txt)
-6. 入境是 [`topic`](./THOUGHT_LOOP.md)：聊天和初步想法先蒸馏，再看 [`/api/thoughts.json`](./api/thoughts.json) 的字段 `gates[]` 和模型 `model_gates[]`。标准在 [`/api/thoughts-criteria.json`](./api/thoughts-criteria.json)。未 `published` 的当实验，不当结论。
+6. 入境是 [`topic`](./THOUGHT_LOOP.md)：聊天和初步想法先蒸馏，再看 [`/api/thoughts.json`](./api/thoughts.json) 的字段 `gates[]` 和模型 `model_gates[]`。标准在 [`/api/thoughts-criteria.json`](./api/thoughts-criteria.json)。未 `published` 的当实验，不当结论。Bench 长文看 [`/api/bench.json`](./api/bench.json)（`conclusion: false`）。
 7. 已发表知识另走 [`KNOWLEDGE_LOOP.md`](./KNOWLEDGE_LOOP.md)：读 [`/api/knowledge.json`](./api/knowledge.json)。`stale` 是过期，不是错误。Agent 只写报告。
 
 元工具：`lab_discover`、`lab_execute`。
