@@ -1,7 +1,7 @@
 {
   "name": "AI Knowledge Lab · Knowledge registry",
-  "generated": "2026-09-30T01:42:58Z",
-  "as_of": "2026-09-30",
+  "generated": "2026-10-04T08:23:50Z",
+  "as_of": "2026-10-04",
   "criteria": "/api/knowledge-criteria.json",
   "criteria_version": "2026-09-16.2",
   "loop": "/KNOWLEDGE_LOOP.md",
