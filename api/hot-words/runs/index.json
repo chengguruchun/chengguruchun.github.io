@@ -1,7 +1,15 @@
 {
   "name": "Hot Words run index",
-  "generated": "2026-09-28T19:59:00Z",
+  "generated": "2026-10-05T06:35:41Z",
   "items": [
+    {
+      "runId": "hot-words-2026-10-W1-20261005T063534Z",
+      "period": "2026-10-W1",
+      "phase": "applied",
+      "word": "Agent Observability",
+      "finishedAt": "2026-10-05T06:35:41Z",
+      "path": "/api/hot-words/runs/hot-words-2026-10-W1-20261005T063534Z.json"
+    },
     {
       "runId": "hot-words-2026-09-W5-20260928T195850Z",
       "period": "2026-09-W5",

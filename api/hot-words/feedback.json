@@ -1,8 +1,8 @@
 {
   "name": "Hot Words feedback",
-  "generated": "2026-09-28T19:59:00Z",
-  "period": "2026-09-W5",
-  "word": "Agentic RAG",
+  "generated": "2026-10-05T06:35:41Z",
+  "period": "2026-10-W1",
+  "word": "Agent Observability",
   "signals": {
     "visits": {
       "site": null,
@@ -24,27 +24,23 @@
     }
   },
   "lastRun": {
-    "runId": "hot-words-2026-09-W5-20260928T195850Z",
-    "phase": "published",
+    "runId": "hot-words-2026-10-W1-20261005T063534Z",
+    "phase": "applied",
     "gates": {
       "schema": "pass",
       "duplicate": "pass",
       "editorial": "pass",
       "evidence": "pass",
-      "relevance": "weak",
+      "relevance": "pass",
       "consistency": "pass"
     },
-    "evidenceCount": 15,
-    "publish": {
-      "commit": "3bdc679acd5bf918fdfd1906c0a3becea7a258a0",
-      "url": "https://chengguruchun.github.io/times/",
-      "mode": "autonomous",
-      "periodScheme": "YYYY-MM-WN month block, not ISO week"
-    },
+    "evidenceCount": 10,
+    "publish": {},
     "error": null
   },
   "learnHints": {
     "recentWords": [
+      "2026-10-W1: Agent Observability",
       "2026-09-W5: Agentic RAG",
       "2026-09-W4: Agent Memory Benchmark",
       "2026-09-W3: Agent 长期记忆",
@@ -53,30 +49,38 @@
     ],
     "rejectedCandidates": [
       {
-        "word": "Agent Memory Evaluation",
+        "word": "Agentic Retrieval",
         "reason": "not_chosen",
-        "notes": "与 BANNED 的 Agent Memory Benchmark 语义邻近，但更强调 evaluation 方法论而非 benchmark 名称，风险较高，备选。"
+        "notes": "与 BANNED 的 Agentic RAG 字面邻近，风险高，仅作对照。"
       },
       {
-        "word": "Context Engineering",
+        "word": "Query Rewriting",
         "reason": "not_chosen",
-        "notes": "承接 W1 的 Context Window Optimization，但更偏工程方法论，与记忆主题互补且无 BANNED 冲突。"
+        "notes": "具体、可落地到本站检索链路，但偏检索侧，与 Agent 主线关联需补强。"
       },
       {
-        "word": "Memory-Augmented Agent",
+        "word": "Context Compression",
         "reason": "not_chosen",
-        "notes": "与 Agent 记忆架构语义重叠，可能触发编辑重复感，备选。"
+        "notes": "承接 Context Window Optimization，工程性强，但可能被视为同一话题延伸。"
       },
       {
-        "word": "Tool-Augmented Memory",
+        "word": "Tool Use Evaluation",
         "reason": "not_chosen",
-        "notes": "较新且具体，但与当前热词记忆主题高度相关，可能被视为同一话题的细分。"
+        "notes": "评测向，但与 BANNED 的 Agent Memory Benchmark 语义邻近，风险中等。"
       }
     ],
     "prefer": "优先选能落到本站软件 / 系统 / Agent 主线的词，并带至少一条可点开的 https 证据。",
-    "avoid": "回避与当前词重复、口号化、以及只有空泛描述没有来源的词。 最近未入选：Agent Memory Evaluation、Context Engineering、Memory-Augmented Agent、Tool-Augmented Memory。"
+    "avoid": "回避与当前词重复、口号化、以及只有空泛描述没有来源的词。 最近未入选：Agentic Retrieval、Query Rewriting、Context Compression、Tool Use Evaluation。"
   },
   "recentRuns": [
+    {
+      "runId": "hot-words-2026-10-W1-20261005T063534Z",
+      "period": "2026-10-W1",
+      "phase": "applied",
+      "word": "Agent Observability",
+      "finishedAt": "2026-10-05T06:35:41Z",
+      "path": "/api/hot-words/runs/hot-words-2026-10-W1-20261005T063534Z.json"
+    },
     {
       "runId": "hot-words-2026-09-W5-20260928T195850Z",
       "period": "2026-09-W5",

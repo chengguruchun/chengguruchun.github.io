@@ -7,9 +7,20 @@
     "meaning": "Nth 7-day block of the calendar month in Asia/Shanghai (days 1–7 = W1, 8–14 = W2, …). Not an ISO 8601 week number.",
     "timezone": "Asia/Shanghai"
   },
-  "current": "2026-09-W5",
-  "updated": "2026-09-29",
+  "current": "2026-10-W1",
+  "updated": "2026-10-05",
   "issues": [
+    {
+      "id": "times-2026-10-w1",
+      "period": "2026-10-W1",
+      "cadence": "weekly",
+      "word": "Agent Observability",
+      "title": "2026-10 Week 1 · Agent Observability",
+      "why": "Agent 从 demo 走向可用系统后，最大的工程瓶颈不再是模型能力，而是多步工具调用与检索链路出错时无法定位。可观测性把 trace、span、token 与工具调用标准化，直接决定本站 Agent 主线能否稳定迭代。OpenTelemetry 的 GenAI 语义约定与 LangSmith 已给出可点开的落地路径，与近期记忆主题互补而不重复。",
+      "date": "2026-10-05",
+      "url": "/times/",
+      "markdown": "/content/times/2026-10-w1.md"
+    },
     {
       "id": "times-2026-09-w5",
       "period": "2026-09-W5",
@@ -69,5 +80,5 @@
       "slug": "2026-09-w1"
     }
   ],
-  "currentProposalHash": "e749783c21600619"
+  "currentProposalHash": "e1bccf7af97777ac"
 }

@@ -3,7 +3,7 @@
   "skill": "/SKILL.md",
   "product": "/PRODUCT.md",
   "llms": "/llms.txt",
-  "generated": "2026-10-04T08:23:50Z",
+  "generated": "2026-10-05T06:35:41Z",
   "base_url": "https://chengguruchun.github.io",
   "items": [
     {
@@ -1027,6 +1027,22 @@
           "override": null
         }
       }
+    },
+    {
+      "id": "times-2026-10-w1",
+      "type": "Times",
+      "title": "2026-10 Week 1 · Agent Observability",
+      "excerpt": "Agent 从 demo 走向可用系统后，最大的工程瓶颈不再是模型能力，而是多步工具调用与检索链路出错时无法定位。可观测性把 trace、span、token 与工具调用标准化，直接决定本站 Agent 主线能否稳定迭代。OpenTelemetry 的 GenAI 语义约定与 LangSmith 已给出可点开的落地路径，与近期记忆主题互补而不重复。",
+      "url": "/times/",
+      "date": "2026-10-05",
+      "tags": [
+        "Times",
+        "Hot Words",
+        "Agent Observability"
+      ],
+      "markdown": "/content/times/2026-10-w1.md",
+      "period": "2026-10-W1",
+      "word": "Agent Observability"
     },
     {
       "id": "times-2026-09-w5",
