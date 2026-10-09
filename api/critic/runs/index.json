@@ -1,9 +1,20 @@
 {
   "name": "Critic Lab runs",
   "kind": "read",
-  "updated": "2026-10-09T09:00:09Z",
-  "count": 15,
+  "updated": "2026-10-09T09:00:46Z",
+  "count": 16,
   "runs": [
+    {
+      "id": "frontend-language-for-ai-assisted-development-9e4db1edb4f9",
+      "article": "frontend-language-for-ai-assisted-development",
+      "article_slug": "frontend-language-for-ai-assisted-development",
+      "status": "needs_review",
+      "summary": "This is a solid, checklist-style terminology primer for AI-assisted frontend/full-stack work; the diff is a harmless heading renumber, but the article contains several boundary conflations (domain vs runtime/risk/veri...",
+      "commit": "9e4db1edb4f9b9c51e68c0d77a8244b0d365c66c",
+      "generated_at": "2026-10-09T09:00:46.517683+00:00",
+      "json": "/api/critic/runs/frontend-language-for-ai-assisted-development-9e4db1edb4f9.json",
+      "markdown": "/api/critic/runs/frontend-language-for-ai-assisted-development-9e4db1edb4f9.md"
+    },
     {
       "id": "frontend-language-for-ai-assisted-development-24a201081660",
       "article": "frontend-language-for-ai-assisted-development",
