@@ -8,10 +8,10 @@
   "items": [
     {
       "id": "ai-native-software-language-aosl",
-      "type": "Articles",
+      "type": "Diverse Lab",
       "title": "AOSL：面向 AI-native 软件工程的语言与构建系统",
       "excerpt": "从“教 AI 写传统代码”进一步走向“为 AI 重新设计软件描述方式”：提出结构化 DSL、统一语义 IR、编译与 Runtime 混合执行、全栈生成、验证闭环与可验证原型方案。",
-      "url": "/articles/ai-native-software-language-aosl.html",
+      "url": "/diverse/ai-native-software-language-aosl.html",
       "date": "2026-10-09",
       "tags": [
         "AI-Native",
@@ -24,8 +24,8 @@
       ],
       "thought_date": "2026-10-09",
       "published_date": "2026-10-09",
-      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/ai-native-software-language-aosl.md",
-      "content": "/content/articles/ai-native-software-language-aosl.md",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/ai-native-software-language-aosl.md",
+      "content": "/content/diverse/ai-native-software-language-aosl.md",
       "knowledge": {
         "status": "fresh",
         "last_verified": "2026-10-09",
