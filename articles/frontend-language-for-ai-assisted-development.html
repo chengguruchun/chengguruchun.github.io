@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 全栈开发的前端语言：把页面需求说清楚的术语手册 · Articles</title>
+<meta name="description" content="从 DOM、组件、布局、状态、路由到 API 与验收标准，整理 AI 辅助开发最常用的前端术语，并用一套需求表达框架减少误解与返工。">
+<meta name="theme-color" content="#f7f5f0">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/site.css">
+<link rel="canonical" href="https://chengguruchun.github.io/articles/frontend-language-for-ai-assisted-development.html">
+<link rel="alternate" type="application/rss+xml" title="AI Knowledge Lab" href="../feed.xml">
+<meta property="og:type" content="article"><meta property="og:site_name" content="AI Knowledge Lab"><meta property="og:locale" content="zh_CN">
+<meta property="og:title" content="AI 全栈开发的前端语言：把页面需求说清楚的术语手册"><meta property="og:description" content="从 DOM、组件、布局、状态、路由到 API 与验收标准，整理 AI 辅助开发最常用的前端术语，并用一套需求表达框架减少误解与返工。"><meta property="og:url" content="https://chengguruchun.github.io/articles/frontend-language-for-ai-assisted-development.html">
+<meta property="og:image" content="https://chengguruchun.github.io/assets/img/og-cover.png"><meta property="og:image:alt" content="AI Knowledge Lab">
+<meta property="article:published_time" content="2026-10-09"><meta property="article:author" content="chengguruchun">
+<meta property="article:tag" content="AI-Assisted Development"><meta property="article:tag" content="Frontend"><meta property="article:tag" content="Full-Stack"><meta property="article:tag" content="UI"><meta property="article:tag" content="Prompt Engineering">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="AI 全栈开发的前端语言：把页面需求说清楚的术语手册"><meta name="twitter:description" content="从 DOM、组件、布局、状态、路由到 API 与验收标准，整理 AI 辅助开发最常用的前端术语，并用一套需求表达框架减少误解与返工。"><meta name="twitter:image" content="https://chengguruchun.github.io/assets/img/og-cover.png">
+<meta name="author" content="chengguruchun">
+</head>
+<body>
+<header class="site-header"><div class="wrap site-header__inner"><a class="brand" href="../index.html"><img class="brand__logo" src="../assets/img/brand-mark.svg" alt="AI Knowledge Lab" width="44" height="44"><span class="brand__tag"><span class="brand__rotate"><span class="brand__item is-active">Independent Thinker</span><span class="brand__item">AI Agents</span><span class="brand__item">Complex Systems</span><span class="brand__item">Diverse Thinking</span></span></span></a><button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">菜单</button><nav class="nav" id="site-nav" aria-label="主导航"><a href="../index.html">Home</a><a href="../bench/">Agent Bench</a><a href="../diverse/">Diverse Lab</a><a href="../articles/" aria-current="page">Articles</a><a href="../projects/">Projects</a><a href="../videos/">Videos</a><a href="../times/">Hot Words</a><a href="../about/">About Me</a><a class="nav__search" href="../tags/">Tags / Search</a></nav></div></header>
+<main><article class="article-body"><header class="page-hero"><div class="prose-wrap"><p class="page-hero__kicker">Articles · AI-assisted Development</p><h1>AI 全栈开发的前端语言：把页面需求说清楚的术语手册</h1><p class="page-hero__desc">从 DOM、组件、布局、状态、路由到 API 与验收标准，整理 AI 辅助开发最常用的前端术语，并用一套需求表达框架减少误解与返工。</p><p class="article-meta"><span>思路 2026-10-09</span><span>发表 2026-10-09</span><span>作者 chengguruchun</span><a class="tag" href="../tags/?tag=Frontend">Frontend</a><a class="tag" href="../tags/?tag=Full-Stack">Full-Stack</a><a class="tag" href="../tags/?tag=AI-Assisted%20Development">AI-Assisted Development</a></p></div></header><div class="prose-wrap">
+<p class="lede">现在借助 AI 写一个页面，可能只需要一句话：“帮我做一个好看的后台管理系统。”模型很快就能生成页面。但“好看”“现代”“简洁”不是可执行的规格：侧边栏是否固定？内容区需要多宽？筛选条件如何提交？表格是否分页？加载中、空数据和请求失败时又显示什么？</p>
+<p>这些没说清楚，AI 就只能自行补全。我的核心观点是：<strong>前端术语是一套压缩歧义的工程语言</strong>。掌握它们不是为了背诵名词，而是为了准确描述界面结构、视觉规则、交互行为、数据流和验收条件。</p>
+<h2>一、先建立前端的整体地图</h2>
+<pre>用户看到的页面
+   ├── 结构：HTML / DOM
+   ├── 表现：CSS / Layout / Responsive
+   ├── 行为：JavaScript / State / Events
+   └── 数据：API / Request / Response
+                └── 后端服务与业务规则</pre>
+<ul><li><strong>HTML</strong> 描述内容的语义结构，例如标题、表单、按钮和表格。</li><li><strong>CSS</strong> 决定尺寸、颜色、间距、排布和不同屏幕下的呈现。</li><li><strong>JavaScript / TypeScript</strong> 负责交互逻辑、状态变化、数据处理与请求调用。</li><li><strong>API</strong> 让前端与后端交换数据；页面不等于业务数据本身。</li></ul>
+<p>现代框架通过组件、状态和数据驱动页面更新，但这些底层概念仍然重要。</p>
+<h2>二、描述页面结构：元素、DOM 与组件</h2>
+<h3>Element、Tag 与 DOM</h3>
+<p><strong>Tag</strong> 是 HTML 源码中的标签；<strong>Element</strong> 是浏览器解析后形成的元素；<strong>DOM</strong> 则把文档组织成可查询和操作的树状对象结构。</p>
+<p>与其对 AI 说“把右边那个东西调小一点”，不如说：“将用户详情卡片中的主操作按钮高度从 40px 调整为 32px，不改变卡片标题和其他按钮。”</p>
+<h3>Semantic HTML：语义化标签</h3>
+<p><code>&lt;main&gt;</code>、<code>&lt;nav&gt;</code>、<code>&lt;form&gt;</code> 和 <code>&lt;button&gt;</code> 表达不同的内容角色或交互含义。语义正确有助于键盘操作、辅助技术和浏览器默认行为，也让代码更容易被人和 AI 理解。</p>
+<h3>Component：组件</h3>
+<p>常见组件包括 Button、Input、Modal/Dialog（模态弹窗）、Drawer（侧边抽屉）、Dropdown/Select（下拉选择）、Tabs（标签页）、Card（卡片）、Table/Data Grid（表格）、Pagination（分页器）和 Toast（轻提示）。</p>
+<p>“增加一个确认弹窗”已经比“做一个小窗口”清楚；“复用现有 ConfirmDialog，点击确认后才提交请求，取消不产生副作用”则更接近可实施的任务。组件是代码组织和复用单位，不等于页面上任意一个矩形。</p>
+<h2>三、描述布局：把“摆得整齐”变成约束</h2>
+<table><thead><tr><th>术语</th><th>含义</th><th>需求表达示例</th></tr></thead><tbody><tr><td>Container / Wrapper</td><td>控制整体宽度的容器</td><td>内容区最大宽度 1200px，居中显示</td></tr><tr><td>Flexbox</td><td>一维布局</td><td>标题靠左，操作按钮靠右</td></tr><tr><td>CSS Grid</td><td>二维行列布局</td><td>桌面端三列卡片，间距 24px</td></tr><tr><td>Gap</td><td>子项之间的间距</td><td>卡片之间使用 16px gap</td></tr><tr><td>Padding / Margin</td><td>内边距 / 外边距</td><td>卡片内边距 24px，标题下方留 20px</td></tr><tr><td>Overflow</td><td>内容溢出时的处理</td><td>表格过宽时允许横向滚动</td></tr><tr><td>Responsive Design</td><td>响应式设计</td><td>大屏三列、中屏两列、窄屏单列</td></tr></tbody></table>
+<p>简单原则：Flexbox 适合导航栏、按钮组等单方向排列；Grid 适合仪表盘和卡片墙等行列布局。响应式设计也不只是缩小页面，还要明确导航如何折叠、表格如何处理、小屏幕哪些内容可以换行。</p>
+<h2>四、描述视觉样式：不只是颜色</h2>
+<ul><li><strong>Design Tokens</strong>：统一管理颜色、字号、间距、圆角和阴影等视觉变量。</li><li><strong>Typography</strong>：字体、字号、字重、行高和字距。</li><li><strong>Visual Hierarchy</strong>：通过尺寸、位置、颜色和留白表达信息层级。</li><li><strong>Contrast</strong>：文字与背景之间的对比度，影响可读性。</li><li><strong>Whitespace</strong>：有意保留的空间，不等于浪费空间。</li></ul>
+<p>“更高级一点”可以作为审美方向，但不能成为唯一验收标准。更有效的描述是：“页面以中性色为主，主操作使用统一品牌色；标题、正文、辅助信息形成三级字号层次；卡片使用轻边框，不使用大面积投影。”还应要求 AI 复用项目已有的设计令牌，避免每个组件各自定义颜色和间距。</p>
+<h2>五、描述交互：事件、状态与反馈</h2>
+<ul><li><strong>Event</strong>：点击、输入、提交、键盘操作等触发行为。</li><li><strong>State</strong>：当前选中标签、弹窗开关、页码、请求状态等影响 UI 的数据。</li><li><strong>Loading State</strong>：请求进行中。</li><li><strong>Empty State</strong>：请求成功但没有数据。</li><li><strong>Error State</strong>：请求失败，并提供错误说明或恢复操作。</li><li><strong>Success Feedback</strong>：操作成功后的提示或页面更新。</li><li><strong>Disabled State</strong>：条件不满足时禁用控件。</li></ul>
+<p>一个完整的交互不能只描述成功路径。以保存表单为例，还要明确提交期间是否禁用按钮、失败时是否保留用户输入、字段错误显示在哪里，以及重复点击是否会触发多次请求。</p>
+<p>Modal 通常用于需要集中处理的对话框；Drawer 适合详情和编辑面板；Popover 用于锚定元素的轻量操作；Tooltip 只适合简短说明。需求中最好明确选哪一种，而不是让 AI 猜。</p>
+<h2>六、描述数据流：API、Mock、分页与搜索</h2>
+<p>前端通常通过 HTTP 请求后端 API。需要明确请求何时发起、参数来自哪里、响应如何映射到界面、失败如何处理，以及筛选和分页发生在前端还是后端。</p>
+<ul><li><strong>Mock Data</strong>：后端未就绪时用于验证布局和交互的模拟数据，不应被误认为真实数据。</li><li><strong>Pagination</strong>：分页，可能是页码分页或游标分页。</li><li><strong>Sorting</strong>：排序，例如按创建时间倒序。</li><li><strong>Filtering</strong>：筛选，例如按状态或日期范围过滤。</li><li><strong>Debounce</strong>：停止输入一段时间后再执行，适合搜索框。</li><li><strong>Throttle</strong>：限制一段时间内的触发频率，适合某些高频事件。</li></ul>
+<p>数据量较大时通常应由后端分页和筛选；只对当前页数据做筛选，不等于对全量数据筛选。若接口尚未提供，也应明确是先用 Mock Data，还是同时实现后端 API。</p>
+<h2>七、路由、权限与表单</h2>
+<p><strong>Routing</strong> 定义 URL 与页面的映射；<strong>Navigation</strong> 是用户在页面之间移动的方式。可以要求刷新后仍能访问当前路径，或通过 URL 参数还原筛选条件。</p>
+<p><strong>Authentication（认证）</strong>回答“你是谁”；<strong>Authorization（授权）</strong>回答“你能做什么”。只在前端隐藏按钮不构成真正的权限保护，敏感操作必须由后端进行权限校验。</p>
+<p><strong>Form Validation（表单校验）</strong>应明确必填字段、格式、校验时机、错误提示位置和提交中的状态。例如：“邮箱在失焦时校验格式；提交时执行完整校验；错误提示放在字段下方；提交期间禁用按钮；后端字段错误映射到对应输入框。”</p>
+<h2>八、工程术语：让 AI 在现有项目中正确修改</h2>
+<ul><li><strong>Props</strong>：父组件传递给子组件的参数。</li><li><strong>State Management</strong>：管理跨组件或跨页面共享状态。</li><li><strong>TypeScript Types / Interfaces</strong>：描述数据结构与接口约束。</li><li><strong>Component Reuse</strong>：复用已有组件，避免重复实现。</li><li><strong>Build</strong>：把源码处理成可运行或可部署产物。</li><li><strong>Lint / Format</strong>：检查代码规则并统一格式。</li><li><strong>Unit / Integration / E2E Test</strong>：分别验证单元、模块协作和完整用户流程。</li><li><strong>Regression</strong>：修改后原有功能意外损坏。</li></ul>
+<p>给 AI 的任务应包含改动边界：“先检查项目结构、路由和组件库；沿用当前框架和请求封装；只修改用户管理页面及必要的共享组件；不要擅自升级依赖或重构无关模块。”</p>
+<h2>九、把术语变成可执行的 AI 需求</h2>
+<table><thead><tr><th>维度</th><th>需要说明什么</th></tr></thead><tbody><tr><td>目标与用户</td><td>谁使用页面，要完成什么任务</td></tr><tr><td>页面结构</td><td>页面区块、组件层次、导航关系</td></tr><tr><td>布局与视觉</td><td>宽度、列数、间距、对齐、主题</td></tr><tr><td>交互与状态</td><td>用户动作、状态变化、加载与错误反馈</td></tr><tr><td>数据与接口</td><td>字段、请求、响应、Mock 或真实 API</td></tr><tr><td>工程约束</td><td>技术栈、现有组件、改动范围、权限</td></tr><tr><td>验收标准</td><td>什么结果可被观察、测试和判定为完成</td></tr></tbody></table>
+<h3>示例：用户管理页面</h3>
+<pre>目标：管理员可以查找、查看和编辑用户。
+结构：左侧导航，右侧主内容区；包含标题、筛选表单和用户表格。
+布局：内容最大宽度 1200px；筛选区使用 Flex，字段间距 16px。
+表格：姓名、邮箱、状态、创建时间、操作。
+交互：按姓名/邮箱搜索，按状态筛选，支持后端分页。
+编辑：打开右侧 Drawer；取消不保存，确认后提交。
+状态：提交时 Loading 并防止重复提交；处理成功、空结果、失败和字段错误。
+工程约束：复用项目已有组件、请求封装和权限机制。
+验收：所有操作可实际使用；加载、空数据、错误和成功状态明确；
+      窄屏布局可用；通过项目已有 lint、类型检查和相关测试。</pre>
+<p>这里真正起作用的不是 Prompt 更长，而是把目标、约束、状态和验收分开。AI 更容易据此制定计划，开发者也更容易检查结果。</p>
+<h2>十、我的思考：术语是一种“压缩歧义”的接口</h2>
+<p>人与 AI 的协作也需要接口。自然语言很灵活，但“做一个弹窗”可能对应 Modal、Drawer、Popover，甚至独立页面。术语提供相对稳定的概念边界；示例、尺寸、状态和验收条件进一步限制解释空间。</p>
+<pre>模糊目标
+   ↓ 术语澄清
+结构化需求
+   ↓ 工程约束
+实现计划
+   ↓ 代码生成
+可运行结果
+   ↓ 测试与人工验收
+反馈 / 修正</pre>
+<p>我认为最值得优先掌握的不是所有前端 API，而是三类知识：<strong>结构词汇</strong>（组件、布局、路由、表单、状态）、<strong>行为词汇</strong>（事件、校验、加载、错误、权限、请求），以及<strong>验证词汇</strong>（响应式、可访问性、类型检查、测试、回归）。它们能覆盖大量日常页面开发，也能帮助后端工程师更准确地描述全栈任务。</p>
+<h2>结语</h2>
+<p>AI 降低了编写代码的门槛，却没有让需求歧义、系统边界和质量验证自动消失。前端术语不是为了显得专业，而是为了把“我想要什么”转换成“系统应该如何表现，以及怎样证明它做对了”。</p>
+<p><strong>好的 AI 开发沟通，不是把一句话写得更华丽，而是让每个关键要求都能被实现、观察和验证。</strong></p>
+<h2>参考</h2><ul><li><a href="https://blog.csdn.net/Dontla/article/details/152606697" rel="noopener noreferrer">参考文章：CSDN · Dontla</a></li><li><a href="https://developer.mozilla.org/zh-CN/docs/Web" rel="noopener noreferrer">MDN Web Docs</a></li><li><a href="https://react.dev/learn" rel="noopener noreferrer">React 文档</a></li><li><a href="https://vuejs.org/guide/" rel="noopener noreferrer">Vue 文档</a></li></ul>
+</div></article></main>
+<footer class="site-footer"><div class="wrap site-footer__inner"><div><p>© <span id="year"></span> chengguruchun · Hangzhou</p><p>Blog for Agents · 知识博客</p><p class="footer-visits" aria-label="访问统计"><span>本站 <strong data-visits-site>-</strong></span><span class="footer-visits__sep" aria-hidden="true">·</span><span>本页 <strong data-visits-page>-</strong></span></p></div></div></footer>
+<script src="../assets/js/site.js"></script><script src="../assets/js/visits.js"></script>
+</body></html>
