@@ -7,6 +7,39 @@
   "base_url": "https://chengguruchun.github.io",
   "items": [
     {
+      "id": "ai-native-software-language-aosl",
+      "type": "Articles",
+      "title": "AOSL：面向 AI-native 软件工程的语言与构建系统",
+      "excerpt": "从“教 AI 写传统代码”进一步走向“为 AI 重新设计软件描述方式”：提出结构化 DSL、统一语义 IR、编译与 Runtime 混合执行、全栈生成、验证闭环与可验证原型方案。",
+      "url": "/articles/ai-native-software-language-aosl.html",
+      "date": "2026-10-09",
+      "tags": [
+        "AI-Native",
+        "Software Language",
+        "DSL",
+        "Compiler",
+        "Semantic IR",
+        "Agent Runtime",
+        "Full-Stack"
+      ],
+      "thought_date": "2026-10-09",
+      "published_date": "2026-10-09",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/ai-native-software-language-aosl.md",
+      "content": "/content/articles/ai-native-software-language-aosl.md",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-10-09",
+        "next_review": "2027-01-07",
+        "cadence_days": 90,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      }
+    },
+    {
       "id": "frontend-language-for-ai-assisted-development",
       "type": "Articles",
       "title": "AI 全栈开发的前端语言：把页面需求说清楚的术语手册",
