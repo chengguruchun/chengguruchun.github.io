@@ -1,9 +1,20 @@
 {
   "name": "Critic Lab runs",
   "kind": "read",
-  "updated": "2026-10-09T09:00:46Z",
-  "count": 16,
+  "updated": "2026-10-09T09:03:44Z",
+  "count": 17,
   "runs": [
+    {
+      "id": "frontend-language-for-ai-assisted-development-623f8a775e97",
+      "article": "frontend-language-for-ai-assisted-development",
+      "article_slug": "frontend-language-for-ai-assisted-development",
+      "status": "needs_review",
+      "summary": "This article is a practical glossary mapping frontend terminology to executable AI task specifications, now extended with package management, build engineering, and release/rollback sections. The core thesis—that term...",
+      "commit": "623f8a775e978244f5b79a1966951d990cf462c4",
+      "generated_at": "2026-10-09T09:03:44.001172+00:00",
+      "json": "/api/critic/runs/frontend-language-for-ai-assisted-development-623f8a775e97.json",
+      "markdown": "/api/critic/runs/frontend-language-for-ai-assisted-development-623f8a775e97.md"
+    },
     {
       "id": "frontend-language-for-ai-assisted-development-9e4db1edb4f9",
       "article": "frontend-language-for-ai-assisted-development",
