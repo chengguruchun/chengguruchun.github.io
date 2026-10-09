@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AOSL：面向 AI-native 软件工程的语言与构建系统 · Articles</title>
+<meta name="description" content="从教 AI 使用传统代码走向 AI-native 软件工程：提出结构化 DSL、统一语义 IR、编译与 Runtime 混合执行、全栈生成、验证闭环和可验证原型。">
+<meta name="theme-color" content="#f7f5f0">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/site.css">
+<link rel="canonical" href="https://chengguruchun.github.io/articles/ai-native-software-language-aosl.html">
+<link rel="alternate" type="application/rss+xml" title="AI Knowledge Lab" href="../feed.xml">
+<meta property="og:type" content="article"><meta property="og:site_name" content="AI Knowledge Lab"><meta property="og:locale" content="zh_CN">
+<meta property="og:title" content="AOSL：面向 AI-native 软件工程的语言与构建系统"><meta property="og:description" content="从教 AI 使用传统代码走向 AI-native 软件工程：提出结构化 DSL、统一语义 IR、编译与 Runtime 混合执行、全栈生成、验证闭环和可验证原型。"><meta property="og:url" content="https://chengguruchun.github.io/articles/ai-native-software-language-aosl.html">
+<meta property="og:image" content="https://chengguruchun.github.io/assets/img/og-cover.png"><meta property="og:image:alt" content="AI Knowledge Lab">
+<meta property="article:published_time" content="2026-10-09"><meta property="article:author" content="chengguruchun">
+<meta property="article:tag" content="AI-Native"><meta property="article:tag" content="Software Language"><meta property="article:tag" content="DSL"><meta property="article:tag" content="Compiler"><meta property="article:tag" content="Semantic IR"><meta property="article:tag" content="Agent Runtime"><meta property="article:tag" content="Full-Stack">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="AOSL：面向 AI-native 软件工程的语言与构建系统"><meta name="twitter:description" content="从教 AI 使用传统代码走向 AI-native 软件工程：提出结构化 DSL、统一语义 IR、编译与 Runtime 混合执行、全栈生成、验证闭环和可验证原型。"><meta name="twitter:image" content="https://chengguruchun.github.io/assets/img/og-cover.png"><meta name="author" content="chengguruchun">
+</head>
+<body>
+<header class="site-header"><div class="wrap site-header__inner"><a class="brand" href="../index.html"><img class="brand__logo" src="../assets/img/brand-mark.svg" alt="AI Knowledge Lab" width="44" height="44"><span class="brand__tag"><span class="brand__rotate"><span class="brand__item is-active">Independent Thinker</span><span class="brand__item">AI Agents</span><span class="brand__item">Complex Systems</span><span class="brand__item">Diverse Thinking</span></span></span></a><button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">菜单</button><nav class="nav" id="site-nav" aria-label="主导航"><a href="../index.html">Home</a><a href="../bench/">Agent Bench</a><a href="../diverse/">Diverse Lab</a><a href="../articles/" aria-current="page">Articles</a><a href="../projects/">Projects</a><a href="../videos/">Videos</a><a href="../times/">Hot Words</a><a href="../about/">About Me</a><a class="nav__search" href="../tags/">Tags / Search</a></nav></div></header>
+<main><article class="article-body"><header class="page-hero"><div class="prose-wrap"><p class="page-hero__kicker">Articles · AI-native Software Engineering</p><h1>AOSL：面向 AI-native 软件工程的语言与构建系统</h1><p class="page-hero__desc">从“教 AI 写传统代码”进一步走向“为 AI 重新设计软件描述方式”：提出结构化 DSL、统一语义 IR、编译与 Runtime 混合执行、全栈生成、验证闭环与可验证原型方案。</p><p class="article-meta"><span>思路 2026-10-09</span><span>发表 2026-10-09</span><span>作者 chengguruchun</span><a class="tag" href="../tags/?tag=AI-Native">AI-Native</a><a class="tag" href="../tags/?tag=Compiler">Compiler</a><a class="tag" href="../tags/?tag=Agent%20Runtime">Agent Runtime</a></p></div></header><div class="prose-wrap">
+<p class="lede">最近讨论 AI 辅助全栈开发时，我想到一个更进一步的问题：如果现有软件工程的语言体系并不是为 AI 设计的，我们是否可以建立一种新的、AI-native 的软件描述语言？</p>
+<nav class="article-toc" aria-label="本文目录"><p><strong>本文结构</strong></p><ul><li><a href="#motivation">从传统语言到 AI-native</a></li><li><a href="#architecture">总体架构</a></li><li><a href="#primitives">核心语义原语</a></li><li><a href="#dsl-example">全栈 DSL 示例</a></li><li><a href="#compiler">Compiler 与 Semantic IR</a></li><li><a href="#runtime">编译与 Runtime 的分工</a></li><li><a href="#ai-role">AI、编译器与 Runtime 的职责</a></li><li><a href="#prototype">可验证原型</a></li><li><a href="#experiments">对照实验与验收指标</a></li><li><a href="#open-questions">开放问题</a></li></ul></nav>
+<h2 id="motivation">一、从教 AI 使用传统语言，到为 AI 重新设计软件语言</h2>
+<p>今天我们教 AI 理解 HTML、CSS、React、Java、API、npm、构建流水线和部署流程，本质上是在教 AI 适应人类为软件工程逐步形成的语言体系。AI 已经能生成大量代码，但生成代码不等于以较低成本、高可靠性地完成整个软件工程。</p>
+<p>一个业务需求往往被分散到许多不同文件和抽象层：前端组件、样式、状态管理、API 契约、后端服务、数据库模型、权限规则、测试和部署配置。它们表达的其实是同一份业务意图，却需要 AI 在多个语言之间反复翻译，并自行维持一致性。</p>
+<blockquote><strong>让软件首先以 AI 能够稳定理解、修改、分析和验证的语义结构来描述，再由工具链将这些语义编译或执行为真正的软件。</strong></blockquote>
+<p>我暂时把这个方向称为 <strong>AOSL（AI-native Oriented Software Language）</strong>。这是一个工作名称，而不是现有行业标准。</p>
+<p>核心假设是：AI-native 软件语言应该优先表达业务意图、系统约束、组件关系、执行行为和验证条件，再把这些信息映射到传统的软件实现。</p>
+<h2 id="architecture">二、AOSL 不只是一门 DSL，而是一套软件构建系统</h2>
+<p>我选择的设计方向是：<strong>结构化 DSL</strong> 作为语言表达；<strong>编译与 Runtime 混合</strong>作为执行方式；第一阶段聚焦<strong>全栈业务</strong>，让 UI、API、后端逻辑、权限和测试共享同一套业务语义。</p>
+<pre>用户需求 / AI 生成的结构化 DSL
+              │
+              ▼
+       Semantic IR（语义中间表示）
+              │
+       ┌──────┴────────┐
+       ▼               ▼
+    Compiler       Agent Runtime
+       │               │
+       ▼               ▼
+ React / Java      Workflow / Tools
+ API / SQL        Checkpoint / Policy
+       └──────┬────────┘
+              ▼
+       Verification & Feedback
+              │
+              └── 诊断 → 修改 → 重新验证</pre>
+<h3>1. DSL：业务描述层</h3><p>DSL 是人类和 AI 都可以读写的源文件，描述 Entity、View、Action、Policy、Workflow、Event、Constraint 和 Test 等业务原语。</p>
+<h3>2. Semantic IR：统一语义基准</h3><p>IR 不应该只是 DSL 的 JSON 副本，而应是解析、引用解析、类型检查和语义分析之后的规范化模型。代码生成器、静态分析器、依赖图和验证器都应该使用同一份 IR，不能各自重新猜测 DSL 的含义。</p>
+<h3>3. Compiler：把稳定语义变成软件</h3><p>Compiler 负责生成前端组件、API 契约、后端骨架、数据 Schema、迁移脚本和测试。它应当是确定性的：相同的 IR、相同的编译器版本和相同配置，应产生可解释、可复现的结果。</p>
+<h3>4. Agent Runtime：执行动态任务</h3><p>Runtime 负责多步骤工作流、外部工具调用、超时、重试、Checkpoint、恢复、风险门控和人工审批。它不应该接管所有业务代码，只承接那些需要动态决策或持久化执行状态的部分。</p>
+<h3>5. Verification：以证据闭环，而不是以模型自评闭环</h3><p>生成结果需要经过编译、测试、契约检查、安全检查和必要的端到端验证。验证失败时，系统向 AI 返回结构化诊断；AI 可以提出修改，但修改必须重新经过确定性工具验证。</p>
+<h2 id="primitives">三、先定义业务原语，而不是模仿 React 或 Java</h2>
+<table><thead><tr><th>原语</th><th>语义职责</th><th>典型产物</th></tr></thead><tbody>
+<tr><td><code>Entity</code></td><td>业务实体、字段、类型、不变量</td><td>数据模型、Schema</td></tr>
+<tr><td><code>View</code></td><td>页面结构、组件、数据绑定</td><td>React 页面</td></tr>
+<tr><td><code>Action</code></td><td>用户或系统可触发的业务操作</td><td>API、命令处理器</td></tr>
+<tr><td><code>Policy</code></td><td>权限、租户隔离、操作限制</td><td>授权检查、策略执行</td></tr>
+<tr><td><code>Workflow</code></td><td>多步骤、分支、重试、审批</td><td>Runtime 执行定义</td></tr>
+<tr><td><code>Event</code></td><td>已发生的业务事实</td><td>事件类型、发布订阅契约</td></tr>
+<tr><td><code>Constraint</code></td><td>系统必须满足的条件</td><td>静态检查、断言、测试</td></tr>
+<tr><td><code>Test</code></td><td>业务验收和验证条件</td><td>测试用例、验证任务</td></tr>
+</tbody></table>
+<p>这些原语构成一张语义关系图：View 引用 Entity；View 中的操作引用 Action；Action 声明输入、输出、授权要求、状态变化和副作用；Policy 被 Action 和数据访问规则引用；Workflow 组合多个 Action；Event 描述已经发生的事实；Constraint 约束各层；Test 为关键行为提供验收条件。</p>
+<p><strong>不要让 AI 在 View 中自行推断后端行为，也不要让后端生成器根据按钮名称猜业务逻辑。跨层行为必须通过明确的语义引用连接。</strong></p>
+<h2 id="dsl-example">四、用一个全栈业务检验语言：多租户设备管理</h2>
+<p>第一版不应该只用 Todo 应用证明概念，而应选择一个包含页面、数据模型、权限和业务操作的真实业务切片。多租户设备管理是合适的起点。</p>
+<pre><code class="language-yaml">language: aosl/v0.1
+module: device-management
+
+entities:
+  Device:
+    identity: [tenant_id, id]
+    fields:
+      id: string
+      tenant_id: TenantId
+      name: string
+      status:
+        type: enum
+        values: [online, offline, disabled]
+    invariants:
+      - tenant_id is required
+      - name.length > 0
+
+policies:
+  device_operator:
+    allow:
+      - action: Device.disable
+        when: >
+          principal.tenant_id == resource.tenant_id
+          &amp;&amp; principal.role in ["admin", "operator"]
+
+actions:
+  Device.disable:
+    input:
+      device_id: DeviceId
+    target: Device
+    authorize: device_operator
+    preconditions:
+      - "target.status != 'disabled'"
+    effects:
+      - set: "target.status"
+        value: disabled
+    result:
+      type: Device
+    errors: [NOT_FOUND, FORBIDDEN, INVALID_STATE]
+
+views:
+  DeviceList:
+    route: /devices
+    data: Device.list
+    layout:
+      type: table
+      columns: [name, status]
+    actions:
+      - action: Device.disable
+        label: 停用
+        confirm: true
+        visible_when: "row.status != 'disabled'"
+
+tests:
+  - id: reject_cross_tenant_access
+    given:
+      principal_tenant: tenant_a
+      device_tenant: tenant_b
+    when:
+      action: Device.disable
+    then:
+      error: FORBIDDEN
+      state_unchanged: true</code></pre>
+<p>这个示例把业务事实、UI 呈现、权限规则和验收要求放在同一模块里，但不把所有实现细节混成一个东西。<code>visible_when</code> 只决定按钮是否展示，绝不能成为授权边界。后端执行 Action 时，仍然必须独立校验身份、租户和权限。</p>
+<p><code>effects</code> 描述业务语义，也不意味着编译器可以随意生成一段不可靠的数据库更新；它需要类型检查、事务规则和持久化适配器来落实。</p>
+<h3>语法需要区分三种表达</h3>
+<ul><li><strong>声明式语义：</strong>例如 <code>authorize: device_operator</code>、<code>identity: [tenant_id, id]</code>。它们必须有明确的类型、引用规则和可检查的含义。</li><li><strong>受限表达式：</strong>例如 <code>row.status != 'disabled'</code>。需要独立的表达式语法、类型检查和受控求值，不能直接执行任意 JavaScript。</li><li><strong>外部实现与能力绑定：</strong>调用已有设备服务、数据库适配器或第三方 API，通过有类型的接口接入，而不是让 DSL 直接执行任意 Shell 命令。</li></ul>
+<p>第一版表达式语言可以只支持布尔运算、比较、字段访问、集合判断和空值检查。任意循环、动态代码执行和复杂算法先通过有明确输入输出契约的实现模块承载，避免 DSL 很快变成另一种难以分析的通用语言。</p>
+<h3>类型系统要表达业务语义</h3>
+<ul><li><code>EntityRef&lt;Device&gt;</code>：指向设备的引用。</li><li><code>Principal</code>：当前经过认证的主体。</li><li><code>TenantId</code>：租户标识，不能与普通字符串随意混用。</li><li><code>Command&lt;Device&gt;</code>：请求执行一个业务操作。</li><li><code>Result&lt;Device, DomainError&gt;</code>：显式表示成功或业务失败。</li><li><code>Event&lt;DeviceDisabled&gt;</code>：已经发生的业务事件。</li></ul>
+<p>目标不是创造更多复杂类型，而是让 AI 容易混淆的概念变得可区分。Device.disable 的输入可以是 DeviceId，但数据库查询必须使用当前可信身份绑定的 TenantId 限定范围。不能因为 AI 生成了一个看起来正确的查询，就认为租户隔离自然成立。</p>
+<h2 id="compiler">五、Compiler：从 DSL 到真正的软件</h2>
+<p>如果直接把 DSL 转成 React 和 Java，将来更换技术栈时就必须重新解释大量规则。多个生成器还可能对同一条业务规则产生不一致的理解。所以编译器应该采用明确的流水线：</p>
+<pre>DSL Source
+   ↓ Parse：语法解析，生成 AST
+   ↓ Resolve：名称解析，验证符号引用
+   ↓ Type Check：类型、参数、返回值和表达式检查
+   ↓ Semantic Analysis：权限、租户边界、副作用与依赖分析
+   ↓ Build IR：生成规范化的 Semantic IR
+   ↓ Plan：计算依赖图、生成顺序和受影响产物
+   ↓ Generate：生成前端、API、后端骨架、迁移与测试
+   ↓ Verify：编译、测试、契约与安全验证</pre>
+<p>其中最关键的是 <strong>Semantic IR（语义中间表示）</strong>。它应当是经过解析和验证的规范化模型，而不只是源 DSL 的 JSON 副本。</p>
+<pre><code class="language-json">{
+  "kind": "Action",
+  "id": "device-management.Device.disable",
+  "input": {
+    "device_id": {
+      "type": "DeviceId",
+      "required": true
+    }
+  },
+  "target": {
+    "entity": "Device",
+    "identity": ["tenant_id", "id"]
+  },
+  "authorization": {
+    "policy_ref": "device-management.device_operator",
+    "enforcement": "server_required"
+  },
+  "execution": {
+    "mode": "transactional",
+    "effects": [
+      {
+        "operation": "set",
+        "path": "Device.status",
+        "value": "disabled"
+      }
+    ]
+  },
+  "errors": ["NOT_FOUND", "FORBIDDEN", "INVALID_STATE"],
+  "provenance": {
+    "source": "device-management.aosl",
+    "symbol": "actions.Device.disable"
+  }
+}</code></pre>
+<p><code>provenance</code> 非常值得提前设计。生成代码后，系统应该能回答：这个 Java 方法由哪个业务声明生成？哪个 UI 按钮引用了这个 Action？修改权限规则会影响哪些文件和测试？某次运行对应哪个 DSL 版本和实现版本？</p>
+<p>这样，AI 的修改才具备可追踪性，而不只是对代码库进行一连串难以还原的文本编辑。</p>
+<h3>增量生成与代码所有权</h3>
+<table><thead><tr><th>产物类别</th><th>修改策略</th></tr></thead><tbody><tr><td>完全生成的 DTO、类型、API 契约</td><td>重新生成并检查差异</td></tr><tr><td>生成的 UI 组件骨架</td><td>根据 DSL 增量更新</td></tr><tr><td>用户编写的业务扩展</td><td>保留，不得静默覆盖</td></tr><tr><td>外部系统适配器</td><td>通过稳定接口调用</td></tr><tr><td>测试和迁移脚本</td><td>生成后必须审查和验证</td></tr></tbody></table>
+<p>如果开发者直接修改生成的 Java 文件，下一次编译器可能覆盖修改。因此需要将生成文件与手写扩展分离，或者通过明确扩展点和合并策略管理变化。<strong>DSL 可以是受管控的业务事实来源，但不意味着所有源代码都必须由它生成。</strong></p>
+<h2 id="runtime">六、编译与 Runtime 的分工：按语义和风险，而不是按技术栈</h2>
+<p>如果全部编译成传统代码，AOSL 会很像模型驱动开发工具；如果全部通过 Runtime 解释执行，又会损失传统软件的类型检查、性能、调试能力和成熟工具链。</p>
+<table><thead><tr><th>业务能力</th><th>推荐方式</th><th>原因</th></tr></thead><tbody>
+<tr><td>UI 布局、静态类型、API 契约</td><td>编译生成</td><td>结构稳定，容易检查</td></tr>
+<tr><td>常规 CRUD、数据映射</td><td>编译生成</td><td>行为明确，易于测试</td></tr>
+<tr><td>权限策略</td><td>编译为检查，必要时由策略引擎求值</td><td>需要强制执行和审计</td></tr>
+<tr><td>多步骤业务流程</td><td>编译成 Workflow，由 Runtime 执行</td><td>需要持久化状态、超时与恢复</td></tr>
+<tr><td>动态选工具、多 Agent 协作</td><td>Runtime</td><td>需要根据观察结果决策</td></tr>
+<tr><td>人工审批、延迟数天的任务</td><td>Runtime</td><td>需要等待、Checkpoint 和恢复</td></tr>
+<tr><td>高风险操作</td><td>受约束的执行模块 + Runtime 治理</td><td>需要授权、审批、幂等与审计</td></tr></tbody></table>
+<p>一个关键区别是：<strong>业务逻辑不等于 Agent 决策。</strong> 权限校验、状态约束、幂等处理和数据持久化，应由确定性代码或受约束的执行模块承担。如果设备处于异常状态，需要查询诊断信息、选择恢复工具并在必要时请求人工审批，这部分才适合 Runtime 编排。</p>
+<p>LLM 可以参与选择下一步做什么，但不能通过自由生成代码绕过业务约束。Runtime 每次调用工具前都要检查权限和输入；调用后要区分成功、失败、超时和结果未知。外部设备命令超时不代表设备没有执行操作，不能忽略重复副作用而简单重试。</p>
+<h3>Workflow 示例</h3>
+<pre><code class="language-yaml">workflows:
+  DisableDeviceWorkflow:
+    input:
+      device_id: DeviceId
+    steps:
+      - id: authorize
+        action: Device.authorize_disable
+      - id: disable
+        action: Device.disable
+        after: authorize
+        retry:
+          max_attempts: 2
+          on: [TRANSIENT_ERROR]
+        timeout: 30s
+      - id: verify
+        action: Device.verify_disabled
+        after: disable
+      - id: audit
+        action: Audit.record
+        after: verify
+    failure:
+      on: [FORBIDDEN, INVALID_STATE]
+      strategy: fail_fast
+    checkpoint:
+      after: [authorize, disable, verify]</code></pre>
+<p>这只是简化示例。真正实现时，需要明确每个步骤的持久化状态、幂等键、补偿动作和恢复策略。如果 disable 已成功，但 verify 超时，恢复时应该从 verify 继续，而不是盲目再次执行 disable。如果外部系统返回结果未知，应先查询真实状态，再决定下一步。</p>
+<p>语言描述工作流语义，Runtime 提供可靠的执行机制。这正是长周期 Agent Runtime、Checkpoint、重试和事件驱动机制可以发挥作用的地方。</p>
+<h2 id="ai-role">七、AI 参与编译器的哪个环节？</h2>
+<p>不应该让 LLM 取代编译器。传统编译器擅长确定性任务：解析、类型检查、引用解析和代码生成；LLM 擅长意图理解、发现缺失信息、复杂业务建模，以及基于诊断提出修复。</p>
+<div class="callout"><h3>AI 负责</h3><ul><li>把用户需求转换成 DSL 初稿；</li><li>发现需求歧义并提出澄清问题；</li><li>根据编译器诊断提出候选修改；</li><li>根据测试失败分析可能原因。</li></ul></div>
+<div class="callout"><h3>确定性工具负责</h3><ul><li>语法和类型检查；</li><li>符号引用与依赖分析；</li><li>权限和租户约束检查；</li><li>代码生成与版本兼容性检查；</li><li>执行测试、保存结果和审计记录。</li></ul></div>
+<div class="callout"><h3>Runtime 负责</h3><ul><li>工作流调度与持久化；</li><li>工具调用和执行状态管理；</li><li>风险门控与审批；</li><li>超时、重试、恢复和结果核验。</li></ul></div>
+<p>例如，AI 生成的 DSL 引用了不存在的 <code>device_operator</code> 策略。系统应该返回结构化诊断：</p>
+<pre>E_POLICY_NOT_FOUND
+Location: actions.Device.disable.authorize
+Reference: device_operator
+Available policies: device_reader, device_admin</pre>
+<p>AI 可以提出修复补丁，但编译器必须重新验证。如果修改会扩大权限、改变数据库约束或引入不可逆操作，还应触发额外风险检查或人工审批。这样才形成可重复、可审计的 AI 开发闭环。</p>
+<h2 id="prototype">八、原型怎么做：先实现一个垂直切片</h2>
+<p>第一版不要实现通用平台，也不要同时支持多个技术栈。先验证：<strong>一份结构化业务定义，能否一致地驱动 UI、API、后端逻辑和测试，并在业务规则变化后准确识别和验证所有受影响部分？</strong></p>
+<ul><li><strong>Compiler：TypeScript。</strong> 实现 DSL 解析、类型模型、依赖图和代码生成，减少工具链复杂度。</li><li><strong>Frontend：React + TypeScript。</strong> 作为第一种 UI 生成目标，业务语义不绑定某个组件库。</li><li><strong>Backend：Java + Spring Boot。</strong> 验证企业后端集成，生成 DTO、API 契约、业务骨架和测试。</li><li><strong>Database：PostgreSQL。</strong> 验证实体、主键、租户边界、约束和数据库迁移。</li></ul>
+<p>选择 TypeScript 实现 Compiler，并不意味着 AOSL 最终只能支持 TypeScript。它只是原型阶段的工程取舍。后续增加 Java、Go 或其他目标生成器，才有助于证明语义模型真正独立于技术栈。</p>
+<h3>建议的仓库结构</h3>
+<pre>aosl/
+├── examples/device-management/
+│   ├── app.aosl.yaml
+│   ├── entities.aosl.yaml
+│   ├── actions.aosl.yaml
+│   ├── policies.aosl.yaml
+│   ├── views.aosl.yaml
+│   └── tests.aosl.yaml
+├── packages/
+│   ├── parser/
+│   ├── type-system/
+│   ├── semantic-ir/
+│   ├── analyzer/
+│   ├── compiler/
+│   ├── generator-react/
+│   ├── generator-java/
+│   ├── generator-test/
+│   └── runtime/
+├── fixtures/{valid,invalid,expected-errors}/
+└── tests/{compiler,semantic,security,end-to-end}/</pre>
+<p>早期可以把所有模块放在一个 TypeScript Monorepo 中，但不要为了目录完整而提前实现所有模块。先把解析、语义模型、校验、一个生成器和端到端测试跑通。</p>
+<h3>四个实现阶段</h3>
+<ol>
+<li><strong>阶段 1：DSL + Parser + Semantic IR。</strong> 定义 Entity、Action、Policy；实现解析、名称解析和基础类型检查；为错误引用和非法类型返回稳定诊断码。验收：合法输入生成确定的 IR，非法输入被准确拒绝。</li>
+<li><strong>阶段 2：React UI + API + 后端骨架。</strong> 根据 View 生成设备列表和详情页；根据 Action 生成 API 契约和后端接口骨架；根据 Policy 生成授权接口及测试。验收：页面操作真正到达后端，而不只是生成静态界面。</li>
+<li><strong>阶段 3：验证器 + AI 修复。</strong> 自动执行编译、单元测试和端到端测试；把失败转换为结构化诊断；允许 AI 提交 DSL 补丁并重新验证；保存生成、修改和测试记录。验收：AI 不能仅凭自己宣称成功。</li>
+<li><strong>阶段 4：持久化 Workflow + 风险治理。</strong> 支持多步骤任务、超时、重试和 Checkpoint；引入工具注册、权限检查和人工审批；明确未知结果、幂等键和恢复策略。验收：进程重启后可恢复工作流，且不会盲目重复不可逆操作。</li>
+</ol>
+<p>这个顺序很重要。不要在 Compiler 还无法证明一个简单 Action 的类型和权限正确时，就急着实现复杂的多 Agent Runtime。</p>
+<h2 id="experiments">九、如何证明 AOSL 优于直接让 AI 写代码？</h2>
+<p>不能只用“代码生成成功率”作为指标，否则可能发现 AOSL 多了一层抽象，却没有真正减少开发成本。</p>
+<ul><li><strong>A 组：</strong>直接让同一个模型根据需求生成全栈代码。</li><li><strong>B 组：</strong>让同一个模型生成 AOSL DSL，再由 Compiler 生成代码。</li><li><strong>C 组：</strong>AOSL + Compiler + Runtime + 自动验证和修复闭环。</li></ul>
+<p>三组使用相同业务需求、相同模型和相同执行环境，记录以下指标：</p>
+<table><thead><tr><th>指标</th><th>要验证的问题</th></tr></thead><tbody>
+<tr><td>首次通过率</td><td>一次生成后有多少任务通过编译和验收</td></tr>
+<tr><td>业务正确率</td><td>功能是否符合预期，而不只是能运行</td></tr>
+<tr><td>安全缺陷数</td><td>是否出现越权、跨租户访问或状态不一致</td></tr>
+<tr><td>迭代修改成本</td><td>修改一项业务规则需要变更多少内容</td></tr>
+<tr><td>回归缺陷率</td><td>修改后是否破坏原有功能</td></tr>
+<tr><td>人工介入次数</td><td>需要多少次澄清、修复或审批</td></tr>
+<tr><td>生成与验证耗时</td><td>端到端时间及模型调用成本</td></tr>
+</tbody></table>
+<p>测试集至少覆盖正常业务、边界条件、权限、错误处理和需求变更。先生成设备列表，再新增一个只允许管理员执行的“删除设备”操作。观察系统能否同步更新 UI、API、后端授权、审计逻辑和测试，并确保普通用户无法绕过 UI 直接调用接口。</p>
+<p>再把设备唯一键从 <code>id</code> 改为 <code>(tenant_id, id)</code>。编译器应该识别相关查询、数据约束和测试受到影响，而不是只改一处声明就认为完成。</p>
+<p><strong>只有当 AOSL 在跨层一致性、修改成本和可验证性方面体现出可重复的优势，它才真正具有独立存在的价值。</strong></p>
+<h2 id="open-questions">十、三个更深层的问题</h2>
+<h3>1. 谁拥有最终的业务事实？</h3>
+<p>如果 DSL 写着设备状态必须是 disabled，而设备实际上没有响应停用命令，DSL、数据库和真实设备之间发生冲突，谁才是最终事实来源？语义模型需要区分期望状态、已持久化的业务状态、外部设备报告的观测状态，以及尚未确认的执行结果。这对普通 CRUD 应用可能不是主要矛盾；对 IoT、长周期 Agent 和外部工具调用却非常关键。</p>
+<h3>2. 如何避免 DSL 变成另一种复杂编程语言？</h3>
+<p>如果每个新需求都增加一个特殊字段、一种表达式或一个新的运行时分支，AOSL 最终会变成另一个难以维护的框架。每个新语法特性都应回答三个问题：</p>
+<ol><li>它是否表达了已有语言难以清楚表达的语义？</li><li>它能否被类型检查、静态分析或运行时验证？</li><li>它是否可以通过明确的扩展接口实现，而不必成为语言内置能力？</li></ol>
+<p>如果只是某个生成器需要的模板参数，就不应轻易提升为语言核心语法。</p>
+<h3>3. 如何让 AI 持续修改软件，又不破坏一致性？</h3>
+<p>这涉及语义依赖图、增量编译、差异生成、版本迁移和回归测试。我认为 AOSL 最有价值的能力之一，是让 AI 修改的单位从“代码文件”变成“业务语义变更”。</p>
+<pre>Change: Restrict Device.disable to administrators
+
+Affected semantics:
+- Policy: device_operator
+- Action: Device.disable
+- View: DeviceList
+- Tests: authorization and tenant isolation
+
+Required verification:
+- Type checking
+- Authorization tests
+- Cross-tenant tests
+- End-to-end regression tests</pre>
+<p>编译器根据语义依赖图计算影响范围，AI 提出修改，验证器检查受影响部分，最后形成可追踪的变更集。这比“AI 能写更多代码”更接近软件生产方式的变化。</p>
+<h2>十一、最终判断：AOSL 应该是什么？</h2>
+<blockquote><strong>AOSL v0.1：一种结构化的全栈业务描述语言，以及围绕它建立的语义 IR、代码生成器和自动验证闭环。</strong></blockquote>
+<p>先不追求通用语言，不追求多模型协作，也不追求立即替代现有框架。先证明一个业务语义模型可以一致地生成 UI、API、后端骨架和测试，并且可以安全、可追踪地演化。等这个基础成立后，再逐渐加入 Workflow、Runtime、Agent 工具调用、长周期任务和动态执行策略。</p>
+<p>我尤其看好它与你之前关注的 Agent Runtime 的结合：<strong>AOSL 负责描述业务世界；Compiler 负责把稳定语义变成软件；Runtime 负责在真实环境中执行、观察、恢复和验证。</strong></p>
+<p>三者组合起来，才可能形成真正区别于传统代码生成工具的 AI-native 软件工程体系。这仍然是一个待验证的架构假设，而不是成熟的标准答案。但它值得通过一个小而完整的全栈原型来检验。</p>
+</div></article></main>
+<footer class="site-footer"><div class="wrap"><p>© 2026 Diverse Lab · Independent Thinking on AI Agents, Runtime & Complex Systems</p><p><a href="../articles/">返回 Articles</a> · <a href="https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/ai-native-software-language-aosl.md">查看文章修订记录</a></p></div></footer>
+<script src="../assets/js/site.js"></script>
+</body></html>
