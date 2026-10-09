@@ -8,6 +8,14 @@
     <lastBuildDate>Fri, 09 Oct 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://chengguruchun.github.io/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
+      <title>AOSL：面向 AI-native 软件工程的语言与构建系统</title>
+      <link>https://chengguruchun.github.io/articles/ai-native-software-language-aosl.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/articles/ai-native-software-language-aosl.html</guid>
+      <pubDate>Fri, 09 Oct 2026 00:00:00 +0000</pubDate>
+      <category>Articles</category>
+      <description>从“教 AI 写传统代码”进一步走向“为 AI 重新设计软件描述方式”：提出结构化 DSL、统一语义 IR、编译与 Runtime 混合执行、全栈生成、验证闭环与可验证原型方案。</description>
+    </item>
+    <item>
       <title>AI 全栈开发的前端语言：把页面需求说清楚的术语手册</title>
       <link>https://chengguruchun.github.io/articles/frontend-language-for-ai-assisted-development.html</link>
       <guid isPermaLink="true">https://chengguruchun.github.io/articles/frontend-language-for-ai-assisted-development.html</guid>
