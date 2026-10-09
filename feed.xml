@@ -13,7 +13,7 @@
       <guid isPermaLink="true">https://chengguruchun.github.io/articles/frontend-language-for-ai-assisted-development.html</guid>
       <pubDate>Fri, 09 Oct 2026 00:00:00 +0000</pubDate>
       <category>Articles</category>
-      <description>从 DOM、组件、布局、状态、路由到 API 与验收标准，整理 AI 辅助开发最常用的前端术语，并用一套需求表达框架减少误解与返工。</description>
+      <description>从 DOM、组件、布局、交互和 API 延伸到包管理、依赖锁定、构建流水线、环境配置、部署验证与回滚，建立一套可执行、可验证的 AI 全栈开发语言。</description>
     </item>
     <item>
       <title>从 Gossip 到 Consensus：Multi-Agent 如何形成可信的集体认知</title>
