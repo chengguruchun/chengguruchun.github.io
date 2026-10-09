@@ -6,7 +6,7 @@ date: 2026-10-09
 thought_date: 2026-10-09
 published_date: 2026-10-09
 tags: [AI-Assisted Development, Frontend, Full-Stack, UI, Prompt Engineering]
-excerpt: 从 DOM、组件、布局、状态、路由到 API 与验收标准，整理 AI 辅助开发最常用的前端术语，并用一套需求表达框架减少误解与返工。
+excerpt: 从 DOM、组件、布局、交互和 API 延伸到包管理、依赖锁定、构建流水线、环境配置、部署验证与回滚，建立一套可执行、可验证的 AI 全栈开发语言。
 history_url: https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/frontend-language-for-ai-assisted-development.md
 last_verified: 2026-10-09
 cadence_days: 90
@@ -275,7 +275,134 @@ AI 开发不只是生成新页面，更多时候是在已有代码中增量修�
 
 给 AI 的任务最好包含边界：“先阅读项目结构和现有组件；沿用当前框架、样式方案和请求封装；只修改用户管理页面及必要的共享组件；不要擅自升级依赖或重构无关模块。”
 
-## 九、把术语变成一份可执行的 AI 需求
+## 九、包管理：依赖不是“装上就行”
+
+前端项目很少只靠浏览器原生能力。组件库、路由、请求客户端、构建工具、测试框架，通常都通过包管理器引入。这里的术语直接影响 AI 能否安全地修改一个已有项目。
+
+### 1. Package Manager、Package 与 Registry
+
+- **Package（软件包）**：可被项目引用和复用的代码及其元数据。
+- **Package Manager（包管理器）**：负责安装、卸载、升级依赖，并处理依赖关系，例如 npm、pnpm、Yarn。
+- **Registry（包仓库）**：发布和下载软件包的服务，例如 npm registry 或企业私有 registry。
+- **Dependency（依赖）**：项目运行或开发时需要的外部包。
+- **Transitive Dependency（传递依赖）**：依赖的依赖。你只安装一个包，安装树可能因此引入几十个其他包。
+
+### 2. package.json、Lockfile 与可复现安装
+
+- **package.json**：项目元数据、脚本、直接依赖和版本范围。
+- **Lockfile**：锁定完整依赖树中的具体版本与解析结果。常见文件包括 `package-lock.json`、`pnpm-lock.yaml`、`yarn.lock`。
+- **Deterministic / Reproducible Install（确定性 / 可复现安装）**：开发者本机、CI 和发布环境尽可能安装到一致的依赖树。
+- **Semantic Versioning / SemVer（语义化版本）**：常见版本格式为 `MAJOR.MINOR.PATCH`。通常主版本代表不兼容变化，次版本代表向后兼容的功能增加，补丁版本代表向后兼容的问题修复；但仍需阅读具体包的发布说明。
+
+一个重要区别是：`^1.2.3` 是允许版本范围，不代表每次安装都会固定到 1.2.3；lockfile 才会进一步锁定实际解析结果。因此，AI 修改依赖时，不应只看 package.json 有没有变化，还要检查 lockfile 是否同步、依赖树是否出现非预期升级。
+
+### 3. dependencies、devDependencies 与 peerDependencies
+
+- **dependencies**：应用运行时需要的依赖。
+- **devDependencies**：构建、测试、Lint 等开发阶段使用的依赖。
+- **peerDependencies**：声明当前包预期由宿主项目提供的兼容依赖，组件库和插件中尤其常见。
+
+例如，一个 React 组件库可能把 React 声明为 peer dependency，避免把另一份 React 一起打包进去。安装警告不应一律通过强制安装或忽略冲突来消除；先弄清楚版本冲突来自哪里。
+
+### 4. 常见包管理命令背后的工程含义
+
+| 术语 / 命令 | 含义 | 需要注意 |
+|---|---|---|
+| install | 安装依赖 | 可能按 lockfile 解析并更新依赖树 |
+| frozen / immutable install | 严格按 lockfile 安装 | CI 中可避免锁文件与清单不一致时悄悄漂移 |
+| add / remove | 添加或移除依赖 | 同时检查包体积、许可证、维护状态和安全风险 |
+| update / upgrade | 升级依赖 | 区分补丁升级与可能包含破坏性变化的主版本升级 |
+| peer dependency conflict | 宿主依赖版本不兼容 | 不要未经分析就用强制参数压掉警告 |
+| audit | 检查已知依赖漏洞 | 结果需要结合可利用性、修复版本和项目风险判断 |
+
+**给 AI 的约束可以这样写：**“先检查当前包管理器和 lockfile；优先使用项目已有依赖；确实需要新包时解释引入原因和替代方案；不要混用 npm、pnpm、Yarn，不要删除或重建 lockfile 来规避冲突；完成后执行项目已有的安装、类型检查、Lint 和测试命令。”
+
+## 十、构建与发布：代码能运行，不等于能上线
+
+“页面在我电脑上能打开”只证明了一个局部环境里的开发结果，不代表产物能在生产环境正确运行。全栈开发还需要理解从源码到线上服务的交付链路。
+
+### 1. Build、Bundle、Transpile 与 Tree Shaking
+
+- **Build（构建）**：执行编译、资源处理、打包和优化，生成运行或部署所需的产物。
+- **Transpile（转译）**：把某种语法或语言转换为目标环境能理解的形式，例如 TypeScript 转成 JavaScript。
+- **Bundle（打包）**：将模块及其依赖组织成一个或多个输出文件。
+- **Tree Shaking**：在静态分析可行的前提下，移除未使用的导出代码。
+- **Code Splitting（代码分割）**：把代码拆成多个加载单元，减少初始页面必须下载的资源。
+- **Source Map**：把压缩或转译后的代码映射回源码，帮助定位生产错误；是否公开给浏览器需要结合安全和运维策略。
+
+构建成功并不等于功能正确。它只能证明构建工具接受了当前输入；接口契约、权限、交互、兼容性和业务规则仍然需要验证。
+
+### 2. Environment、Configuration 与 Secret
+
+- **Environment（环境）**：开发、测试、预发布、生产等不同运行环境。
+- **Environment Variable（环境变量）**：部署时注入的配置，例如 API Base URL。
+- **Configuration（配置）**：影响应用行为但不一定属于业务代码的参数。
+- **Secret（秘密信息）**：Token、密码、私钥等敏感数据。
+
+前端构建工具中的变量往往会被编译进公开的静态资源。**不能把私钥、数据库密码或服务端 Token 放进前端环境变量并以为它们是安全的。** 任何发送到浏览器的内容，都应默认可被用户查看。
+
+需求里应明确：“开发、预发布和生产环境使用正确的 API 地址；敏感凭据仅保存在服务端或安全的 CI/CD Secret 中；不把密钥写进源码、提交记录或浏览器产物。”
+
+### 3. CI、CD 与 Pipeline
+
+- **CI（Continuous Integration，持续集成）**：代码变更后自动运行检查，例如安装依赖、Lint、类型检查、测试和构建。
+- **CD（Continuous Delivery / Deployment，持续交付 / 持续部署）**：将通过验证的版本准备好发布，或自动部署到目标环境。不同团队对 Delivery 与 Deployment 的使用略有区别。
+- **Pipeline（流水线）**：把检查、构建、制品保存、部署、健康检查等步骤编排起来。
+- **Artifact（构建产物）**：某次构建生成并可被部署、追踪的文件或镜像。
+- **Release（发布版本）**：对外提供的一个明确版本，最好能追溯到提交、构建和变更记录。
+
+成熟的交付流程不应该只是“把代码推上去”。更可靠的链路是：
+
+```text
+Commit / Pull Request
+        ↓
+Install from lockfile
+        ↓
+Lint + Type Check + Test
+        ↓
+Build Artifact
+        ↓
+Deploy to Preview / Staging
+        ↓
+Smoke Test / Health Check
+        ↓
+Production Release
+        ↓
+Observe Metrics + Errors
+```
+
+### 4. Preview、Staging、Production 与 Feature Flag
+
+- **Preview Deployment（预览部署）**：为分支或 Pull Request 创建临时可访问版本，方便在合并前检查页面。
+- **Staging（预发布环境）**：尽量接近生产配置，用于验证部署和集成行为。
+- **Production（生产环境）**：真实用户使用的环境。
+- **Feature Flag（功能开关）**：把功能是否对用户开放与代码是否已经部署分离。可以先部署代码，再逐步开放功能，但仍需考虑开关默认值和失效时的行为。
+- **Smoke Test（冒烟测试）**：发布后快速验证关键路径仍然可用，例如首页加载、登录和主要 API 请求。
+
+“部署成功”只是平台接受了部署，不等于用户路径正常。至少应验证页面能打开、静态资源加载成功、API 地址正确、认证没有失效、关键操作可完成。
+
+### 5. Rollback、Canary、Blue-Green 与 Cache Invalidation
+
+- **Rollback（回滚）**：出现问题时恢复到上一个已知可用版本。前提是旧版本仍可部署，且数据库变更具有兼容性。
+- **Canary Release（金丝雀发布）**：先把新版本暴露给一小部分流量或用户，观察指标后再扩大范围。
+- **Blue-Green Deployment（蓝绿部署）**：准备两套环境，在验证后切换流量，降低切换风险，但需要额外资源和状态管理。
+- **Cache Invalidation（缓存失效 / 清理）**：让 CDN 或浏览器不再使用过期资源。静态文件通常适合使用带内容哈希的文件名与长期缓存策略。
+- **Database Migration（数据库迁移）**：变更表结构或数据。它通常比回滚应用代码更棘手，因为旧代码和新结构可能无法兼容。
+
+前端常见故障之一是 HTML 已更新，但浏览器或 CDN 仍缓存旧 JavaScript；另一个是新前端已经发布，却调用了尚未部署或不兼容的 API。发布必须考虑前后端兼容窗口，而不是假设所有组件会同时更新。
+
+### 6. 发布相关表达：把“上线一下”变成可执行任务
+
+| 模糊说法 | 更准确的工程表达 |
+|---|---|
+| 帮我发布一下 | 说明目标环境、触发方式、构建命令、部署目标和验收路径 |
+| 线上打不开 | 区分 DNS / 网络、HTTP 状态码、静态资源、运行时异常和 API 错误 |
+| 页面还是旧的 | 检查部署版本、CDN 缓存、浏览器缓存、Service Worker 和资源哈希 |
+| 先上去看看 | 创建 Preview Deployment，在预览环境执行关键路径验收 |
+| 出问题就回退 | 明确回滚版本、触发条件、负责人、数据兼容性和恢复步骤 |
+| 不能影响老用户 | 设计向后兼容的 API、渐进发布、功能开关和回滚方案 |
+
+## 十一、把术语变成一份可执行的 AI 需求
 
 我更倾向于把页面需求拆成七个维度，而不是写一段很长但含糊的自然语言。
 
@@ -333,7 +460,7 @@ AI 开发不只是生成新页面，更多时候是在已有代码中增量修�
 
 这里真正起作用的不是 Prompt 更长，而是它把**目标、约束、状态和验收**分开了。AI 更容易据此做计划，开发者也更容易检查结果。
 
-## 十、我的进一步思考：术语是一种“压缩歧义”的接口
+## 十二、我的进一步思考：术语是一种“压缩歧义”的接口
 
 从软件工程角度看，人与 AI 的协作也需要接口。
 
@@ -363,7 +490,7 @@ AI 开发不只是生成新页面，更多时候是在已有代码中增量修�
 
 它们能覆盖大量日常页面开发，也能帮助后端工程师更准确地描述全栈任务。
 
-## 结语
+## 十三、结语
 
 AI 降低了编写代码的门槛，却没有让需求歧义、系统边界和质量验证自动消失。
 
