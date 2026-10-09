@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>从需求事件到代码变更：构建 Event-driven Coding Agent Runtime · Diverse Lab</title>
+<meta name="description" content="当飞书或企业微信出现验收 Bug、PRD 发生变化，Agent 如何可靠地发现事件、分析影响、修改代码、验证结果并创建 PR？从 MCP、Webhook 到任务状态机与安全闭环的架构设计。">
+<meta name="theme-color" content="#f7f5f0">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/site.css">
+<link rel="canonical" href="https://chengguruchun.github.io/diverse/event-driven-coding-agent-runtime.html">
+<link rel="alternate" type="application/rss+xml" title="AI Knowledge Lab" href="../feed.xml">
+<meta property="og:type" content="article"><meta property="og:site_name" content="AI Knowledge Lab"><meta property="og:locale" content="zh_CN">
+<meta property="og:title" content="从需求事件到代码变更：构建 Event-driven Coding Agent Runtime"><meta property="og:description" content="当飞书或企业微信出现验收 Bug、PRD 发生变化，Agent 如何可靠地发现事件、分析影响、修改代码、验证结果并创建 PR？从 MCP、Webhook 到任务状态机与安全闭环的架构设计。"><meta property="og:url" content="https://chengguruchun.github.io/diverse/event-driven-coding-agent-runtime.html">
+<meta property="og:image" content="https://chengguruchun.github.io/assets/img/og-cover.png"><meta property="og:image:alt" content="AI Knowledge Lab">
+<meta property="article:published_time" content="2026-10-09"><meta property="article:author" content="chengguruchun">
+<meta property="article:tag" content="Agent Runtime"><meta property="article:tag" content="Coding Agent"><meta property="article:tag" content="MCP"><meta property="article:tag" content="Webhook"><meta property="article:tag" content="Verification">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="从需求事件到代码变更：构建 Event-driven Coding Agent Runtime"><meta name="twitter:description" content="当飞书或企业微信出现验收 Bug、PRD 发生变化，Agent 如何可靠地发现事件、分析影响、修改代码、验证结果并创建 PR？从 MCP、Webhook 到任务状态机与安全闭环的架构设计。"><meta name="twitter:image" content="https://chengguruchun.github.io/assets/img/og-cover.png"><meta name="author" content="chengguruchun">
+</head>
+<body>
+<header class="site-header"><div class="wrap site-header__inner"><a class="brand" href="../index.html"><img class="brand__logo" src="../assets/img/brand-mark.svg" alt="AI Knowledge Lab" width="44" height="44"><span class="brand__tag"><span class="brand__rotate"><span class="brand__item is-active">Independent Thinker</span><span class="brand__item">AI Agents</span><span class="brand__item">Complex Systems</span><span class="brand__item">Diverse Thinking</span></span></span></a><button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">菜单</button><nav class="nav" id="site-nav" aria-label="主导航"><a href="../index.html">Home</a><a href="../bench/">Agent Bench</a><a href="../diverse/" aria-current="page">Diverse Lab</a><a href="../articles/">Articles</a><a href="../projects/">Projects</a><a href="../videos/">Videos</a><a href="../times/">Hot Words</a><a href="../about/">About Me</a><a class="nav__search" href="../tags/">Tags / Search</a></nav></div></header>
+<main><article class="article-body"><header class="page-hero"><div class="prose-wrap"><p class="page-hero__kicker">Diverse Lab · Agent Runtime Engineering</p><h1>从需求事件到代码变更：构建 Event-driven Coding Agent Runtime</h1><p class="page-hero__desc">当飞书或企业微信出现验收 Bug、PRD 发生变化，Agent 如何可靠地发现事件、分析影响、修改代码、验证结果并创建 PR？从 MCP、Webhook 到任务状态机与安全闭环的架构设计。</p><p class="article-meta"><span>思路 2026-10-09</span><span>发表 2026-10-09</span><span>作者 chengguruchun</span><a class="tag" href="../tags/?tag=Agent%20Runtime">Agent Runtime</a><a class="tag" href="../tags/?tag=MCP">MCP</a><a class="tag" href="../tags/?tag=Webhook">Webhook</a></p></div></header><div class="prose-wrap">
+<p class="lede">研发自动化的下一步，不只是让 Agent 能写代码，而是让需求和验收事件能够可靠地触发代码修改，并用可追踪的工程证据证明结果。</p>
+<nav class="article-toc" aria-label="本文目录"><p><strong>本文结构</strong></p><ul><li><a href="#boundary">MCP、Webhook 与 Runtime 的边界</a></li><li><a href="#sources">飞书和企业微信事件源</a></li><li><a href="#protocol">统一事件协议</a></li><li><a href="#state-machine">任务状态机</a></li><li><a href="#bug-prd">Bug 与 PRD 变更</a></li><li><a href="#runtime">Coding Agent 与 Runtime</a></li><li><a href="#mvp">MVP 与验证指标</a></li><li><a href="#control-plane">研发控制平面</a></li></ul></nav>
+<h2 id="boundary">一、先把 MCP、Webhook、Runtime 的边界说清楚</h2>
+<p>假设验收同学在飞书群里发出一个 Bug，或产品经理修改了 PRD。理想的系统能够发现事件、理解上下文、定位代码、修改实现、运行测试，并提交一个可审查的 Pull Request。这条链路可以称为 <strong>Event-driven Coding Agent</strong>：由研发事件驱动的编码 Agent。</p>
+<p>但它不是“给 Agent 接上几个 MCP”就自然出现的能力。它至少包含三个问题：事件如何被发现、Agent 如何可靠执行、如何证明修改有效。</p>
+<blockquote><strong>MCP 解决工具连接，Webhook 解决变化通知，Agent Runtime 解决任务执行与治理，验证系统决定结果是否可信。</strong></blockquote>
+<table><thead><tr><th>层</th><th>职责</th><th>典型技术</th></tr></thead><tbody><tr><td>事件源</td><td>记录需求、Bug、测试和代码变化</td><td>飞书、企业微信、GitHub、CI</td></tr><tr><td>Event Gateway</td><td>接收、鉴权、规范化、去重和投递</td><td>Webhook、长连接、轮询、消息队列</td></tr><tr><td>MCP / Connector</td><td>让 Agent 查询或操作外部系统</td><td>文档、GitHub、测试平台工具</td></tr><tr><td>Agent Runtime</td><td>调度任务、管理状态、控制权限和恢复</td><td>状态机、Scheduler、Checkpoint、Policy</td></tr><tr><td>Coding Agent</td><td>理解代码、规划并提出修改</td><td>Codex、OpenCode、Pi 等</td></tr><tr><td>Verification</td><td>判断补丁是否通过工程约束</td><td>编译、单测、集成测试、E2E、CI</td></tr></tbody></table>
+<p>MCP 是 Agent 调用工具的协议。它可以让模型读取 PRD、搜索代码、创建 Issue 或 PR，但通常不会自动告诉常驻服务“某份文档刚刚被修改”。Webhook 或事件订阅解决通知问题；事件到达后，Runtime 再调用 MCP 或系统 API 拉取完整上下文，启动任务。</p>
+<p>系统可以同时使用 MCP 与 REST API：MCP 适合给 Agent 提供结构化工具；事件入口、鉴权、幂等和任务持久化等基础设施则不必强行做成 MCP。</p>
+<h2 id="sources">二、飞书和企业微信：不要把群机器人当作万能事件源</h2>
+<h3>飞书：文档事件与群消息需要分开设计</h3>
+<p>飞书开放平台提供事件订阅能力，也支持通过 WebSocket 长连接接收事件。云文档变更通知还受到订阅身份、文档类型和权限范围等条件限制，不能假设应用天然能看到企业内所有文档的所有变化。</p>
+<p>建议分成两条通道：</p><ul><li><strong>PRD 通道：</strong>对有权限的文档订阅可用事件；若无法覆盖目标文档，就定时读取版本或内容摘要，发现变化后再做差异分析。</li><li><strong>验收反馈通道：</strong>通过应用有权接收的消息事件、反馈表单或明确的 Bug 卡片收集问题。提取消息链接、截图、复现步骤、期望结果和实际结果。</li></ul>
+<p>文档事件到达时，不要直接把整份文档塞给模型。先取得文档标识、版本或更新时间，再读取新旧内容，生成可追踪的变更集。</p>
+<h3>企业微信：先确认具体的消息接收能力</h3>
+<p>企业微信中的机器人 Webhook 常见用途是向群里发送通知，它并不自动等于“读取群里所有人的消息”。实际能否接收消息取决于应用类型、企业授权和所用接口。</p>
+<p>更稳妥的 MVP 是使用标准反馈入口：用户通过表单、应用命令或指定流程提交验收 Bug，Runtime 获得结构化事件。若业务必须从现有群聊自动提取消息，则先验证当前企业微信应用具备相应的接收能力，再设计适配器。</p>
+<blockquote><strong>事件源要有明确授权、可追溯的来源和稳定的事件标识；不要靠非官方抓取或不透明的群聊监听来构建研发基础设施。</strong></blockquote>
+<h2 id="protocol">三、统一事件协议：让不同入口进入同一个 Runtime</h2>
+<p>飞书消息、企业微信反馈、PRD 更新和 CI 失败的原始格式不同，但可以转换为统一事件：</p>
+<pre><code class="language-typescript">type DevEvent = {
+  eventId: string;
+  source: "feishu" | "wecom" | "prd" | "github" | "ci";
+  eventType: "bug_reported" | "prd_changed" | "test_failed";
+  projectId: string;
+  sourceUrl: string;
+  occurredAt: string;
+  actorId?: string;
+  payload: Record&lt;string, unknown&gt;;
+  correlationId?: string;
+};</code></pre>
+<p>事件协议应该包含来源、发生时间、稳定标识和原始链接。PRD 更新还要包含文档标识、旧版本和新版本；Bug 则应尽可能保存复现步骤、截图、环境、期望结果和实际结果。</p>
+<p>事件本身不等于修复任务。Runtime 需要先分类和归并。同一个 Bug 被多人重复反馈，或者 PRD 在短时间内连续修改，都不应该不加判断地启动多个并发编码任务。</p>
+<ol><li>接收：校验签名、身份和来源权限。</li><li>规范化：转成统一的 DevEvent。</li><li>去重：用 eventId、源系统对象 ID 和版本识别重复事件。</li><li>归并：关联已有 Bug、PRD 变更、代码分支和正在执行的任务。</li><li>持久化：先写入任务存储，再异步调度。</li><li>投递：由队列和 Scheduler 选择适当的 Agent 执行。</li></ol>
+<h2 id="state-machine">四、从事件到 PR：完整的执行状态机</h2>
+<pre>RECEIVED → TRIAGED → CONTEXT_READY → IMPACT_ANALYZED
+   → PLAN_APPROVED → SANDBOX_RUNNING → VERIFYING
+   → VERIFIED → PR_CREATED → AWAITING_REVIEW
+
+异常路径：NEEDS_HUMAN / RETRYING / FAILED</pre>
+<p>每个状态都应有明确的进入条件和失败路径。任务表至少保存 taskId、sourceEventId、状态、输入版本、代码基线 SHA、分支、尝试次数、Checkpoint、测试结果和 PR URL。任务状态必须由持久化存储驱动，不能只存在 Agent 的上下文窗口里。</p>
+<ul><li><strong>TRIAGED：</strong>识别是 Bug、需求变化、重复反馈还是信息不足。</li><li><strong>CONTEXT_READY：</strong>取得关联 PRD、代码仓库、测试结果和相关 Issue。</li><li><strong>IMPACT_ANALYZED：</strong>列出受影响模块、接口、数据模型和测试。</li><li><strong>PLAN_APPROVED：</strong>根据风险决定自动执行，还是等待人工确认。</li><li><strong>SANDBOX_RUNNING：</strong>在隔离的分支和工作目录中修改代码。</li><li><strong>VERIFYING：</strong>执行编译、单元测试、集成测试和必要的端到端测试。</li><li><strong>PR_CREATED：</strong>附上来源、变更摘要和测试证据。</li></ul>
+<h2 id="bug-prd">五、PRD 变化和验收 Bug，应该使用不同的规划策略</h2>
+<h3>场景 A：验收发现 Bug</h3>
+<ol><li>解析复现步骤、日志、截图和运行环境。</li><li>在本地或测试环境尝试复现，先确认问题是否稳定。</li><li>搜索相关实现、调用链、历史提交和测试。</li><li>优先添加能够复现问题的回归测试。</li><li>修改实现，执行相关测试和回归测试。</li><li>创建 Draft PR，说明复现证据、根因假设、修改内容和验证结果。</li></ol>
+<p><strong>能复现、能通过测试和真正解决用户问题是不同层级的证据。</strong> 测试通过只是必要条件之一；如果问题依赖真实环境或外部设备状态，还需要对应环境中的验证。</p>
+<h3>场景 B：PRD 发生变化</h3>
+<ol><li>获取新旧版本并生成结构化差异。</li><li>区分文案、UI、接口、数据模型、权限和业务规则变化。</li><li>将变化映射到语义依赖图或代码索引，找出受影响模块和测试。</li><li>检查新需求是否与既有约束冲突，缺少验收条件时先请求澄清。</li><li>生成影响分析和实施计划。</li><li>对低风险且边界明确的修改自动执行；权限、数据迁移、删除或不可逆副作用要求人工审批。</li><li>生成或更新测试，验证新行为及旧行为没有被意外破坏。</li></ol>
+<p><strong>把 PRD 差异转化成“目标行为和验收条件的变化”，而不是直接把整份新 PRD 当成编码 Prompt。</strong></p>
+<h2 id="runtime">六、Coding Agent 不等于 Runtime</h2>
+<p>Codex、OpenCode、Pi 等可以承担代码理解、修改和命令执行，但外围系统仍需控制任务生命周期。具体产品的 SDK、工具能力和部署方式可能不同，选型前应对照当前版本验证。</p>
+<table><thead><tr><th>能力</th><th>Coding Agent</th><th>Runtime</th></tr></thead><tbody><tr><td>理解需求与代码</td><td>主要负责</td><td>提供上下文</td></tr><tr><td>生成代码补丁</td><td>主要负责</td><td>限制写入范围</td></tr><tr><td>执行命令</td><td>通过工具执行</td><td>配置沙箱与权限</td></tr><tr><td>事件去重与归并</td><td>不应依赖模型</td><td>负责</td></tr><tr><td>审批与风险门控</td><td>可提出建议</td><td>强制执行策略</td></tr><tr><td>测试结果可信度</td><td>分析失败原因</td><td>保存真实工具结果</td></tr><tr><td>创建 PR</td><td>可通过工具完成</td><td>控制何时允许执行</td></tr></tbody></table>
+<p>我倾向于让 Runtime 保持编码 Agent 可替换。MCP 适配器提供统一工具接口，Coding Agent 承担具体实现，Runtime 决定什么时候运行、能访问什么、失败后如何恢复，以及什么条件满足后才能创建 PR。</p>
+<h2 id="mvp">七、推荐的 MVP：先做 Bug 自动修复，再做 PRD 变更</h2>
+<ol><li>飞书通过指定反馈入口提交 Bug。</li><li>Event Gateway 校验并持久化事件。</li><li>Runtime 创建任务，取得代码和必要上下文。</li><li>Coding Agent 在独立分支中复现并修复。</li><li>沙箱执行测试；失败时有限重试，超限则转人工。</li><li>验证通过后创建 Draft PR。</li><li>将 PR 链接、测试结果和失败原因回写飞书。</li></ol>
+<p>第二阶段再加入 PRD 版本检测、差异分析、代码影响图和自动回归测试。第三阶段再考虑跨仓库、多 Agent 并行、长期任务和自动化需求到发布链路。</p>
+<p>建议评估事件接收率、重复任务数、自动修复成功率、人工验收通过率、回归缺陷率、单任务耗时、模型成本、人工介入次数、恢复成功率和安全策略拦截情况。自动创建 PR 是流程节点，不是问题解决的最终证明。</p>
+<h2 id="control-plane">八、研发系统会形成自己的控制平面</h2>
+<ul><li><strong>Desired State：</strong>PRD、验收条件和业务约束定义希望系统变成什么样。</li><li><strong>Observed State：</strong>当前代码、测试、运行日志和验收反馈描述系统实际是什么样。</li><li><strong>Controller：</strong>Runtime 比较期望与实际之间的差异，决定是否启动修复任务。</li><li><strong>Executor：</strong>Coding Agent 在受控环境里执行修改。</li><li><strong>Verifier：</strong>编译、测试、CI 和人工验收提供证据。</li><li><strong>Feedback：</strong>新结果回流到任务状态与需求系统。</li></ul>
+<p>它与 Kubernetes 控制器有相似之处：系统不是执行一次命令就结束，而是持续比较 Desired State 与 Observed State，并在满足策略的前提下推动状态收敛。</p>
+<p>但软件需求比容器副本数更复杂：目标可能含糊、验收条件可能缺失、不同需求可能冲突，代码修改也可能产生新缺陷。因此控制平面不能只靠自动重试，还必须有需求澄清、影响分析、风险策略和人工决策机制。</p>
+<blockquote><strong>未来更有价值的系统未必是最会写代码的 Agent，而是能把需求变化转化成可执行任务、把执行过程转化成可验证证据，并且在失败时可靠停止或恢复的研发 Runtime。</strong></blockquote>
+<h2>结语</h2>
+<p>我倾向于把这套系统拆成四个可替换层：事件适配器、MCP / 工具适配器、Coding Agent 执行器，以及掌握状态和安全边界的 Agent Runtime。</p>
+<p>飞书或企业微信不需要理解代码；GitHub MCP 不需要承担长任务调度；Coding Agent 不应该决定是否可以绕过安全策略。每一层有清晰职责，整个系统才容易扩展、调试和验证。</p>
+<p>第一步不是追求完全无人值守，而是把“一个真实 Bug 从反馈到 PR”的链路做到可追踪、可恢复、可验证。等它稳定之后，再让 PRD 的变化驱动代码演进，最终形成从需求、实现、测试到反馈的持续闭环。</p>
+<h2>参考资料</h2><ul><li><a href="https://open.feishu.cn/document/">飞书开放平台：事件订阅与长连接能力</a></li><li><a href="https://open.feishu.cn/document/server-docs/docs/drive-v1/event/subscribe">飞书云文档事件订阅说明</a></li><li><a href="https://developer.work.weixin.qq.com/">企业微信开发者中心</a></li><li><a href="https://github.com/github/github-mcp-server">GitHub 官方 MCP Server</a></li><li><a href="https://docs.github.com/en/webhooks">GitHub Webhooks 文档</a></li><li><a href="https://developers.openai.com/api/docs/guides/agents/sdk">OpenAI Agents SDK 文档</a></li></ul>
+</div></article></main>
+<footer class="site-footer"><div class="wrap"><p>© 2026 Diverse Lab · Independent Thinking on AI Agents, Runtime & Complex Systems</p><p><a href="../diverse/">返回 Diverse Lab</a> · <a href="https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/event-driven-coding-agent-runtime.md">查看文章修订记录</a></p></div></footer>
+<script src="../assets/js/site.js"></script>
+</body></html>
