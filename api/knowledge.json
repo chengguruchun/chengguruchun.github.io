@@ -1,7 +1,7 @@
 {
   "name": "AI Knowledge Lab · Knowledge registry",
-  "generated": "2026-10-04T08:23:50Z",
-  "as_of": "2026-10-04",
+  "generated": "2026-10-11T08:44:02Z",
+  "as_of": "2026-10-11",
   "criteria": "/api/knowledge-criteria.json",
   "criteria_version": "2026-09-16.2",
   "loop": "/KNOWLEDGE_LOOP.md",
@@ -9,7 +9,7 @@
     "Times"
   ],
   "counts": {
-    "fresh": 32,
+    "fresh": 34,
     "stale": 0,
     "changed": 0,
     "contested": 0,
@@ -17,6 +17,66 @@
   },
   "due": [],
   "items": [
+    {
+      "id": "ai-native-software-language-aosl",
+      "type": "Diverse Lab",
+      "title": "AOSL：面向 AI-native 软件工程的语言与构建系统",
+      "excerpt": "从“教 AI 写传统代码”进一步走向“为 AI 重新设计软件描述方式”：提出结构化 DSL、统一语义 IR、编译与 Runtime 混合执行、全栈生成、验证闭环与可验证原型方案。",
+      "url": "/diverse/ai-native-software-language-aosl.html",
+      "content": "/content/diverse/ai-native-software-language-aosl.md",
+      "tags": [
+        "AI-Native",
+        "Software Language",
+        "DSL",
+        "Compiler",
+        "Semantic IR",
+        "Agent Runtime",
+        "Full-Stack"
+      ],
+      "published_date": "2026-10-09",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/ai-native-software-language-aosl.md",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-10-09",
+        "next_review": "2027-01-07",
+        "cadence_days": 90,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      }
+    },
+    {
+      "id": "frontend-language-for-ai-assisted-development",
+      "type": "Articles",
+      "title": "AI 全栈开发的前端语言：把页面需求说清楚的术语手册",
+      "excerpt": "从 DOM、组件、布局、交互和 API 延伸到包管理、依赖锁定、构建流水线、环境配置、部署验证与回滚，建立一套可执行、可验证的 AI 全栈开发语言。",
+      "url": "/articles/frontend-language-for-ai-assisted-development.html",
+      "content": "/content/articles/frontend-language-for-ai-assisted-development.md",
+      "tags": [
+        "AI-Assisted Development",
+        "Frontend",
+        "Full-Stack",
+        "UI",
+        "Prompt Engineering"
+      ],
+      "published_date": "2026-10-09",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/frontend-language-for-ai-assisted-development.md",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-10-09",
+        "next_review": "2027-01-07",
+        "cadence_days": 90,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      }
+    },
     {
       "id": "gossip-evidence-consensus-multi-agent",
       "type": "Articles",
