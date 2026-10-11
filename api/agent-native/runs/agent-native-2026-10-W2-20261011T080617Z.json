@@ -1,0 +1,103 @@
+{
+  "runId": "agent-native-2026-10-W2-20261011T080617Z",
+  "period": "2026-10-W2",
+  "phase": "failed",
+  "verdict": "drift",
+  "startedAt": "2026-10-11T08:06:17Z",
+  "finishedAt": "2026-10-11T08:06:19Z",
+  "input": {
+    "live": true,
+    "periodScheme": "YYYY-MM-WN = Nth 7-day block of the calendar month (Asia/Shanghai), not ISO week"
+  },
+  "gates": {
+    "surfaces": "pass",
+    "protocol": "pass",
+    "tool_parity": "pass",
+    "canonical_md": "pass",
+    "page_parity": "fail",
+    "bench_loop": "pass",
+    "catalog_index": "pass",
+    "machine_map": "pass",
+    "agent_card": "pass",
+    "projects_api": "pass",
+    "live": "pass"
+  },
+  "checks": [
+    {
+      "gate": "surfaces",
+      "ok": true,
+      "hard": true,
+      "detail": "all stable surfaces present"
+    },
+    {
+      "gate": "protocol",
+      "ok": true,
+      "hard": true,
+      "detail": "SKILL + discover.json use discover-then-execute"
+    },
+    {
+      "gate": "tool_parity",
+      "ok": true,
+      "hard": true,
+      "detail": "46 tools"
+    },
+    {
+      "gate": "canonical_md",
+      "ok": true,
+      "hard": true,
+      "detail": "all catalog entries have markdown"
+    },
+    {
+      "gate": "page_parity",
+      "ok": false,
+      "hard": true,
+      "detail": "gap /diverse/event-driven-coding-agent-runtime.html:not-in-catalog"
+    },
+    {
+      "gate": "bench_loop",
+      "ok": true,
+      "hard": true,
+      "detail": "bench ideas are Thought Loop sentences"
+    },
+    {
+      "gate": "catalog_index",
+      "ok": true,
+      "hard": true,
+      "detail": "index and catalog ids match"
+    },
+    {
+      "gate": "machine_map",
+      "ok": true,
+      "hard": true,
+      "detail": "llms.txt lists core surfaces"
+    },
+    {
+      "gate": "agent_card",
+      "ok": true,
+      "hard": true,
+      "detail": "card is read-only and lists discover/catalog/skill"
+    },
+    {
+      "gate": "projects_api",
+      "ok": true,
+      "hard": true,
+      "detail": "personal JSON snapshot (llm-trace-reuse, chengguruchun.github.io, idealagent)"
+    },
+    {
+      "gate": "live",
+      "ok": true,
+      "hard": false,
+      "detail": "production surfaces 2xx"
+    }
+  ],
+  "summary": {
+    "pass": 10,
+    "fail": 1,
+    "warn": 0
+  },
+  "criteria": "/api/agent-native/criteria.json",
+  "publish": {
+    "url": "https://chengguruchun.github.io/api/agent-native/runs/latest.json"
+  },
+  "error": "page_parity: gap /diverse/event-driven-coding-agent-runtime.html:not-in-catalog"
+}

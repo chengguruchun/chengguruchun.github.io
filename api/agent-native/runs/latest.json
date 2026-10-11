@@ -1,10 +1,10 @@
 {
-  "runId": "agent-native-2026-10-W1-20261004T073821Z",
-  "period": "2026-10-W1",
-  "phase": "checked",
-  "verdict": "agent-native",
-  "startedAt": "2026-10-04T07:38:21Z",
-  "finishedAt": "2026-10-04T07:38:23Z",
+  "runId": "agent-native-2026-10-W2-20261011T080617Z",
+  "period": "2026-10-W2",
+  "phase": "failed",
+  "verdict": "drift",
+  "startedAt": "2026-10-11T08:06:17Z",
+  "finishedAt": "2026-10-11T08:06:19Z",
   "input": {
     "live": true,
     "periodScheme": "YYYY-MM-WN = Nth 7-day block of the calendar month (Asia/Shanghai), not ISO week"
@@ -14,7 +14,7 @@
     "protocol": "pass",
     "tool_parity": "pass",
     "canonical_md": "pass",
-    "page_parity": "pass",
+    "page_parity": "fail",
     "bench_loop": "pass",
     "catalog_index": "pass",
     "machine_map": "pass",
@@ -49,9 +49,9 @@
     },
     {
       "gate": "page_parity",
-      "ok": true,
+      "ok": false,
       "hard": true,
-      "detail": "published HTML has catalog + markdown"
+      "detail": "gap /diverse/event-driven-coding-agent-runtime.html:not-in-catalog"
     },
     {
       "gate": "bench_loop",
@@ -91,13 +91,13 @@
     }
   ],
   "summary": {
-    "pass": 11,
-    "fail": 0,
+    "pass": 10,
+    "fail": 1,
     "warn": 0
   },
   "criteria": "/api/agent-native/criteria.json",
   "publish": {
     "url": "https://chengguruchun.github.io/api/agent-native/runs/latest.json"
   },
-  "error": null
+  "error": "page_parity: gap /diverse/event-driven-coding-agent-runtime.html:not-in-catalog"
 }
