@@ -1,9 +1,9 @@
 {
   "runId": "hot-words-2026-10-W2-20261012T070053Z",
   "period": "2026-10-W2",
-  "phase": "applied",
+  "phase": "published",
   "startedAt": "2026-10-12T07:00:53Z",
-  "finishedAt": "2026-10-12T07:01:06Z",
+  "finishedAt": "2026-10-12T07:01:08Z",
   "input": {
     "currentWord": "Agent Observability",
     "recentHistory": [
@@ -184,6 +184,11 @@
       "gate": "pass"
     }
   },
-  "publish": {},
+  "publish": {
+    "commit": "5fbff55bfd504b596de1b8c7d4651527833f4965",
+    "url": "https://chengguruchun.github.io/times/",
+    "mode": "autonomous",
+    "periodScheme": "YYYY-MM-WN month block, not ISO week"
+  },
   "error": null
 }

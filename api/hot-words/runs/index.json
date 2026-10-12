@@ -1,13 +1,13 @@
 {
   "name": "Hot Words run index",
-  "generated": "2026-10-12T07:01:06Z",
+  "generated": "2026-10-12T07:01:09Z",
   "items": [
     {
       "runId": "hot-words-2026-10-W2-20261012T070053Z",
       "period": "2026-10-W2",
-      "phase": "applied",
+      "phase": "published",
       "word": "Agent Sandboxing",
-      "finishedAt": "2026-10-12T07:01:06Z",
+      "finishedAt": "2026-10-12T07:01:08Z",
       "path": "/api/hot-words/runs/hot-words-2026-10-W2-20261012T070053Z.json"
     },
     {
