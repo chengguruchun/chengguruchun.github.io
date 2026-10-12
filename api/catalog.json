@@ -3,7 +3,7 @@
   "skill": "/SKILL.md",
   "product": "/PRODUCT.md",
   "llms": "/llms.txt",
-  "generated": "2026-10-11T08:44:02Z",
+  "generated": "2026-10-12T07:01:06Z",
   "base_url": "https://chengguruchun.github.io",
   "items": [
     {
@@ -1091,6 +1091,22 @@
           "override": null
         }
       }
+    },
+    {
+      "id": "times-2026-10-w2",
+      "type": "Times",
+      "title": "2026-10 Week 2 · Agent Sandboxing",
+      "excerpt": "Agent Sandboxing 直接回应 Agent 从对话走向执行后的核心工程问题：如何约束文件系统、网络与命令权限。它承接本站 Agent 主线，与近期 Agent Observability 形成“观测—约束”互补，且能落到工具调用权限、最小权限与运行时隔离的具体实现。相比偏评测的候选，它更贴近系统与安全主线，证据链完整且可操作。",
+      "url": "/times/",
+      "date": "2026-10-12",
+      "tags": [
+        "Times",
+        "Hot Words",
+        "Agent Sandboxing"
+      ],
+      "markdown": "/content/times/2026-10-w2.md",
+      "period": "2026-10-W2",
+      "word": "Agent Sandboxing"
     },
     {
       "id": "times-2026-10-w1",

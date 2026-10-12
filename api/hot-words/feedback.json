@@ -1,8 +1,8 @@
 {
   "name": "Hot Words feedback",
-  "generated": "2026-10-05T06:35:43Z",
-  "period": "2026-10-W1",
-  "word": "Agent Observability",
+  "generated": "2026-10-12T07:01:06Z",
+  "period": "2026-10-W2",
+  "word": "Agent Sandboxing",
   "signals": {
     "visits": {
       "site": null,
@@ -24,8 +24,8 @@
     }
   },
   "lastRun": {
-    "runId": "hot-words-2026-10-W1-20261005T063534Z",
-    "phase": "published",
+    "runId": "hot-words-2026-10-W2-20261012T070053Z",
+    "phase": "applied",
     "gates": {
       "schema": "pass",
       "duplicate": "pass",
@@ -34,17 +34,13 @@
       "relevance": "pass",
       "consistency": "pass"
     },
-    "evidenceCount": 10,
-    "publish": {
-      "commit": "9ab53eb5dc8d0841f2ddd9e310d4fbd9085eafa2",
-      "url": "https://chengguruchun.github.io/times/",
-      "mode": "autonomous",
-      "periodScheme": "YYYY-MM-WN month block, not ISO week"
-    },
+    "evidenceCount": 15,
+    "publish": {},
     "error": null
   },
   "learnHints": {
     "recentWords": [
+      "2026-10-W2: Agent Sandboxing",
       "2026-10-W1: Agent Observability",
       "2026-09-W5: Agentic RAG",
       "2026-09-W4: Agent Memory Benchmark",
@@ -54,30 +50,38 @@
     ],
     "rejectedCandidates": [
       {
-        "word": "Agentic Retrieval",
+        "word": "Agent Handoff Protocol",
         "reason": "not_chosen",
-        "notes": "与 BANNED 的 Agentic RAG 字面邻近，风险高，仅作对照。"
+        "notes": "承接 Agent 记忆架构与 Context Window Optimization 的编排侧延伸，聚焦多 Agent 协作中的状态与权限交接，工程可落地且不与 BANNED 词冲突。"
       },
       {
-        "word": "Query Rewriting",
+        "word": "Agent Evaluation Harness",
         "reason": "not_chosen",
-        "notes": "具体、可落地到本站检索链路，但偏检索侧，与 Agent 主线关联需补强。"
+        "notes": "与 BANNED 的 Agent Memory Benchmark 语义邻近但不同：聚焦评测基础设施（harness）而非记忆基准，可落地到本站 Agent 测试与回归链路。"
       },
       {
-        "word": "Context Compression",
+        "word": "Agent Runtime Isolation",
         "reason": "not_chosen",
-        "notes": "承接 Context Window Optimization，工程性强，但可能被视为同一话题延伸。"
+        "notes": "与 Agent Sandboxing 互补：Sandboxing 偏策略与权限模型，Runtime Isolation 偏底层隔离技术（microVM、用户态内核），可落到本站 Agent 执行环境主线。"
       },
       {
-        "word": "Tool Use Evaluation",
+        "word": "Agent Cost Attribution",
         "reason": "not_chosen",
-        "notes": "评测向，但与 BANNED 的 Agent Memory Benchmark 语义邻近，风险中等。"
+        "notes": "与 Agent Observability 互补：观测关注行为与质量，成本归因关注 token 与费用分摊，可落地到本站 Agent 网关与多租户场景，且不重复 BANNED 词。"
       }
     ],
     "prefer": "优先选能落到本站软件 / 系统 / Agent 主线的词，并带至少一条可点开的 https 证据。",
-    "avoid": "回避与当前词重复、口号化、以及只有空泛描述没有来源的词。 最近未入选：Agentic Retrieval、Query Rewriting、Context Compression、Tool Use Evaluation。"
+    "avoid": "回避与当前词重复、口号化、以及只有空泛描述没有来源的词。 最近未入选：Agent Handoff Protocol、Agent Evaluation Harness、Agent Runtime Isolation、Agent Cost Attribution。"
   },
   "recentRuns": [
+    {
+      "runId": "hot-words-2026-10-W2-20261012T070053Z",
+      "period": "2026-10-W2",
+      "phase": "applied",
+      "word": "Agent Sandboxing",
+      "finishedAt": "2026-10-12T07:01:06Z",
+      "path": "/api/hot-words/runs/hot-words-2026-10-W2-20261012T070053Z.json"
+    },
     {
       "runId": "hot-words-2026-10-W1-20261005T063534Z",
       "period": "2026-10-W1",
@@ -149,14 +153,6 @@
       "word": "Memory-as-a-Service",
       "finishedAt": "2026-09-07T04:44:46Z",
       "path": "/api/hot-words/runs/hot-words-2026-09-W1-20260907T044436Z.json"
-    },
-    {
-      "runId": "hot-words-2026-09-W1",
-      "period": "2026-09-W1",
-      "phase": "published",
-      "word": "Context Engineering",
-      "finishedAt": "2026-09-07T02:31:32Z",
-      "path": "/api/hot-words/runs/hot-words-2026-09-W1.json"
     }
   ],
   "endpoints": {

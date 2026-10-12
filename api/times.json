@@ -7,9 +7,20 @@
     "meaning": "Nth 7-day block of the calendar month in Asia/Shanghai (days 1–7 = W1, 8–14 = W2, …). Not an ISO 8601 week number.",
     "timezone": "Asia/Shanghai"
   },
-  "current": "2026-10-W1",
-  "updated": "2026-10-05",
+  "current": "2026-10-W2",
+  "updated": "2026-10-12",
   "issues": [
+    {
+      "id": "times-2026-10-w2",
+      "period": "2026-10-W2",
+      "cadence": "weekly",
+      "word": "Agent Sandboxing",
+      "title": "2026-10 Week 2 · Agent Sandboxing",
+      "why": "Agent Sandboxing 直接回应 Agent 从对话走向执行后的核心工程问题：如何约束文件系统、网络与命令权限。它承接本站 Agent 主线，与近期 Agent Observability 形成“观测—约束”互补，且能落到工具调用权限、最小权限与运行时隔离的具体实现。相比偏评测的候选，它更贴近系统与安全主线，证据链完整且可操作。",
+      "date": "2026-10-12",
+      "url": "/times/",
+      "markdown": "/content/times/2026-10-w2.md"
+    },
     {
       "id": "times-2026-10-w1",
       "period": "2026-10-W1",
@@ -80,5 +91,5 @@
       "slug": "2026-09-w1"
     }
   ],
-  "currentProposalHash": "e1bccf7af97777ac"
+  "currentProposalHash": "8ab8f0838ff11c0c"
 }
