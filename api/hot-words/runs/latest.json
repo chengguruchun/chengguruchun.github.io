@@ -1,12 +1,13 @@
 {
-  "runId": "hot-words-2026-10-W2-20261012T070053Z",
+  "runId": "hot-words-2026-10-W2-20261012T213143Z",
   "period": "2026-10-W2",
-  "phase": "published",
-  "startedAt": "2026-10-12T07:00:53Z",
-  "finishedAt": "2026-10-12T07:01:08Z",
+  "phase": "skipped",
+  "startedAt": "2026-10-12T21:31:43Z",
+  "finishedAt": "2026-10-12T21:31:43Z",
   "input": {
-    "currentWord": "Agent Observability",
+    "currentWord": "Agent Sandboxing",
     "recentHistory": [
+      "2026-10-W2: Agent Sandboxing",
       "2026-10-W1: Agent Observability",
       "2026-09-W5: Agentic RAG",
       "2026-09-W4: Agent Memory Benchmark",
@@ -21,174 +22,19 @@
   },
   "proposal": {
     "word": "Agent Sandboxing",
-    "why": "Agent Sandboxing 直接回应 Agent 从对话走向执行后的核心工程问题：如何约束文件系统、网络与命令权限。它承接本站 Agent 主线，与近期 Agent Observability 形成“观测—约束”互补，且能落到工具调用权限、最小权限与运行时隔离的具体实现。相比偏评测的候选，它更贴近系统与安全主线，证据链完整且可操作。",
-    "candidates": [
-      {
-        "word": "Agent Sandboxing",
-        "evidence": [
-          {
-            "title": "Sandboxing AI agents: lessons from Claude Code and OpenAI Codex",
-            "url": "https://www.anthropic.com/engineering/claude-code-best-practices",
-            "sourceType": "vendor engineering blog",
-            "publishedAt": "2025-07-15",
-            "claim": "Anthropic 详述在 Claude Code 中通过文件系统沙箱、网络白名单与命令审批机制限制 Agent 的可执行动作，降低越权与数据外泄风险。"
-          },
-          {
-            "title": "OpenAI Codex CLI sandbox and approval modes",
-            "url": "https://github.com/openai/codex",
-            "sourceType": "open-source repository docs",
-            "publishedAt": "2025-08-01",
-            "claim": "Codex CLI 提供 read-only、workspace-write、danger-full-access 三档沙箱模式，并允许按命令粒度审批，是 Agent 运行时隔离的工程参考。"
-          },
-          {
-            "title": "OWASP Top 10 for LLM Applications: LLM05 Supply Chain and LLM06 Excessive Agency",
-            "url": "https://owasp.org/www-project-top-10-for-large-language-model-applications/",
-            "sourceType": "security standard",
-            "publishedAt": "2025-06-10",
-            "claim": "OWASP 将 Excessive Agency 列为 LLM 应用核心风险，建议对 Agent 工具调用实施最小权限与沙箱隔离，为 Agent Sandboxing 提供安全框架依据。"
-          }
-        ],
-        "notes": "与本站 Agent 主线强相关：可落地到工具调用权限、文件系统隔离、网络白名单等工程实践，且与近期 Agent Observability 互补（观测 vs 约束），不重复 BANNED 词。"
-      },
-      {
-        "word": "Agent Handoff Protocol",
-        "evidence": [
-          {
-            "title": "OpenAI Agents SDK: Handoffs",
-            "url": "https://openai.github.io/openai-agents-python/handoffs/",
-            "sourceType": "vendor SDK documentation",
-            "publishedAt": "2025-03-11",
-            "claim": "OpenAI Agents SDK 将 handoff 定义为一等公民原语，允许一个 Agent 将控制权与上下文移交给另一个 Agent，并保留对话历史与工具权限边界。"
-          },
-          {
-            "title": "Anthropic: Building effective agents",
-            "url": "https://www.anthropic.com/engineering/building-effective-agents",
-            "sourceType": "vendor engineering blog",
-            "publishedAt": "2024-12-19",
-            "claim": "Anthropic 在 multi-agent 编排模式中讨论 orchestrator-worker 与 routing 交接，强调显式传递任务状态与工具集，避免上下文污染。"
-          },
-          {
-            "title": "LangGraph: Multi-agent handoffs and command",
-            "url": "https://langchain-ai.github.io/langgraph/concepts/multi_agent/",
-            "sourceType": "open-source framework docs",
-            "publishedAt": "2025-05-20",
-            "claim": "LangGraph 通过 Command 原语与 handoff 工具实现 Agent 间状态转移，支持在图中显式建模交接条件，是可观测、可测试的工程实现。"
-          }
-        ],
-        "notes": "承接 Agent 记忆架构与 Context Window Optimization 的编排侧延伸，聚焦多 Agent 协作中的状态与权限交接，工程可落地且不与 BANNED 词冲突。"
-      },
-      {
-        "word": "Agent Evaluation Harness",
-        "evidence": [
-          {
-            "title": "OpenAI Evals: Getting started",
-            "url": "https://platform.openai.com/docs/guides/evals",
-            "sourceType": "vendor platform documentation",
-            "publishedAt": "2025-04-01",
-            "claim": "OpenAI Evals 提供可复用的评测 harness，支持对 Agent 轨迹、工具调用与最终答案进行打分，并支持回归测试与 CI 集成。"
-          },
-          {
-            "title": "LangSmith Evaluation: Evaluate an agent",
-            "url": "https://docs.smith.langchain.com/evaluation",
-            "sourceType": "vendor platform documentation",
-            "publishedAt": "2025-06-15",
-            "claim": "LangSmith 提供针对 Agent 的评测 harness，覆盖轨迹级指标、工具选择准确率与端到端任务成功率，并支持数据集版本管理。"
-          },
-          {
-            "title": "Inspect: A framework for large language model evaluations",
-            "url": "https://inspect.aisi.org.uk/",
-            "sourceType": "open-source evaluation framework",
-            "publishedAt": "2025-05-01",
-            "claim": "UK AISI 的 Inspect 框架提供可组合的评测 harness，支持 Agent 多轮交互、工具调用与沙箱执行，是构建可复现 Agent 评测的工程基础。"
-          }
-        ],
-        "notes": "与 BANNED 的 Agent Memory Benchmark 语义邻近但不同：聚焦评测基础设施（harness）而非记忆基准，可落地到本站 Agent 测试与回归链路。"
-      },
-      {
-        "word": "Agent Runtime Isolation",
-        "evidence": [
-          {
-            "title": "gVisor: Container runtime sandbox",
-            "url": "https://gvisor.dev/docs/",
-            "sourceType": "open-source runtime docs",
-            "publishedAt": "2025-03-01",
-            "claim": "gVisor 通过用户态内核拦截系统调用，为不可信代码提供强隔离，适合作为 Agent 执行工具的运行时隔离层。"
-          },
-          {
-            "title": "Firecracker: Lightweight virtualization for serverless",
-            "url": "https://firecracker-microvm.github.io/",
-            "sourceType": "open-source VMM docs",
-            "publishedAt": "2025-02-10",
-            "claim": "Firecracker microVM 提供毫秒级启动与强隔离边界，被广泛用于 Agent 代码执行沙箱，兼顾安全与性能。"
-          },
-          {
-            "title": "E2B: Open-source sandbox for AI agents",
-            "url": "https://e2b.dev/docs",
-            "sourceType": "vendor documentation",
-            "publishedAt": "2025-07-01",
-            "claim": "E2B 提供面向 AI Agent 的云端沙箱运行时，支持文件系统、网络与进程隔离，并暴露 SDK 供 Agent 安全执行代码。"
-          }
-        ],
-        "notes": "与 Agent Sandboxing 互补：Sandboxing 偏策略与权限模型，Runtime Isolation 偏底层隔离技术（microVM、用户态内核），可落到本站 Agent 执行环境主线。"
-      },
-      {
-        "word": "Agent Cost Attribution",
-        "evidence": [
-          {
-            "title": "OpenTelemetry: GenAI semantic conventions",
-            "url": "https://opentelemetry.io/docs/specs/semconv/gen-ai/",
-            "sourceType": "open standard",
-            "publishedAt": "2025-06-01",
-            "claim": "OpenTelemetry GenAI 语义约定定义 token 用量、模型与工具调用等属性，为 Agent 成本归因提供标准化遥测字段。"
-          },
-          {
-            "title": "LangSmith: Cost tracking and token usage",
-            "url": "https://docs.smith.langchain.com/observability/how_to_guides/token_usage",
-            "sourceType": "vendor platform documentation",
-            "publishedAt": "2025-05-10",
-            "claim": "LangSmith 支持按 trace、run 与用户维度聚合 token 与成本，便于将 Agent 调用费用归因到具体任务或租户。"
-          },
-          {
-            "title": "Helicone: LLM observability and cost tracking",
-            "url": "https://docs.helicone.ai/",
-            "sourceType": "vendor documentation",
-            "publishedAt": "2025-04-20",
-            "claim": "Helicone 提供按请求、用户与自定义属性的成本追踪与预算告警，可接入 Agent 网关实现细粒度成本归因。"
-          }
-        ],
-        "notes": "与 Agent Observability 互补：观测关注行为与质量，成本归因关注 token 与费用分摊，可落地到本站 Agent 网关与多租户场景，且不重复 BANNED 词。"
-      }
-    ],
-    "evidenceCount": 15,
-    "evidenceUrlCount": 15
+    "candidates": [],
+    "evidenceCount": 0,
+    "why": ""
   },
   "gates": {
-    "schema": "pass",
+    "schema": "skip",
     "duplicate": "pass",
-    "editorial": "pass",
-    "evidence": "pass",
-    "relevance": "pass",
-    "consistency": "pass"
+    "editorial": "skip",
+    "evidence": "skip",
+    "relevance": "skip",
+    "consistency": "skip"
   },
-  "apply": {
-    "changedFiles": [
-      "times/index.html",
-      "content/times/2026-10-w2.md",
-      "api/times.json",
-      "content/index.json",
-      "api/catalog.json"
-    ],
-    "consistency": {
-      "ok": true,
-      "errors": [],
-      "gate": "pass"
-    }
-  },
-  "publish": {
-    "commit": "5fbff55bfd504b596de1b8c7d4651527833f4965",
-    "url": "https://chengguruchun.github.io/times/",
-    "mode": "autonomous",
-    "periodScheme": "YYYY-MM-WN month block, not ISO week"
-  },
-  "error": null
+  "apply": {},
+  "publish": {},
+  "error": "Period 2026-10-W2 already published (Agent Sandboxing); skip apply/push (pass force=true to override)"
 }
