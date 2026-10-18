@@ -1,7 +1,15 @@
 {
   "name": "Knowledge lifecycle run index",
-  "generated": "2026-10-11T08:44:02Z",
+  "generated": "2026-10-18T07:11:28Z",
   "items": [
+    {
+      "runId": "knowledge-2026-10-W3-20261018T071127Z",
+      "period": "2026-10-W3",
+      "phase": "checked",
+      "due": 0,
+      "finishedAt": "2026-10-18T07:11:28Z",
+      "path": "/api/knowledge/runs/knowledge-2026-10-W3-20261018T071127Z.json"
+    },
     {
       "runId": "knowledge-2026-10-W2-20261011T084401Z",
       "period": "2026-10-W2",
