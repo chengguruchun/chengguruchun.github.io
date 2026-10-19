@@ -1,0 +1,41 @@
+{
+  "runId": "hot-words-2026-10-W3-20261019T185735Z",
+  "period": "2026-10-W3",
+  "phase": "skipped",
+  "startedAt": "2026-10-19T18:57:36Z",
+  "finishedAt": "2026-10-19T18:57:36Z",
+  "input": {
+    "currentWord": "Agent 工具调用可靠性",
+    "recentHistory": [
+      "2026-10-W3: Agent 工具调用可靠性",
+      "2026-10-W2: Agent Sandboxing",
+      "2026-10-W1: Agent Observability",
+      "2026-09-W5: Agentic RAG",
+      "2026-09-W4: Agent Memory Benchmark",
+      "2026-09-W3: Agent 长期记忆",
+      "2026-09-W2: Agent 记忆架构",
+      "2026-09-W1: Context Window Optimization"
+    ],
+    "force": false,
+    "mode": "autonomous",
+    "hasFeedback": true,
+    "periodScheme": "YYYY-MM-WN = Nth 7-day block of the calendar month (Asia/Shanghai), not ISO week"
+  },
+  "proposal": {
+    "word": "Agent 工具调用可靠性",
+    "candidates": [],
+    "evidenceCount": 0,
+    "why": ""
+  },
+  "gates": {
+    "schema": "skip",
+    "duplicate": "pass",
+    "editorial": "skip",
+    "evidence": "skip",
+    "relevance": "skip",
+    "consistency": "skip"
+  },
+  "apply": {},
+  "publish": {},
+  "error": "Period 2026-10-W3 already published (Agent 工具调用可靠性); skip apply/push (pass force=true to override)"
+}
