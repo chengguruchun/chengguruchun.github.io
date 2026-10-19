@@ -1,9 +1,9 @@
 {
   "runId": "hot-words-2026-10-W3-20261019T054814Z",
   "period": "2026-10-W3",
-  "phase": "applied",
+  "phase": "published",
   "startedAt": "2026-10-19T05:48:14Z",
-  "finishedAt": "2026-10-19T05:48:21Z",
+  "finishedAt": "2026-10-19T05:48:23Z",
   "input": {
     "currentWord": "Agent Sandboxing",
     "recentHistory": [
@@ -185,6 +185,11 @@
       "gate": "pass"
     }
   },
-  "publish": {},
+  "publish": {
+    "commit": "20fe03f1660849c8a3bb99ac9ad8f0fd988b26a1",
+    "url": "https://chengguruchun.github.io/times/",
+    "mode": "autonomous",
+    "periodScheme": "YYYY-MM-WN month block, not ISO week"
+  },
   "error": null
 }
