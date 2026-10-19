@@ -1,7 +1,15 @@
 {
   "name": "Hot Words run index",
-  "generated": "2026-10-12T21:31:43Z",
+  "generated": "2026-10-19T05:48:21Z",
   "items": [
+    {
+      "runId": "hot-words-2026-10-W3-20261019T054814Z",
+      "period": "2026-10-W3",
+      "phase": "applied",
+      "word": "Agent 工具调用可靠性",
+      "finishedAt": "2026-10-19T05:48:21Z",
+      "path": "/api/hot-words/runs/hot-words-2026-10-W3-20261019T054814Z.json"
+    },
     {
       "runId": "hot-words-2026-10-W2-20261012T213143Z",
       "period": "2026-10-W2",

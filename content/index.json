@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-18T07:11:28Z",
+  "generated": "2026-10-19T05:48:21Z",
   "items": [
     {
       "id": "ai-native-software-language-aosl",
@@ -1086,6 +1086,22 @@
           "override": null
         }
       }
+    },
+    {
+      "id": "times-2026-10-w3",
+      "type": "Times",
+      "title": "2026-10 Week 3 · Agent 工具调用可靠性",
+      "excerpt": "沙箱与可观测性解决隔离与追踪，但生产 Agent 最常翻车的是工具调用本身：参数幻觉、错误重试与并行调用冲突。该词有 Function Calling Leaderboard 等可量化榜单与厂商规范支撑，能承接前几周从记忆、上下文到执行可靠性的工程主线。",
+      "url": "/times/",
+      "date": "2026-10-19",
+      "tags": [
+        "Times",
+        "Hot Words",
+        "Agent 工具调用可靠性"
+      ],
+      "markdown": "/content/times/2026-10-w3.md",
+      "period": "2026-10-W3",
+      "word": "Agent 工具调用可靠性"
     },
     {
       "id": "times-2026-10-w2",

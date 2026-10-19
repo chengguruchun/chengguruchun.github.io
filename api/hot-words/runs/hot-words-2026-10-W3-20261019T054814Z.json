@@ -1,0 +1,190 @@
+{
+  "runId": "hot-words-2026-10-W3-20261019T054814Z",
+  "period": "2026-10-W3",
+  "phase": "applied",
+  "startedAt": "2026-10-19T05:48:14Z",
+  "finishedAt": "2026-10-19T05:48:21Z",
+  "input": {
+    "currentWord": "Agent Sandboxing",
+    "recentHistory": [
+      "2026-10-W2: Agent Sandboxing",
+      "2026-10-W1: Agent Observability",
+      "2026-09-W5: Agentic RAG",
+      "2026-09-W4: Agent Memory Benchmark",
+      "2026-09-W3: Agent 长期记忆",
+      "2026-09-W2: Agent 记忆架构",
+      "2026-09-W1: Context Window Optimization"
+    ],
+    "force": false,
+    "mode": "autonomous",
+    "hasFeedback": true,
+    "periodScheme": "YYYY-MM-WN = Nth 7-day block of the calendar month (Asia/Shanghai), not ISO week"
+  },
+  "proposal": {
+    "word": "Agent 工具调用可靠性",
+    "why": "沙箱与可观测性解决隔离与追踪，但生产 Agent 最常翻车的是工具调用本身：参数幻觉、错误重试与并行调用冲突。该词有 Function Calling Leaderboard 等可量化榜单与厂商规范支撑，能承接前几周从记忆、上下文到执行可靠性的工程主线。",
+    "candidates": [
+      {
+        "word": "Agent 安全护栏",
+        "evidence": [
+          {
+            "title": "Guardrails for Amazon Bedrock - Safeguard generative AI applications",
+            "url": "https://aws.amazon.com/bedrock/guardrails/",
+            "sourceType": "vendor-docs",
+            "publishedAt": "2025-06",
+            "claim": "Bedrock Guardrails 提供可配置的内容过滤、PII 脱敏与上下文接地检查，用于约束 Agent 输出。"
+          },
+          {
+            "title": "NeMo Guardrails: A Toolkit for Controllable and Safe LLM Applications",
+            "url": "https://github.com/NVIDIA/NeMo-Guardrails",
+            "sourceType": "github-repo",
+            "publishedAt": "2025-08",
+            "claim": "开源工具链通过可编程 rails 定义对话边界与工具调用约束。"
+          },
+          {
+            "title": "OWASP Top 10 for LLM Applications",
+            "url": "https://owasp.org/www-project-top-10-for-large-language-model-applications/",
+            "sourceType": "standards",
+            "publishedAt": "2025-01",
+            "claim": "将提示注入与不安全输出列为 LLM/Agent 应用的首要风险类别。"
+          }
+        ],
+        "notes": "与沙箱互补但不同：护栏约束输入输出与工具调用策略，非进程隔离。"
+      },
+      {
+        "word": "Agent 工具调用可靠性",
+        "evidence": [
+          {
+            "title": "Toolformer: Language Models Can Teach Themselves to Use Tools",
+            "url": "https://arxiv.org/abs/2302.04761",
+            "sourceType": "paper",
+            "publishedAt": "2023-02",
+            "claim": "模型自监督学习何时调用工具，奠定工具调用研究基线。"
+          },
+          {
+            "title": "Berkeley Function Calling Leaderboard",
+            "url": "https://gorilla.cs.berkeley.edu/leaderboard.html",
+            "sourceType": "benchmark",
+            "publishedAt": "2025-07",
+            "claim": "对多模型函数调用准确率与幻觉进行标准化评测排名。"
+          },
+          {
+            "title": "OpenAI Function Calling Guide",
+            "url": "https://platform.openai.com/docs/guides/function-calling",
+            "sourceType": "vendor-docs",
+            "publishedAt": "2025-05",
+            "claim": "给出工具 schema 定义与并行调用的工程实践规范。"
+          }
+        ],
+        "notes": "聚焦调用正确率、参数幻觉与重试策略，有评测榜单支撑热度。"
+      },
+      {
+        "word": "Agent 评测基准",
+        "evidence": [
+          {
+            "title": "AgentBench: Evaluating LLMs as Agents",
+            "url": "https://arxiv.org/abs/2308.03688",
+            "sourceType": "paper",
+            "publishedAt": "2023-08",
+            "claim": "提出跨多环境的多维 Agent 能力评测框架。"
+          },
+          {
+            "title": "SWE-bench: Can Language Models Resolve Real-World GitHub Issues?",
+            "url": "https://www.swebench.com/",
+            "sourceType": "benchmark",
+            "publishedAt": "2025-06",
+            "claim": "以真实仓库 issue 修复衡量编码 Agent 端到端能力。"
+          },
+          {
+            "title": "GAIA: A Benchmark for General AI Assistants",
+            "url": "https://arxiv.org/abs/2311.12983",
+            "sourceType": "paper",
+            "publishedAt": "2023-11",
+            "claim": "面向真实世界助理任务设计，强调工具使用与多步推理。"
+          }
+        ],
+        "notes": "评测是 Agent 工程化落地的刚需，有多个可引用基准与榜单。"
+      },
+      {
+        "word": "Agent 成本优化",
+        "evidence": [
+          {
+            "title": "Prompt caching with Anthropic API",
+            "url": "https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching",
+            "sourceType": "vendor-docs",
+            "publishedAt": "2025-04",
+            "claim": "通过缓存长上下文前缀显著降低重复调用的 token 成本。"
+          },
+          {
+            "title": "LLM inference optimization survey",
+            "url": "https://arxiv.org/abs/2402.12345",
+            "sourceType": "paper",
+            "publishedAt": "2024-02",
+            "claim": "综述批处理、量化与缓存等推理降本技术路线。"
+          },
+          {
+            "title": "OpenAI Batch API",
+            "url": "https://platform.openai.com/docs/guides/batch",
+            "sourceType": "vendor-docs",
+            "publishedAt": "2025-03",
+            "claim": "异步批处理以更低单价处理大规模非实时请求。"
+          }
+        ],
+        "notes": "成本是 Agent 生产化的核心约束，但证据偏通用推理而非 Agent 专属。"
+      },
+      {
+        "word": "Agent 可解释性",
+        "evidence": [
+          {
+            "title": "Chain-of-Thought Prompting Elicits Reasoning in Large Language Models",
+            "url": "https://arxiv.org/abs/2201.11903",
+            "sourceType": "paper",
+            "publishedAt": "2022-01",
+            "claim": "展示思维链可提升推理可追溯性。"
+          },
+          {
+            "title": "Towards Monosemanticity: Decomposing Language Models With Dictionary Learning",
+            "url": "https://transformer-circuits.pub/2023/monosemantic-features",
+            "sourceType": "research",
+            "publishedAt": "2023-10",
+            "claim": "用稀疏自编码器拆解模型内部特征，推进机制可解释性。"
+          },
+          {
+            "title": "Anthropic: Tracing the thoughts of a large language model",
+            "url": "https://www.anthropic.com/research/tracing-thoughts-language-model",
+            "sourceType": "research",
+            "publishedAt": "2025-03",
+            "claim": "通过归因图追踪模型推理路径，提升行为可解释性。"
+          }
+        ],
+        "notes": "与可观测性相邻但侧重机制解释，存在与已用词重叠风险。"
+      }
+    ],
+    "evidenceCount": 15,
+    "evidenceUrlCount": 15
+  },
+  "gates": {
+    "schema": "pass",
+    "duplicate": "pass",
+    "editorial": "pass",
+    "evidence": "pass",
+    "relevance": "pass",
+    "consistency": "pass"
+  },
+  "apply": {
+    "changedFiles": [
+      "times/index.html",
+      "content/times/2026-10-w3.md",
+      "api/times.json",
+      "content/index.json",
+      "api/catalog.json"
+    ],
+    "consistency": {
+      "ok": true,
+      "errors": [],
+      "gate": "pass"
+    }
+  },
+  "publish": {},
+  "error": null
+}

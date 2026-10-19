@@ -1,8 +1,8 @@
 {
   "name": "Hot Words feedback",
-  "generated": "2026-10-12T21:31:43Z",
-  "period": "2026-10-W2",
-  "word": "Agent Sandboxing",
+  "generated": "2026-10-19T05:48:21Z",
+  "period": "2026-10-W3",
+  "word": "Agent 工具调用可靠性",
   "signals": {
     "visits": {
       "site": null,
@@ -24,22 +24,23 @@
     }
   },
   "lastRun": {
-    "runId": "hot-words-2026-10-W2-20261012T213143Z",
-    "phase": "skipped",
+    "runId": "hot-words-2026-10-W3-20261019T054814Z",
+    "phase": "applied",
     "gates": {
-      "schema": "skip",
+      "schema": "pass",
       "duplicate": "pass",
-      "editorial": "skip",
-      "evidence": "skip",
-      "relevance": "skip",
-      "consistency": "skip"
+      "editorial": "pass",
+      "evidence": "pass",
+      "relevance": "pass",
+      "consistency": "pass"
     },
-    "evidenceCount": 0,
+    "evidenceCount": 15,
     "publish": {},
-    "error": "Period 2026-10-W2 already published (Agent Sandboxing); skip apply/push (pass force=true to override)"
+    "error": null
   },
   "learnHints": {
     "recentWords": [
+      "2026-10-W3: Agent 工具调用可靠性",
       "2026-10-W2: Agent Sandboxing",
       "2026-10-W1: Agent Observability",
       "2026-09-W5: Agentic RAG",
@@ -48,11 +49,40 @@
       "2026-09-W2: Agent 记忆架构",
       "2026-09-W1: Context Window Optimization"
     ],
-    "rejectedCandidates": [],
-    "prefer": "下一轮务必补齐结构化证据（title/url/claim）；先有来源，再谈热度。",
-    "avoid": "回避与当前词重复、口号化、以及只有空泛描述没有来源的词。"
+    "rejectedCandidates": [
+      {
+        "word": "Agent 安全护栏",
+        "reason": "not_chosen",
+        "notes": "与沙箱互补但不同：护栏约束输入输出与工具调用策略，非进程隔离。"
+      },
+      {
+        "word": "Agent 评测基准",
+        "reason": "not_chosen",
+        "notes": "评测是 Agent 工程化落地的刚需，有多个可引用基准与榜单。"
+      },
+      {
+        "word": "Agent 成本优化",
+        "reason": "not_chosen",
+        "notes": "成本是 Agent 生产化的核心约束，但证据偏通用推理而非 Agent 专属。"
+      },
+      {
+        "word": "Agent 可解释性",
+        "reason": "not_chosen",
+        "notes": "与可观测性相邻但侧重机制解释，存在与已用词重叠风险。"
+      }
+    ],
+    "prefer": "优先选能落到本站软件 / 系统 / Agent 主线的词，并带至少一条可点开的 https 证据。",
+    "avoid": "回避与当前词重复、口号化、以及只有空泛描述没有来源的词。 最近未入选：Agent 安全护栏、Agent 评测基准、Agent 成本优化、Agent 可解释性。"
   },
   "recentRuns": [
+    {
+      "runId": "hot-words-2026-10-W3-20261019T054814Z",
+      "period": "2026-10-W3",
+      "phase": "applied",
+      "word": "Agent 工具调用可靠性",
+      "finishedAt": "2026-10-19T05:48:21Z",
+      "path": "/api/hot-words/runs/hot-words-2026-10-W3-20261019T054814Z.json"
+    },
     {
       "runId": "hot-words-2026-10-W2-20261012T213143Z",
       "period": "2026-10-W2",
@@ -124,14 +154,6 @@
       "word": "Context Window Optimization",
       "finishedAt": "2026-09-07T05:44:41Z",
       "path": "/api/hot-words/runs/hot-words-2026-09-W1-20260907T054441Z.json"
-    },
-    {
-      "runId": "hot-words-2026-09-W1-20260907T044655Z",
-      "period": "2026-09-W1",
-      "phase": "published",
-      "word": "Context Window Optimization",
-      "finishedAt": "2026-09-07T04:47:06Z",
-      "path": "/api/hot-words/runs/hot-words-2026-09-W1-20260907T044655Z.json"
     }
   ],
   "endpoints": {

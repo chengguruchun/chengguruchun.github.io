@@ -7,9 +7,20 @@
     "meaning": "Nth 7-day block of the calendar month in Asia/Shanghai (days 1–7 = W1, 8–14 = W2, …). Not an ISO 8601 week number.",
     "timezone": "Asia/Shanghai"
   },
-  "current": "2026-10-W2",
-  "updated": "2026-10-12",
+  "current": "2026-10-W3",
+  "updated": "2026-10-19",
   "issues": [
+    {
+      "id": "times-2026-10-w3",
+      "period": "2026-10-W3",
+      "cadence": "weekly",
+      "word": "Agent 工具调用可靠性",
+      "title": "2026-10 Week 3 · Agent 工具调用可靠性",
+      "why": "沙箱与可观测性解决隔离与追踪，但生产 Agent 最常翻车的是工具调用本身：参数幻觉、错误重试与并行调用冲突。该词有 Function Calling Leaderboard 等可量化榜单与厂商规范支撑，能承接前几周从记忆、上下文到执行可靠性的工程主线。",
+      "date": "2026-10-19",
+      "url": "/times/",
+      "markdown": "/content/times/2026-10-w3.md"
+    },
     {
       "id": "times-2026-10-w2",
       "period": "2026-10-W2",
@@ -91,5 +102,5 @@
       "slug": "2026-09-w1"
     }
   ],
-  "currentProposalHash": "8ab8f0838ff11c0c"
+  "currentProposalHash": "c2edb29c635819e3"
 }
