@@ -2,6 +2,72 @@
   "type": "Diverse Lab",
   "items": [
     {
+      "id": "ai-native-software-language-aosl",
+      "type": "Diverse Lab",
+      "title": "AOSL：面向 AI-native 软件工程的语言与构建系统",
+      "excerpt": "从“教 AI 写传统代码”进一步走向“为 AI 重新设计软件描述方式”：提出结构化 DSL、统一语义 IR、编译与 Runtime 混合执行、全栈生成、验证闭环与可验证原型方案。",
+      "url": "/diverse/ai-native-software-language-aosl.html",
+      "date": "2026-10-09",
+      "tags": [
+        "AI-Native",
+        "Software Language",
+        "DSL",
+        "Compiler",
+        "Semantic IR",
+        "Agent Runtime",
+        "Full-Stack"
+      ],
+      "thought_date": "2026-10-09",
+      "published_date": "2026-10-09",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/ai-native-software-language-aosl.md",
+      "content": "/content/diverse/ai-native-software-language-aosl.md",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-10-09",
+        "next_review": "2027-01-07",
+        "cadence_days": 90,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      }
+    },
+    {
+      "id": "event-driven-coding-agent-runtime",
+      "type": "Diverse Lab",
+      "title": "从需求事件到代码变更：构建 Event-driven Coding Agent Runtime",
+      "excerpt": "当飞书或企业微信出现验收 Bug、PRD 发生变化，Agent 如何可靠地发现事件、分析影响、修改代码、验证结果并创建 PR？从 MCP、Webhook 到任务状态机与安全闭环的架构设计。",
+      "url": "/diverse/event-driven-coding-agent-runtime.html",
+      "date": "2026-10-09",
+      "tags": [
+        "Agent Runtime",
+        "Coding Agent",
+        "MCP",
+        "Webhook",
+        "Event-driven",
+        "Verification",
+        "Developer Tools"
+      ],
+      "thought_date": "2026-10-09",
+      "published_date": "2026-10-09",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/event-driven-coding-agent-runtime.md",
+      "content": "/content/diverse/event-driven-coding-agent-runtime.md",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-10-09",
+        "next_review": "2027-01-07",
+        "cadence_days": 90,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      }
+    },
+    {
       "id": "software-design-universal-patterns",
       "type": "Diverse Lab",
       "title": "软件工程的隐形语法：从“加一层”到“广进严出”",
