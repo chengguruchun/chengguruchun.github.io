@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-30",
+  "updated": "2026-10-21",
   "tags": {
     "Actor Model": [
       "agent-runtime-cognitive-actor"
@@ -39,10 +39,21 @@
     "Agent Module": [
       "iot-agent-from-device-to-physical-world-runtime"
     ],
+    "Agent Observability": [
+      "times-2026-10-w1"
+    ],
     "Agent Runtime": [
+      "ai-native-software-language-aosl",
+      "event-driven-coding-agent-runtime",
       "reinforcement-learning-game-theory-complex-systems",
       "from-mes-to-manufacturing-agent-runtime",
       "h-neurons-paper-reading"
+    ],
+    "Agent Sandboxing": [
+      "times-2026-10-w2"
+    ],
+    "Agent 工具调用可靠性": [
+      "times-2026-10-w3"
     ],
     "Agent 记忆架构": [
       "times-2026-09-w2"
@@ -58,6 +69,12 @@
     ],
     "Agentic RAG": [
       "times-2026-09-w5"
+    ],
+    "AI-Assisted Development": [
+      "frontend-language-for-ai-assisted-development"
+    ],
+    "AI-Native": [
+      "ai-native-software-language-aosl"
     ],
     "Akka": [
       "agent-runtime-cognitive-actor"
@@ -87,6 +104,12 @@
     "Code Agent": [
       "domain-driven-agent-tool-design"
     ],
+    "Coding Agent": [
+      "event-driven-coding-agent-runtime"
+    ],
+    "Compiler": [
+      "ai-native-software-language-aosl"
+    ],
     "Complex Systems": [
       "software-design-universal-patterns",
       "reinforcement-learning-game-theory-complex-systems",
@@ -113,11 +136,11 @@
     "Cost": [
       "reasoning-scale-knowledge-external"
     ],
-    "DDD": [
-      "domain-driven-agent-tool-design"
-    ],
     "Data Loop": [
       "agent-industrial-internet"
+    ],
+    "DDD": [
+      "domain-driven-agent-tool-design"
     ],
     "Decision Engineering": [
       "from-mes-to-manufacturing-agent-runtime"
@@ -127,6 +150,9 @@
     ],
     "Design Patterns": [
       "software-design-universal-patterns"
+    ],
+    "Developer Tools": [
+      "event-driven-coding-agent-runtime"
     ],
     "Diverse": [
       "software-design-universal-patterns",
@@ -138,6 +164,9 @@
       "from-function-to-ecosystem",
       "llm-scientific-experiment",
       "physics-ecology-llm"
+    ],
+    "DSL": [
+      "ai-native-software-language-aosl"
     ],
     "Dubbo": [
       "spring-dubbo-deepseek-harness-runtime"
@@ -157,6 +186,9 @@
       "agent-optimizer-experience-policy",
       "agent-skill-evolution-pruning"
     ],
+    "Event-driven": [
+      "event-driven-coding-agent-runtime"
+    ],
     "Experience Memory": [
       "agent-optimizer-experience-policy"
     ],
@@ -164,11 +196,11 @@
       "from-function-to-ecosystem",
       "llm-scientific-experiment"
     ],
-    "FDE": [
-      "fde-agent-opportunity-discovery"
-    ],
     "Faithfulness": [
       "interpretability-rl-faithfulness"
+    ],
+    "FDE": [
+      "fde-agent-opportunity-discovery"
     ],
     "Feedback": [
       "agent-evaluation-proxy-vs-real-outcome"
@@ -178,6 +210,13 @@
     ],
     "Forward-Deployed-Engineer": [
       "fde-agent-opportunity-discovery"
+    ],
+    "Frontend": [
+      "frontend-language-for-ai-assisted-development"
+    ],
+    "Full-Stack": [
+      "ai-native-software-language-aosl",
+      "frontend-language-for-ai-assisted-development"
     ],
     "Game Theory": [
       "reinforcement-learning-game-theory-complex-systems"
@@ -201,6 +240,9 @@
       "agent-engineering-from-workflow-to-control-plane"
     ],
     "Hot Words": [
+      "times-2026-10-w3",
+      "times-2026-10-w2",
+      "times-2026-10-w1",
       "times-2026-09-w5",
       "times-2026-09-w4",
       "times-2026-09-w3",
@@ -260,14 +302,17 @@
       "k8s-to-agent-control-plane",
       "llm-scientific-experiment"
     ],
+    "Manufacturing": [
+      "from-mes-to-manufacturing-agent-runtime"
+    ],
+    "MCP": [
+      "event-driven-coding-agent-runtime"
+    ],
     "MES": [
       "from-mes-to-manufacturing-agent-runtime"
     ],
     "MHS": [
       "iot-agent-from-automation-to-physical-infrastructure"
-    ],
-    "Manufacturing": [
-      "from-mes-to-manufacturing-agent-runtime"
     ],
     "Model Selection": [
       "reasoning-scale-knowledge-external"
@@ -313,8 +358,8 @@
     "Production": [
       "ai-era-production-consumption-balance"
     ],
-    "RL": [
-      "interpretability-rl-faithfulness"
+    "Prompt Engineering": [
+      "frontend-language-for-ai-assisted-development"
     ],
     "ReAct": [
       "react-is-the-inner-loop-long-running-agent-harness-runtime",
@@ -326,6 +371,9 @@
     "Reinforcement Learning": [
       "reinforcement-learning-game-theory-complex-systems",
       "agent-optimizer-experience-policy"
+    ],
+    "RL": [
+      "interpretability-rl-faithfulness"
     ],
     "Runtime": [
       "gossip-evidence-consensus-multi-agent",
@@ -342,6 +390,9 @@
       "iot-agent-from-device-to-physical-world-runtime",
       "saas-ecommerce-agent-thinking"
     ],
+    "Semantic IR": [
+      "ai-native-software-language-aosl"
+    ],
     "Skill": [
       "agent-skill-evolution-pruning"
     ],
@@ -354,6 +405,9 @@
     "Software Design": [
       "software-design-universal-patterns"
     ],
+    "Software Language": [
+      "ai-native-software-language-aosl"
+    ],
     "Spring": [
       "spring-dubbo-deepseek-harness-runtime"
     ],
@@ -364,6 +418,9 @@
       "symbolicism-vs-connectionism"
     ],
     "Times": [
+      "times-2026-10-w3",
+      "times-2026-10-w2",
+      "times-2026-10-w1",
       "times-2026-09-w5",
       "times-2026-09-w4",
       "times-2026-09-w3",
@@ -376,8 +433,17 @@
     "Transformer": [
       "transformer-from-attention-to-decoder-only"
     ],
+    "UI": [
+      "frontend-language-for-ai-assisted-development"
+    ],
+    "Verification": [
+      "event-driven-coding-agent-runtime"
+    ],
     "Vertical": [
       "agent-industrial-internet"
+    ],
+    "Webhook": [
+      "event-driven-coding-agent-runtime"
     ],
     "Workflow": [
       "agent-engineering-from-workflow-to-control-plane"
