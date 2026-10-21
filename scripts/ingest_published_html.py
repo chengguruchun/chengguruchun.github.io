@@ -432,9 +432,49 @@ def write_markdown(meta: dict) -> bool:
     return True
 
 
+
+def discover_pages() -> list[dict]:
+    """Discover published HTML pages from the filesystem instead of relying only on PAGES."""
+    discovered = []
+    known_ids = {str(meta["id"]) for meta in PAGES}
+    catalog_data = load_json(CATALOG) if CATALOG.exists() else {}
+    registered = {str(item.get("id")) for item in catalog_data.get("items", []) if isinstance(item, dict)}
+    for folder, kind in ((ROOT / "articles", "Articles"), (ROOT / "diverse", "Diverse Lab")):
+        content_dir = "articles" if kind == "Articles" else "diverse"
+        for html_path in sorted(folder.glob("*.html")):
+            if html_path.name == "index.html":
+                continue
+            slug = html_path.stem
+            markdown_path = ROOT / "content" / content_dir / f"{slug}.md"
+            if slug in known_ids or (slug in registered and markdown_path.exists()):
+                continue
+            raw = html_path.read_text(encoding="utf-8")
+            def meta(pattern: str) -> str:
+                match = re.search(pattern, raw, re.I | re.S)
+                return html_lib.unescape(match.group(1)).strip() if match else ""
+            title = meta(r'<meta\s+property="og:title"\s+content="([^"]*)"')
+            if not title:
+                title_match = re.search(r"<title>(.*?)</title>", raw, re.I | re.S)
+                title = html_lib.unescape(re.sub(r"\s*[·|].*$", "", title_match.group(1))).strip() if title_match else slug
+            excerpt = meta(r'<meta\s+name="description"\s+content="([^"]*)"')
+            date = meta(r'<meta\s+property="article:published_time"\s+content="([^"]*)"') or "2026-10-21"
+            tag_values = [html_lib.unescape(x).strip() for x in re.findall(r'<meta\s+property="article:tag"\s+content="([^"]*)"', raw, re.I)]
+            discovered.append({
+                "id": slug, "type": kind, "title": title, "excerpt": excerpt,
+                "url": f"/{folder.name}/{html_path.name}", "date": date,
+                "thought_date": date, "published_date": date, "tags": tag_values or ["Agent"],
+                "html": html_path, "content": f"/content/{content_dir}/{slug}.md",
+            })
+    return discovered
+
+
 def main() -> int:
     created = 0
-    for meta in PAGES:
+    pages_by_id = {str(meta['id']): meta for meta in PAGES}
+    for meta in discover_pages():
+        pages_by_id.setdefault(str(meta['id']), meta)
+    pages = list(pages_by_id.values())
+    for meta in pages:
         if not meta["html"].exists():
             print(f"skip missing html {meta['id']}")
             continue
@@ -450,7 +490,7 @@ def main() -> int:
             upsert(ARTICLES, row)
         else:
             upsert(DIVERSE, row)
-    print(f"ingested {len(PAGES)} catalog rows; created {created} markdown files")
+    print(f"ingested {len(pages)} catalog rows; created {created} markdown files")
     return 0
 
 
