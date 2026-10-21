@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-19T05:48:21Z",
+  "generated": "2026-10-21T00:00:00Z",
   "items": [
     {
       "id": "ai-native-software-language-aosl",
@@ -52,6 +52,39 @@
       "published_date": "2026-10-09",
       "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/frontend-language-for-ai-assisted-development.md",
       "content": "/content/articles/frontend-language-for-ai-assisted-development.md",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-10-09",
+        "next_review": "2027-01-07",
+        "cadence_days": 90,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      }
+    },
+    {
+      "id": "event-driven-coding-agent-runtime",
+      "type": "Diverse Lab",
+      "title": "从需求事件到代码变更：构建 Event-driven Coding Agent Runtime",
+      "excerpt": "当飞书或企业微信出现验收 Bug、PRD 发生变化，Agent 如何可靠地发现事件、分析影响、修改代码、验证结果并创建 PR？从 MCP、Webhook 到任务状态机与安全闭环的架构设计。",
+      "url": "/diverse/event-driven-coding-agent-runtime.html",
+      "date": "2026-10-09",
+      "tags": [
+        "Agent Runtime",
+        "Coding Agent",
+        "MCP",
+        "Webhook",
+        "Event-driven",
+        "Verification",
+        "Developer Tools"
+      ],
+      "thought_date": "2026-10-09",
+      "published_date": "2026-10-09",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/event-driven-coding-agent-runtime.md",
+      "content": "/content/diverse/event-driven-coding-agent-runtime.md",
       "knowledge": {
         "status": "fresh",
         "last_verified": "2026-10-09",
