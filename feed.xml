@@ -7,6 +7,13 @@
     <language>zh-cn</language>
     <lastBuildDate>Fri, 09 Oct 2026 00:00:00 +0000</lastBuildDate>
     <item>
+    <title>面向 Agent 的架构拆解：从组织协作到任务协作</title>
+    <link>https://chengguruchun.github.io/diverse/agent-oriented-architecture-decomposition.html</link>
+    <guid isPermaLink="true">https://chengguruchun.github.io/diverse/agent-oriented-architecture-decomposition.html</guid>
+    <pubDate>Thu, 22 Oct 2026 00:00:00 GMT</pubDate>
+    <description>当 Agent 成为重要的软件生产者，架构设计是否需要从面向人的组织协作，进一步走向面向任务的协作？从任务边界、可执行契约到架构感知的 Agent Runtime。</description>
+  </item>
+  <item>
       <title>AOSL：面向 AI-native 软件工程的语言与构建系统</title>
       <link>https://chengguruchun.github.io/diverse/ai-native-software-language-aosl.html</link>
       <guid isPermaLink="true">https://chengguruchun.github.io/diverse/ai-native-software-language-aosl.html</guid>
