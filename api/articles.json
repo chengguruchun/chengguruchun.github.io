@@ -2,6 +2,37 @@
   "type": "Articles",
   "items": [
     {
+      "id": "frontend-language-for-ai-assisted-development",
+      "type": "Articles",
+      "title": "AI 全栈开发的前端语言：把页面需求说清楚的术语手册",
+      "excerpt": "从 DOM、组件、布局、交互和 API 延伸到包管理、依赖锁定、构建流水线、环境配置、部署验证与回滚，建立一套可执行、可验证的 AI 全栈开发语言。",
+      "url": "/articles/frontend-language-for-ai-assisted-development.html",
+      "date": "2026-10-09",
+      "tags": [
+        "AI-Assisted Development",
+        "Frontend",
+        "Full-Stack",
+        "UI",
+        "Prompt Engineering"
+      ],
+      "thought_date": "2026-10-09",
+      "published_date": "2026-10-09",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/frontend-language-for-ai-assisted-development.md",
+      "content": "/content/articles/frontend-language-for-ai-assisted-development.md",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-10-09",
+        "next_review": "2027-01-07",
+        "cadence_days": 90,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      }
+    },
+    {
       "id": "gossip-evidence-consensus-multi-agent",
       "type": "Articles",
       "title": "从 Gossip 到 Consensus：Multi-Agent 如何形成可信的集体认知",
