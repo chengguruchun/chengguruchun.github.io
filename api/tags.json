@@ -1,10 +1,11 @@
 {
-  "updated": "2026-10-21",
+  "updated": "2026-10-22",
   "tags": {
     "Actor Model": [
       "agent-runtime-cognitive-actor"
     ],
     "Agent": [
+      "agent-engineering-laws-harness-architecture-feedback",
       "gossip-evidence-consensus-multi-agent",
       "iot-agent-from-device-to-physical-world-runtime",
       "react-is-the-inner-loop-long-running-agent-harness-runtime",
@@ -43,6 +44,7 @@
       "times-2026-10-w1"
     ],
     "Agent Runtime": [
+      "agent-engineering-laws-harness-architecture-feedback",
       "ai-native-software-language-aosl",
       "event-driven-coding-agent-runtime",
       "reinforcement-learning-game-theory-complex-systems",
@@ -234,6 +236,7 @@
       "h-neurons-paper-reading"
     ],
     "Harness": [
+      "agent-engineering-laws-harness-architecture-feedback",
       "react-is-the-inner-loop-long-running-agent-harness-runtime",
       "react-to-long-running-agent",
       "spring-dubbo-deepseek-harness-runtime",
@@ -318,6 +321,7 @@
       "reasoning-scale-knowledge-external"
     ],
     "Multi-Agent": [
+      "agent-engineering-laws-harness-architecture-feedback",
       "gossip-evidence-consensus-multi-agent"
     ],
     "Optimizer": [
@@ -447,6 +451,18 @@
     ],
     "Workflow": [
       "agent-engineering-from-workflow-to-control-plane"
+    ],
+    "Software Architecture": [
+      "agent-engineering-laws-harness-architecture-feedback"
+    ],
+    "Conway's Law": [
+      "agent-engineering-laws-harness-architecture-feedback"
+    ],
+    "Brooks's Law": [
+      "agent-engineering-laws-harness-architecture-feedback"
+    ],
+    "Amdahl's Law": [
+      "agent-engineering-laws-harness-architecture-feedback"
     ]
   }
 }
