@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent 化会改变哪些软件工程定律？从 Harness 到架构反馈闭环 · Diverse Lab</title>
+<meta name="description" content="Agent 化不一定打破康威定律、布鲁克斯定律或阿姆达尔定律，而是改变它们成立的条件。本文从 Harness 出发，梳理 Architecture、Agent Runtime 与 Optimization 的边界，并提出架构感知 Harness、反馈驱动架构与自优化 Runtime 的研究方向。">
+<meta name="theme-color" content="#f7f5f0">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/site.css">
+<link rel="canonical" href="https://chengguruchun.github.io/diverse/agent-engineering-laws-harness-architecture-feedback.html">
+<link rel="alternate" type="application/rss+xml" title="AI Knowledge Lab" href="../feed.xml">
+<meta property="og:type" content="article"><meta property="og:site_name" content="AI Knowledge Lab"><meta property="og:locale" content="zh_CN">
+<meta property="og:title" content="Agent 化会改变哪些软件工程定律？从 Harness 到架构反馈闭环"><meta property="og:description" content="Agent 化不一定打破康威定律、布鲁克斯定律或阿姆达尔定律，而是改变它们成立的条件。本文从 Harness 出发，梳理 Architecture、Agent Runtime 与 Optimization 的边界，并提出架构感知 Harness、反馈驱动架构与自优化 Runtime 的研究方向。"><meta property="og:url" content="https://chengguruchun.github.io/diverse/agent-engineering-laws-harness-architecture-feedback.html">
+<meta property="og:image" content="https://chengguruchun.github.io/assets/img/og-cover.png"><meta property="og:image:alt" content="AI Knowledge Lab">
+<meta property="article:published_time" content="2026-10-22"><meta property="article:author" content="chengguruchun">
+
+<meta property="article:tag" content="Agent"><meta property="article:tag" content="Harness"><meta property="article:tag" content="Agent Runtime"><meta property="article:tag" content="Software Architecture"><meta property="article:tag" content="Conway's Law"><meta property="article:tag" content="Brooks's Law"><meta property="article:tag" content="Amdahl's Law"><meta property="article:tag" content="Multi-Agent"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Agent 化会改变哪些软件工程定律？从 Harness 到架构反馈闭环"><meta name="twitter:description" content="Agent 化不一定打破康威定律、布鲁克斯定律或阿姆达尔定律，而是改变它们成立的条件。本文从 Harness 出发，梳理 Architecture、Agent Runtime 与 Optimization 的边界，并提出架构感知 Harness、反馈驱动架构与自优化 Runtime 的研究方向。"><meta name="twitter:image" content="https://chengguruchun.github.io/assets/img/og-cover.png"><meta name="author" content="chengguruchun">
+</head>
+<body>
+<header class="site-header"><div class="wrap site-header__inner"><a class="brand" href="../index.html"><img class="brand__logo" src="../assets/img/brand-mark.svg" alt="AI Knowledge Lab" width="44" height="44"><span class="brand__tag"><span class="brand__rotate"><span class="brand__item is-active">Independent Thinker</span><span class="brand__item">AI Agents</span><span class="brand__item">Complex Systems</span><span class="brand__item">Diverse Thinking</span></span></span></a><button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">菜单</button><nav class="nav" id="site-nav" aria-label="主导航"><a href="../index.html">Home</a><a href="../bench/">Agent Bench</a><a href="../diverse/" aria-current="page">Diverse Lab</a><a href="../articles/">Articles</a><a href="../projects/">Projects</a><a href="../videos/">Videos</a><a href="../times/">Hot Words</a><a href="../about/">About Me</a><a class="nav__search" href="../tags/">Tags / Search</a></nav></div></header>
+<main><article class="article-body"><header class="page-hero"><div class="prose-wrap"><p class="page-hero__kicker">Diverse Lab · Harness & Architecture</p><h1>Agent 化会改变哪些软件工程定律？从 Harness 到架构反馈闭环</h1><p class="page-hero__desc">Agent 化不一定打破康威定律、布鲁克斯定律或阿姆达尔定律，而是改变它们成立的条件。本文从 Harness 出发，梳理 Architecture、Agent Runtime 与 Optimization 的边界，并提出架构感知 Harness、反馈驱动架构与自优化 Runtime 的研究方向。</p><p class="article-meta"><span>思路 2026-10-22</span><span>发表 2026-10-22</span><span>作者 chengguruchun</span><a class="tag" href="../tags/?tag=Agent">Agent</a><a class="tag" href="../tags/?tag=Harness">Harness</a><a class="tag" href="../tags/?tag=Agent%20Runtime">Agent Runtime</a><a class="tag" href="../tags/?tag=Software%20Architecture">Software Architecture</a><a class="tag" href="../tags/?tag=Conway%27s%20Law">Conway's Law</a></p></div></header><div class="prose-wrap"><h1 id="agent-化会改变哪些软件工程定律从-harness-到架构反馈闭环">Agent 化会改变哪些软件工程定律？从 Harness 到架构反馈闭环</h1>
+<h2 id="一个问题agent-会打破软件工程的经典定律吗">一个问题：Agent 会打破软件工程的经典定律吗？</h2>
+<p>当 Agent 开始承担需求分析、代码修改、测试和集成，软件生产的执行能力似乎可以被快速复制。于是，一个自然的问题出现了：过去那些围绕人类团队、沟通成本和有限并行度形成的软件工程规律，是否还适用于 Agent？</p>
+<p>我的判断是：<strong>Agent 不会让经典定律自动失效，但它可能改变这些规律的前提条件、成本结构和适用边界。</strong> 执行者更容易扩展，不等于任务天然可并行；代码更容易生成，也不等于系统更容易验证；单步执行不可靠，也不意味着整个任务必然失败。</p>
+<p>更有价值的研究方向，不是罗列“哪些定律被打破”，而是追问：当生产主体变了，哪些约束仍然存在，哪些成本被转移，哪些新的瓶颈开始主导系统？</p>
+<h2 id="一三个经典定律三种不同的约束">一、三个经典定律，三种不同的约束</h2>
+<h3 id="1-康威定律协作结构会映射到软件结构">1. 康威定律：协作结构会映射到软件结构</h3>
+<p>康威定律通常被概括为：设计系统的组织，其沟通结构会反映在所设计的系统中。它提醒我们，软件架构并非只由技术因素决定，团队职责、信息流和跨团队协调方式也会影响模块边界。</p>
+<p>Agent 化之后，协作主体可以动态创建、分配和回收。任务规划器、编码 Agent、集成 Agent、验证器与审批角色，可能围绕某个目标临时形成协作网络。因此，软件结构除了受到组织沟通拓扑的影响，也可能受到<strong>任务依赖拓扑与 Agent 协作拓扑</strong>的影响。</p>
+<p>这是受康威定律启发的延伸假设，不是康威定律本身已经证明的结论。Agent 是动态执行者，不应与稳定模块一一对应。架构边界仍应建立在领域职责、接口契约和系统不变量上，而不是某次运行时的 Agent 分工。</p>
+<h3 id="2-布鲁克斯定律增加执行者不一定缩短工期">2. 布鲁克斯定律：增加执行者不一定缩短工期</h3>
+<p>布鲁克斯定律指出，向一个已经延期的软件项目增加人手，可能让项目更晚完成。新人培训、沟通成本和任务依赖，都会抵消新增人力带来的收益。</p>
+<p>Agent 降低了部分启动和重复执行的成本，但没有消除依赖关系。若多个 Agent 可以在明确契约下独立实现并验证任务，新增执行者可能提高吞吐量；若它们同时修改共享文件、依赖不稳定接口，或产生无法独立验证的结果，协调和集成成本仍然会上升。</p>
+<p>所以，Agent 化可能削弱的是新增执行者的某些固定成本，而不是布鲁克斯定律背后的依赖与协调问题。关键变量不是 Agent 数量，而是<strong>任务独立性、共享资源冲突率与集成成本</strong>。</p>
+<h3 id="3-阿姆达尔定律串行部分依然限制并行收益">3. 阿姆达尔定律：串行部分依然限制并行收益</h3>
+<p>阿姆达尔定律描述了并行化的理论上限：系统中无法并行的部分越大，增加并行执行者的收益越有限。</p>
+<p>假设一个任务有 70% 的工作可以并行，30% 必须串行。即使并行部分拥有无限资源，理论加速比也不会超过约 3.33 倍，因为串行部分仍然存在。现实系统还需要付出调度、上下文准备、通信、验证和集成成本，实际收益通常更低。</p>
+<p>Agent 不会打破这个定律，但可以通过更好的任务分解、稳定接口、模拟依赖和提前验证，改变工作中真正可并行的比例。由此，架构设计不只是决定代码如何组织，也会影响软件生产能够获得多大的并行收益。</p>
+<h2 id="二执行能力扩展之后瓶颈会转移到哪里">二、执行能力扩展之后，瓶颈会转移到哪里？</h2>
+<p>如果 Agent 可以较低成本地并发执行任务，那么限制系统效率的因素可能逐渐从“有多少人可以做事”，转向以下问题：</p>
+<ul>
+<li><strong>任务分解：</strong> 任务是否具有清晰的目标、边界和依赖？</li>
+<li><strong>协调：</strong> 执行者之间是否共享正确的上下文，能否避免无效冲突？</li>
+<li><strong>验证：</strong> 局部结果能否被自动验证，局部正确能否组合成全局正确？</li>
+<li><strong>恢复：</strong> 失败能否被发现，状态能否恢复，重试是否安全？</li>
+<li><strong>成本控制：</strong> 增加并行度带来的收益，是否超过模型调用、集成与验证成本？</li>
+</ul>
+<p>这些并不是传统工程中不存在的问题。变化在于，当执行能力更容易扩展时，它们可能成为决定整体效率与可靠性的主导约束。</p>
+<p>因此，可以提出一个工作假设：<strong>Agent 化并未消除复杂性，而是可能把瓶颈从个体执行能力转移到任务组织、协调和验证机制。</strong> 这一假设需要通过真实项目中的任务耗时、冲突率、返工率、验证覆盖率和总成本来检验。</p>
+<h2 id="三这不就是-harness-要解决的问题吗">三、这不就是 Harness 要解决的问题吗？</h2>
+<p>是的。任务拆解、协调执行、结果验证、失败恢复和执行优化，正是 Harness / Agent Runtime 逐渐承担的核心职责。不过，Harness 是一类工程机制，而“为什么这些机制成为新的核心约束”是更高一层的架构与工程问题。</p>
+<p>可以把相关职责分为三个层次：</p>
+<table><thead><tr><th>层次</th><th>核心问题</th><th>典型对象</th></tr></thead><tbody><tr><td>Architecture</td><td>系统如何被拆分，边界与约束是什么？</td><td>领域、模块、接口契约、依赖、不变量</td></tr><tr><td>Harness / Agent Runtime</td><td>任务如何规划、调度、执行、验证和恢复？</td><td>Planner、Task DAG、工具、工作区、Checkpoint、Retry</td></tr><tr><td>Optimization</td><td>哪种策略在什么条件下效果更好？</td><td>成功率、成本、耗时、失败轨迹、并行度、策略评估</td></tr></tbody></table>
+<p>这三层相互依赖，但不能混为一谈。</p>
+<p>Harness 可以把一个需求拆成十个子任务，却不能保证这十个任务符合领域边界；Runtime 可以重试失败任务，却不能保证重试不会造成重复扣费；优化器可以发现集成成本很高，却需要架构信息才能判断问题是任务粒度、接口设计还是共享状态导致的。</p>
+<p><strong>Architecture 决定任务可以如何安全地拆分，Harness 决定任务如何执行，Optimization 根据执行结果评估和改进策略。</strong></p>
+<h2 id="四从静态架构到-architecture-aware-harness">四、从静态架构到 Architecture-aware Harness</h2>
+<p>普通 Harness 可以依据用户目标与模型推理来生成任务计划。Architecture-aware Harness 则进一步读取系统已有的结构信息，把领域边界、依赖关系、接口契约、代码所有权和验证规则纳入规划。</p>
+<p>一个可能的流程是：</p>
+<ol>
+<li><strong>解析目标：</strong> 把用户需求转换为可验收的目标与约束。</li>
+<li><strong>理解架构：</strong> 读取模块关系、接口、依赖、测试和权限边界。</li>
+<li><strong>生成任务图：</strong> 将需求映射为任务 DAG，标注前置条件、共享资源和验收标准。</li>
+<li><strong>安排执行：</strong> 为可并行任务分配 Agent、工作区与工具权限。</li>
+<li><strong>验证与集成：</strong> 先验证局部契约，再验证跨模块行为。</li>
+<li><strong>失败处理：</strong> 根据错误类别决定重试、恢复、重新规划或请求人工审批。</li>
+</ol>
+<p>这不是要求 Harness 完全依赖预先写好的架构文档。架构信息可能不完整，也可能过时；Runtime 仍需通过代码检索、测试结果和执行反馈补充判断。但显式结构能减少系统每次都从零推断依赖的负担，也能让任务计划更容易被审计。</p>
+<h2 id="五从执行反馈到架构演化">五、从执行反馈到架构演化</h2>
+<p>更有挑战性的方向，是让反馈不仅影响下一次执行，也能帮助发现架构本身的问题。</p>
+<p>例如，一个 Coding Harness 反复观察到：</p>
+<ul>
+<li>多个 Agent 经常修改同一组文件；</li>
+<li>接口变更总是在集成阶段才被发现；</li>
+<li>局部测试通过，但跨模块测试频繁失败；</li>
+<li>某些任务长期等待同一个共享组件；</li>
+<li>为了完成局部需求，执行者经常需要修改不相关模块。</li>
+</ul>
+<p>这些信号可能意味着任务分解不合理，也可能说明模块边界、接口契约或公共状态设计存在问题。系统不应直接根据单次失败就自动重构架构，而应将信号归因、聚合并形成可审查的改进建议。</p>
+<p>这可以形成一个反馈闭环：</p>
+<p><strong>架构与契约 → 任务图 → Agent 执行 → 测试与集成 → 冲突和成本分析 → 任务策略调整或架构改进建议。</strong></p>
+<p>其中，任务策略调整可以由 Runtime 在既定约束内完成；架构改进则可能需要创建设计提案、运行对比实验并经过人工批准。二者风险不同，不应使用同样的自动化权限。</p>
+<h2 id="六harness-能恢复失败但不意味着可以忽略正确性">六、Harness 能恢复失败，但不意味着可以忽略正确性</h2>
+<p>Agent 的单次执行可能失败。通过重试、Checkpoint、Resume、回滚、幂等控制和替代路径，系统可以把部分局部失败转化为可恢复事件。</p>
+<p>但“可以恢复”并不等于“最终一定正确”。如果验收标准本身不完整，验证器存在盲区，或者多个 Agent 基于错误假设协作，系统可能高效地完成错误目标。</p>
+<p>因此，可靠的 Harness 至少要回答三个问题：</p>
+<ol>
+<li>失败能否被及时识别，而不只是由 Agent 自我报告？</li>
+<li>恢复操作是否安全，是否会重复产生外部副作用？</li>
+<li>任务完成是否有独立证据，而不只是模型判断“看起来成功”？</li>
+</ol>
+<p>这也说明验证能力不是执行链路末端的装饰，而是任务能否被安全拆分、并行和恢复的前提。</p>
+<h2 id="七三个值得验证的研究假设">七、三个值得验证的研究假设</h2>
+<h3 id="假设一架构信息可以提升任务分解质量">假设一：架构信息可以提升任务分解质量</h3>
+<p>在相同模型、相同需求和相同预算下，对比“仅基于需求生成任务计划”与“同时读取架构、契约和依赖图生成计划”，观察任务返工率、接口冲突、集成耗时和最终通过率。</p>
+<h3 id="假设二并行度的收益取决于任务拓扑而非-agent-数量本身">假设二：并行度的收益取决于任务拓扑，而非 Agent 数量本身</h3>
+<p>控制任务规模和模型预算，逐步增加并行 Agent 数量，测量端到端耗时、冲突率、重复工作量与总成本。研究在哪些依赖结构下增加并行度仍然有效，何时开始出现收益递减甚至负收益。</p>
+<h3 id="假设三执行反馈可以帮助识别架构边界问题">假设三：执行反馈可以帮助识别架构边界问题</h3>
+<p>持续收集文件冲突、接口变更、跨模块测试失败、等待时间和返工数据，形成架构改进建议，再由工程师评审并对照修改前后的结果。重点不是让系统自行重构一切，而是验证这些反馈是否具有识别架构问题的价值。</p>
+<p>为了避免把相关性误认为因果关系，实验还应控制需求复杂度、代码库规模、测试质量、模型版本和任务预算，并记录失败案例。只有可重复的比较，才能判断这些设计是否真正有效。</p>
+<h2 id="八从-harness-到自优化-runtime">八、从 Harness 到自优化 Runtime</h2>
+<p>如果前述假设获得支持，系统就可以进一步根据历史轨迹优化任务执行策略。例如，哪些任务类型适合并行，哪些模块应先建立契约，哪些失败适合重试，哪些失败需要重新规划，哪些情况必须交给人类决策。</p>
+<p>这里的优化不一定需要训练模型权重。系统可以先利用可追踪的任务特征、结果证据、成本和失败分类，改进规划规则、调度策略和验证流程。</p>
+<p>但需要防止一个问题：系统不能只优化速度或表面成功率。如果优化器为了降低耗时而跳过验证，或者为了提高任务完成率而扩大权限，它可能损害真正的目标。</p>
+<p>因此，优化目标应当是受约束的多目标问题：在正确性、安全性和可审计性要求之内，优化总成本、交付时间和恢复效率，而不是单独追求某一个指标。</p>
+<h2 id="结语agent-化改变的是约束结构">结语：Agent 化改变的是约束结构</h2>
+<p>康威定律提醒我们，协作结构会影响软件结构；布鲁克斯定律提醒我们，增加执行者不必然带来更快交付；阿姆达尔定律则指出，串行部分会限制并行收益。</p>
+<p>Agent 并没有让这些规律失去意义。相反，它们帮助我们看清：当执行者可以动态扩展时，架构边界、任务依赖、协调成本与结果验证会变得更加关键。</p>
+<p>Harness 是执行与控制层，Architecture-aware Harness 是连接架构与执行的接口，而反馈驱动的架构演化则是一个更长期的研究方向。</p>
+<p><strong>值得追求的，不是让更多 Agent 同时工作，而是让系统知道哪些任务可以并行、并行的前提是什么、结果如何验证，以及失败之后如何安全恢复。</strong></p>
+<p>这可能是 Agent 化软件工程真正需要建立的新基础设施。</p></div></article></main></main>
+<footer class="site-footer"><div class="wrap"><p>© 2026 Diverse Lab · Independent Thinking on AI Agents, Runtime &amp; Complex Systems</p><p><a href="../diverse/">返回 Diverse Lab</a> · <a href="https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/agent-engineering-laws-harness-architecture-feedback.md">查看文章修订记录</a></p></div></footer>
+<script src="../assets/js/site.js"></script>
+</body></html>
