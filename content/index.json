@@ -2,6 +2,40 @@
   "generated": "2026-10-22T00:00:00Z",
   "items": [
     {
+      "id": "agent-engineering-laws-harness-architecture-feedback",
+      "type": "Diverse Lab",
+      "title": "Agent 化会改变哪些软件工程定律？从 Harness 到架构反馈闭环",
+      "excerpt": "Agent 化不一定打破康威定律、布鲁克斯定律或阿姆达尔定律，而是改变它们成立的条件。本文从 Harness 出发，梳理 Architecture、Agent Runtime 与 Optimization 的边界，并提出架构感知 Harness、反馈驱动架构与自优化 Runtime 的研究方向。",
+      "url": "/diverse/agent-engineering-laws-harness-architecture-feedback.html",
+      "date": "2026-10-22",
+      "tags": [
+        "Agent",
+        "Harness",
+        "Agent Runtime",
+        "Software Architecture",
+        "Conway's Law",
+        "Brooks's Law",
+        "Amdahl's Law",
+        "Multi-Agent"
+      ],
+      "thought_date": "2026-10-22",
+      "published_date": "2026-10-22",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/agent-engineering-laws-harness-architecture-feedback.md",
+      "content": "/content/diverse/agent-engineering-laws-harness-architecture-feedback.md",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-10-22",
+        "next_review": "2027-01-20",
+        "cadence_days": 90,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      }
+    },
+    {
       "id": "agent-oriented-architecture-decomposition",
       "type": "Diverse Lab",
       "title": "面向 Agent 的架构拆解：从组织协作到任务协作",
