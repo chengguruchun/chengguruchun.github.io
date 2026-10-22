@@ -77,10 +77,18 @@ def load_catalog() -> tuple[str, dict[str, dict]]:
     return base, by_url
 
 
+def is_site_verification_html(path: Path) -> bool:
+    """Google (and similar) ownership files must stay plain-text; not SEO pages."""
+    name = path.name
+    return path.parent == ROOT and name.startswith("google") and name.endswith(".html")
+
+
 def html_files() -> list[Path]:
     out = []
     for p in sorted(ROOT.rglob("*.html")):
         if any(part in SKIP_DIRS for part in p.relative_to(ROOT).parts):
+            continue
+        if is_site_verification_html(p):
             continue
         out.append(p)
     return out

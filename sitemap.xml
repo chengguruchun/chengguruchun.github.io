@@ -1,14 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://chengguruchun.github.io/diverse/agent-engineering-laws-harness-architecture-feedback.html</loc>
-    <lastmod>2026-10-22</lastmod>
-    <priority>0.7</priority>
-  </url>
-
-  <url>
     <loc>https://chengguruchun.github.io/</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-22</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
@@ -17,18 +11,8 @@
   </url>
   <url>
     <loc>https://chengguruchun.github.io/articles/</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-09</lastmod>
     <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://chengguruchun.github.io/diverse/ai-native-software-language-aosl.html</loc>
-    <lastmod>2026-10-09</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://chengguruchun.github.io/articles/frontend-language-for-ai-assisted-development.html</loc>
-    <lastmod>2026-10-09</lastmod>
-    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://chengguruchun.github.io/articles/agent-engineering-from-workflow-to-control-plane.html</loc>
@@ -83,6 +67,11 @@
   <url>
     <loc>https://chengguruchun.github.io/articles/from-mes-to-manufacturing-agent-runtime.html</loc>
     <lastmod>2026-09-16</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://chengguruchun.github.io/articles/frontend-language-for-ai-assisted-development.html</loc>
+    <lastmod>2026-10-09</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
@@ -151,8 +140,28 @@
   </url>
   <url>
     <loc>https://chengguruchun.github.io/diverse/</loc>
-    <lastmod>2026-09-23</lastmod>
+    <lastmod>2026-10-22</lastmod>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://chengguruchun.github.io/diverse/agent-engineering-laws-harness-architecture-feedback.html</loc>
+    <lastmod>2026-10-22</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://chengguruchun.github.io/diverse/agent-oriented-architecture-decomposition.html</loc>
+    <lastmod>2026-10-22</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://chengguruchun.github.io/diverse/ai-native-software-language-aosl.html</loc>
+    <lastmod>2026-10-09</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://chengguruchun.github.io/diverse/event-driven-coding-agent-runtime.html</loc>
+    <lastmod>2026-10-09</lastmod>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://chengguruchun.github.io/diverse/from-function-to-ecosystem.html</loc>
@@ -223,11 +232,5 @@
   <url>
     <loc>https://chengguruchun.github.io/videos/</loc>
     <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://chengguruchun.github.io/diverse/agent-oriented-architecture-decomposition.html</loc>
-    <lastmod>2026-10-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
   </url>
 </urlset>

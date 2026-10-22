@@ -722,10 +722,15 @@ def check_seo() -> None:
     else:
         fail("robots.txt missing Sitemap directive")
 
+    def is_site_verification_html(path: Path) -> bool:
+        name = path.name
+        return path.parent == ROOT and name.startswith("google") and name.endswith(".html")
+
     pages = [
         p
         for p in sorted(ROOT.rglob("*.html"))
         if not any(part in SEO_SKIP_DIRS for part in p.relative_to(ROOT).parts)
+        and not is_site_verification_html(p)
     ]
     if not pages:
         fail("no HTML pages found")

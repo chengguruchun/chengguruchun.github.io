@@ -1,11 +1,18 @@
 {
   "updated": "2026-10-22",
   "tags": {
+    "AI-Assisted Development": [
+      "frontend-language-for-ai-assisted-development"
+    ],
+    "AI-Native": [
+      "ai-native-software-language-aosl"
+    ],
     "Actor Model": [
       "agent-runtime-cognitive-actor"
     ],
     "Agent": [
       "agent-engineering-laws-harness-architecture-feedback",
+      "agent-oriented-architecture-decomposition",
       "gossip-evidence-consensus-multi-agent",
       "iot-agent-from-device-to-physical-world-runtime",
       "react-is-the-inner-loop-long-running-agent-harness-runtime",
@@ -45,6 +52,7 @@
     ],
     "Agent Runtime": [
       "agent-engineering-laws-harness-architecture-feedback",
+      "agent-oriented-architecture-decomposition",
       "ai-native-software-language-aosl",
       "event-driven-coding-agent-runtime",
       "reinforcement-learning-game-theory-complex-systems",
@@ -72,14 +80,11 @@
     "Agentic RAG": [
       "times-2026-09-w5"
     ],
-    "AI-Assisted Development": [
-      "frontend-language-for-ai-assisted-development"
-    ],
-    "AI-Native": [
-      "ai-native-software-language-aosl"
-    ],
     "Akka": [
       "agent-runtime-cognitive-actor"
+    ],
+    "Amdahl's Law": [
+      "agent-engineering-laws-harness-architecture-feedback"
     ],
     "Architecture": [
       "software-design-universal-patterns",
@@ -96,6 +101,9 @@
       "simuhome-paper-reading",
       "iot-agent-from-automation-to-physical-infrastructure-part-ii",
       "iot-agent-from-automation-to-physical-infrastructure"
+    ],
+    "Brooks's Law": [
+      "agent-engineering-laws-harness-architecture-feedback"
     ],
     "Business-Complexity": [
       "fde-agent-opportunity-discovery"
@@ -135,14 +143,20 @@
       "iot-agent-reconstruction",
       "k8s-to-agent-control-plane"
     ],
+    "Conway's Law": [
+      "agent-engineering-laws-harness-architecture-feedback"
+    ],
     "Cost": [
       "reasoning-scale-knowledge-external"
     ],
-    "Data Loop": [
-      "agent-industrial-internet"
-    ],
     "DDD": [
       "domain-driven-agent-tool-design"
+    ],
+    "DSL": [
+      "ai-native-software-language-aosl"
+    ],
+    "Data Loop": [
+      "agent-industrial-internet"
     ],
     "Decision Engineering": [
       "from-mes-to-manufacturing-agent-runtime"
@@ -166,9 +180,6 @@
       "from-function-to-ecosystem",
       "llm-scientific-experiment",
       "physics-ecology-llm"
-    ],
-    "DSL": [
-      "ai-native-software-language-aosl"
     ],
     "Dubbo": [
       "spring-dubbo-deepseek-harness-runtime"
@@ -198,11 +209,11 @@
       "from-function-to-ecosystem",
       "llm-scientific-experiment"
     ],
-    "Faithfulness": [
-      "interpretability-rl-faithfulness"
-    ],
     "FDE": [
       "fde-agent-opportunity-discovery"
+    ],
+    "Faithfulness": [
+      "interpretability-rl-faithfulness"
     ],
     "Feedback": [
       "agent-evaluation-proxy-vs-real-outcome"
@@ -305,9 +316,6 @@
       "k8s-to-agent-control-plane",
       "llm-scientific-experiment"
     ],
-    "Manufacturing": [
-      "from-mes-to-manufacturing-agent-runtime"
-    ],
     "MCP": [
       "event-driven-coding-agent-runtime"
     ],
@@ -317,11 +325,18 @@
     "MHS": [
       "iot-agent-from-automation-to-physical-infrastructure"
     ],
+    "Manufacturing": [
+      "from-mes-to-manufacturing-agent-runtime"
+    ],
     "Model Selection": [
       "reasoning-scale-knowledge-external"
     ],
+    "Modularity": [
+      "agent-oriented-architecture-decomposition"
+    ],
     "Multi-Agent": [
       "agent-engineering-laws-harness-architecture-feedback",
+      "agent-oriented-architecture-decomposition",
       "gossip-evidence-consensus-multi-agent"
     ],
     "Optimizer": [
@@ -365,6 +380,9 @@
     "Prompt Engineering": [
       "frontend-language-for-ai-assisted-development"
     ],
+    "RL": [
+      "interpretability-rl-faithfulness"
+    ],
     "ReAct": [
       "react-is-the-inner-loop-long-running-agent-harness-runtime",
       "react-to-long-running-agent"
@@ -375,9 +393,6 @@
     "Reinforcement Learning": [
       "reinforcement-learning-game-theory-complex-systems",
       "agent-optimizer-experience-policy"
-    ],
-    "RL": [
-      "interpretability-rl-faithfulness"
     ],
     "Runtime": [
       "gossip-evidence-consensus-multi-agent",
@@ -406,8 +421,15 @@
     "Smart Home": [
       "iot-agent-from-automation-to-physical-infrastructure"
     ],
+    "Software Architecture": [
+      "agent-engineering-laws-harness-architecture-feedback",
+      "agent-oriented-architecture-decomposition"
+    ],
     "Software Design": [
       "software-design-universal-patterns"
+    ],
+    "Software Engineering": [
+      "agent-oriented-architecture-decomposition"
     ],
     "Software Language": [
       "ai-native-software-language-aosl"
@@ -420,6 +442,9 @@
     ],
     "Symbolicism": [
       "symbolicism-vs-connectionism"
+    ],
+    "Task Decomposition": [
+      "agent-oriented-architecture-decomposition"
     ],
     "Times": [
       "times-2026-10-w3",
@@ -451,18 +476,6 @@
     ],
     "Workflow": [
       "agent-engineering-from-workflow-to-control-plane"
-    ],
-    "Software Architecture": [
-      "agent-engineering-laws-harness-architecture-feedback"
-    ],
-    "Conway's Law": [
-      "agent-engineering-laws-harness-architecture-feedback"
-    ],
-    "Brooks's Law": [
-      "agent-engineering-laws-harness-architecture-feedback"
-    ],
-    "Amdahl's Law": [
-      "agent-engineering-laws-harness-architecture-feedback"
     ]
   }
 }
