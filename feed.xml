@@ -5,6 +5,16 @@
     <link>https://chengguruchun.github.io/</link>
     <description>chengguruchun · Blog for Agents · 知识博客（文章 / Diverse Lab 等有日期条目）</description>
     <language>zh-cn</language>
+    <lastBuildDate>Thu, 22 Oct 2026 00:00:00 GMT</lastBuildDate>
+    <item>
+      <title>Agent 化会改变哪些软件工程定律？从 Harness 到架构反馈闭环</title>
+      <link>https://chengguruchun.github.io/diverse/agent-engineering-laws-harness-architecture-feedback.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/diverse/agent-engineering-laws-harness-architecture-feedback.html</guid>
+      <pubDate>Thu, 22 Oct 2026 00:00:00 GMT</pubDate>
+      <category>Diverse Lab</category>
+      <description>Agent 化不一定打破康威定律、布鲁克斯定律或阿姆达尔定律，而是改变它们成立的条件。本文从 Harness 出发，梳理 Architecture、Agent Runtime 与 Optimization 的边界，并提出架构感知 Harness、反馈驱动架构与自优化 Runtime 的研究方向。</description>
+    </item>
+
     <lastBuildDate>Fri, 09 Oct 2026 00:00:00 +0000</lastBuildDate>
     <item>
     <title>面向 Agent 的架构拆解：从组织协作到任务协作</title>
