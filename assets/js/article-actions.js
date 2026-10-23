@@ -16,7 +16,7 @@
   document.head.appendChild(style);
 
   async function init() {
-    const article = document.querySelector("main article");
+    const article = document.querySelector("main article.article-body") || document.querySelector("main article") || document.querySelector("main");
     const heading = article && article.querySelector(".page-hero h1");
     if (!article || !heading || document.getElementById(TOOLBAR_ID)) return;
 
@@ -48,7 +48,7 @@
     let markdownPath = "";
 
     try {
-      const response = await fetch(new URL("../api/catalog.json", window.location.href), { cache: "no-cache" });
+      const response = await fetch(new URL("/api/catalog.json", window.location.origin), { cache: "no-cache" });
       if (!response.ok) throw new Error("无法读取文章索引");
       const catalog = await response.json();
       const item = (catalog.items || []).find(entry => {
