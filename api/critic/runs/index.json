@@ -1,9 +1,20 @@
 {
   "name": "Critic Lab runs",
   "kind": "read",
-  "updated": "2026-10-23T09:00:37Z",
-  "count": 20,
+  "updated": "2026-10-23T09:16:36Z",
+  "count": 21,
   "runs": [
+    {
+      "id": "agent-engineering-from-workflow-to-control-plane-73c4efca8a0a",
+      "article": "agent-engineering-from-workflow-to-control-plane",
+      "article_slug": "agent-engineering-from-workflow-to-control-plane",
+      "status": "needs_review",
+      "summary": "这篇稿子更像一张方向性的路线图，并未构成严密论证：把 Workflow、Graph、Loop、Harness、Gateway、Control Plane 这几层并列、逐层叠加的叙事有启发，但其中几处关键跳跃没有论证——尤其是「Agent 真正改变的是控制方式」「Tool Gateway 是能力的统一治理层」「Control Plane 会自然出现」这三条，更像是设计直觉而非已验证结论。此外，全文的核心追问（语义性的 Goal 如何...",
+      "commit": "73c4efca8a0a0ad53c5d51d2dd94247d9f170f29",
+      "generated_at": "2026-10-23T09:16:36.141183+00:00",
+      "json": "/api/critic/runs/agent-engineering-from-workflow-to-control-plane-73c4efca8a0a.json",
+      "markdown": "/api/critic/runs/agent-engineering-from-workflow-to-control-plane-73c4efca8a0a.md"
+    },
     {
       "id": "agent-engineering-from-workflow-to-control-plane-f6ac6da0a375",
       "article": "agent-engineering-from-workflow-to-control-plane",
