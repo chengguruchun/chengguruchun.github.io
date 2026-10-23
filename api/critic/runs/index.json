@@ -1,9 +1,20 @@
 {
   "name": "Critic Lab runs",
   "kind": "read",
-  "updated": "2026-10-21T00:00:00Z",
-  "count": 16,
+  "updated": "2026-10-23T04:54:53Z",
+  "count": 19,
   "runs": [
+    {
+      "id": "ai-era-design-principles-patterns-ddd-902b6512b53a",
+      "article": "ai-era-design-principles-patterns-ddd",
+      "article_slug": "ai-era-design-principles-patterns-ddd",
+      "status": "needs_review",
+      "summary": "文章的总体论点（AI 降低实现成本但抬高建模与验证的相对价值）站得住，SOLID/模式/DDD 与 Agent Harness 的分层映射也有教学价值。主要弱点在于三处概念被压平：限界上下文被等同为模块/服务边界，设计原则被用作可验证约束的依据，而『领域语义 → 可执行校验』的转化成本被系统性低估。整体更像是有价值的工程假设集合，应显式标注为假设并补上反例条件与失败模式。",
+      "commit": "902b6512b53a151636d4e3c85751c8df8dcd1036",
+      "generated_at": "2026-10-23T04:54:53.079931+00:00",
+      "json": "/api/critic/runs/ai-era-design-principles-patterns-ddd-902b6512b53a.json",
+      "markdown": "/api/critic/runs/ai-era-design-principles-patterns-ddd-902b6512b53a.md"
+    },
     {
       "id": "ai-native-software-language-aosl-e5c0115af9fc",
       "article": "ai-native-software-language-aosl",
@@ -69,6 +80,17 @@
       "generated_at": "2026-09-30T01:57:06.887187+00:00",
       "json": "/api/critic/runs/agent-runtime-cognitive-actor-fe1881d23cdc.json",
       "markdown": "/api/critic/runs/agent-runtime-cognitive-actor-fe1881d23cdc.md"
+    },
+    {
+      "id": "agent-runtime-model-learning-runtime-cd2ea8988fde",
+      "article": "agent-runtime-model-learning-runtime",
+      "article_slug": "agent-runtime-model-learning-runtime",
+      "status": "needs_review",
+      "summary": "The article is a coherent, appropriately hedged conceptual sketch of a 'Runtime Model' as a learnable execution-policy layer, and its claims are mostly framed as hypotheses, which is appropriate. The main weaknesses a...",
+      "commit": "cd2ea8988fdea46ef443535453e01c8a04c92d26",
+      "generated_at": "2026-09-30T00:24:09.366997+00:00",
+      "json": "/api/critic/runs/agent-runtime-model-learning-runtime-cd2ea8988fde.json",
+      "markdown": "/api/critic/runs/agent-runtime-model-learning-runtime-cd2ea8988fde.md"
     },
     {
       "id": "gossip-evidence-consensus-multi-agent-d497bfee3dee",
@@ -179,6 +201,17 @@
       "generated_at": "2026-09-21T01:03:53.981695+00:00",
       "json": "/api/critic/runs/spring-dubbo-deepseek-harness-runtime-d365fde199d2.json",
       "markdown": "/api/critic/runs/spring-dubbo-deepseek-harness-runtime-d365fde199d2.md"
+    },
+    {
+      "id": "index-aad75ca16287",
+      "article": "index",
+      "article_slug": "index",
+      "status": "needs_review",
+      "summary": "The changed artifact is an article index entry; its substance is the new card's abstract about Conway-style runtime convergence from Spring/Dubbo to Agent Runtime/Harness. The core 'runtime architectures are convergin...",
+      "commit": "aad75ca162877aecd303f0be6623592d63e21516",
+      "generated_at": "2026-09-21T00:40:13.748054+00:00",
+      "json": "/api/critic/runs/index-aad75ca16287.json",
+      "markdown": "/api/critic/runs/index-aad75ca16287.md"
     }
   ]
 }
