@@ -1,0 +1,106 @@
+## 🤖 Critic Lab Report
+
+Article: `articles/agent-engineering-from-workflow-to-control-plane.html`
+Commit: `f6ac6da0a37591eea90463c24e3122dee31498b0`
+Model: `deepseek-chat`
+Status: **needs_review**
+
+该文是一条自洽性较高的渐进式工程思考线索，把 Workflow→Loop→Control Plane 解读为控制方式从调用函数向目标收敛迁移。内部类比大多表述谨慎，但核心命题（“真正属于 Agent 特性的是 Loop”“Control Plane 会自然出现”）仍属未验证的假设，需要标记为假设并补充边界条件。文章基本没有触及“Domain Object × Action = Tool”这条定义/启发式问题，也未讨论工具合并导致参数膨胀，以及运行时/风险/验证边界与领域边界被混为一谈的风险；这三项恰好是最容易在落地时出问题的地方。
+
+## 1. Logic
+
+- **HIGH** — “我越来越倾向于认为，真正属于 Agent 特性的，是 Loop”
+  - Issue: 该结论由“Graph/Workflow/Harness 都不是 Agent 独有”推出“Loop 才是 Agent 特性”，属于排除式推论，但 Loop（调节循环、反馈控制）在控制论、自动化、SRE reconcile 中早已存在，并非 Agent 独有；真正独特的更可能是“语义性目标判断 + 自然语言能力选择”这一组合。
+  - Why it matters: 如果按“Loop=Agent 特性”来组织架构，会把传统控制循环与 LLM 驱动循环混为一谈，导致把已有确定性反馈回路误当 Agent 能力来实现，或低估非 Agent 系统中原本可靠的循环控制。
+  - Test / fix: 把该句改写为假设，并给出可检验标准：在一个已有负反馈控制回路的系统中引入 LLM 增益，若去除 LLM 后目标仍可收敛，则说明 Agent 特性不在 Loop 本身，而在语义级目标解释与能力选择。
+
+- **MEDIUM** — “Control Plane ↓ Desired Goal ↓ Agent Runtime ↓ ... 这里 Control Plane 不是替代 Agent，也不是替代微服务”
+  - Issue: “自然出现”是弱论证：文章从“只有一个 Agent 时可能没必要”跳到“数量增加后系统会自然出现更高一层问题”，但没有说明在什么规模、什么失败率、什么协调复杂度下 Control Plane 的边际收益超过其自身复杂度成本。
+  - Why it matters: 过早引入 Control Plane 是常见过度工程：单 Agent + 简单调度器往往足以支撑；若按“自然出现”直接建控制面，可能引入分布式一致性问题而无对应收益。
+  - Test / fix: 补充触发条件（例如并发任务数、工具数、多 Agent 冲突率、失败恢复成本）并给出一个“何时不该上 Control Plane”的反向判据。
+
+- **MEDIUM** — “Agent 的 Actual State 不能只记录执行状态，还要尽可能接近真实结果”
+  - Issue: 这是全文最关键也最未展开的断言。执行状态（HTTP 200、Tool PASS）与语义目标完成之间的差距，文章只给了一个不等式，没有定义“多接近”以及由谁判定，导致第六至第十一节的所有治理设计缺少可落地的完成判据。
+  - Why it matters: Reconcile 循环的收敛性完全依赖 Actual State 的可观测性与判定可靠性；若语义完成无法被可靠测量，Control Plane 会围绕错误信号反复调整（振荡）或过早宣布完成。
+  - Test / fix: 给出至少两档完成判据：可机器验证的客观指标（如转化率阈值）与需要 LLM-as-judge/人工抽检的语义指标，并说明两者冲突时的仲裁规则。
+
+- **LOW** — “OpenAPI 暴露的是程序可调用的能力，Tool Gateway 开始暴露 Agent 可理解、可治理的能力”
+  - Issue: “可理解”与“可治理”是可观察性/描述层属性，并不必然要求一个新的 Gateway 层；OpenAPI 描述加 MCP/工具描述也可达成，Gateway 的必要性未被论证。
+  - Why it matters: 把“可理解/可治理”等同于“需要独立 Tool Gateway”，容易在已有 API 网关上重复建设一层，而真正缺的可能只是能力元数据与授权模型。
+  - Test / fix: 对照已有 API Gateway/服务网格，列出 Tool Gateway 必须独立存在的差异能力（如工具级租户授权、Agent 可读 schema、调用轨迹），若无法列出则降级为“API 网关的能力扩展”。
+
+## 2. Counterexamples
+
+- **HIGH** — Thesis: Agent 的难点在于语义性完成判断，系统需要持续观察真实结果来收敛。
+  - Counterexample: 大量生产级 Agent 任务其实有精确可验证的完成条件，例如代码修改以 CI 全绿为准、数据库迁移以 schema 校验通过为准、工单处理以状态机终态为准。在这些场景中，Actual State 完全可由机器判定，与 Kubernetes 的区别远小于文章暗示的程度。
+  - Boundary: 当目标可被形式化谓词精确表达时，文章“Agent 完成往往是语义性的”这一区分不成立，Loop/Reconcile 的类比反而更贴切、风险更低。
+
+- **HIGH** — Thesis: 真正的 Agent 特性是 Loop，系统会围绕目标持续调整。
+  - Counterexample: 在许多高可靠场景（支付对账、设备安全联锁）中，引入 LLM 驱动的调整循环恰恰是风险源：反馈延迟、观测噪声、模型幻觉会导致控制回路不稳定，而固定 Workflow 加人工例外处理更可靠。
+  - Boundary: 安全关键、强实时、低容错场景下，确定性路径优于目标驱动循环；Loop 的适用范围应限定在容错、可回滚、观测充分的领域。
+
+- **MEDIUM** — Thesis: Agent 数量、任务数量增加后，Control Plane 会自然出现。
+  - Counterexample: 一个中等规模团队可能长期停留在“单 Agent + 少量 Workflow + 简单队列”形态，任务量增长通过增加 Worker 与重试预算即可消化，Control Plane 带来的多租户一致性与元数据治理成本反而成为负担。
+  - Boundary: Control Plane 的收益阈值取决于任务异质性、跨 Agent 协调需求与失败恢复成本，而非单纯数量增长。
+
+## 3. Novelty
+
+- **common_combination** — Workflow/Graph/Loop/Harness 作为不同层次而非互相替代
+  - Basis: 各概念在各自社区已分别存在（工作流引擎、图编排、ReAct 循环、Agent harness/runtime）。将其并列分层是合理整合，但未见新的判据或形式化定义，初步评估不构成新颖贡献。
+
+- **common_combination** — 以 Kubernetes Reconcile 类比 Agent 目标收敛
+  - Basis: Reconcile/Desired vs Actual State 类比在 Agent 与自动运维讨论中已较常见；文章止步于类比，未处理语义性完成判断带来的不可判定性，这恰是可以差异化但尚未展开之处。
+
+- **potentially_distinctive** — 从 OpenAPI 到 Tool Gateway 的 Agent Capability 层
+  - Basis: 把能力发现、授权、路由、可观测性整合为“Agent 可理解/可治理能力层”是有潜力的组合，但需与既有 API 网关、MCP 等方案做差异对照才能确认；无外部检索，此为其一初步判断。
+
+- **established** — “Agent 化是让原有软件变成 Agent 可以工作的环境”，而非重写
+  - Basis: 渐进式增强、保留确定性业务能力的观点在 Agent 工程讨论中已广泛存在。
+
+## 4. Facts
+
+- **MEDIUM** — 文章讨论 Kubernetes Reconcile、OpenAPI、HTTP 200、Tool Call PASS 等作为既定机制
+  - Why verify: 这些机制的具体语义（如 Reconcile 的幂等性要求、OpenAPI 版本差异、工具调用成功是否代表业务成功）随版本与实现不同，文中以“既定事实”方式引用但未给来源。
+  - Preferred source: `official`
+
+- **LOW** — 文章标注日期为 2026-09-04 / 2026-09-08，讨论的 Agent Runtime、Harness 生态处于快速演进期
+  - Why verify: 时效性强，相关工具/平台名称与能力在数周内可能变化；文中“未来可能”的判断需以当时生态为准。
+  - Preferred source: `multiple_independent`
+
+- **LOW** — “Kubernetes 的很多状态可以直接机器判断，而 Agent 的完成往往是语义性的”
+  - Why verify: 这是对比性断言，Kubernetes 也存在语义性/非二元健康判断（如 readiness 探针的语义模糊、业务健康度），断言被简化，需核对两类系统各自的可判定性范围。
+  - Preferred source: `primary`
+
+## 5. Missing Points
+
+- **HIGH** — 全文未定义“Domain Object × Action = Tool”的判据：它是定义、启发式，还是普适规律？
+  - Why it matters: 若当作定义，则可机械推导工具集，但会强行把非对象化能力（如搜索、通知）硬套进对象×动作结构；若当作启发式，则需要给出反例边界（跨对象动作、无状态动作、组合动作），否则后续工具治理与 Control Plane 的能力模型都会建立在不稳固的分类上。建议明确标注为启发式，并列出不适用场景。
+
+- **HIGH** — 未讨论工具合并（tool consolidation）导致的参数膨胀与选择困难
+  - Why it matters: 把多个动作合并为一个通用工具（例如统一 execute_action）会减少工具数量但显著扩大参数空间，增加 schema 复杂度、模型漏填/填错概率，并使 Tool Gateway 的授权与可观测性粒度变粗。文章将 Tool Gateway 定位为统一治理层，却未处理“工具粒度 vs 参数复杂度”的权衡。
+
+- **HIGH** — 运行时/风险/验证边界与领域边界被混用
+  - Why it matters: 领域边界（Domain Object 的职责划分）决定能力归谁所有；运行时边界决定资源隔离与部署；风险/验证边界决定哪些动作需要审批、回滚与人工确认。三者错位会导致：高风险动作因共享同一 Tool 而共用宽松授权；验收标准按领域归属而非按风险等级设定。文章多处把“能力层”“控制面”“Runtime”并置却未拆解这三类边界。
+
+- **MEDIUM** — 缺少语义性完成判断的判定主体与失败模式说明
+  - Why it matters: Control Plane 的 Reconcile 需要可靠 Actual State；若完成判定由同一 Agent 自评，会出现自我确认偏差；由 LLM-as-judge 则需说明一致性、成本与人工升级路径。文中只提出问题（最后一节），但无任何机制层面的设计。
+
+- **MEDIUM** — 缺少 Control Plane 的失败与安全边界
+  - Why it matters: Control Plane 下发目标、选择 Agent、授权 Tool，是新的单点与权限聚合点；一旦被攻陷或误配置，影响面覆盖所有下游 Agent 与真实设备（尤其 IoT 一节强调 Action 会改变物理世界）。需讨论最小授权、任务预算、熔断与人工接管。
+
+- **LOW** — 缺少对 Loop 振荡/发散的条件说明
+  - Why it matters: 目标驱动循环在观测延迟大或反馈噪声高的场景可能不收敛；未给出停止条件、最大迭代、预算与升级机制，Loop 的工程可行性被高估。
+
+## 6. Recommended Changes
+
+- 将“真正属于 Agent 特性的是 Loop”和“Control Plane 会自然出现”明确标注为假设（hypothesis），并各附一条可证伪的判据或反向边界条件。
+- 新增一节定义“Domain Object × Action = Tool”的性质：标注为启发式，列出不适用场景（无状态动作、跨对象动作、组合动作），并给出一两个反例。
+- 补充“工具粒度”权衡小节：说明工具合并如何引起参数膨胀、schema 复杂度与授权粒度问题，给出选择粗/细粒度的判据。
+- 拆解三类边界：领域边界（能力归属）、运行时边界（隔离与部署）、风险/验证边界（审批、回滚、人工确认），说明三者错位时的故障模式。
+- 在第五节与最后一节之间补充“语义完成判定”的具体设计：客观指标、LLM-as-judge、人工抽检三类判据的适用场景、仲裁规则与成本。
+- 为 Loop 增加停止条件、最大迭代/预算、振荡检测与人工升级路径，说明在强实时或安全关键场景下退回到确定性 Workflow 的条件。
+- 为 Kubernetes/OpenAPI/工具调用状态这些时效敏感与版本敏感的机制加注来源或版本说明，避免以既定事实呈现类比细节。
+
+Evidence level: `E0`
+
+> Critic Lab is advisory. It does not modify the article or decide whether a finding should be accepted.

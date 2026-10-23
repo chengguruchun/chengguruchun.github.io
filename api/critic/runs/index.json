@@ -1,9 +1,20 @@
 {
   "name": "Critic Lab runs",
   "kind": "read",
-  "updated": "2026-10-23T04:54:53Z",
-  "count": 19,
+  "updated": "2026-10-23T09:00:37Z",
+  "count": 20,
   "runs": [
+    {
+      "id": "agent-engineering-from-workflow-to-control-plane-f6ac6da0a375",
+      "article": "agent-engineering-from-workflow-to-control-plane",
+      "article_slug": "agent-engineering-from-workflow-to-control-plane",
+      "status": "needs_review",
+      "summary": "该文是一条自洽性较高的渐进式工程思考线索，把 Workflow→Loop→Control Plane 解读为控制方式从调用函数向目标收敛迁移。内部类比大多表述谨慎，但核心命题（“真正属于 Agent 特性的是 Loop”“Control Plane 会自然出现”）仍属未验证的假设，需要标记为假设并补充边界条件。文章基本没有触及“Domain Object × Action = Tool”这条定义/启发式问题，也未讨论工具合并导致参...",
+      "commit": "f6ac6da0a37591eea90463c24e3122dee31498b0",
+      "generated_at": "2026-10-23T09:00:37.306479+00:00",
+      "json": "/api/critic/runs/agent-engineering-from-workflow-to-control-plane-f6ac6da0a375.json",
+      "markdown": "/api/critic/runs/agent-engineering-from-workflow-to-control-plane-f6ac6da0a375.md"
+    },
     {
       "id": "ai-era-design-principles-patterns-ddd-902b6512b53a",
       "article": "ai-era-design-principles-patterns-ddd",
