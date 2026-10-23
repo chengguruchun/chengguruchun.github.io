@@ -228,6 +228,20 @@ def check_index_coherence() -> None:
         ("api/articles.json", (load_json(ROOT / "api" / "articles.json") or {}).get("items") or []),
         ("api/diverse-lab.json", (load_json(ROOT / "api" / "diverse-lab.json") or {}).get("items") or []),
     )
+    expected_articles = [x.get("id") for x in c_items if x.get("type") == "Articles"]
+    expected_diverse = [x.get("id") for x in c_items if x.get("type") == "Diverse Lab"]
+    section_ids = {
+        "api/articles.json": [x.get("id") for x in article_indexes[2][1]],
+        "api/diverse-lab.json": [x.get("id") for x in article_indexes[3][1]],
+    }
+    if section_ids["api/articles.json"] != expected_articles:
+        fail("api/articles.json IDs/order differ from catalog Articles")
+    else:
+        ok("api/articles.json matches catalog")
+    if section_ids["api/diverse-lab.json"] != expected_diverse:
+        fail("api/diverse-lab.json IDs/order differ from catalog Diverse Lab")
+    else:
+        ok("api/diverse-lab.json matches catalog")
     for label, rows in article_indexes:
         for item in rows:
             if item.get("type") not in ("Articles", "Diverse Lab"):
