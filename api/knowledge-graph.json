@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0",
+  "name": "Diverse Lab Knowledge Graph",
+  "description": "A curated, source-traceable concept graph. Edges are claims to review, not ground truth.",
+  "updated": "2026-10-24",
+  "nodes": [
+    {"id":"agent-runtime","type":"concept","label":"Agent Runtime","description":"Execution environment and control loop for agent tasks.","tags":["Agent","Runtime"]},
+    {"id":"mcp-gateway","type":"concept","label":"MCP Gateway","description":"Governed entry point for discovering and invoking MCP servers and tools.","tags":["MCP","Gateway","Tools"]},
+    {"id":"skill-hub","type":"concept","label":"Skill Hub","description":"Capability catalog and lifecycle management for reusable agent skills.","tags":["Skill","Capability"]},
+    {"id":"knowledge-ci","type":"concept","label":"Knowledge CI","description":"Automated checks and review workflows for knowledge quality and index consistency.","tags":["Knowledge","CI/CD"]},
+    {"id":"knowledge-graph","type":"concept","label":"Knowledge Graph","description":"Explicit entities and typed relationships with traceable evidence.","tags":["Knowledge","Graph"]},
+    {"id":"hybrid-retrieval","type":"concept","label":"Hybrid Retrieval","description":"Combines metadata, lexical and vector retrieval with rank fusion.","tags":["Search","RAG"]},
+    {"id":"article-agent-engineering","type":"article","label":"Agent Engineering：从 Workflow 到 Loop，再到 Control Plane","article_id":"agent-engineering-from-workflow-to-control-plane","url":"/articles/agent-engineering-from-workflow-to-control-plane.html"},
+    {"id":"article-k8s-agent-control-plane","type":"article","label":"Kubernetes × Agent：从容器编排到目标收敛","article_id":"k8s-to-agent-control-plane","url":"/articles/k8s-to-agent-control-plane.html"},
+    {"id":"article-ai-native-language","type":"article","label":"AOSL：面向 AI-native 软件工程的语言与构建系统","article_id":"ai-native-software-language-aosl","url":"/diverse/ai-native-software-language-aosl.html"}
+  ],
+  "edges": [
+    {"id":"e-runtime-control-plane","source":"agent-runtime","target":"article-agent-engineering","type":"explained_by","confidence":"high","evidence":["agent-engineering-from-workflow-to-control-plane"]},
+    {"id":"e-k8s-runtime","source":"agent-runtime","target":"article-k8s-agent-control-plane","type":"compared_with","confidence":"high","evidence":["k8s-to-agent-control-plane"]},
+    {"id":"e-mcp-runtime","source":"mcp-gateway","target":"agent-runtime","type":"supports","confidence":"medium","evidence":[]},
+    {"id":"e-skill-runtime","source":"skill-hub","target":"agent-runtime","type":"provides_capabilities_to","confidence":"medium","evidence":[]},
+    {"id":"e-knowledge-ci-graph","source":"knowledge-ci","target":"knowledge-graph","type":"validates","confidence":"medium","evidence":[]},
+    {"id":"e-graph-retrieval","source":"knowledge-graph","target":"hybrid-retrieval","type":"supports","confidence":"medium","evidence":[]},
+    {"id":"e-aosl-runtime","source":"article-ai-native-language","target":"agent-runtime","type":"related_to","confidence":"medium","evidence":["ai-native-software-language-aosl"]}
+  ],
+  "governance": {"source_of_truth":"curated JSON in Git","rule":"Every edge is a maintained claim; attach catalog evidence before raising confidence.","review":"Changes are checked by CI and reviewed through pull requests."}
+}
