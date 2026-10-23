@@ -221,6 +221,26 @@ def check_index_coherence() -> None:
     else:
         ok("Articles + Diverse Lab present")
 
+    # Agent-facing article metadata is an explicit contract, not just UI labels.
+    article_indexes = (
+        ("api/catalog.json", c_items),
+        ("content/index.json", i_items),
+        ("api/articles.json", (load_json(ROOT / "api" / "articles.json") or {}).get("items") or []),
+        ("api/diverse-lab.json", (load_json(ROOT / "api" / "diverse-lab.json") or {}).get("items") or []),
+    )
+    for label, rows in article_indexes:
+        for item in rows:
+            if item.get("type") not in ("Articles", "Diverse Lab"):
+                continue
+            eid = item.get("id") or "<missing-id>"
+            if not str(item.get("name") or "").strip():
+                fail(f"{label} {eid} missing name")
+            if not str(item.get("desc") or "").strip():
+                fail(f"{label} {eid} missing desc")
+            if not str(item.get("url") or "").strip():
+                fail(f"{label} {eid} missing url")
+        ok(f"{label} agent metadata scanned")
+
     for it in i_items:
         if it.get("type") in ("Articles", "Diverse Lab"):
             content = it.get("content") or it.get("markdown")
