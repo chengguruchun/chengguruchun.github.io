@@ -113,6 +113,8 @@ Add capabilities in `discover.json` + `tools.json`, not this file.
 | `/api/discover.json` | Capability index (grows) |
 | `/mcp/tools.json` | Full schemas (grows) |
 | `/api/catalog.json` | Knowledge index (Articles, Diverse Lab, Times) |
+| `/api/tags.json` | Reverse index from tag to entry IDs |
+| `/api/tag-taxonomy.json` | Tag dimensions, canonical concepts, aliases, and related-concept expansion hints |
 | `/content/**/*.md` | Canonical knowledge |
 | `/api/projects*.json` | Projects (research + personal) |
 | `/api/videos.json` | Videos (page-only; not in catalog) |
