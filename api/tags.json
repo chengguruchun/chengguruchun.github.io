@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-22",
+  "updated": "2026-10-23",
   "tags": {
     "Actor Model": [
       "agent-runtime-cognitive-actor"
@@ -107,6 +107,7 @@
       "domain-driven-agent-tool-design"
     ],
     "Coding Agent": [
+      "ai-era-design-principles-patterns-ddd",
       "event-driven-coding-agent-runtime"
     ],
     "Compiler": [
@@ -142,6 +143,7 @@
       "agent-industrial-internet"
     ],
     "DDD": [
+      "ai-era-design-principles-patterns-ddd",
       "domain-driven-agent-tool-design"
     ],
     "Decision Engineering": [
@@ -151,6 +153,7 @@
       "fde-agent-opportunity-discovery"
     ],
     "Design Patterns": [
+      "ai-era-design-principles-patterns-ddd",
       "software-design-universal-patterns"
     ],
     "Developer Tools": [
@@ -453,6 +456,7 @@
       "agent-engineering-from-workflow-to-control-plane"
     ],
     "Software Architecture": [
+      "ai-era-design-principles-patterns-ddd",
       "agent-engineering-laws-harness-architecture-feedback"
     ],
     "Conway's Law": [
@@ -463,6 +467,12 @@
     ],
     "Amdahl's Law": [
       "agent-engineering-laws-harness-architecture-feedback"
+    ],
+    "AI Engineering": [
+      "ai-era-design-principles-patterns-ddd"
+    ],
+    "SOLID": [
+      "ai-era-design-principles-patterns-ddd"
     ]
   }
 }
