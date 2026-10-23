@@ -33,6 +33,26 @@ Not a runtime; static surfaces + local/CI apply scripts.
    - Edit the article itself (`articles/<slug>.html`; keep `content/articles/<slug>.md` in sync when it exists), then push.
    - Reply on the issue with a per-finding handling record: finding → decision → where fixed / why rejected → commit. Close the issue only when every accepted finding is fixed; if any accepted finding remains, or human confirmation is required, keep it open and say exactly what is left.
 
+
+## Article discovery and retrieval
+
+The catalog is the lightweight discovery layer; Markdown is the canonical full-text layer.
+
+1. For published articles in **both** Diverse Lab and Articles, query `/api/catalog.json` first. Each article record exposes:
+   - `id`: stable article identifier
+   - `name`: human-readable title for Agent discovery
+   - `desc`: concise, content-grounded summary for relevance screening
+   - `url`: public HTML page
+   - `content` (or `markdown`): canonical Markdown path
+   - `type` and `tags`: section and topic filters
+2. Use `name`, `desc`, and `tags` to shortlist candidates. Do not fetch every article by default.
+3. Fetch `/content/**/*.md` only when the task needs the article's actual arguments, design trade-offs, implementation details, or evidence. Prefer `content` / `markdown` from the selected catalog record over constructing a path from the ID or guessing a URL.
+4. If the user only asks whether a topic exists or requests a reading list, metadata may be enough. State when an answer is based only on metadata.
+5. Before attributing a specific claim to an article, read the relevant Markdown and verify the claim in context. A summary is a discovery hint, not evidence.
+6. Return the article `name` and `url` (and `id` when useful) when citing or recommending it. If the index points to missing content, report the broken reference; do not claim to have read it.
+7. Treat `name` and `desc` as explicit Agent-facing aliases of the legacy `title` and `excerpt`. Keep both pairs synchronized when publishing or editing an article. The index validation workflow enforces non-empty metadata.
+
+
 ## Bench process
 
 ```
