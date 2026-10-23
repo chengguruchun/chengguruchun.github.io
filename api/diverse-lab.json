@@ -38,6 +38,41 @@
       "desc": "Agent 化不一定打破康威定律、布鲁克斯定律或阿姆达尔定律，而是改变它们成立的条件。本文从 Harness 出发，梳理 Architecture、Agent Runtime 与 Optimization 的边界，并提出架构感知 Harness、反馈驱动架构与自优化 Runtime 的研究方向。"
     },
     {
+      "id": "agent-oriented-architecture-decomposition",
+      "type": "Diverse Lab",
+      "title": "面向 Agent 的架构拆解：从组织协作到任务协作",
+      "excerpt": "当 Agent 成为重要的软件生产者，架构设计是否需要从面向人的组织协作，进一步走向面向任务的协作？本文讨论软件结构与任务结构的映射、可执行契约、并行开发边界、架构感知的 Agent Runtime，以及如何衡量多 Agent 研发效率。",
+      "url": "/diverse/agent-oriented-architecture-decomposition.html",
+      "date": "2026-10-22",
+      "tags": [
+        "Agent",
+        "Software Architecture",
+        "Multi-Agent",
+        "Task Decomposition",
+        "Software Engineering",
+        "Agent Runtime",
+        "Modularity"
+      ],
+      "thought_date": "2026-10-22",
+      "published_date": "2026-10-22",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/agent-oriented-architecture-decomposition.md",
+      "content": "/content/diverse/agent-oriented-architecture-decomposition.md",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-10-22",
+        "next_review": "2027-01-20",
+        "cadence_days": 90,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      },
+      "name": "面向 Agent 的架构拆解：从组织协作到任务协作",
+      "desc": "当 Agent 成为重要的软件生产者，架构设计是否需要从面向人的组织协作，进一步走向面向任务的协作？本文讨论软件结构与任务结构的映射、可执行契约、并行开发边界、架构感知的 Agent Runtime，以及如何衡量多 Agent 研发效率。"
+    },
+    {
       "id": "ai-native-software-language-aosl",
       "type": "Diverse Lab",
       "title": "AOSL：面向 AI-native 软件工程的语言与构建系统",
