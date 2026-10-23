@@ -6,6 +6,7 @@
     ],
     "Agent": [
       "agent-engineering-laws-harness-architecture-feedback",
+      "agent-oriented-architecture-decomposition",
       "gossip-evidence-consensus-multi-agent",
       "iot-agent-from-device-to-physical-world-runtime",
       "react-is-the-inner-loop-long-running-agent-harness-runtime",
@@ -45,6 +46,7 @@
     ],
     "Agent Runtime": [
       "agent-engineering-laws-harness-architecture-feedback",
+      "agent-oriented-architecture-decomposition",
       "ai-native-software-language-aosl",
       "event-driven-coding-agent-runtime",
       "reinforcement-learning-game-theory-complex-systems",
@@ -72,6 +74,9 @@
     "Agentic RAG": [
       "times-2026-09-w5"
     ],
+    "AI Engineering": [
+      "ai-era-design-principles-patterns-ddd"
+    ],
     "AI-Assisted Development": [
       "frontend-language-for-ai-assisted-development"
     ],
@@ -80,6 +85,9 @@
     ],
     "Akka": [
       "agent-runtime-cognitive-actor"
+    ],
+    "Amdahl's Law": [
+      "agent-engineering-laws-harness-architecture-feedback"
     ],
     "Architecture": [
       "software-design-universal-patterns",
@@ -96,6 +104,9 @@
       "simuhome-paper-reading",
       "iot-agent-from-automation-to-physical-infrastructure-part-ii",
       "iot-agent-from-automation-to-physical-infrastructure"
+    ],
+    "Brooks's Law": [
+      "agent-engineering-laws-harness-architecture-feedback"
     ],
     "Business-Complexity": [
       "fde-agent-opportunity-discovery"
@@ -135,6 +146,9 @@
       "agent-engineering-from-workflow-to-control-plane",
       "iot-agent-reconstruction",
       "k8s-to-agent-control-plane"
+    ],
+    "Conway's Law": [
+      "agent-engineering-laws-harness-architecture-feedback"
     ],
     "Cost": [
       "reasoning-scale-knowledge-external"
@@ -323,8 +337,12 @@
     "Model Selection": [
       "reasoning-scale-knowledge-external"
     ],
+    "Modularity": [
+      "agent-oriented-architecture-decomposition"
+    ],
     "Multi-Agent": [
       "agent-engineering-laws-harness-architecture-feedback",
+      "agent-oriented-architecture-decomposition",
       "gossip-evidence-consensus-multi-agent"
     ],
     "Optimizer": [
@@ -409,11 +427,22 @@
     "Smart Home": [
       "iot-agent-from-automation-to-physical-infrastructure"
     ],
+    "Software Architecture": [
+      "ai-era-design-principles-patterns-ddd",
+      "agent-engineering-laws-harness-architecture-feedback",
+      "agent-oriented-architecture-decomposition"
+    ],
     "Software Design": [
       "software-design-universal-patterns"
     ],
+    "Software Engineering": [
+      "agent-oriented-architecture-decomposition"
+    ],
     "Software Language": [
       "ai-native-software-language-aosl"
+    ],
+    "SOLID": [
+      "ai-era-design-principles-patterns-ddd"
     ],
     "Spring": [
       "spring-dubbo-deepseek-harness-runtime"
@@ -423,6 +452,9 @@
     ],
     "Symbolicism": [
       "symbolicism-vs-connectionism"
+    ],
+    "Task Decomposition": [
+      "agent-oriented-architecture-decomposition"
     ],
     "Times": [
       "times-2026-10-w3",
@@ -454,25 +486,6 @@
     ],
     "Workflow": [
       "agent-engineering-from-workflow-to-control-plane"
-    ],
-    "Software Architecture": [
-      "ai-era-design-principles-patterns-ddd",
-      "agent-engineering-laws-harness-architecture-feedback"
-    ],
-    "Conway's Law": [
-      "agent-engineering-laws-harness-architecture-feedback"
-    ],
-    "Brooks's Law": [
-      "agent-engineering-laws-harness-architecture-feedback"
-    ],
-    "Amdahl's Law": [
-      "agent-engineering-laws-harness-architecture-feedback"
-    ],
-    "AI Engineering": [
-      "ai-era-design-principles-patterns-ddd"
-    ],
-    "SOLID": [
-      "ai-era-design-principles-patterns-ddd"
     ]
   }
 }

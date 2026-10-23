@@ -26,4 +26,7 @@ This file is the **installable skill entrypoint**. The full protocol lives at:
 4. Prefer `/content/**/*.md` over HTML; use catalog `content` / `markdown` (Times: use `markdown` or `slug`, not raw id in path_template)
 5. Critic reports: `lab_list_critic_runs` → `/api/critic/runs/index.json`, then `lab_get_critic_run`
 
+6. Discover published articles through `https://chengguruchun.github.io/api/catalog.json`: filter on `name`, `desc`, `tags`, and `type` (`Diverse Lab` / `Articles`).
+7. Read only relevant originals, preferring each selected record's `content` / `markdown` path under `/content/`. Metadata is for discovery, not evidence; verify claims in Markdown before citing them.
+
 Do not hardcode the tool list — discover first, then execute.

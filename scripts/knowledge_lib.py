@@ -342,6 +342,13 @@ def merge_indexes(registry: dict[str, Any]) -> list[Path]:
             continue
         data = load_json(path)
         items = data.get("items") if isinstance(data.get("items"), list) else []
+        # Keep an explicit, stable Agent-facing metadata contract while retaining
+        # title/excerpt for existing pages, feeds, and clients.
+        for item in items:
+            if not isinstance(item, dict) or item.get("type") not in {"Articles", "Diverse Lab"}:
+                continue
+            item["name"] = str(item.get("name") or item.get("title") or item.get("id") or "").strip()
+            item["desc"] = str(item.get("desc") or item.get("excerpt") or "").strip()
         data["items"] = attach_knowledge(items, by_id)
         if wrap or "generated" in data:
             data["generated"] = generated

@@ -33,7 +33,44 @@
           "frontmatter": true,
           "override": null
         }
-      }
+      },
+      "name": "Agent 化会改变哪些软件工程定律？从 Harness 到架构反馈闭环",
+      "desc": "Agent 化不一定打破康威定律、布鲁克斯定律或阿姆达尔定律，而是改变它们成立的条件。本文从 Harness 出发，梳理 Architecture、Agent Runtime 与 Optimization 的边界，并提出架构感知 Harness、反馈驱动架构与自优化 Runtime 的研究方向。"
+    },
+    {
+      "id": "agent-oriented-architecture-decomposition",
+      "type": "Diverse Lab",
+      "title": "面向 Agent 的架构拆解：从组织协作到任务协作",
+      "excerpt": "当 Agent 成为重要的软件生产者，架构设计是否需要从面向人的组织协作，进一步走向面向任务的协作？本文讨论软件结构与任务结构的映射、可执行契约、并行开发边界、架构感知的 Agent Runtime，以及如何衡量多 Agent 研发效率。",
+      "url": "/diverse/agent-oriented-architecture-decomposition.html",
+      "date": "2026-10-22",
+      "tags": [
+        "Agent",
+        "Software Architecture",
+        "Multi-Agent",
+        "Task Decomposition",
+        "Software Engineering",
+        "Agent Runtime",
+        "Modularity"
+      ],
+      "thought_date": "2026-10-22",
+      "published_date": "2026-10-22",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/agent-oriented-architecture-decomposition.md",
+      "content": "/content/diverse/agent-oriented-architecture-decomposition.md",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-10-22",
+        "next_review": "2027-01-20",
+        "cadence_days": 90,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      },
+      "name": "面向 Agent 的架构拆解：从组织协作到任务协作",
+      "desc": "当 Agent 成为重要的软件生产者，架构设计是否需要从面向人的组织协作，进一步走向面向任务的协作？本文讨论软件结构与任务结构的映射、可执行契约、并行开发边界、架构感知的 Agent Runtime，以及如何衡量多 Agent 研发效率。"
     },
     {
       "id": "ai-native-software-language-aosl",
@@ -66,7 +103,9 @@
           "frontmatter": true,
           "override": null
         }
-      }
+      },
+      "name": "AOSL：面向 AI-native 软件工程的语言与构建系统",
+      "desc": "从“教 AI 写传统代码”进一步走向“为 AI 重新设计软件描述方式”：提出结构化 DSL、统一语义 IR、编译与 Runtime 混合执行、全栈生成、验证闭环与可验证原型方案。"
     },
     {
       "id": "event-driven-coding-agent-runtime",
@@ -99,7 +138,9 @@
           "frontmatter": true,
           "override": null
         }
-      }
+      },
+      "name": "从需求事件到代码变更：构建 Event-driven Coding Agent Runtime",
+      "desc": "当飞书或企业微信出现验收 Bug、PRD 发生变化，Agent 如何可靠地发现事件、分析影响、修改代码、验证结果并创建 PR？从 MCP、Webhook 到任务状态机与安全闭环的架构设计。"
     },
     {
       "id": "software-design-universal-patterns",
@@ -130,7 +171,9 @@
           "frontmatter": true,
           "override": null
         }
-      }
+      },
+      "name": "软件工程的隐形语法：从“加一层”到“广进严出”",
+      "desc": "把软件工程里反复出现的设计思想放在一起：间接层、分而治之、粗到精、缓存、批处理、异步、隔离、一致性、反馈与控制，以及它们背后的共同结构。"
     },
     {
       "id": "reinforcement-learning-game-theory-complex-systems",
@@ -161,7 +204,9 @@
           "frontmatter": true,
           "override": null
         }
-      }
+      },
+      "name": "从强化学习到博弈论：Agent Runtime 正在走向复杂系统",
+      "desc": "从强化学习、博弈论与多智能体出发，重新思考 Agent Runtime：当 Agent 拥有目标、策略和反馈，Runtime 管理的可能不再只是执行，而是一个动态的智能生态。"
     },
     {
       "id": "simuhome-paper-reading",
@@ -192,7 +237,9 @@
           "frontmatter": true,
           "override": null
         }
-      }
+      },
+      "name": "SimuHome：从“调用设备”到“与环境闭环”",
+      "desc": "智能家居 Agent benchmark 的一个重要转变：从判断 API 是否调用正确，到观察环境、行动、等待状态变化并验证目标状态。"
     },
     {
       "id": "h-neurons-paper-reading",
@@ -223,7 +270,9 @@
           "frontmatter": true,
           "override": null
         }
-      }
+      },
+      "name": "H-Neurons：幻觉可能藏在模型内部的稀疏神经元中",
+      "desc": "从神经元层面理解 hallucination、over-compliance 与预训练起源，并思考内部风险信号如何进入 Agent Runtime。"
     },
     {
       "id": "symbolicism-vs-connectionism",
@@ -255,7 +304,9 @@
           "frontmatter": true,
           "override": null
         }
-      }
+      },
+      "name": "符号主义 vs 联结主义：意义如何接地",
+      "desc": "符号主义说意义在符号的位置，联结主义说意义在向量的位置；两派都没解决「符号接地」。现实是大模型底层分布式、表层符号化，缺的都是把意义接到真实经验的那块「地」。"
     },
     {
       "id": "interpretability-rl-faithfulness",
@@ -287,7 +338,9 @@
           "frontmatter": true,
           "override": null
         }
-      }
+      },
+      "name": "可解释性 × 强化学习：让「强」和「真」对得上账",
+      "desc": "RL 让模型变强、变会说谎；可解释性负责让强和真对账。SAE 与 GRPO 本质都是用对比替代绝对，共同指向 faithfulness。"
     },
     {
       "id": "from-function-to-ecosystem",
@@ -320,7 +373,9 @@
           "frontmatter": true,
           "override": null
         }
-      }
+      },
+      "name": "从函数到生态系统：重新理解大模型与 Agent",
+      "desc": "物理学给我们规律，生态学给我们关系与反馈，科学实验告诉我们如何验证；把三种心智放在一起，可以重新理解 LLM 与 Agent。"
     },
     {
       "id": "llm-scientific-experiment",
@@ -356,7 +411,9 @@
           "frontmatter": true,
           "override": null
         }
-      }
+      },
+      "name": "大模型：用科学实验的方式使用",
+      "desc": "大模型调用更接近条件分布上的采样。用假设、对照、评测与反馈闭环，把 Prompt Engineering 做成可陈述的 Experiment Engineering。"
     },
     {
       "id": "physics-ecology-llm",
@@ -388,7 +445,9 @@
           "frontmatter": true,
           "override": null
         }
-      }
+      },
+      "name": "物理学 × 生态学：对复杂系统的一个思考",
+      "desc": "物理学看规律，生态学看关系与反馈；综合二者，才能理解 LLM 与多 Agent 如何逼近 Complex System Engineering。"
     }
   ]
 }

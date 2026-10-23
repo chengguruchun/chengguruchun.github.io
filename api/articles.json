@@ -19,7 +19,9 @@
       "thought_date": "2026-10-23",
       "published_date": "2026-10-23",
       "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/ai-era-design-principles-patterns-ddd.md",
-      "content": "/content/articles/ai-era-design-principles-patterns-ddd.md"
+      "content": "/content/articles/ai-era-design-principles-patterns-ddd.md",
+      "name": "AI 时代，为什么设计原则、设计模式与 DDD 仍然重要",
+      "desc": "AI 降低了代码生产成本，却没有消除软件设计的复杂性。本文从 SOLID、设计模式与 DDD 出发，讨论如何把领域语义、模块边界和业务不变量转化为 Coding Agent 可以遵循并验证的工程约束。"
     },
     {
       "id": "frontend-language-for-ai-assisted-development",
@@ -50,7 +52,9 @@
           "frontmatter": true,
           "override": null
         }
-      }
+      },
+      "name": "AI 全栈开发的前端语言：把页面需求说清楚的术语手册",
+      "desc": "从 DOM、组件、布局、交互和 API 延伸到包管理、依赖锁定、构建流水线、环境配置、部署验证与回滚，建立一套可执行、可验证的 AI 全栈开发语言。"
     },
     {
       "id": "gossip-evidence-consensus-multi-agent",
@@ -79,7 +83,9 @@
           "frontmatter": true,
           "override": null
         }
-      }
+      },
+      "name": "从 Gossip 到 Consensus：Multi-Agent 如何形成可信的集体认知",
+      "desc": "Gossip 负责传播，Evidence/Trust 负责判断，Consensus 负责必要的全局一致：从分布式系统重新思考 Multi-Agent 协作与 Agent Runtime。"
     },
     {
       "id": "iot-agent-from-device-to-physical-world-runtime",
@@ -113,7 +119,9 @@
           "frontmatter": true,
           "override": null
         }
-      }
+      },
+      "name": "IoT Agent 化：从设备能力到 Physical World Runtime",
+      "desc": "从设备能力标准化、Agent 模组、IoT Core 到 SaaS/PaaS，重新思考 IoT Agent 化：设备如何进入 Agent 世界，IoT 平台如何成为 Physical World Runtime。"
     },
     {
       "id": "react-is-the-inner-loop-long-running-agent-harness-runtime",
@@ -145,7 +153,9 @@
           "frontmatter": true,
           "override": null
         }
-      }
+      },
+      "name": "ReAct 只是内循环：长周期 Agent 为什么开始需要 Harness 与 Runtime",
+      "desc": "从 ReAct 出发，区分 Action Loop、Task Loop 与 System Loop，理解 2025 年以后长周期 Agent 为什么越来越依赖 Harness、Durable Execution、Checkpoint、Verification 与 Runtime。"
     },
     {
       "id": "react-to-long-running-agent",
@@ -176,7 +186,9 @@
           "frontmatter": true,
           "override": null
         }
-      }
+      },
+      "name": "从 ReAct 到 Long-Running Agent：Harness 为什么开始成为 Agent 的第二增长曲线",
+      "desc": "ReAct 解决一步怎么走，Harness 让 Agent 能走很远，Runtime 让 Agent 能活很久。重新理解 2025 年以后长周期 Agent 的能力演进。"
     },
     {
       "id": "transformer-from-attention-to-decoder-only",
@@ -206,7 +218,9 @@
           "frontmatter": true,
           "override": null
         }
-      }
+      },
+      "name": "从 Transformer 到 Decoder-only：我重新理解大语言模型是怎么“学会”的",
+      "desc": "从一次关于 Transformer 的追问出发，重新理解 Self-Attention、Encoder-Decoder、Decoder-only，以及训练与推理到底有什么不同。"
     },
     {
       "id": "spring-dubbo-deepseek-harness-runtime",
@@ -237,7 +251,9 @@
           "frontmatter": true,
           "override": null
         }
-      }
+      },
+      "name": "从 Spring、Dubbo 到 DeepSeek Harness：运行时架构为什么正在趋同",
+      "desc": "从 Spring、Dubbo Service 到 DeepSeek Harness，观察依赖注入、Context、Event Bus、生命周期与运行时治理这些工程思想如何在 Agent 时代重新组合。"
     },
     {
       "id": "from-mes-to-manufacturing-agent-runtime",
@@ -270,7 +286,9 @@
           "frontmatter": true,
           "override": null
         }
-      }
+      },
+      "name": "从 MES 到 Manufacturing Agent Runtime：当生产系统开始自己做决策",
+      "desc": "SHEIN 式制造的关键不是把 MES 加上一个 Copilot，而是把高频、动态、组合复杂的生产决策变成 Agent Runtime 的持续闭环。核心观点：不要替代岗位，要替代决策单元。"
     },
     {
       "id": "from-llm-to-agent-runtime",
@@ -300,7 +318,9 @@
           "frontmatter": true,
           "override": null
         }
-      }
+      },
+      "name": "从 LLM 到 Agent Runtime：当“预测下一个 Token”开始进入真实世界",
+      "desc": "从模型推理、KV Cache、Inference Runtime、Tool、Environment 和 Feedback 出发，思考为什么 Agent Runtime 是模型能力进入真实世界之后的新一层。"
     },
     {
       "id": "fde-agent-opportunity-discovery",
@@ -333,7 +353,9 @@
           "frontmatter": true,
           "override": null
         }
-      }
+      },
+      "name": "FDE 的新价值：识别业务复杂度，而不是简单交付 Agent",
+      "desc": "从 Business Reality 到 Decision Unit，再到 Agent Suitability：重新理解 FDE 在 Agent 项目中的价值。"
     },
     {
       "id": "agent-runtime-cognitive-actor",
@@ -363,7 +385,9 @@
           "frontmatter": true,
           "override": null
         }
-      }
+      },
+      "name": "从 Actor Model 到 Cognitive Actor：Claude Agent Teams 给 Agent Runtime 的启发",
+      "desc": "从 Akka Actor、Mailbox、Supervisor、Sharding 出发，分析 Claude Agent Teams、多 Agent 通信与 Agent Runtime 的演化。"
     },
     {
       "id": "ai-era-production-consumption-balance",
@@ -393,7 +417,9 @@
           "frontmatter": true,
           "override": null
         }
-      }
+      },
+      "name": "AI 时代，企业真正需要解决的不是流程，而是生产与消费的平衡",
+      "desc": "当 AI 让生产、执行和运营越来越便宜，企业真正需要关注的可能不再只是流程效率，而是如何缩短需求、生产、消费与反馈之间的距离。"
     },
     {
       "id": "iot-agent-from-automation-to-physical-infrastructure-part-ii",
@@ -424,7 +450,9 @@
           "frontmatter": true,
           "override": null
         }
-      }
+      },
+      "name": "IoT Agent 化：从自动化平台到 Physical Infrastructure（二）",
+      "desc": "第一篇讨论“契约留下，打包物被解包到运行时”。这一篇继续往下追：当 Agent 真正进入物理世界，IoT 平台究竟应该提供什么？"
     },
     {
       "id": "iot-agent-from-automation-to-physical-infrastructure",
@@ -457,7 +485,9 @@
           "frontmatter": true,
           "override": null
         }
-      }
+      },
+      "name": "IoT Agent 化：从自动化平台到 Physical Infrastructure",
+      "desc": "Agent 不会消灭 IoT 的基础设施，而会解构过去为了服务人类而预先打包好的应用层确定性。契约留下，打包物被解包到运行时。"
     },
     {
       "id": "domain-driven-agent-tool-design",
@@ -488,7 +518,9 @@
           "frontmatter": true,
           "override": null
         }
-      }
+      },
+      "name": "领域驱动设计 Agent 工具：从「动作推导」到「领域对象 × 动作」",
+      "desc": "设计 agent tool 的正确起点不是先枚举动作，而是先建领域模型。一句话坐标：领域对象 × 动作 = 工具；动作推导降级为完备性校验。"
     },
     {
       "id": "reasoning-scale-knowledge-external",
@@ -520,7 +552,9 @@
           "frontmatter": true,
           "override": null
         }
-      }
+      },
+      "name": "推理是规模红利，知识是外挂红利",
+      "desc": "企业为什么不全用小模型？因为「知识」和「推理」是两回事：知识天天变，该外挂；推理难压缩，才吃规模。真正的决策变量是任务链长度——单步 95% 正确，十步只剩 60%。"
     },
     {
       "id": "agent-industrial-internet",
@@ -552,7 +586,9 @@
           "frontmatter": true,
           "override": null
         }
-      }
+      },
+      "name": "AI Agent 改造工业互联网：壁垒是数据闭环，不是模型",
+      "desc": "工业互联网的核心壁垒是「数据闭环 + 行业 know-how」。AI Agent 能加速数据→决策→执行的闭环，但行业知识门槛不会被轻易跨越；组织能力（技术 + 文化）仍是决定性变量。"
     },
     {
       "id": "agent-evaluation-proxy-vs-real-outcome",
@@ -588,7 +624,9 @@
           "frontmatter": true,
           "override": null
         }
-      }
+      },
+      "name": "Agent 的评价：Proxy Metric ≠ Real Outcome",
+      "desc": "测试、API 状态和 outcome.ok 都可能 PASS，但用户仍然认为问题没有解决。Agent 的评价最终必须回到真实 Outcome。"
     },
     {
       "id": "agent-optimizer-experience-policy",
@@ -620,7 +658,9 @@
           "frontmatter": true,
           "override": null
         }
-      }
+      },
+      "name": "Agent Optimizer：不训练模型，而是优化经验与策略",
+      "desc": "Agent 变强不一定首先意味着修改模型权重，也可以通过经验记忆、策略调整和工具调用方式的优化实现。"
     },
     {
       "id": "agent-skill-evolution-pruning",
@@ -652,7 +692,9 @@
           "frontmatter": true,
           "override": null
         }
-      }
+      },
+      "name": "Agent 技能演化：从轨迹回流到可剪枝的程序性记忆",
+      "desc": "把执行轨迹蒸馏成技能已被两代工作证明有效，但「技能如何停止增长」被留给了未来工作。剪枝的关键转换：不追踪模型为什么用一节，只测量删掉之后效果变不变。"
     },
     {
       "id": "agent-engineering-from-workflow-to-control-plane",
@@ -686,7 +728,9 @@
           "frontmatter": true,
           "override": null
         }
-      }
+      },
+      "name": "Agent Engineering：从 Workflow 到 Loop，再到 Control Plane",
+      "desc": "Workflow、Graph、Loop、Harness 与 Control Plane 并不是互相替代，而是 Agent 系统在不同不确定性和治理尺度上的不同工程层。"
     },
     {
       "id": "saas-ecommerce-agent-thinking",
@@ -717,7 +761,9 @@
           "frontmatter": true,
           "override": null
         }
-      }
+      },
+      "name": "SaaS 电商平台的 Agent 思考",
+      "desc": "从某电商 SaaS 平台出发：Agent 不是给业务系统加一个聊天入口，而是让软件从 API / Workflow 中心逐渐演化为 Goal / Capability / Feedback Loop 中心。"
     },
     {
       "id": "iot-agent-reconstruction",
@@ -748,7 +794,9 @@
           "frontmatter": true,
           "override": null
         }
-      }
+      },
+      "name": "IoT 平台的 Agent 重构",
+      "desc": "如果说传统 IoT 平台解决的是“设备如何被连接、管理和自动化”，那么 Agent 时代真正值得思考的问题是：设备、云边能力和智能决策，能不能共同组成一个可以围绕目标持续工作的运行系统？"
     },
     {
       "id": "k8s-to-agent-control-plane",
@@ -783,7 +831,9 @@
           "frontmatter": true,
           "override": null
         }
-      }
+      },
+      "name": "Kubernetes × Agent：从容器编排到目标收敛",
+      "desc": "K8s 管服务如何稳定运行；Agent Control Plane 管智能任务如何被分解、执行、验证并完成。核心是 Desired State 与 Actual Outcome 的持续拟合。"
     }
   ]
 }
