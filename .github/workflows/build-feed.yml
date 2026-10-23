@@ -6,6 +6,8 @@ on:
       - "content/**"
       - "api/catalog.json"
       - "api/articles.json"
+      - "api/knowledge-graph.json"
+      - "scripts/validate_knowledge_graph.py"
       - "scripts/build_feeds.py"
       - "scripts/build_seo.py"
       - "scripts/sync_articles_index.py"
@@ -49,6 +51,9 @@ jobs:
 
       - name: Check knowledge registry
         run: python3 scripts/build_knowledge.py --check
+
+      - name: Validate knowledge graph
+        run: python3 scripts/validate_knowledge_graph.py
 
       - name: Run validate_lab
         run: python3 scripts/validate_lab.py
