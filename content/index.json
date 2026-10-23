@@ -2,6 +2,26 @@
   "generated": "2026-10-22T00:00:00Z",
   "items": [
     {
+      "id": "ai-era-design-principles-patterns-ddd",
+      "type": "Articles",
+      "title": "AI 时代，为什么设计原则、设计模式与 DDD 仍然重要",
+      "excerpt": "AI 降低了代码生产成本，却没有消除软件设计的复杂性。本文从 SOLID、设计模式与 DDD 出发，讨论如何把领域语义、模块边界和业务不变量转化为 Coding Agent 可以遵循并验证的工程约束。",
+      "url": "/articles/ai-era-design-principles-patterns-ddd.html",
+      "date": "2026-10-23",
+      "tags": [
+        "AI Engineering",
+        "Software Architecture",
+        "SOLID",
+        "Design Patterns",
+        "DDD",
+        "Coding Agent"
+      ],
+      "thought_date": "2026-10-23",
+      "published_date": "2026-10-23",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/ai-era-design-principles-patterns-ddd.md",
+      "content": "/content/articles/ai-era-design-principles-patterns-ddd.md"
+    },
+    {
       "id": "agent-engineering-laws-harness-architecture-feedback",
       "type": "Diverse Lab",
       "title": "Agent 化会改变哪些软件工程定律？从 Harness 到架构反馈闭环",
