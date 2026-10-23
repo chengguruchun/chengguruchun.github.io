@@ -1,9 +1,20 @@
 {
   "name": "Critic Lab runs",
   "kind": "read",
-  "updated": "2026-10-23T09:16:36Z",
-  "count": 21,
+  "updated": "2026-10-23T09:23:36Z",
+  "count": 22,
   "runs": [
+    {
+      "id": "fde-agent-opportunity-discovery-4c69c6e202c8",
+      "article": "fde-agent-opportunity-discovery",
+      "article_slug": "fde-agent-opportunity-discovery",
+      "status": "needs_review",
+      "summary": "The article is a well-structured, explicitly hedged engineering hypothesis about FDE as a business-decision-modeling role, and it mostly labels its speculation appropriately. The main weaknesses are definitional loose...",
+      "commit": "4c69c6e202c84fc2f721ae23e03abb28a0f9f374",
+      "generated_at": "2026-10-23T09:23:36.759509+00:00",
+      "json": "/api/critic/runs/fde-agent-opportunity-discovery-4c69c6e202c8.json",
+      "markdown": "/api/critic/runs/fde-agent-opportunity-discovery-4c69c6e202c8.md"
+    },
     {
       "id": "agent-engineering-from-workflow-to-control-plane-73c4efca8a0a",
       "article": "agent-engineering-from-workflow-to-control-plane",
