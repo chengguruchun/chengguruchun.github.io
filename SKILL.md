@@ -53,6 +53,39 @@ The catalog is the lightweight discovery layer; Markdown is the canonical full-t
 7. Treat `name` and `desc` as explicit Agent-facing aliases of the legacy `title` and `excerpt`. Keep both pairs synchronized when publishing or editing an article. The index validation workflow enforces non-empty metadata.
 
 
+## Hybrid knowledge retrieval
+
+Use the retrieval pipeline below for questions that may benefit from the Lab's published knowledge. This is a retrieval protocol, not a claim that every layer is implemented as a hosted search service.
+
+1. **Understand the query.** Extract the problem to solve, core concepts, constraints, and likely synonyms. Keep the original query as a candidate signal; expand only with relevant aliases or related concepts.
+2. **Read the lightweight indexes.**
+   - `/api/catalog.json` is the canonical article metadata index across Articles, Diverse Lab, and Times.
+   - `/api/tags.json` is a reverse index from exact tag to entry IDs.
+   - `/api/tag-taxonomy.json` maps tags into semantic dimensions and records aliases / related concepts. Treat aliases as equivalent query terms; related concepts are expansion hints, not synonyms.
+3. **Run hybrid candidate retrieval.** Combine:
+   - exact tag / alias hits (strong topical signal);
+   - lexical matches across `name`, `title`, `desc`, `excerpt`, and `tags` (keyword signal);
+   - related-concept expansion from the taxonomy (recall signal);
+   - metadata filters such as `type` and `knowledge.status` when relevant.
+   If a semantic embedding index is available in the future, combine its candidates with these results. Do not claim semantic-vector search when no such index is available.
+4. **Rank and deduplicate.** Deduplicate by stable `id`. Prefer direct matches in title/name and exact tags over weak related-concept overlap; use the description to judge problem fit. Treat retrieval scores as heuristics, not evidence. Start with a small shortlist (usually 3–8 entries) and broaden only if coverage is insufficient.
+5. **Fetch only needed originals.** For claims, design trade-offs, implementation details, or evidence, fetch Markdown using the selected item's `content` or `markdown` path. Metadata alone supports discovery and reading-list recommendations, not detailed claims.
+6. **Respect knowledge state.** Check `knowledge.status` from the catalog / `/api/knowledge.json`. Explain relevant `stale`, `changed`, `contested`, or `archived` status. Archived material is historical context, not a current conclusion.
+7. **Cite traceably.** Return each selected item's `name`, `url`, and `id` when useful. Never infer that an article supports a claim from tag overlap alone; verify it in the Markdown.
+8. **Report limits.** Say whether the result came from metadata-only retrieval or full-text inspection. If the indexes lack a relevant article, report the knowledge gap rather than inventing a result.
+
+### Practical lexical scoring
+
+When implementing local/client-side retrieval, use a transparent weighted score rather than opaque ranking:
+
+- exact tag match: +6; taxonomy alias match: +5;
+- query phrase in `name` / `title`: +5; individual query terms there: +2 each;
+- phrase in `desc` / `excerpt`: +3; individual terms there: +1 each;
+- exact related-concept match: +2;
+- optionally apply small section / freshness boosts only when they reflect the user's stated intent.
+
+Normalize case and whitespace; preserve technical tokens such as `MCP`, `DDD`, `RAG`, `Runtime`, and `Checkpoint`. Avoid treating common words as meaningful terms. This score is a first-pass ranker, not a calibrated relevance probability.
+
 ## Bench process
 
 ```
