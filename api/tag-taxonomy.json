@@ -1,0 +1,314 @@
+{
+  "version": "1.0",
+  "updated": "2026-10-23",
+  "purpose": "Agent-facing tag taxonomy for hybrid retrieval. Aliases are equivalent terms; related are recall hints, not synonyms.",
+  "dimensions": {
+    "domain": {
+      "description": "领域与业务场景",
+      "tags": [
+        "Agent",
+        "IoT",
+        "SaaS",
+        "AI Engineering",
+        "AI-Native",
+        "Complex Systems"
+      ]
+    },
+    "architecture": {
+      "description": "架构与系统边界",
+      "tags": [
+        "Architecture",
+        "Software Architecture",
+        "Control Plane",
+        "Agent Runtime",
+        "Agent-Architecture",
+        "Modularity",
+        "DDD"
+      ]
+    },
+    "mechanism": {
+      "description": "执行、协作与运行机制",
+      "tags": [
+        "Harness",
+        "Checkpoint",
+        "Resume",
+        "Retry",
+        "Mailbox",
+        "Supervisor",
+        "MCP",
+        "RAG",
+        "Compiler",
+        "DSL"
+      ]
+    },
+    "problem": {
+      "description": "要解决的工程问题",
+      "tags": [
+        "Agent Evaluation",
+        "Agent Observability",
+        "Agent Sandboxing",
+        "Agent 工具调用可靠性",
+        "Agent 记忆架构",
+        "Agent 长期记忆",
+        "Task Decomposition"
+      ]
+    },
+    "method": {
+      "description": "设计方法与分析框架",
+      "tags": [
+        "Design Patterns",
+        "SOLID",
+        "DDD",
+        "Reinforcement Learning",
+        "Game Theory",
+        "Benchmark"
+      ]
+    },
+    "content_type": {
+      "description": "内容的主要形式",
+      "tags": [
+        "Paper Reading",
+        "Engineering Practice",
+        "Architecture Analysis",
+        "Benchmark"
+      ]
+    }
+  },
+  "concepts": [
+    {
+      "id": "agent-runtime",
+      "canonical": "Agent Runtime",
+      "aliases": [
+        "agent runtime",
+        "agent 执行时",
+        "智能体运行时",
+        "运行时"
+      ],
+      "related": [
+        "Harness",
+        "Control Plane",
+        "Checkpoint",
+        "Resume",
+        "Retry",
+        "Supervisor",
+        "Agent"
+      ],
+      "tags": [
+        "Agent Runtime",
+        "Agent",
+        "Harness",
+        "Control Plane"
+      ]
+    },
+    {
+      "id": "harness",
+      "canonical": "Harness",
+      "aliases": [
+        "agent harness",
+        "执行 harness",
+        "运行闭环"
+      ],
+      "related": [
+        "Agent Runtime",
+        "ReAct",
+        "Evaluation",
+        "Feedback Loop",
+        "Retry"
+      ],
+      "tags": [
+        "Harness",
+        "Agent Runtime",
+        "Agent Evaluation"
+      ]
+    },
+    {
+      "id": "control-plane",
+      "canonical": "Control Plane",
+      "aliases": [
+        "控制面",
+        "任务控制面",
+        "调度控制面"
+      ],
+      "related": [
+        "Agent Runtime",
+        "Task Decomposition",
+        "Reconciliation",
+        "Orchestration"
+      ],
+      "tags": [
+        "Control Plane",
+        "Agent Runtime",
+        "Architecture"
+      ]
+    },
+    {
+      "id": "agent-memory",
+      "canonical": "Agent Memory",
+      "aliases": [
+        "agent memory",
+        "智能体记忆",
+        "长期记忆",
+        "会话记忆"
+      ],
+      "related": [
+        "Context Engineering",
+        "RAG",
+        "Memory Compression",
+        "Retrieval",
+        "Persistence"
+      ],
+      "tags": [
+        "Agent 记忆架构",
+        "Agent 长期记忆",
+        "Agent Memory Benchmark",
+        "Agentic RAG"
+      ]
+    },
+    {
+      "id": "tool-reliability",
+      "canonical": "Tool Calling Reliability",
+      "aliases": [
+        "工具调用可靠性",
+        "tool call reliability",
+        "工具调用失败"
+      ],
+      "related": [
+        "MCP",
+        "Retry",
+        "Idempotency",
+        "Timeout",
+        "Observability",
+        "Evaluation"
+      ],
+      "tags": [
+        "Agent 工具调用可靠性",
+        "MCP",
+        "Agent Observability"
+      ]
+    },
+    {
+      "id": "multi-agent",
+      "canonical": "Multi-Agent",
+      "aliases": [
+        "多智能体",
+        "多 Agent",
+        "multi agent",
+        "agent team"
+      ],
+      "related": [
+        "Actor Model",
+        "Mailbox",
+        "Gossip",
+        "Consensus",
+        "Task Decomposition",
+        "Supervisor"
+      ],
+      "tags": [
+        "Multi-Agent",
+        "Agent",
+        "Actor Model",
+        "Gossip"
+      ]
+    },
+    {
+      "id": "software-design",
+      "canonical": "Software Design",
+      "aliases": [
+        "软件设计",
+        "设计原则",
+        "设计模式",
+        "领域驱动设计"
+      ],
+      "related": [
+        "SOLID",
+        "DDD",
+        "Modularity",
+        "Boundaries",
+        "Software Architecture"
+      ],
+      "tags": [
+        "Architecture",
+        "DDD",
+        "AI Engineering",
+        "Coding Agent"
+      ]
+    },
+    {
+      "id": "ai-native-language",
+      "canonical": "AI-Native Software Language",
+      "aliases": [
+        "AOSL",
+        "AI 原生语言",
+        "AI-native DSL",
+        "结构化 DSL"
+      ],
+      "related": [
+        "DSL",
+        "Compiler",
+        "Semantic IR",
+        "Runtime",
+        "Full-Stack"
+      ],
+      "tags": [
+        "AI-Native",
+        "Software Language",
+        "Compiler",
+        "DSL",
+        "Agent Runtime"
+      ]
+    },
+    {
+      "id": "iot-agent",
+      "canonical": "IoT Agent",
+      "aliases": [
+        "物联网 Agent",
+        "设备 Agent",
+        "工业 Agent"
+      ],
+      "related": [
+        "Device Capability",
+        "Physical World",
+        "Control Plane",
+        "Telemetry",
+        "MCP"
+      ],
+      "tags": [
+        "IoT",
+        "Agent Module",
+        "Capability",
+        "Architecture",
+        "Control Plane"
+      ]
+    },
+    {
+      "id": "evaluation",
+      "canonical": "Agent Evaluation",
+      "aliases": [
+        "agent eval",
+        "智能体评测",
+        "结果验证",
+        "任务成功率"
+      ],
+      "related": [
+        "Ground Truth",
+        "Proxy Metric",
+        "Benchmark",
+        "Feedback Loop",
+        "Observability"
+      ],
+      "tags": [
+        "Agent Evaluation",
+        "Benchmark",
+        "Agent Observability"
+      ]
+    }
+  ],
+  "retrieval_policy": {
+    "exact_tag_first": true,
+    "aliases_are_synonyms": true,
+    "related_concepts_are_expansion_hints": true,
+    "deduplicate_by": "id",
+    "fetch_full_markdown": "only after candidate shortlist, when evidence or implementation detail is needed",
+    "future_semantic_search": "merge vector candidates with lexical/tag candidates; do not replace exact matching"
+  }
+}
