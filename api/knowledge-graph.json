@@ -1,0 +1,229 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": "1.0.0",
+  "name": "Diverse Lab Knowledge Graph",
+  "description": "A small, versioned concept graph. Article IDs are resolved against api/catalog.json; edges are hypotheses/curated relationships, not ground truth by default.",
+  "updated_at": "2026-10-24",
+  "nodes": [
+    {
+      "id": "agent-runtime",
+      "type": "concept",
+      "label": "Agent Runtime",
+      "description": "负责智能任务执行、状态管理、工具调用和反馈收敛的运行层。",
+      "status": "seed",
+      "source_articles": [
+        "from-llm-to-agent-runtime",
+        "react-is-the-inner-loop-long-running-agent-harness-runtime",
+        "event-driven-coding-agent-runtime"
+      ]
+    },
+    {
+      "id": "harness",
+      "type": "concept",
+      "label": "Harness",
+      "description": "围绕模型执行提供约束、工具、验证、状态与反馈的工程机制。",
+      "status": "seed",
+      "source_articles": [
+        "agent-engineering-laws-harness-architecture-feedback",
+        "react-is-the-inner-loop-long-running-agent-harness-runtime"
+      ]
+    },
+    {
+      "id": "control-plane",
+      "type": "concept",
+      "label": "Agent Control Plane",
+      "description": "负责目标、策略、任务分派与治理；与实际执行运行层分工。",
+      "status": "seed",
+      "source_articles": [
+        "agent-engineering-from-workflow-to-control-plane",
+        "k8s-to-agent-control-plane"
+      ]
+    },
+    {
+      "id": "knowledge-ci",
+      "type": "concept",
+      "label": "Knowledge CI",
+      "description": "将知识来源、索引、关系和复查规则纳入自动化校验与持续更新。",
+      "status": "proposed",
+      "source_articles": [
+        "agent-engineering-laws-harness-architecture-feedback"
+      ]
+    },
+    {
+      "id": "knowledge-graph",
+      "type": "concept",
+      "label": "Knowledge Graph",
+      "description": "以实体/概念节点和显式关系组织可追溯的知识连接。",
+      "status": "proposed",
+      "source_articles": [
+        "reasoning-scale-knowledge-external"
+      ]
+    },
+    {
+      "id": "llm-wiki",
+      "type": "concept",
+      "label": "LLM Wiki",
+      "description": "把知识文档作为可持续维护的工作产物，依据新证据进行更新与复核。",
+      "status": "proposed",
+      "source_articles": [
+        "reasoning-scale-knowledge-external"
+      ]
+    },
+    {
+      "id": "hybrid-retrieval",
+      "type": "concept",
+      "label": "Hybrid Retrieval",
+      "description": "融合关键词、标签、元数据过滤与向量语义召回，再进行结果排序。",
+      "status": "proposed",
+      "source_articles": [
+        "reasoning-scale-knowledge-external"
+      ]
+    },
+    {
+      "id": "agent-memory",
+      "type": "concept",
+      "label": "Agent Memory",
+      "description": "跨轮次/跨任务保存并检索有价值的信息，包含筛选、更新和遗忘策略。",
+      "status": "seed",
+      "source_articles": [
+        "agent-skill-evolution-pruning",
+        "react-is-the-inner-loop-long-running-agent-harness-runtime"
+      ]
+    },
+    {
+      "id": "feedback-loop",
+      "type": "concept",
+      "label": "Feedback Loop",
+      "description": "通过验证结果、运行反馈和定期复查更新系统状态或知识。",
+      "status": "seed",
+      "source_articles": [
+        "agent-engineering-laws-harness-architecture-feedback",
+        "agent-engineering-from-workflow-to-control-plane"
+      ]
+    },
+    {
+      "id": "mcp-gateway",
+      "type": "concept",
+      "label": "MCP Gateway",
+      "description": "集中管理和路由 MCP 工具/服务接入，并提供策略、鉴权与可观测性边界。",
+      "status": "proposed",
+      "source_articles": [
+        "event-driven-coding-agent-runtime"
+      ]
+    },
+    {
+      "id": "skill-hub",
+      "type": "concept",
+      "label": "Skill Hub",
+      "description": "组织、发现和分发可复用的 Agent 技能/能力描述。",
+      "status": "proposed",
+      "source_articles": [
+        "agent-skill-evolution-pruning"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "harness-contains-runtime-controls",
+      "source": "harness",
+      "target": "agent-runtime",
+      "relation": "constrains_and_supports",
+      "status": "seed",
+      "evidence_articles": [
+        "agent-engineering-laws-harness-architecture-feedback",
+        "react-is-the-inner-loop-long-running-agent-harness-runtime"
+      ]
+    },
+    {
+      "id": "control-plane-governs-runtime",
+      "source": "control-plane",
+      "target": "agent-runtime",
+      "relation": "governs",
+      "status": "seed",
+      "evidence_articles": [
+        "agent-engineering-from-workflow-to-control-plane",
+        "k8s-to-agent-control-plane"
+      ]
+    },
+    {
+      "id": "runtime-emits-feedback",
+      "source": "agent-runtime",
+      "target": "feedback-loop",
+      "relation": "emits_feedback_to",
+      "status": "seed",
+      "evidence_articles": [
+        "agent-engineering-laws-harness-architecture-feedback"
+      ]
+    },
+    {
+      "id": "feedback-refreshes-knowledge",
+      "source": "feedback-loop",
+      "target": "knowledge-ci",
+      "relation": "can_trigger",
+      "status": "proposed",
+      "evidence_articles": [
+        "agent-engineering-laws-harness-architecture-feedback"
+      ]
+    },
+    {
+      "id": "knowledge-ci-validates-graph",
+      "source": "knowledge-ci",
+      "target": "knowledge-graph",
+      "relation": "validates_structure_of",
+      "status": "proposed",
+      "evidence_articles": [
+        "reasoning-scale-knowledge-external"
+      ]
+    },
+    {
+      "id": "wiki-maintains-knowledge",
+      "source": "llm-wiki",
+      "target": "knowledge-graph",
+      "relation": "can_supply_and_revise",
+      "status": "proposed",
+      "evidence_articles": [
+        "reasoning-scale-knowledge-external"
+      ]
+    },
+    {
+      "id": "hybrid-retrieval-uses-graph",
+      "source": "hybrid-retrieval",
+      "target": "knowledge-graph",
+      "relation": "can_use_as_signal",
+      "status": "proposed",
+      "evidence_articles": [
+        "reasoning-scale-knowledge-external"
+      ]
+    },
+    {
+      "id": "memory-uses-feedback",
+      "source": "agent-memory",
+      "target": "feedback-loop",
+      "relation": "updated_by",
+      "status": "seed",
+      "evidence_articles": [
+        "agent-skill-evolution-pruning"
+      ]
+    },
+    {
+      "id": "gateway-exposes-tools",
+      "source": "mcp-gateway",
+      "target": "agent-runtime",
+      "relation": "exposes_capabilities_to",
+      "status": "proposed",
+      "evidence_articles": [
+        "event-driven-coding-agent-runtime"
+      ]
+    },
+    {
+      "id": "skill-hub-discovery",
+      "source": "skill-hub",
+      "target": "hybrid-retrieval",
+      "relation": "can_use_for_discovery",
+      "status": "proposed",
+      "evidence_articles": [
+        "agent-skill-evolution-pruning"
+      ]
+    }
+  ]
+}
