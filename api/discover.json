@@ -117,10 +117,11 @@
     {
       "name": "lab_list_tags",
       "kind": "read",
-      "description": "List tags and entry ids under each tag.",
+      "description": "List tags and entry IDs from /api/tags.json. For semantic dimensions, aliases, and related-concept expansion, also read /api/tag-taxonomy.json.",
       "invoke": {
         "method": "GET",
-        "path": "/api/tags.json"
+        "path": "/api/tags.json",
+        "taxonomy": "/api/tag-taxonomy.json"
       }
     },
     {
