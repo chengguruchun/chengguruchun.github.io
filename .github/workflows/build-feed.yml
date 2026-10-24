@@ -11,6 +11,7 @@ on:
       - "scripts/sync_articles_index.py"
       - "scripts/validate_lab.py"
       - "scripts/build_knowledge.py"
+      - ".github/workflows/build-feed.yml"
       - "**/*.html"
   workflow_dispatch:
 
