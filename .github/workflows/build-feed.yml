@@ -2,6 +2,7 @@ name: Rebuild feeds, Articles index and SEO
 
 on:
   push:
+    branches: [main]
     paths:
       - "content/**"
       - "api/catalog.json"
@@ -11,6 +12,7 @@ on:
       - "scripts/sync_articles_index.py"
       - "scripts/validate_lab.py"
       - "scripts/build_knowledge.py"
+      - ".github/workflows/build-feed.yml"
       - "**/*.html"
   workflow_dispatch:
 
@@ -23,7 +25,6 @@ concurrency:
 
 jobs:
   publish:
-    if: github.event_name == 'workflow_dispatch' || !startsWith(github.event.head_commit.message, 'chore: regenerate feeds, Articles index and page metadata')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -32,32 +33,28 @@ jobs:
         with:
           python-version: "3.12"
 
-      # All derived artifacts are generated from the checked-out source first.
-      - name: Sync Articles index
-        run: python3 scripts/sync_articles_index.py
-
-      - name: Build feed.xml and api/feeds.json
-        run: python3 scripts/build_feeds.py
-
-      - name: Rebuild page metadata, sitemap and robots
-        run: python3 scripts/build_seo.py
-
-      # Validate the complete generated state before creating a commit.
-      # This avoids Validate Lab racing the generator workflow on the same push.
-      - name: Check SEO metadata
-        run: python3 scripts/build_seo.py --check
-
-      - name: Check knowledge registry
-        run: python3 scripts/build_knowledge.py --check
-
-      - name: Run validate_lab
-        run: python3 scripts/validate_lab.py
-
-      - name: Commit generated state if changed
+      # One guarded step avoids workflow-level condition ambiguity and prevents
+      # the generated commit from recursively regenerating itself.
+      - name: Regenerate and validate generated state
+        env:
+          HEAD_COMMIT_MESSAGE: ${{ github.event.head_commit.message || '' }}
         run: |
+          if [[ "$GITHUB_EVENT_NAME" != "workflow_dispatch" && "$HEAD_COMMIT_MESSAGE" == "chore: regenerate feeds, Articles index and page metadata" ]]; then
+            echo "Generated-state commit; no regeneration needed."
+            exit 0
+          fi
+
+          python3 scripts/sync_articles_index.py
+          python3 scripts/build_feeds.py
+          python3 scripts/build_seo.py
+          python3 scripts/build_seo.py --check
+          python3 scripts/build_knowledge.py
+          python3 scripts/build_knowledge.py --check
+          python3 scripts/validate_lab.py
+
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add feed.xml api/feeds.json sitemap.xml robots.txt "*.html" articles/index.html
+          git add feed.xml api/feeds.json sitemap.xml robots.txt api/knowledge.json api/knowledge-criteria.json api/catalog.json api/articles.json api/diverse-lab.json content/index.json api/tags.json "*.html" articles/index.html
           if git diff --staged --quiet; then
             echo "No generated changes"
           else

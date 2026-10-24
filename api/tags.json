@@ -1,6 +1,15 @@
 {
-  "updated": "2026-10-23",
+  "updated": "2026-10-24",
   "tags": {
+    "AI Engineering": [
+      "ai-era-design-principles-patterns-ddd"
+    ],
+    "AI-Assisted Development": [
+      "frontend-language-for-ai-assisted-development"
+    ],
+    "AI-Native": [
+      "ai-native-software-language-aosl"
+    ],
     "Actor Model": [
       "agent-runtime-cognitive-actor"
     ],
@@ -74,15 +83,6 @@
     "Agentic RAG": [
       "times-2026-09-w5"
     ],
-    "AI Engineering": [
-      "ai-era-design-principles-patterns-ddd"
-    ],
-    "AI-Assisted Development": [
-      "frontend-language-for-ai-assisted-development"
-    ],
-    "AI-Native": [
-      "ai-native-software-language-aosl"
-    ],
     "Akka": [
       "agent-runtime-cognitive-actor"
     ],
@@ -153,12 +153,15 @@
     "Cost": [
       "reasoning-scale-knowledge-external"
     ],
-    "Data Loop": [
-      "agent-industrial-internet"
-    ],
     "DDD": [
       "ai-era-design-principles-patterns-ddd",
       "domain-driven-agent-tool-design"
+    ],
+    "DSL": [
+      "ai-native-software-language-aosl"
+    ],
+    "Data Loop": [
+      "agent-industrial-internet"
     ],
     "Decision Engineering": [
       "from-mes-to-manufacturing-agent-runtime"
@@ -183,9 +186,6 @@
       "from-function-to-ecosystem",
       "llm-scientific-experiment",
       "physics-ecology-llm"
-    ],
-    "DSL": [
-      "ai-native-software-language-aosl"
     ],
     "Dubbo": [
       "spring-dubbo-deepseek-harness-runtime"
@@ -215,11 +215,11 @@
       "from-function-to-ecosystem",
       "llm-scientific-experiment"
     ],
-    "Faithfulness": [
-      "interpretability-rl-faithfulness"
-    ],
     "FDE": [
       "fde-agent-opportunity-discovery"
+    ],
+    "Faithfulness": [
+      "interpretability-rl-faithfulness"
     ],
     "Feedback": [
       "agent-evaluation-proxy-vs-real-outcome"
@@ -322,9 +322,6 @@
       "k8s-to-agent-control-plane",
       "llm-scientific-experiment"
     ],
-    "Manufacturing": [
-      "from-mes-to-manufacturing-agent-runtime"
-    ],
     "MCP": [
       "event-driven-coding-agent-runtime"
     ],
@@ -333,6 +330,9 @@
     ],
     "MHS": [
       "iot-agent-from-automation-to-physical-infrastructure"
+    ],
+    "Manufacturing": [
+      "from-mes-to-manufacturing-agent-runtime"
     ],
     "Model Selection": [
       "reasoning-scale-knowledge-external"
@@ -386,6 +386,9 @@
     "Prompt Engineering": [
       "frontend-language-for-ai-assisted-development"
     ],
+    "RL": [
+      "interpretability-rl-faithfulness"
+    ],
     "ReAct": [
       "react-is-the-inner-loop-long-running-agent-harness-runtime",
       "react-to-long-running-agent"
@@ -397,9 +400,6 @@
       "reinforcement-learning-game-theory-complex-systems",
       "agent-optimizer-experience-policy"
     ],
-    "RL": [
-      "interpretability-rl-faithfulness"
-    ],
     "Runtime": [
       "gossip-evidence-consensus-multi-agent",
       "react-is-the-inner-loop-long-running-agent-harness-runtime",
@@ -410,6 +410,9 @@
       "agent-skill-evolution-pruning",
       "agent-engineering-from-workflow-to-control-plane",
       "k8s-to-agent-control-plane"
+    ],
+    "SOLID": [
+      "ai-era-design-principles-patterns-ddd"
     ],
     "SaaS": [
       "iot-agent-from-device-to-physical-world-runtime",
@@ -440,9 +443,6 @@
     ],
     "Software Language": [
       "ai-native-software-language-aosl"
-    ],
-    "SOLID": [
-      "ai-era-design-principles-patterns-ddd"
     ],
     "Spring": [
       "spring-dubbo-deepseek-harness-runtime"

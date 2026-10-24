@@ -21,7 +21,19 @@
       "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/ai-era-design-principles-patterns-ddd.md",
       "content": "/content/articles/ai-era-design-principles-patterns-ddd.md",
       "name": "AI 时代，为什么设计原则、设计模式与 DDD 仍然重要",
-      "desc": "AI 降低了代码生产成本，却没有消除软件设计的复杂性。本文从 SOLID、设计模式与 DDD 出发，讨论如何把领域语义、模块边界和业务不变量转化为 Coding Agent 可以遵循并验证的工程约束。"
+      "desc": "AI 降低了代码生产成本，却没有消除软件设计的复杂性。本文从 SOLID、设计模式与 DDD 出发，讨论如何把领域语义、模块边界和业务不变量转化为 Coding Agent 可以遵循并验证的工程约束。",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-10-23",
+        "next_review": "2027-01-21",
+        "cadence_days": 90,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      }
     },
     {
       "id": "frontend-language-for-ai-assisted-development",
