@@ -80,7 +80,12 @@ def load_catalog() -> tuple[str, dict[str, dict]]:
 def html_files() -> list[Path]:
     out = []
     for p in sorted(ROOT.rglob("*.html")):
-        if any(part in SKIP_DIRS for part in p.relative_to(ROOT).parts):
+        rel = p.relative_to(ROOT)
+        if any(part in SKIP_DIRS for part in rel.parts):
+            continue
+        # Google Search Console verification files are plain-text tokens served
+        # with an .html suffix, not site pages. Exclude them from SEO and sitemap.
+        if len(rel.parts) == 1 and re.fullmatch(r"google[0-9a-f]+\.html", rel.name, re.IGNORECASE):
             continue
         out.append(p)
     return out
