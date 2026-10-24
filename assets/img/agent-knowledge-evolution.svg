@@ -18,7 +18,7 @@
     .knowledge{fill:#eaf4ef;stroke:#b4d5c4}
     .evolution{fill:#fff2df;stroke:#e6c99b}
     .runtime{fill:#263746;stroke:#263746}
-    .runtimeText{fill:#fffefa}
+    .runtimeText{fill:#fffefa}.runtimeEyebrow{font-size:16px;font-weight:700;letter-spacing:2px;fill:#c9d6df}
     .flow{fill:none;stroke:#64748b;stroke-width:3;marker-end:url(#arrow)}
     .feedback{fill:none;stroke:#39745d;stroke-width:3.5;marker-end:url(#greenArrow)}
   </style>
@@ -60,7 +60,7 @@
 <path d="M1164 520 V554 H720" class="flow"/>
 
 <rect x="330" y="582" width="780" height="106" rx="20" class="runtime"/>
-<text x="720" y="623" text-anchor="middle" class="eyebrow" fill="#c9d6df">EXECUTION LAYER</text>
+<text x="720" y="623" text-anchor="middle" class="runtimeEyebrow">EXECUTION LAYER</text>
 <text x="720" y="657" text-anchor="middle" class="box-title runtimeText">Agent Runtime · 外部 Agent · 工具与实验</text>
 
 <path d="M720 688 V722" class="flow"/>
@@ -68,9 +68,9 @@
 <text x="370" y="758" class="box-title">反馈 → 验证 → 审核 → 版本化发布</text>
 <text x="370" y="788" class="body">CI 检查结构、引用和一致性；技术结论仍需证据、测试或人工判断</text>
 
-<path d="M1110 768 H1300 V435 H1368" class="feedback"/>
+<path d="M1110 768 H1400 V435 H1368" class="feedback"/>
 <text x="1184" y="746" class="small" fill="#39745d">反馈与修订</text>
-<path d="M330 768 H140 V435 H72" class="feedback"/>
+<path d="M330 768 H40 V435 H72" class="feedback"/>
 <text x="88" y="746" class="small" fill="#39745d">知识 / Skill 更新</text>
 
 <text x="72" y="864" class="small">目标架构：持续发现知识缺口，提出改进并可追溯地验证；不是让模型无约束地自动改写正式知识。</text>
