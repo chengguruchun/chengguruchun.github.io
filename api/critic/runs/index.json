@@ -1,9 +1,20 @@
 {
   "name": "Critic Lab runs",
   "kind": "read",
-  "updated": "2026-10-23T09:26:05Z",
-  "count": 23,
+  "updated": "2026-10-24T00:37:21Z",
+  "count": 24,
   "runs": [
+    {
+      "id": "ai-era-design-principles-patterns-ddd-d0f16155dc0e",
+      "article": "ai-era-design-principles-patterns-ddd",
+      "article_slug": "ai-era-design-principles-patterns-ddd",
+      "status": "needs_review",
+      "summary": "这篇文章以一种有用的方式将 DDD/原则/模式定位为 agent 可验证的约束，而不是过时的工艺，但它从未界定其关键术语（尤其是“不变量”和“可验证”），并在若干地方从合理的启发式滑向近似普遍的断言。Git diff 只是由 SEO/metadata/footer 构建脚本产生的噪声，对工程内容没有影响。在强化之前，把具体的“领域边界 = 运行时/风险/验证边界”的等同关系重新表述为需带反例检验的假设。",
+      "commit": "d0f16155dc0e87364134a42de07a598ed42e2ea8",
+      "generated_at": "2026-10-24T00:37:21.536021+00:00",
+      "json": "/api/critic/runs/ai-era-design-principles-patterns-ddd-d0f16155dc0e.json",
+      "markdown": "/api/critic/runs/ai-era-design-principles-patterns-ddd-d0f16155dc0e.md"
+    },
     {
       "id": "transformer-from-attention-to-decoder-only-18bbd2406c87",
       "article": "transformer-from-attention-to-decoder-only",
