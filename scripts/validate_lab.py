@@ -760,6 +760,12 @@ def check_seo() -> None:
         p
         for p in sorted(ROOT.rglob("*.html"))
         if not any(part in SEO_SKIP_DIRS for part in p.relative_to(ROOT).parts)
+        # Google Search Console verification tokens use an .html suffix but
+        # are plain-text ownership proofs, not indexable site pages.
+        and not (
+            len(p.relative_to(ROOT).parts) == 1
+            and re.fullmatch(r"google[0-9a-f]+\\.html", p.name, re.IGNORECASE)
+        )
     ]
     if not pages:
         fail("no HTML pages found")
