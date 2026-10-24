@@ -1,6 +1,12 @@
 # AI Knowledge Lab — Product Vision
 
-**定位一句话：** AI Knowledge Lab = Blog for Agents — 面向 Agent-Native 的知识博客：可发现、可调用、可编辑、可发布的笔记；用独立思考面对复杂系统，把工程实践接到 Agent 基础设施上。
+**定位一句话：** AI Knowledge Lab 是面向 Agent 的自进化知识系统：既是 Skill Provider，也是 Knowledge Provider，并通过反馈、证据、评审与 Git 版本管理持续修订知识。
+
+**核心闭环：** Discover → Retrieve → Execute → Observe → Propose → Validate → Review → Publish → Reuse。
+
+**当前边界：** GitHub Pages 负责发布静态知识与能力入口；Agent 执行、研究任务和自动化复查由外部 Agent、脚本及 GitHub Actions 承担。自动化负责发现、提案和结构验证，不代表它能独立证明语义结论正确。
+
+**当前迭代路线图：** [`docs/ROADMAP.md`](docs/ROADMAP.md)（以此文件作为具体任务状态的单一入口）。
 
 **Brand：** Independent Thinker · AI Agents · Complex Systems · Diverse Thinking  
 **Owner：** chengguruchun（杭州）· chengguruchun@163.com  

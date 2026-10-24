@@ -1,20 +1,22 @@
 # AI Knowledge Lab
 
-**EN:** An Agent-Native knowledge blog — discoverable, callable, editable, publishable. Independent Thinker · AI Agents · Complex Systems · Diverse Thinking.
+**EN:** An Agent-native knowledge system — a Skill provider, a knowledge provider, and an evidence-based evolution loop.
 
-**ZH:** Blog for Agents — 面向 Agent-Native 的知识博客：可发现、可调用、可编辑、可发布的笔记。Independent Thinker · AI Agents · Complex Systems · Diverse Thinking。
+**ZH:** 面向 Agent 的自进化知识系统：提供可复用 Skill、可追溯知识，并通过反馈、验证、评审与 Git 版本管理持续改进。Independent Thinker · AI Agents · Complex Systems · Diverse Thinking.
 
 - 站点：https://chengguruchun.github.io
 - 仓库：https://github.com/chengguruchun/chengguruchun.github.io
 - 作者：chengguruchun（杭州）· chengguruchun@163.com
 
-**Blog for Agents** — 面向 Agent-Native 的知识博客，首页：**Discover → execute**。
+**Blog for Agents** — 不只是发布文章，而是让 Agent 发现能力、检索知识、执行任务，并把反馈转化为可审查的知识改进。核心循环：**Discover → Retrieve → Execute → Observe → Improve**。
 
 ## 愿景
 
 一个由 AI 驱动的个人知识管理与研究平台：记录思考、验证观点、持续进化，让 AI 成为研究伙伴。不只是博客，而是面向 Agent 的个人知识基础设施。
 
-![Personal Agent Lab 愿景：从知识产生、验证到持续演化的闭环](assets/img/personal-agent-lab-vision.jpg)
+![AI Knowledge Lab 自进化知识系统：Skill Provider、Knowledge Provider、Evolution Engine 与反馈审核闭环](assets/img/agent-knowledge-evolution.svg)
+
+系统分为三个角色：**Skill Provider** 提供任务方法和工作流；**Knowledge Provider** 提供结构化知识、原文与证据；**Evolution Engine** 从任务结果中发现缺口、提出变更并通过验证与审核发布。当前网站主要提供静态知识与能力入口，执行和研究任务由外部 Agent、脚本及 GitHub Actions 承担。
 
 ## 人类阅读
 
@@ -54,6 +56,8 @@
 
 正文以 `content/**/*.md` 为权威源，HTML 是渲染层。
 
+**路线图：** 当前迭代计划统一维护在 [`docs/ROADMAP.md`](./docs/ROADMAP.md)，产品边界与愿景见 [`PRODUCT.md`](./PRODUCT.md)。
+
 **Thought Loop**（人看 [`/bench/`](./bench/)）：任意 Agent 加载 Skill 后，聊天/初步想法只落 `topic`，过字段 `gates[]` 和模型 `model_gates[]` 再分流。模型标准是可改提示词。已有文章正文不重写。Hot Words 仍走周环。未过门的想法是一句 thought，不是 `/bench/` 上的长文。索引：[`/api/thoughts.json`](./api/thoughts.json) · [`/api/thoughts-criteria.json`](./api/thoughts-criteria.json) · [`THOUGHT_LOOP.md`](./THOUGHT_LOOP.md)
 
 ## For Agents
@@ -82,7 +86,8 @@ feed.xml                   内容 RSS
 sitemap.xml robots.txt     搜索引擎入口（生成物）
 scripts/build_feeds.py     从 catalog 生成 RSS
 scripts/build_seo.py       注入页面元数据 + 生成 sitemap / robots
-PRODUCT.md                 产品愿景与路线图
+PRODUCT.md                 产品愿景与边界
+ docs/ROADMAP.md            Agent-native 知识系统迭代路线图
 KNOWLEDGE_LOOP.md          已发表知识的有效性回路
 scripts/build_knowledge.py 知识 registry + catalog 新鲜度字段
 assets/                    CSS / JS
@@ -166,6 +171,10 @@ python3 scripts/validate_lab.py --live   # optional soft live checks
 ```
 
 CI runs on PR/push via `.github/workflows/validate-lab.yml` (no `--live`).
+
+## Roadmap
+
+当前重点不是堆叠数据库或复杂服务，而是先保证知识索引、原文证据和图谱引用一致，再建立可重复的检索评测，最后把外部 Agent 的执行反馈转化为可验证、可回滚的 Skill / Knowledge 改进。详见 [`docs/ROADMAP.md`](./docs/ROADMAP.md)。
 
 ## Agent-native Loop
 
