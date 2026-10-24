@@ -764,7 +764,7 @@ def check_seo() -> None:
         # are plain-text ownership proofs, not indexable site pages.
         and not (
             len(p.relative_to(ROOT).parts) == 1
-            and re.fullmatch(r"google[0-9a-f]+\\.html", p.name, re.IGNORECASE)
+            and re.fullmatch(r"google[0-9a-f]+\.html", p.name, re.IGNORECASE)
         )
     ]
     if not pages:
