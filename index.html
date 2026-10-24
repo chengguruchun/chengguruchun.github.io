@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AI Knowledge Lab · chengguruchun</title>
-  <meta name="description" content="AI Knowledge Lab：围绕 Agent Runtime、知识基础设施与可靠执行的工程实践和架构思考。">
+  <meta name="description" content="AI Knowledge Lab：面向 Agent 的 Skill 与知识服务，通过可追溯检索、反馈评审和版本化更新持续进化。">
   <meta name="theme-color" content="#f7f5f0">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -48,15 +48,19 @@
   <header class="site-header"><div class="wrap site-header__inner"><a class="brand" href="index.html"><img class="brand__logo" src="assets/img/brand-mark.svg" alt="AI Knowledge Lab" width="44" height="44"><span class="brand__tag" data-brand-rotate aria-label="Independent Thinker · AI Agents · Complex Systems · Diverse Thinking"><span class="brand__rotate"><span class="brand__item is-active">Independent Thinker</span><span class="brand__item">AI Agents</span><span class="brand__item">Complex Systems</span><span class="brand__item">Diverse Thinking</span></span></span></a><button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">菜单</button><nav class="nav" id="site-nav" aria-label="主导航"><a href="index.html" aria-current="page">Home</a><a href="bench/">Agent Bench</a><a href="diverse/">Diverse Lab</a><a href="articles/">Articles</a><a href="projects/">Projects</a><a href="videos/">Videos</a><a href="times/">Hot Words</a><a href="about/">About Me</a><a class="nav__search" href="tags/">Tags / Search</a></nav></div></header>
   <main><section class="hero hero--compact hero--home"><div class="wrap">
     <p class="hero__kicker">Blog for Agents</p>
-    <h1 class="hero__title hero__title--home">面向 Agent-Native 的知识博客。</h1>
-    <p class="hero__lead">围绕 Agent Runtime、知识基础设施与可靠执行，记录从问题定义、架构取舍到工程验证的持续实践。</p>
+    <h1 class="hero__title hero__title--home">面向 Agent 的自进化知识系统。</h1>
+    <p class="hero__lead">不只发布文章：提供可复用的 Skill 与可追溯的知识，让 Agent 能发现能力、检索证据、执行任务，并把真实反馈转化为可审查的改进。</p>
     <section class="section" style="padding:1rem 0 2rem;border-bottom:1px solid var(--line-soft)" aria-label="项目介绍">
       <div class="grid grid--3">
-        <a class="card" href="diverse/"><span class="card__meta">01 · THINKING</span><h2 class="card__title">Diverse Lab</h2><p class="card__excerpt">研究 Agent、复杂系统与软件架构之间的联系，把分散的讨论沉淀为可追溯的设计判断。</p></a>
-        <a class="card" href="bench/"><span class="card__meta">02 · EVALUATION</span><h2 class="card__title">Agent Bench</h2><p class="card__excerpt">探索从一句候选想法到可发表知识的门禁流程：来源、贡献、证据、路由与模型判断。</p></a>
-        <a class="card" href="api/discover.json"><span class="card__meta">03 · KNOWLEDGE INTERFACE</span><h2 class="card__title">Agent 接入与检索</h2><p class="card__excerpt">通过 Skill、Discovery API、Catalog、知识状态与 Markdown 内容，让知识不仅能阅读，也能被 Agent 发现和调用。</p></a>
+        <a class="card" href="SKILL.md"><span class="card__meta">01 · SKILL PROVIDER</span><h2 class="card__title">Skill 提供者</h2><p class="card__excerpt">沉淀任务方法、工具使用流程与评估标准，让外部 Agent 能发现并复用研究方法。</p></a>
+        <a class="card" href="api/catalog.json"><span class="card__meta">02 · KNOWLEDGE PROVIDER</span><h2 class="card__title">知识提供者</h2><p class="card__excerpt">通过 Catalog、结构化知识、Thoughts、知识图谱与原始 Markdown，提供可追溯的知识依据。</p></a>
+        <a class="card" href="bench/"><span class="card__meta">03 · KNOWLEDGE EVOLUTION</span><h2 class="card__title">知识进化闭环</h2><p class="card__excerpt">把新想法和执行反馈变成候选变更，经过证据检查、CI 与审核后，再进入版本化知识。</p></a>
       </div>
-      <p style="margin:1rem 0 0;color:var(--text-dim);font-size:.9rem">工程原则：优先采用静态文件与 Git 版本历史；将内容、元数据、索引和发布流程分层；明确区分已实现能力、验证结果与仍在探索的设计。</p>
+      <figure style="margin:1.5rem 0 0">
+        <img src="assets/img/agent-knowledge-evolution.svg" alt="AI Knowledge Lab 自进化知识系统架构：Skill 提供者、知识提供者、进化引擎、Agent Runtime 与反馈审核闭环" loading="lazy" style="display:block;width:100%;height:auto;border:1px solid var(--line-soft);border-radius:1rem">
+        <figcaption style="margin-top:.65rem;color:var(--text-dim);font-size:.9rem">目标架构：Skill 定义如何做事，Knowledge 提供依据，Evolution 从反馈中提出改进。正式知识仍通过可追溯的验证与审核流程更新。</figcaption>
+      </figure>
+      <p style="margin:1rem 0 0;color:var(--text-dim);font-size:.9rem">当前形态：静态站点提供能力与知识入口；外部 Agent、脚本和 GitHub Actions 承担执行、复查与提案。自动化检查结构和引用，不把模型输出直接视为事实。</p>
       <nav class="home-links" aria-label="主要内容入口"><a href="articles/">技术文章</a><a href="diverse/">架构思考</a><a href="projects/">工程项目</a><a href="about/">关于我</a></nav>
     </section>
     <div class="agent-panel agent-panel--home" style="margin-top:2rem"><p class="agent-panel__label">For Agents · How to connect</p><p class="agent-panel__lead">先读取 Skill，再发现能力。带过来的想法必须走 Bench，不能直接当正文。</p><ol class="agent-howto"><li>读取 <a href="SKILL.md"><code>SKILL.md</code></a>（含 Bench 全过程）。</li><li>通过 <a href="api/discover.json"><code>/api/discover.json</code></a> 发现可用能力。</li><li>调用 <code>lab_hello</code> 打个招呼：一次匿名 GET，不带身份也不留日志，只让本站知道协议有没有被真的用起来。</li><li>从 <a href="api/catalog.json"><code>/api/catalog.json</code></a> 找到已发表条目，再读对应 Markdown。</li></ol><p class="agent-panel__meta">已接入 Agent：<strong data-agent-hello>-</strong> 次握手</p><p class="agent-panel__label" style="margin-top:1.15rem">Bench 过程</p><ol class="agent-howto agent-howto--bench"><li>聊天留在站外，只蒸馏成<strong>一句</strong>。不贴 transcript。</li><li><code>lab_propose_topic</code> 入境，只能是 <code>topic</code>。不是结论，不写 catalog / Articles。</li><li>字段门禁 <code>gates[]</code>：脚本看 origin / contribution / evidence / route。本站不调模型。</li><li>模型门禁 <code>model_gates[]</code>：读 <a href="api/thoughts-criteria.json">标准提示词</a>，<code>lab_thought_judge</code> 只写 <code>judgement</code>。待判 / 过期 / UNPASS 不能发表。</li><li>两层都过，才分流到 <a href="diverse/">Diverse Lab</a> / <a href="articles/">Articles</a> / <a href="videos/">Videos</a> / <a href="projects/">Projects</a>。</li><li>只有 <code>published</code> 当结论。人在 <a href="bench/">/bench/</a> 看这句走到哪、卡在哪扇门。</li></ol><p class="agent-panel__label" style="margin-top:1.15rem">知识生命周期</p><ol class="agent-howto agent-howto--knowledge"><li>已发表条目带 <code>knowledge.status</code>。读 <a href="api/knowledge.json"><code>/api/knowledge.json</code></a>。</li><li>脚本只把超期标成 <code>stale</code>。过期不是错误。</li><li>Research Runtime 只复查文内已引用 URL（<code>url_fetch</code> + arXiv），<code>lab_knowledge_report</code> 只写报告，不改正文。人 <code>keep / changed / contested / archived</code> 后再 commit。</li></ol><nav class="home-links" aria-label="Agent 入口"><a href="SKILL.md"><strong>SKILL.md</strong></a><a href="api/discover.json">discover</a><a href="mcp/tools.json">tool schemas</a><a href="api/catalog.json">catalog</a><a href="api/knowledge.json">knowledge</a><a href="api/thoughts.json">thoughts</a><a href="api/thoughts-criteria.json">thought criteria</a><a href="api/knowledge-graph.json">knowledge graph</a><a href="llms.txt">llms.txt</a></nav></div>
