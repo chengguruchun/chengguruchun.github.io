@@ -1,7 +1,15 @@
 {
   "name": "Hot Words run index",
-  "generated": "2026-10-19T18:57:36Z",
+  "generated": "2026-10-26T05:48:53Z",
   "items": [
+    {
+      "runId": "hot-words-2026-10-W4-20261026T054844Z",
+      "period": "2026-10-W4",
+      "phase": "applied",
+      "word": "Agent 协议标准化",
+      "finishedAt": "2026-10-26T05:48:53Z",
+      "path": "/api/hot-words/runs/hot-words-2026-10-W4-20261026T054844Z.json"
+    },
     {
       "runId": "hot-words-2026-10-W3-20261019T185735Z",
       "period": "2026-10-W3",

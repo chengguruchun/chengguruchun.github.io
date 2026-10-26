@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-25T07:32:34Z",
+  "generated": "2026-10-26T05:48:53Z",
   "items": [
     {
       "id": "ai-era-design-principles-patterns-ddd",
@@ -1294,6 +1294,22 @@
       },
       "name": "物理学 × 生态学：对复杂系统的一个思考",
       "desc": "物理学看规律，生态学看关系与反馈；综合二者，才能理解 LLM 与多 Agent 如何逼近 Complex System Engineering。"
+    },
+    {
+      "id": "times-2026-10-w4",
+      "type": "Times",
+      "title": "2026-10 Week 4 · Agent 协议标准化",
+      "excerpt": "本周选 Agent 协议标准化，因为它把近期分散的工具、记忆、可观测性议题收束到可互操作的接口层：MCP 定义模型与工具/资源的连接，A2A 定义跨 Agent 协作，二者都有公开规范可核验。相比继续讨论可靠性口号，协议标准化给出可落地的工程抓手，也便于后续用真实仓库与文档补齐结构化证据。",
+      "url": "/times/",
+      "date": "2026-10-26",
+      "tags": [
+        "Times",
+        "Hot Words",
+        "Agent 协议标准化"
+      ],
+      "markdown": "/content/times/2026-10-w4.md",
+      "period": "2026-10-W4",
+      "word": "Agent 协议标准化"
     },
     {
       "id": "times-2026-10-w3",

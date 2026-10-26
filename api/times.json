@@ -7,9 +7,20 @@
     "meaning": "Nth 7-day block of the calendar month in Asia/Shanghai (days 1–7 = W1, 8–14 = W2, …). Not an ISO 8601 week number.",
     "timezone": "Asia/Shanghai"
   },
-  "current": "2026-10-W3",
-  "updated": "2026-10-19",
+  "current": "2026-10-W4",
+  "updated": "2026-10-26",
   "issues": [
+    {
+      "id": "times-2026-10-w4",
+      "period": "2026-10-W4",
+      "cadence": "weekly",
+      "word": "Agent 协议标准化",
+      "title": "2026-10 Week 4 · Agent 协议标准化",
+      "why": "本周选 Agent 协议标准化，因为它把近期分散的工具、记忆、可观测性议题收束到可互操作的接口层：MCP 定义模型与工具/资源的连接，A2A 定义跨 Agent 协作，二者都有公开规范可核验。相比继续讨论可靠性口号，协议标准化给出可落地的工程抓手，也便于后续用真实仓库与文档补齐结构化证据。",
+      "date": "2026-10-26",
+      "url": "/times/",
+      "markdown": "/content/times/2026-10-w4.md"
+    },
     {
       "id": "times-2026-10-w3",
       "period": "2026-10-W3",
@@ -102,5 +113,5 @@
       "slug": "2026-09-w1"
     }
   ],
-  "currentProposalHash": "c2edb29c635819e3"
+  "currentProposalHash": "da5c3963f365802b"
 }
