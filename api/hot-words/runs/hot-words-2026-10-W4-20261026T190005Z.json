@@ -1,0 +1,41 @@
+{
+  "runId": "hot-words-2026-10-W4-20261026T190005Z",
+  "period": "2026-10-W4",
+  "phase": "skipped",
+  "startedAt": "2026-10-26T19:00:05Z",
+  "finishedAt": "2026-10-26T19:00:05Z",
+  "input": {
+    "currentWord": "Agent 协议标准化",
+    "recentHistory": [
+      "2026-10-W4: Agent 协议标准化",
+      "2026-10-W3: Agent 工具调用可靠性",
+      "2026-10-W2: Agent Sandboxing",
+      "2026-10-W1: Agent Observability",
+      "2026-09-W5: Agentic RAG",
+      "2026-09-W4: Agent Memory Benchmark",
+      "2026-09-W3: Agent 长期记忆",
+      "2026-09-W2: Agent 记忆架构"
+    ],
+    "force": false,
+    "mode": "autonomous",
+    "hasFeedback": true,
+    "periodScheme": "YYYY-MM-WN = Nth 7-day block of the calendar month (Asia/Shanghai), not ISO week"
+  },
+  "proposal": {
+    "word": "Agent 协议标准化",
+    "candidates": [],
+    "evidenceCount": 0,
+    "why": ""
+  },
+  "gates": {
+    "schema": "skip",
+    "duplicate": "pass",
+    "editorial": "skip",
+    "evidence": "skip",
+    "relevance": "skip",
+    "consistency": "skip"
+  },
+  "apply": {},
+  "publish": {},
+  "error": "Period 2026-10-W4 already published (Agent 协议标准化); skip apply/push (pass force=true to override)"
+}

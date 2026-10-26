@@ -1,20 +1,20 @@
 {
-  "runId": "hot-words-2026-10-W4-20261026T054844Z",
+  "runId": "hot-words-2026-10-W4-20261026T190005Z",
   "period": "2026-10-W4",
-  "phase": "published",
-  "startedAt": "2026-10-26T05:48:44Z",
-  "finishedAt": "2026-10-26T05:48:56Z",
+  "phase": "skipped",
+  "startedAt": "2026-10-26T19:00:05Z",
+  "finishedAt": "2026-10-26T19:00:05Z",
   "input": {
-    "currentWord": "Agent 工具调用可靠性",
+    "currentWord": "Agent 协议标准化",
     "recentHistory": [
+      "2026-10-W4: Agent 协议标准化",
       "2026-10-W3: Agent 工具调用可靠性",
       "2026-10-W2: Agent Sandboxing",
       "2026-10-W1: Agent Observability",
       "2026-09-W5: Agentic RAG",
       "2026-09-W4: Agent Memory Benchmark",
       "2026-09-W3: Agent 长期记忆",
-      "2026-09-W2: Agent 记忆架构",
-      "2026-09-W1: Context Window Optimization"
+      "2026-09-W2: Agent 记忆架构"
     ],
     "force": false,
     "mode": "autonomous",
@@ -23,174 +23,19 @@
   },
   "proposal": {
     "word": "Agent 协议标准化",
-    "why": "本周选 Agent 协议标准化，因为它把近期分散的工具、记忆、可观测性议题收束到可互操作的接口层：MCP 定义模型与工具/资源的连接，A2A 定义跨 Agent 协作，二者都有公开规范可核验。相比继续讨论可靠性口号，协议标准化给出可落地的工程抓手，也便于后续用真实仓库与文档补齐结构化证据。",
-    "candidates": [
-      {
-        "word": "Agent 评测基准",
-        "evidence": [
-          {
-            "title": "SWE-bench Verified",
-            "url": "https://www.swebench.com/",
-            "sourceType": "benchmark",
-            "publishedAt": "2024-08-13",
-            "claim": "SWE-bench Verified 提供 500 个人工校验的真实 GitHub issue 修复任务，成为衡量编码 Agent 能力的常用基准。"
-          },
-          {
-            "title": "GAIA: A Benchmark for General AI Assistants",
-            "url": "https://huggingface.co/papers/2311.12983",
-            "sourceType": "paper",
-            "publishedAt": "2023-11-21",
-            "claim": "GAIA 提出面向通用助手的三级难度任务集，强调工具使用、网页浏览与多步推理的综合评测。"
-          },
-          {
-            "title": "Introducing SWE-bench Verified",
-            "url": "https://openai.com/index/introducing-swe-bench-verified/",
-            "sourceType": "blog",
-            "publishedAt": "2024-08-13",
-            "claim": "OpenAI 发布人工筛选的 SWE-bench Verified 子集，用于更可靠地评估模型解决真实软件工程任务的能力。"
-          }
-        ],
-        "notes": "评测基准是 Agent 工程落地的度量基础设施，与近期记忆、可观测性话题互补，且证据为公开基准与论文。"
-      },
-      {
-        "word": "Agent 成本优化",
-        "evidence": [
-          {
-            "title": "Prompt caching",
-            "url": "https://platform.openai.com/docs/guides/prompt-caching",
-            "sourceType": "docs",
-            "publishedAt": "2024-10-01",
-            "claim": "提示缓存对重复前缀按折扣计费，可显著降低长上下文 Agent 的调用成本。"
-          },
-          {
-            "title": "Introducing Context Caching on Vertex AI",
-            "url": "https://cloud.google.com/blog/products/ai-machine-learning/context-caching-for-vertex-ai",
-            "sourceType": "blog",
-            "publishedAt": "2024-06-17",
-            "claim": "Vertex AI 上下文缓存按缓存 token 折扣计价，适用于多轮复用同一上下文的 Agent 场景。"
-          },
-          {
-            "title": "Efficient Memory Management for Large Language Model Serving with PagedAttention",
-            "url": "https://arxiv.org/abs/2309.06180",
-            "sourceType": "paper",
-            "publishedAt": "2023-09-12",
-            "claim": "PagedAttention 通过分页式 KV 缓存管理提升推理吞吐并降低显存浪费，是服务侧降本的关键技术。"
-          }
-        ],
-        "notes": "成本是 Agent 多步调用最实际的约束，证据覆盖厂商计费文档与系统论文，可量化讨论。"
-      },
-      {
-        "word": "Agent 协议标准化",
-        "evidence": [
-          {
-            "title": "Model Context Protocol",
-            "url": "https://www.anthropic.com/news/model-context-protocol",
-            "sourceType": "blog",
-            "publishedAt": "2024-11-25",
-            "claim": "MCP 提出开放协议，统一 LLM 应用与外部数据源、工具的连接方式，减少重复集成。"
-          },
-          {
-            "title": "Model Context Protocol Specification",
-            "url": "https://modelcontextprotocol.io/specification",
-            "sourceType": "docs",
-            "publishedAt": "2024-11-25",
-            "claim": "MCP 规范定义 JSON-RPC 消息、资源与工具原语，为客户端与服务端互操作提供标准。"
-          },
-          {
-            "title": "Agent-to-Agent Protocol",
-            "url": "https://github.com/a2aproject/A2A",
-            "sourceType": "repo",
-            "publishedAt": "2025-04-09",
-            "claim": "A2A 项目定义跨 Agent 协作的通信协议，覆盖能力发现与任务委派。"
-          }
-        ],
-        "notes": "协议层标准化决定 Agent 生态互操作，MCP 与 A2A 均有公开规范可引用。"
-      },
-      {
-        "word": "Agent 失败恢复",
-        "evidence": [
-          {
-            "title": "Reflexion: Language Agents with Verbal Reinforcement Learning",
-            "url": "https://arxiv.org/abs/2303.11366",
-            "sourceType": "paper",
-            "publishedAt": "2023-03-20",
-            "claim": "Reflexion 让 Agent 从失败轨迹中生成语言化反思并重试，提升后续任务成功率。"
-          },
-          {
-            "title": "Self-Refine: Iterative Refinement with Self-Feedback",
-            "url": "https://arxiv.org/abs/2303.17651",
-            "sourceType": "paper",
-            "publishedAt": "2023-03-30",
-            "claim": "Self-Refine 通过自我反馈迭代修正输出，验证了无需额外训练的错误纠正范式。"
-          },
-          {
-            "title": "ReAct: Synergizing Reasoning and Acting in Language Models",
-            "url": "https://arxiv.org/abs/2210.03629",
-            "sourceType": "paper",
-            "publishedAt": "2022-10-06",
-            "claim": "ReAct 交替推理与行动，为工具调用失败后的重规划提供基础框架。"
-          }
-        ],
-        "notes": "失败恢复区别于被禁的可靠性口号，聚焦具体重试与反思机制，有明确论文支撑。"
-      },
-      {
-        "word": "Agent 记忆压缩",
-        "evidence": [
-          {
-            "title": "MemGPT: Towards LLMs as Operating Systems",
-            "url": "https://arxiv.org/abs/2310.08560",
-            "sourceType": "paper",
-            "publishedAt": "2023-10-12",
-            "claim": "MemGPT 用分层记忆与自我编辑在有限上下文内管理长期信息，实现记忆的换入换出。"
-          },
-          {
-            "title": "LLMLingua: Compressing Prompts for Accelerated Inference",
-            "url": "https://arxiv.org/abs/2310.05736",
-            "sourceType": "paper",
-            "publishedAt": "2023-10-09",
-            "claim": "LLMLingua 通过粗到细的提示压缩在保留语义的同时大幅缩短输入长度。"
-          },
-          {
-            "title": "Lost in the Middle: How Language Models Use Long Contexts",
-            "url": "https://arxiv.org/abs/2307.03172",
-            "sourceType": "paper",
-            "publishedAt": "2023-07-06",
-            "claim": "长上下文中间位置信息易被忽略，说明单纯堆叠上下文不如压缩与精选记忆。"
-          }
-        ],
-        "notes": "记忆压缩承接近期记忆架构话题但角度不同，强调压缩与检索取舍，证据充分。"
-      }
-    ],
-    "evidenceCount": 15,
-    "evidenceUrlCount": 15
+    "candidates": [],
+    "evidenceCount": 0,
+    "why": ""
   },
   "gates": {
-    "schema": "pass",
+    "schema": "skip",
     "duplicate": "pass",
-    "editorial": "pass",
-    "evidence": "pass",
-    "relevance": "pass",
-    "consistency": "pass"
+    "editorial": "skip",
+    "evidence": "skip",
+    "relevance": "skip",
+    "consistency": "skip"
   },
-  "apply": {
-    "changedFiles": [
-      "times/index.html",
-      "content/times/2026-10-w4.md",
-      "api/times.json",
-      "content/index.json",
-      "api/catalog.json"
-    ],
-    "consistency": {
-      "ok": true,
-      "errors": [],
-      "gate": "pass"
-    }
-  },
-  "publish": {
-    "commit": "8b505bff7316224bd9832227bf333ee1d62e1f49",
-    "url": "https://chengguruchun.github.io/times/",
-    "mode": "autonomous",
-    "periodScheme": "YYYY-MM-WN month block, not ISO week"
-  },
-  "error": null
+  "apply": {},
+  "publish": {},
+  "error": "Period 2026-10-W4 already published (Agent 协议标准化); skip apply/push (pass force=true to override)"
 }

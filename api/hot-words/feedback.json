@@ -1,6 +1,6 @@
 {
   "name": "Hot Words feedback",
-  "generated": "2026-10-26T05:48:56Z",
+  "generated": "2026-10-26T19:00:05Z",
   "period": "2026-10-W4",
   "word": "Agent 协议标准化",
   "signals": {
@@ -24,24 +24,19 @@
     }
   },
   "lastRun": {
-    "runId": "hot-words-2026-10-W4-20261026T054844Z",
-    "phase": "published",
+    "runId": "hot-words-2026-10-W4-20261026T190005Z",
+    "phase": "skipped",
     "gates": {
-      "schema": "pass",
+      "schema": "skip",
       "duplicate": "pass",
-      "editorial": "pass",
-      "evidence": "pass",
-      "relevance": "pass",
-      "consistency": "pass"
+      "editorial": "skip",
+      "evidence": "skip",
+      "relevance": "skip",
+      "consistency": "skip"
     },
-    "evidenceCount": 15,
-    "publish": {
-      "commit": "8b505bff7316224bd9832227bf333ee1d62e1f49",
-      "url": "https://chengguruchun.github.io/times/",
-      "mode": "autonomous",
-      "periodScheme": "YYYY-MM-WN month block, not ISO week"
-    },
-    "error": null
+    "evidenceCount": 0,
+    "publish": {},
+    "error": "Period 2026-10-W4 already published (Agent 协议标准化); skip apply/push (pass force=true to override)"
   },
   "learnHints": {
     "recentWords": [
@@ -54,32 +49,19 @@
       "2026-09-W3: Agent 长期记忆",
       "2026-09-W2: Agent 记忆架构"
     ],
-    "rejectedCandidates": [
-      {
-        "word": "Agent 评测基准",
-        "reason": "not_chosen",
-        "notes": "评测基准是 Agent 工程落地的度量基础设施，与近期记忆、可观测性话题互补，且证据为公开基准与论文。"
-      },
-      {
-        "word": "Agent 成本优化",
-        "reason": "not_chosen",
-        "notes": "成本是 Agent 多步调用最实际的约束，证据覆盖厂商计费文档与系统论文，可量化讨论。"
-      },
-      {
-        "word": "Agent 失败恢复",
-        "reason": "not_chosen",
-        "notes": "失败恢复区别于被禁的可靠性口号，聚焦具体重试与反思机制，有明确论文支撑。"
-      },
-      {
-        "word": "Agent 记忆压缩",
-        "reason": "not_chosen",
-        "notes": "记忆压缩承接近期记忆架构话题但角度不同，强调压缩与检索取舍，证据充分。"
-      }
-    ],
-    "prefer": "优先选能落到本站软件 / 系统 / Agent 主线的词，并带至少一条可点开的 https 证据。",
-    "avoid": "回避与当前词重复、口号化、以及只有空泛描述没有来源的词。 最近未入选：Agent 评测基准、Agent 成本优化、Agent 失败恢复、Agent 记忆压缩。"
+    "rejectedCandidates": [],
+    "prefer": "下一轮务必补齐结构化证据（title/url/claim）；先有来源，再谈热度。",
+    "avoid": "回避与当前词重复、口号化、以及只有空泛描述没有来源的词。"
   },
   "recentRuns": [
+    {
+      "runId": "hot-words-2026-10-W4-20261026T190005Z",
+      "period": "2026-10-W4",
+      "phase": "skipped",
+      "word": "Agent 协议标准化",
+      "finishedAt": "2026-10-26T19:00:05Z",
+      "path": "/api/hot-words/runs/hot-words-2026-10-W4-20261026T190005Z.json"
+    },
     {
       "runId": "hot-words-2026-10-W4-20261026T054844Z",
       "period": "2026-10-W4",
@@ -151,14 +133,6 @@
       "word": "Agent Memory Benchmark",
       "finishedAt": "2026-09-21T18:26:45Z",
       "path": "/api/hot-words/runs/hot-words-2026-09-W4-20260921T182634Z.json"
-    },
-    {
-      "runId": "hot-words-2026-09-W3-20260921T061047Z",
-      "period": "2026-09-W3",
-      "phase": "published",
-      "word": "Agent 长期记忆",
-      "finishedAt": "2026-09-21T06:10:57Z",
-      "path": "/api/hot-words/runs/hot-words-2026-09-W3-20260921T061047Z.json"
     }
   ],
   "endpoints": {
