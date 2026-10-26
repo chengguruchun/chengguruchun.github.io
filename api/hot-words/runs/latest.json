@@ -1,9 +1,9 @@
 {
   "runId": "hot-words-2026-10-W4-20261026T054844Z",
   "period": "2026-10-W4",
-  "phase": "applied",
+  "phase": "published",
   "startedAt": "2026-10-26T05:48:44Z",
-  "finishedAt": "2026-10-26T05:48:53Z",
+  "finishedAt": "2026-10-26T05:48:56Z",
   "input": {
     "currentWord": "Agent 工具调用可靠性",
     "recentHistory": [
@@ -186,6 +186,11 @@
       "gate": "pass"
     }
   },
-  "publish": {},
+  "publish": {
+    "commit": "8b505bff7316224bd9832227bf333ee1d62e1f49",
+    "url": "https://chengguruchun.github.io/times/",
+    "mode": "autonomous",
+    "periodScheme": "YYYY-MM-WN month block, not ISO week"
+  },
   "error": null
 }
