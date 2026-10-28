@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-24",
+  "updated": "2026-10-29",
   "tags": {
     "AI Engineering": [
       "ai-era-design-principles-patterns-ddd"
@@ -118,6 +118,7 @@
       "domain-driven-agent-tool-design"
     ],
     "Coding Agent": [
+      "grill-me-superpowers-openspec-agent-development-workflow",
       "ai-era-design-principles-patterns-ddd",
       "event-driven-coding-agent-runtime"
     ],
@@ -439,6 +440,7 @@
       "software-design-universal-patterns"
     ],
     "Software Engineering": [
+      "grill-me-superpowers-openspec-agent-development-workflow",
       "agent-oriented-architecture-decomposition"
     ],
     "Software Language": [
@@ -476,6 +478,7 @@
       "frontend-language-for-ai-assisted-development"
     ],
     "Verification": [
+      "grill-me-superpowers-openspec-agent-development-workflow",
       "event-driven-coding-agent-runtime"
     ],
     "Vertical": [
@@ -486,6 +489,21 @@
     ],
     "Workflow": [
       "agent-engineering-from-workflow-to-control-plane"
+    ],
+    "Agent Skills": [
+      "grill-me-superpowers-openspec-agent-development-workflow"
+    ],
+    "Grill Me": [
+      "grill-me-superpowers-openspec-agent-development-workflow"
+    ],
+    "Superpowers": [
+      "grill-me-superpowers-openspec-agent-development-workflow"
+    ],
+    "OpenSpec": [
+      "grill-me-superpowers-openspec-agent-development-workflow"
+    ],
+    "Spec-driven Development": [
+      "grill-me-superpowers-openspec-agent-development-workflow"
     ]
   }
 }
