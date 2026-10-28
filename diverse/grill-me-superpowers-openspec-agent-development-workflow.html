@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grill Me、Superpowers 与 OpenSpec：把 AI 编程从“会写代码”变成可控的工程流程 · Diverse Lab</title>
+<meta name="description" content="从需求追问、工程执行方法到可追踪的规格变更，深入比较 Grill Me、Superpowers 与 OpenSpec 的职责边界、重叠部分和组合方式，并以本地 Coding Agent CLI 为例设计需求到发布的闭环。">
+<meta name="theme-color" content="#f7f5f0">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/site.css">
+<link rel="canonical" href="https://chengguruchun.github.io/diverse/grill-me-superpowers-openspec-agent-development-workflow.html">
+</head>
+<body>
+<header class="site-header"><div class="wrap site-header__inner"><a class="brand" href="../index.html"><img class="brand__logo" src="../assets/img/brand-mark.svg" alt="AI Knowledge Lab" width="44" height="44"><span class="brand__tag"><span class="brand__rotate"><span class="brand__item is-active">Independent Thinker</span><span class="brand__item">AI Agents</span><span class="brand__item">Complex Systems</span><span class="brand__item">Diverse Thinking</span></span></span></a><button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">菜单</button><nav class="nav" id="site-nav" aria-label="主导航"><a href="../index.html">Home</a><a href="../bench/">Agent Bench</a><a href="../diverse/" aria-current="page">Diverse Lab</a><a href="../articles/">Articles</a><a href="../projects/">Projects</a><a href="../videos/">Videos</a><a href="../times/">Hot Words</a><a href="../about/">About Me</a><a class="nav__search" href="../tags/">Tags / Search</a></nav></div></header>
+<main><article class="article-body"><header class="page-hero"><div class="prose-wrap"><p class="page-hero__kicker">Diverse Lab · Agent Development Workflow</p><h1>Grill Me、Superpowers 与 OpenSpec：把 AI 编程从“会写代码”变成可控的工程流程</h1><p class="page-hero__desc">从需求追问、工程执行方法到可追踪的规格变更，深入比较 Grill Me、Superpowers 与 OpenSpec 的职责边界、重叠部分和组合方式，并以本地 Coding Agent CLI 为例设计需求到发布的闭环。</p><p class="article-meta"><span>思路 2026-10-29</span><span>发表 2026-10-29</span><span>作者 chengguruchun</span><a class="tag" href="../tags/?tag=Coding%20Agent">Coding Agent</a><a class="tag" href="../tags/?tag=Agent%20Skills">Agent Skills</a><a class="tag" href="../tags/?tag=Grill%20Me">Grill Me</a><a class="tag" href="../tags/?tag=Superpowers">Superpowers</a><a class="tag" href="../tags/?tag=OpenSpec">OpenSpec</a></p></div></header>
+<div class="prose-wrap">
+<p>本文讨论三个常被放在一起的开发 Skills / 工具：Grill Me、Superpowers 与 OpenSpec。它们并非同类产品，而是分别处理需求决策、工程执行和规格治理。</p>
+<h2>先给结论：三者不是三个同类工具</h2>
+<ul><li><strong>Grill Me：把问题问透。</strong> 通过连续追问，逐个消除方案里的隐含假设和未决选择。</li><li><strong>Superpowers：把开发过程做扎实。</strong> 它是一套面向 Coding Agent 的工程方法与可组合 Skills，覆盖设计讨论、计划、TDD、代码审查、调试和完成前验证。</li><li><strong>OpenSpec：把需求和变更变成可追踪的规格资产。</strong> 它用 proposal、specs、design、tasks 等工件，让人和 Agent 在编码前对“要改什么、怎样算完成”达成一致。</li></ul>
+<p>因此，它们更像是三个互补维度：<strong>决策澄清、执行方法、规格治理</strong>。它们有重叠，但不应该机械地当成三个必须按顺序运行的独立阶段。</p>
+<h2>一、Grill Me：消除隐含假设</h2>
+<p>Grill Me 是 Matt Pocock 的 Skills 集合中的技能，核心方式是持续访谈用户，沿着设计决策树逐项深入，每次只问一个问题，并为问题提供建议答案。它不是完整的软件开发生命周期，也不是规格管理器。</p>
+<p>官方来源：<a href="https://github.com/mattpocock/skills/tree/main/skills/productivity/grill-me">mattpocock/skills · grill-me</a>。</p>
+<p>以“做一个本地 CLI，调用 Pi Agent、Cursor CLI 和 DeepSeek，完成需求到发布的自动化流程”为例，必须澄清：CLI 是流程编排器还是长期运行的 Runtime？不同 CLI 是可替换 Provider 还是固定阶段？谁批准计划？测试失败可以重试几次？生产部署是否必须人工审批？</p>
+<p>Grill Me 的价值不是替用户立即选择架构，而是暴露决策并问清理由和边界。结束条件应是关键决策已明确，未知项已标注，剩余风险有验证方式或负责人。若代码库已有答案，应先查代码、配置、测试和文档，而不是让用户重复提供信息。</p>
+<h2>二、Superpowers：把工程纪律嵌入 Agent</h2>
+<p>Superpowers 是 obra 维护的 Agentic Skills 框架和软件开发方法论。典型流程包含 Brainstorming、Writing Plans、计划执行、Test-Driven Development、代码审查、系统性调试和完成前验证。</p>
+<p>官方仓库：<a href="https://github.com/obra/superpowers">obra/superpowers</a>。</p>
+<p>它的贡献是把工程实践变成 Agent 的行为约束。例如遵循 Red → Green → Refactor，先看到失败测试，再实现最小改动；完成前运行真实命令、检查退出码和结果，而不是凭模型自述宣布成功。</p>
+<p>Superpowers 的 Brainstorming 本身也会通过提问澄清需求，因此与 Grill Me 有重叠。Grill Me 更适合显式地沿决策树深挖；Superpowers 的 Brainstorming 则是完整工程流程的一环，会把理解收敛为设计并连接计划与实施。不要在每次任务里重复运行两套相同的追问。</p>
+<h2>三、OpenSpec：让变更成为可审查、可演进的规格</h2>
+<p>OpenSpec 是面向 AI Coding Assistant 的 Spec-Driven Development 工具。一次变更可以包含 proposal.md、specs/、design.md、tasks.md，并在完成后归档，保留变更历史并更新适用的当前规格。</p>
+<p>官方仓库：<a href="https://github.com/Fission-AI/OpenSpec">Fission-AI/OpenSpec</a>；文档：<a href="https://openspec.dev/docs">openspec.dev/docs</a>。</p>
+<p>例如“失败后支持断点恢复”不应只有一句需求。规格应说明进程退出后怎样读取有效 Checkpoint、已完成步骤如何避免重复副作用，以及状态不兼容时应如何明确失败。OpenSpec 的价值是让行为要求在编码前可审查，并让实现、Judge 和 CI 能引用同一组验收标准。</p>
+<p>它不是要求每次改一行代码都写一套完整文档。文案和低风险修复可以轻量处理；涉及 API、数据模型、权限、计费、迁移和生产恢复时，则应更明确地写出失败场景、安全边界与回滚策略。</p>
+<h2>四、核心差异</h2>
+<table><thead><tr><th>维度</th><th>Grill Me</th><th>Superpowers</th><th>OpenSpec</th></tr></thead><tbody>
+<tr><td>核心问题</td><td>我们到底要解决什么？</td><td>Agent 应如何按工程纪律完成工作？</td><td>行为与变更如何被记录、审查和追踪？</td></tr>
+<tr><td>主要形态</td><td>深度访谈 Skill</td><td>Skills 框架与开发方法论</td><td>规格驱动工作流与 CLI</td></tr>
+<tr><td>主要产物</td><td>决策、假设、未决项</td><td>设计、计划、测试、审查与验证结果</td><td>Proposal、Specs、Design、Tasks、归档变更</td></tr>
+<tr><td>主要价值</td><td>减少误解需求</td><td>减少随意实施和无证据完成</td><td>减少规格散落与变更不可追踪</td></tr>
+<tr><td>不能替代</td><td>技术调研、规格存储、测试</td><td>业务决策和持久化规格治理</td><td>真实测试、代码审查和运行时安全控制</td></tr>
+</tbody></table>
+<h2>五、组合方式：本地 Coding Agent CLI</h2>
+<pre><code>需求 / Issue
+    ↓
+读取代码、配置、测试与项目约定
+    ↓
+Grill Me（按需）：澄清目标、约束与未知项
+    ↓
+确认方案
+    ↓
+OpenSpec（中高风险变更）：Proposal + Specs + Design + Tasks
+    ↓
+Superpowers：细化计划 → TDD → 编码 → Review
+    ↓
+Judge：对照规格检查行为和证据
+    ↓
+CI/CD：测试、静态检查、构建、安全扫描
+    ↓
+人工审批（高风险发布）→ 部署 → 运行观测
+    ↓
+反馈、问题记录、规格与后续任务更新</code></pre>
+<h3>需求入口：先调查，再决定是否追问</h3><p>CLI 收到需求后，先检索仓库和测试。如果仍有关键歧义，再用 Grill Me 一次处理一个高价值问题。把结论区分为已确认、基于证据的推断、未决项和非目标，避免把模型默认选择伪装成用户决定。</p>
+<h3>规格与实施：明确唯一事实来源</h3><p>对于跨模块、接口、数据结构或安全边界变更，使用 OpenSpec 维护行为要求和变更级任务状态。Superpowers 的计划可以负责更细粒度的执行步骤，但不要长期维护两份彼此漂移的任务清单。</p>
+<h3>验证：Judge 不能只问另一个模型</h3><p>验证顺序应包含规格场景覆盖、单元/集成/端到端测试、类型检查、Lint、构建、安全检查和差异审查。模型 Judge 可补充语义审查，但不能替代确定性测试和真实运行证据。CI 通过也不代表业务目标一定实现，还要检查验收条件是否覆盖真实用户行为。</p>
+<h3>发布：按风险设置权限门控</h3><p>开发环境可以更自动化；生产环境、数据迁移、计费和外部副作用应有明确审批、回滚和审计。Agent 可以提出发布动作，但 Runtime 应检查环境、风险、授权和证据。</p>
+<h2>六、避免把流程叠成三倍工作量</h2>
+<ul><li>不要让 Grill Me 和 Superpowers Brainstorming 重复追问相同问题。</li><li>不要让 OpenSpec 的任务清单与另一份实施计划长期漂移。</li><li>不要让 Judge 使用与规格不同的验收标准。</li><li>不要在 CI 通过后跳过真实业务场景验证。</li></ul>
+<p>建议明确每类信息的权威来源：用户确认的目标放在需求记录或设计中；长期行为要求由 OpenSpec Specs 维护；代码事实以仓库为准；验证结果来自测试、CI 和运行证据；发布授权由 Runtime 策略、审批和审计记录维护。</p>
+<h2>七、走向自己的 Agent Runtime</h2>
+<p>如果把这套方式集成进本地 CLI，不应只写死三个 Shell 命令，而应让 Runtime 管理生命周期状态，例如：</p>
+<pre><code>RECEIVED → RECONNAISSANCE → CLARIFYING（按需）
+→ SPEC_READY（按需）→ PLAN_APPROVED → IMPLEMENTING
+→ VERIFYING → REVIEW_REQUIRED（按风险）
+→ READY_TO_RELEASE → DEPLOYED</code></pre>
+<p>每次状态转换都要有进入条件和证据。Runtime 应保存需求来源、代码版本、决策与未决项、规格标识、任务依赖、工具调用、失败分类、测试日志、审批记录和 Checkpoint。需求不清楚就返回澄清；规格冲突就回到设计；测试失败进入系统性调试；权限不足或生产发布则等待授权。</p>
+<p><strong>Skill 提供局部能力，规格提供行为依据，Runtime 管理状态与权限，验证系统提供证据。</strong> 这才是从“会调用 Skills 的 CLI”走向可恢复、可审计的 Coding Agent Runtime 的关键。</p>
+<h2>结语</h2><p>Grill Me、Superpowers 和 OpenSpec 分别代表认真澄清问题、严格执行工程方法、用规格管理变更。对本地 Coding Agent CLI，推荐策略是：先读取项目事实；有歧义时用 Grill Me；需要长期可追踪的变更时用 OpenSpec；实施时采用 Superpowers 的工程纪律；最后用独立验证、CI/CD、风险门控和发布观测形成闭环。</p>
+<p>目标不是把三个工具拼在一起，而是建立一套能按任务复杂度灵活选择、按证据推进状态、在失败时安全恢复的工程系统。</p>
+<p class="article-meta"><span>参考资料</span><a href="https://github.com/mattpocock/skills/tree/main/skills/productivity/grill-me">Grill Me</a><a href="https://github.com/obra/superpowers">Superpowers</a><a href="https://github.com/Fission-AI/OpenSpec">OpenSpec</a><a href="https://openspec.dev/docs">OpenSpec Docs</a></p>
+</div></article></main>
+<footer class="site-footer"><div class="wrap"><p>AI Knowledge Lab · 思考、实践与验证</p><p><a href="./">返回 Diverse Lab</a></p></div></footer>
+<script src="../assets/js/site.js"></script>
+</body></html>
