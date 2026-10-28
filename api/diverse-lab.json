@@ -2,6 +2,42 @@
   "type": "Diverse Lab",
   "items": [
     {
+      "id": "grill-me-superpowers-openspec-agent-development-workflow",
+      "type": "Diverse Lab",
+      "title": "Grill Me、Superpowers 与 OpenSpec：把 AI 编程从“会写代码”变成可控的工程流程",
+      "excerpt": "从需求追问、工程执行方法到可追踪的规格变更，深入比较 Grill Me、Superpowers 与 OpenSpec 的职责边界、重叠部分和组合方式，并以本地 Coding Agent CLI 为例设计需求到发布的闭环。",
+      "url": "/diverse/grill-me-superpowers-openspec-agent-development-workflow.html",
+      "date": "2026-10-29",
+      "tags": [
+        "Coding Agent",
+        "Agent Skills",
+        "Grill Me",
+        "Superpowers",
+        "OpenSpec",
+        "Spec-driven Development",
+        "Software Engineering",
+        "Verification"
+      ],
+      "thought_date": "2026-10-29",
+      "published_date": "2026-10-29",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/grill-me-superpowers-openspec-agent-development-workflow.md",
+      "content": "/content/diverse/grill-me-superpowers-openspec-agent-development-workflow.md",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-10-29",
+        "next_review": "2027-01-27",
+        "cadence_days": 90,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      },
+      "name": "Grill Me、Superpowers 与 OpenSpec：把 AI 编程从“会写代码”变成可控的工程流程",
+      "desc": "从需求追问、工程执行方法到可追踪的规格变更，深入比较 Grill Me、Superpowers 与 OpenSpec 的职责边界、重叠部分和组合方式，并以本地 Coding Agent CLI 为例设计需求到发布的闭环。"
+    },
+    {
       "id": "agent-engineering-laws-harness-architecture-feedback",
       "type": "Diverse Lab",
       "title": "Agent 化会改变哪些软件工程定律？从 Harness 到架构反馈闭环",
