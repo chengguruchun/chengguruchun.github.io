@@ -1,9 +1,20 @@
 {
   "name": "Critic Lab runs",
   "kind": "read",
-  "updated": "2026-10-24T00:37:21Z",
-  "count": 24,
+  "updated": "2026-10-29T23:56:50Z",
+  "count": 25,
   "runs": [
+    {
+      "id": "llm-inference-serving-from-api-to-gpu-bde767497e71",
+      "article": "llm-inference-serving-from-api-to-gpu",
+      "article_slug": "llm-inference-serving-from-api-to-gpu",
+      "status": "needs_review",
+      "summary": "这篇文章是一篇扎实的、主要以概念梳理为主的架构综述，其分层结构（接入 → 网关 → 路由 → 运行时 → 分布式执行 → GPU）与当前推理服务认知基本一致。主要风险是若干被表述为确定事实、实际上取决于版本和实现的说法（PagedAttention/RadixAttention 的行为、SSE 背压、缓存局部性路由），以及缺少真正决定可行性的工程测量与限制条件（TTFT/TPOT 目标、SLO、成本、失败模式）。该文在核心架构论断...",
+      "commit": "bde767497e7129a25b85801cd3e323030795474e",
+      "generated_at": "2026-10-29T23:56:50.264718+00:00",
+      "json": "/api/critic/runs/llm-inference-serving-from-api-to-gpu-bde767497e71.json",
+      "markdown": "/api/critic/runs/llm-inference-serving-from-api-to-gpu-bde767497e71.md"
+    },
     {
       "id": "ai-era-design-principles-patterns-ddd-d0f16155dc0e",
       "article": "ai-era-design-principles-patterns-ddd",
