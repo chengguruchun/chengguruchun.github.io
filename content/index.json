@@ -2,6 +2,43 @@
   "generated": "2026-10-26T05:48:53Z",
   "items": [
     {
+      "id": "llm-inference-serving-from-api-to-gpu",
+      "type": "Articles",
+      "title": "从 API 请求到 GPU 执行：拆解大模型推理服务架构",
+      "excerpt": "从云端接入、API Gateway、模型路由，到 vLLM/SGLang 的请求队列、连续批处理、KV Cache 管理，再到 Tensor Parallel、CUDA、NCCL 与 GPU 执行，串起一次流式推理请求的完整链路。",
+      "url": "/articles/llm-inference-serving-from-api-to-gpu.html",
+      "date": "2026-10-30",
+      "tags": [
+        "LLM",
+        "Inference",
+        "vLLM",
+        "SGLang",
+        "GPU",
+        "KV Cache",
+        "CUDA",
+        "Tensor Parallelism",
+        "Serving Architecture"
+      ],
+      "thought_date": "2026-10-30",
+      "published_date": "2026-10-30",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/llm-inference-serving-from-api-to-gpu.md",
+      "content": "/content/articles/llm-inference-serving-from-api-to-gpu.md",
+      "name": "从 API 请求到 GPU 执行：拆解大模型推理服务架构",
+      "desc": "从云端接入、API Gateway、模型路由，到 vLLM/SGLang 的请求队列、连续批处理、KV Cache 管理，再到 Tensor Parallel、CUDA、NCCL 与 GPU 执行，串起一次流式推理请求的完整链路。",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-10-30",
+        "next_review": "2027-01-28",
+        "cadence_days": 90,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      }
+    },
+    {
       "id": "grill-me-superpowers-openspec-agent-development-workflow",
       "type": "Diverse Lab",
       "title": "Grill Me、Superpowers 与 OpenSpec：把 AI 编程从“会写代码”变成可控的工程流程",
