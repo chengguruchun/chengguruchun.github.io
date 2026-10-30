@@ -1,0 +1,35 @@
+{
+  "id": "thought-multi-agent-runtime-topology",
+  "thought": "企业级 Multi-Agent Runtime 应以 Task 与 Shared State 为组织中心：Agent 是可替换的执行者，拓扑、通信、协调和治理应作为正交维度设计，并通过独立验证形成可靠闭环。",
+  "stage": "topic",
+  "status": "hold",
+  "origin": "joint",
+  "contribution": "synthesis",
+  "knowledge": {
+    "type": "HYPOTHESIS",
+    "confidence": "LOW",
+    "evidence_level": "L1"
+  },
+  "quality": {
+    "fact_check": "pending",
+    "inference_check": "pending",
+    "evidence_check": "pending",
+    "counterexample_check": "pending"
+  },
+  "source": {
+    "agent": "ChatGPT",
+    "note": "由用户与 Agent 关于 Multi-Agent 拓扑、Gossip、协调机制和企业级 Runtime 的讨论蒸馏而来；仅登记一句 topic，不将聊天记录写入仓库。"
+  },
+  "critiques": [
+    "该主张需要与以 Agent 为中心的编排方式进行可重复对照；Task/Shared State 是否更优取决于任务类型、共享状态冲突和协作成本。"
+  ],
+  "comparisons": [
+    "与星型、树型、黑板和 Mesh 的拓扑分类不同，本命题把拓扑、通信、协调、治理拆成正交维度，并进一步主张以 Task 生命周期和 Shared State 作为 Runtime 的持久化事实来源。"
+  ],
+  "evidence": [],
+  "route": null,
+  "also": [],
+  "promotes_to": null,
+  "published_url": null,
+  "updated": "2026-10-30"
+}
