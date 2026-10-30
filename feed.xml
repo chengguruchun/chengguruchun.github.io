@@ -5,8 +5,40 @@
     <link>https://chengguruchun.github.io/</link>
     <description>chengguruchun · Blog for Agents · 知识博客（文章 / Diverse Lab 等有日期条目）</description>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 23 Oct 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 30 Oct 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://chengguruchun.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>从 Agent 拓扑到任务协作：重新设计 Multi-Agent Runtime</title>
+      <link>https://chengguruchun.github.io/diverse/multi-agent-runtime-topology-task-collaboration.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/diverse/multi-agent-runtime-topology-task-collaboration.html</guid>
+      <pubDate>Fri, 30 Oct 2026 00:00:00 +0000</pubDate>
+      <category>Diverse Lab</category>
+      <description>多 Agent 架构不应只比较 Swarm、Orchestrator 或 Gossip。本文把拓扑、通信、协调与治理拆成正交维度，并提出以 Task 与 Shared State 为中心、Agent 为可替换执行单元的企业级 Runtime 设计。</description>
+    </item>
+    <item>
+      <title>从 API 请求到 GPU 执行：拆解大模型推理服务架构</title>
+      <link>https://chengguruchun.github.io/articles/llm-inference-serving-from-api-to-gpu.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/articles/llm-inference-serving-from-api-to-gpu.html</guid>
+      <pubDate>Fri, 30 Oct 2026 00:00:00 +0000</pubDate>
+      <category>Articles</category>
+      <description>从云端接入、API Gateway、模型路由，到 vLLM/SGLang 的请求队列、连续批处理、KV Cache 管理，再到 Tensor Parallel、CUDA、NCCL 与 GPU 执行，串起一次流式推理请求的完整链路。</description>
+    </item>
+    <item>
+      <title>Grill Me、Superpowers 与 OpenSpec：把 AI 编程从“会写代码”变成可控的工程流程</title>
+      <link>https://chengguruchun.github.io/diverse/grill-me-superpowers-openspec-agent-development-workflow.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/diverse/grill-me-superpowers-openspec-agent-development-workflow.html</guid>
+      <pubDate>Thu, 29 Oct 2026 00:00:00 +0000</pubDate>
+      <category>Diverse Lab</category>
+      <description>从需求追问、工程执行方法到可追踪的规格变更，深入比较 Grill Me、Superpowers 与 OpenSpec 的职责边界、重叠部分和组合方式，并以本地 Coding Agent CLI 为例设计需求到发布的闭环。</description>
+    </item>
+    <item>
+      <title>2026-10 Week 4 · Agent 协议标准化</title>
+      <link>https://chengguruchun.github.io/times/</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/times/</guid>
+      <pubDate>Mon, 26 Oct 2026 00:00:00 +0000</pubDate>
+      <category>Times</category>
+      <description>本周选 Agent 协议标准化，因为它把近期分散的工具、记忆、可观测性议题收束到可互操作的接口层：MCP 定义模型与工具/资源的连接，A2A 定义跨 Agent 协作，二者都有公开规范可核验。相比继续讨论可靠性口号，协议标准化给出可落地的工程抓手，也便于后续用真实仓库与文档补齐结构化证据。</description>
+    </item>
     <item>
       <title>AI 时代，为什么设计原则、设计模式与 DDD 仍然重要</title>
       <link>https://chengguruchun.github.io/articles/ai-era-design-principles-patterns-ddd.html</link>

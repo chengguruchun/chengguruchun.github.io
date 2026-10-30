@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-29",
+  "updated": "2026-10-30",
   "tags": {
     "AI Engineering": [
       "ai-era-design-principles-patterns-ddd"
@@ -14,6 +14,7 @@
       "agent-runtime-cognitive-actor"
     ],
     "Agent": [
+      "multi-agent-runtime-topology-task-collaboration",
       "agent-engineering-laws-harness-architecture-feedback",
       "agent-oriented-architecture-decomposition",
       "gossip-evidence-consensus-multi-agent",
@@ -54,6 +55,7 @@
       "times-2026-10-w1"
     ],
     "Agent Runtime": [
+      "multi-agent-runtime-topology-task-collaboration",
       "agent-engineering-laws-harness-architecture-feedback",
       "agent-oriented-architecture-decomposition",
       "ai-native-software-language-aosl",
@@ -64,6 +66,12 @@
     ],
     "Agent Sandboxing": [
       "times-2026-10-w2"
+    ],
+    "Agent Skills": [
+      "grill-me-superpowers-openspec-agent-development-workflow"
+    ],
+    "Agent 协议标准化": [
+      "times-2026-10-w4"
     ],
     "Agent 工具调用可靠性": [
       "times-2026-10-w3"
@@ -111,6 +119,9 @@
     "Business-Complexity": [
       "fde-agent-opportunity-discovery"
     ],
+    "CUDA": [
+      "llm-inference-serving-from-api-to-gpu"
+    ],
     "Capability": [
       "iot-agent-from-device-to-physical-world-runtime"
     ],
@@ -151,6 +162,9 @@
     "Conway's Law": [
       "agent-engineering-laws-harness-architecture-feedback"
     ],
+    "Coordination": [
+      "multi-agent-runtime-topology-task-collaboration"
+    ],
     "Cost": [
       "reasoning-scale-knowledge-external"
     ],
@@ -176,6 +190,9 @@
     ],
     "Developer Tools": [
       "event-driven-coding-agent-runtime"
+    ],
+    "Distributed Systems": [
+      "multi-agent-runtime-topology-task-collaboration"
     ],
     "Diverse": [
       "software-design-universal-patterns",
@@ -238,11 +255,20 @@
       "ai-native-software-language-aosl",
       "frontend-language-for-ai-assisted-development"
     ],
+    "GPU": [
+      "llm-inference-serving-from-api-to-gpu"
+    ],
     "Game Theory": [
       "reinforcement-learning-game-theory-complex-systems"
     ],
+    "Gossip": [
+      "multi-agent-runtime-topology-task-collaboration"
+    ],
     "Graph": [
       "agent-engineering-from-workflow-to-control-plane"
+    ],
+    "Grill Me": [
+      "grill-me-superpowers-openspec-agent-development-workflow"
     ],
     "Ground Truth": [
       "agent-evaluation-proxy-vs-real-outcome"
@@ -261,6 +287,7 @@
       "agent-engineering-from-workflow-to-control-plane"
     ],
     "Hot Words": [
+      "times-2026-10-w4",
       "times-2026-10-w3",
       "times-2026-10-w2",
       "times-2026-10-w1",
@@ -274,6 +301,7 @@
       "agent-industrial-internet"
     ],
     "Inference": [
+      "llm-inference-serving-from-api-to-gpu",
       "from-llm-to-agent-runtime"
     ],
     "Interpretability": [
@@ -290,6 +318,9 @@
     "IoT Core": [
       "iot-agent-from-device-to-physical-world-runtime"
     ],
+    "KV Cache": [
+      "llm-inference-serving-from-api-to-gpu"
+    ],
     "Know-how": [
       "agent-industrial-internet"
     ],
@@ -301,6 +332,7 @@
       "k8s-to-agent-control-plane"
     ],
     "LLM": [
+      "llm-inference-serving-from-api-to-gpu",
       "transformer-from-attention-to-decoder-only",
       "from-llm-to-agent-runtime",
       "h-neurons-paper-reading",
@@ -342,9 +374,13 @@
       "agent-oriented-architecture-decomposition"
     ],
     "Multi-Agent": [
+      "multi-agent-runtime-topology-task-collaboration",
       "agent-engineering-laws-harness-architecture-feedback",
       "agent-oriented-architecture-decomposition",
       "gossip-evidence-consensus-multi-agent"
+    ],
+    "OpenSpec": [
+      "grill-me-superpowers-openspec-agent-development-workflow"
     ],
     "Optimizer": [
       "agent-optimizer-experience-policy"
@@ -412,6 +448,9 @@
       "agent-engineering-from-workflow-to-control-plane",
       "k8s-to-agent-control-plane"
     ],
+    "SGLang": [
+      "llm-inference-serving-from-api-to-gpu"
+    ],
     "SOLID": [
       "ai-era-design-principles-patterns-ddd"
     ],
@@ -421,6 +460,12 @@
     ],
     "Semantic IR": [
       "ai-native-software-language-aosl"
+    ],
+    "Serving Architecture": [
+      "llm-inference-serving-from-api-to-gpu"
+    ],
+    "Shared State": [
+      "multi-agent-runtime-topology-task-collaboration"
     ],
     "Skill": [
       "agent-skill-evolution-pruning"
@@ -432,6 +477,7 @@
       "iot-agent-from-automation-to-physical-infrastructure"
     ],
     "Software Architecture": [
+      "multi-agent-runtime-topology-task-collaboration",
       "ai-era-design-principles-patterns-ddd",
       "agent-engineering-laws-harness-architecture-feedback",
       "agent-oriented-architecture-decomposition"
@@ -446,8 +492,14 @@
     "Software Language": [
       "ai-native-software-language-aosl"
     ],
+    "Spec-driven Development": [
+      "grill-me-superpowers-openspec-agent-development-workflow"
+    ],
     "Spring": [
       "spring-dubbo-deepseek-harness-runtime"
+    ],
+    "Superpowers": [
+      "grill-me-superpowers-openspec-agent-development-workflow"
     ],
     "Supply Chain": [
       "from-mes-to-manufacturing-agent-runtime"
@@ -458,7 +510,14 @@
     "Task Decomposition": [
       "agent-oriented-architecture-decomposition"
     ],
+    "Task Orchestration": [
+      "multi-agent-runtime-topology-task-collaboration"
+    ],
+    "Tensor Parallelism": [
+      "llm-inference-serving-from-api-to-gpu"
+    ],
     "Times": [
+      "times-2026-10-w4",
       "times-2026-10-w3",
       "times-2026-10-w2",
       "times-2026-10-w1",
@@ -490,20 +549,8 @@
     "Workflow": [
       "agent-engineering-from-workflow-to-control-plane"
     ],
-    "Agent Skills": [
-      "grill-me-superpowers-openspec-agent-development-workflow"
-    ],
-    "Grill Me": [
-      "grill-me-superpowers-openspec-agent-development-workflow"
-    ],
-    "Superpowers": [
-      "grill-me-superpowers-openspec-agent-development-workflow"
-    ],
-    "OpenSpec": [
-      "grill-me-superpowers-openspec-agent-development-workflow"
-    ],
-    "Spec-driven Development": [
-      "grill-me-superpowers-openspec-agent-development-workflow"
+    "vLLM": [
+      "llm-inference-serving-from-api-to-gpu"
     ]
   }
 }
