@@ -2,6 +2,31 @@
   "type": "Diverse Lab",
   "items": [
     {
+      "id": "multi-agent-runtime-topology-task-collaboration",
+      "type": "Diverse Lab",
+      "title": "从 Agent 拓扑到任务协作：重新设计 Multi-Agent Runtime",
+      "excerpt": "多 Agent 架构不应只比较 Swarm、Orchestrator 或 Gossip。本文把拓扑、通信、协调与治理拆成正交维度，并提出以 Task 与 Shared State 为中心、Agent 为可替换执行单元的企业级 Runtime 设计。",
+      "url": "/diverse/multi-agent-runtime-topology-task-collaboration.html",
+      "date": "2026-10-30",
+      "tags": [
+        "Agent",
+        "Multi-Agent",
+        "Agent Runtime",
+        "Distributed Systems",
+        "Task Orchestration",
+        "Shared State",
+        "Gossip",
+        "Coordination",
+        "Software Architecture"
+      ],
+      "thought_date": "2026-10-30",
+      "published_date": "2026-10-30",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/multi-agent-runtime-topology-task-collaboration.md",
+      "content": "/content/diverse/multi-agent-runtime-topology-task-collaboration.md",
+      "name": "从 Agent 拓扑到任务协作：重新设计 Multi-Agent Runtime",
+      "desc": "多 Agent 架构不应只比较 Swarm、Orchestrator 或 Gossip。本文把拓扑、通信、协调与治理拆成正交维度，并提出以 Task 与 Shared State 为中心、Agent 为可替换执行单元的企业级 Runtime 设计。"
+    },
+    {
       "id": "grill-me-superpowers-openspec-agent-development-workflow",
       "type": "Diverse Lab",
       "title": "Grill Me、Superpowers 与 OpenSpec：把 AI 编程从“会写代码”变成可控的工程流程",
