@@ -1,9 +1,9 @@
 {
   "runId": "hot-words-2026-11-W1-20261102T072034Z",
   "period": "2026-11-W1",
-  "phase": "applied",
+  "phase": "published",
   "startedAt": "2026-11-02T07:20:34Z",
-  "finishedAt": "2026-11-02T07:20:43Z",
+  "finishedAt": "2026-11-02T07:20:46Z",
   "input": {
     "currentWord": "Agent 协议标准化",
     "recentHistory": [
@@ -186,6 +186,11 @@
       "gate": "pass"
     }
   },
-  "publish": {},
+  "publish": {
+    "commit": "ad4681c50182d7d704b1743244b11ab29276489a",
+    "url": "https://chengguruchun.github.io/times/",
+    "mode": "autonomous",
+    "periodScheme": "YYYY-MM-WN month block, not ISO week"
+  },
   "error": null
 }
