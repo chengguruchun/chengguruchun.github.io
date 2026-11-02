@@ -1,6 +1,6 @@
 {
   "name": "Hot Words feedback",
-  "generated": "2026-11-02T07:20:46Z",
+  "generated": "2026-11-02T22:04:54Z",
   "period": "2026-11-W1",
   "word": "Agent 评测基准",
   "signals": {
@@ -24,24 +24,19 @@
     }
   },
   "lastRun": {
-    "runId": "hot-words-2026-11-W1-20261102T072034Z",
-    "phase": "published",
+    "runId": "hot-words-2026-11-W1-20261102T220454Z",
+    "phase": "skipped",
     "gates": {
-      "schema": "pass",
+      "schema": "skip",
       "duplicate": "pass",
-      "editorial": "pass",
-      "evidence": "pass",
-      "relevance": "pass",
-      "consistency": "pass"
+      "editorial": "skip",
+      "evidence": "skip",
+      "relevance": "skip",
+      "consistency": "skip"
     },
-    "evidenceCount": 15,
-    "publish": {
-      "commit": "ad4681c50182d7d704b1743244b11ab29276489a",
-      "url": "https://chengguruchun.github.io/times/",
-      "mode": "autonomous",
-      "periodScheme": "YYYY-MM-WN month block, not ISO week"
-    },
-    "error": null
+    "evidenceCount": 0,
+    "publish": {},
+    "error": "Period 2026-11-W1 already published (Agent 评测基准); skip apply/push (pass force=true to override)"
   },
   "learnHints": {
     "recentWords": [
@@ -54,32 +49,19 @@
       "2026-09-W4: Agent Memory Benchmark",
       "2026-09-W3: Agent 长期记忆"
     ],
-    "rejectedCandidates": [
-      {
-        "word": "Agent 身份与授权",
-        "reason": "not_chosen",
-        "notes": "与协议标准化相邻但聚焦身份/授权层，有标准草案与厂商落地双证据。"
-      },
-      {
-        "word": "Agent 成本优化",
-        "reason": "not_chosen",
-        "notes": "工程落地痛点明确，论文与厂商文档均有量化证据。"
-      },
-      {
-        "word": "Agent 可恢复执行",
-        "reason": "not_chosen",
-        "notes": "从可观测性延伸到执行可靠性，属于工程深水区且证据充分。"
-      },
-      {
-        "word": "Agent 互操作层",
-        "reason": "not_chosen",
-        "notes": "与协议标准化高度相关，但聚焦跨运行时互操作与能力协商，需注意与禁用词区分。"
-      }
-    ],
-    "prefer": "优先选能落到本站软件 / 系统 / Agent 主线的词，并带至少一条可点开的 https 证据。",
-    "avoid": "回避与当前词重复、口号化、以及只有空泛描述没有来源的词。 最近未入选：Agent 身份与授权、Agent 成本优化、Agent 可恢复执行、Agent 互操作层。"
+    "rejectedCandidates": [],
+    "prefer": "下一轮务必补齐结构化证据（title/url/claim）；先有来源，再谈热度。",
+    "avoid": "回避与当前词重复、口号化、以及只有空泛描述没有来源的词。"
   },
   "recentRuns": [
+    {
+      "runId": "hot-words-2026-11-W1-20261102T220454Z",
+      "period": "2026-11-W1",
+      "phase": "skipped",
+      "word": "Agent 评测基准",
+      "finishedAt": "2026-11-02T22:04:54Z",
+      "path": "/api/hot-words/runs/hot-words-2026-11-W1-20261102T220454Z.json"
+    },
     {
       "runId": "hot-words-2026-11-W1-20261102T072034Z",
       "period": "2026-11-W1",
@@ -151,14 +133,6 @@
       "word": "Agentic RAG",
       "finishedAt": "2026-09-28T19:59:00Z",
       "path": "/api/hot-words/runs/hot-words-2026-09-W5-20260928T195850Z.json"
-    },
-    {
-      "runId": "hot-words-2026-09-W4-20260928T062137Z",
-      "period": "2026-09-W4",
-      "phase": "skipped",
-      "word": "Agent Memory Benchmark",
-      "finishedAt": "2026-09-28T06:21:37Z",
-      "path": "/api/hot-words/runs/hot-words-2026-09-W4-20260928T062137Z.json"
     }
   ],
   "endpoints": {
