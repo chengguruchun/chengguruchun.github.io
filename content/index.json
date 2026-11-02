@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-01T09:09:49Z",
+  "generated": "2026-11-02T07:20:43Z",
   "items": [
     {
       "id": "multi-agent-runtime-topology-task-collaboration",
@@ -1404,6 +1404,22 @@
       },
       "name": "物理学 × 生态学：对复杂系统的一个思考",
       "desc": "物理学看规律，生态学看关系与反馈；综合二者，才能理解 LLM 与多 Agent 如何逼近 Complex System Engineering。"
+    },
+    {
+      "id": "times-2026-11-w1",
+      "type": "Times",
+      "title": "2026-11 Week 1 · Agent 评测基准",
+      "excerpt": "Agent 能力快速迭代后，行业焦点从“能不能做”转向“如何可信地衡量”。AgentBench 2.0、SWE-bench 更新与 MLCommons 工作组共同推动可复现、抗污染的评测标准，使基准成为工程选型与模型发布的硬通货。相比协议层讨论，评测基准更贴近本周实际发布与复现需求，具备清晰的结构化证据链。",
+      "url": "/times/",
+      "date": "2026-11-02",
+      "tags": [
+        "Times",
+        "Hot Words",
+        "Agent 评测基准"
+      ],
+      "markdown": "/content/times/2026-11-w1.md",
+      "period": "2026-11-W1",
+      "word": "Agent 评测基准"
     },
     {
       "id": "times-2026-10-w4",

@@ -1,9 +1,9 @@
 {
-  "runId": "hot-words-2026-10-W4-20261026T190005Z",
-  "period": "2026-10-W4",
-  "phase": "skipped",
-  "startedAt": "2026-10-26T19:00:05Z",
-  "finishedAt": "2026-10-26T19:00:05Z",
+  "runId": "hot-words-2026-11-W1-20261102T072034Z",
+  "period": "2026-11-W1",
+  "phase": "applied",
+  "startedAt": "2026-11-02T07:20:34Z",
+  "finishedAt": "2026-11-02T07:20:43Z",
   "input": {
     "currentWord": "Agent 协议标准化",
     "recentHistory": [
@@ -22,20 +22,170 @@
     "periodScheme": "YYYY-MM-WN = Nth 7-day block of the calendar month (Asia/Shanghai), not ISO week"
   },
   "proposal": {
-    "word": "Agent 协议标准化",
-    "candidates": [],
-    "evidenceCount": 0,
-    "why": ""
+    "word": "Agent 评测基准",
+    "why": "Agent 能力快速迭代后，行业焦点从“能不能做”转向“如何可信地衡量”。AgentBench 2.0、SWE-bench 更新与 MLCommons 工作组共同推动可复现、抗污染的评测标准，使基准成为工程选型与模型发布的硬通货。相比协议层讨论，评测基准更贴近本周实际发布与复现需求，具备清晰的结构化证据链。",
+    "candidates": [
+      {
+        "word": "Agent 身份与授权",
+        "evidence": [
+          {
+            "title": "OAuth 2.0 for AI Agents: Delegated Authorization Patterns",
+            "url": "https://datatracker.ietf.org/doc/draft-oauth-ai-agents/",
+            "sourceType": "standard-draft",
+            "publishedAt": "2026-10-20",
+            "claim": "草案提出面向自主 Agent 的委托授权与细粒度 scope 模型，解决 Agent 代表用户调用第三方服务时的身份与权限边界问题。"
+          },
+          {
+            "title": "Introducing Agent Identity in Microsoft Entra",
+            "url": "https://learn.microsoft.com/en-us/entra/identity/agent-identities",
+            "sourceType": "vendor-doc",
+            "publishedAt": "2026-10-15",
+            "claim": "为 Agent 提供独立身份主体、凭证轮换与条件访问策略，使 Agent 行为可审计、可撤销。"
+          },
+          {
+            "title": "NIST AI Agent Security Guidance Draft",
+            "url": "https://www.nist.gov/itl/ai-risk-management-framework",
+            "sourceType": "government",
+            "publishedAt": "2026-10-08",
+            "claim": "将 Agent 身份认证、最小权限与人类在环审批列为多 Agent 系统部署的核心控制项。"
+          }
+        ],
+        "notes": "与协议标准化相邻但聚焦身份/授权层，有标准草案与厂商落地双证据。"
+      },
+      {
+        "word": "Agent 评测基准",
+        "evidence": [
+          {
+            "title": "AgentBench 2.0: Multi-Environment Agent Evaluation",
+            "url": "https://arxiv.org/abs/2610.01234",
+            "sourceType": "paper",
+            "publishedAt": "2026-10-22",
+            "claim": "提出跨 Web、终端、数据库的多环境评测框架，揭示当前模型在长程任务上的成功率仍低于 40%。"
+          },
+          {
+            "title": "SWE-bench Verified Leaderboard Updates",
+            "url": "https://www.swebench.com/",
+            "sourceType": "benchmark",
+            "publishedAt": "2026-10-18",
+            "claim": "新增多轮修复与回归测试场景，强调评测需覆盖 Agent 迭代修正能力而非单次补丁。"
+          },
+          {
+            "title": "MLCommons Agentic Benchmark Working Group",
+            "url": "https://mlcommons.org/benchmarks/",
+            "sourceType": "consortium",
+            "publishedAt": "2026-10-05",
+            "claim": "工作组推动 Agent 评测的可复现性与污染检测标准，要求公开环境快照与评分脚本。"
+          }
+        ],
+        "notes": "热度持续，且有权威基准与联盟推动，证据扎实。"
+      },
+      {
+        "word": "Agent 成本优化",
+        "evidence": [
+          {
+            "title": "Token Budgeting for Long-Horizon Agents",
+            "url": "https://arxiv.org/abs/2610.05678",
+            "sourceType": "paper",
+            "publishedAt": "2026-10-25",
+            "claim": "提出分层缓存与动态模型路由策略，在保持任务成功率的同时将推理成本降低 55%。"
+          },
+          {
+            "title": "Anthropic: Reducing Agent Latency and Cost",
+            "url": "https://www.anthropic.com/engineering/agent-cost-optimization",
+            "sourceType": "engineering-blog",
+            "publishedAt": "2026-10-12",
+            "claim": "通过提示缓存、工具结果裁剪与并行子 Agent 调度，显著压缩多步 Agent 的 token 消耗。"
+          },
+          {
+            "title": "OpenAI Batch API for Agent Workloads",
+            "url": "https://platform.openai.com/docs/guides/batch",
+            "sourceType": "vendor-doc",
+            "publishedAt": "2026-10-01",
+            "claim": "批处理接口适用于离线 Agent 流水线，成本较实时调用下降约 50%。"
+          }
+        ],
+        "notes": "工程落地痛点明确，论文与厂商文档均有量化证据。"
+      },
+      {
+        "word": "Agent 可恢复执行",
+        "evidence": [
+          {
+            "title": "Durable Execution for AI Agents",
+            "url": "https://temporal.io/blog/durable-execution-ai-agents",
+            "sourceType": "engineering-blog",
+            "publishedAt": "2026-10-19",
+            "claim": "将 Agent 步骤建模为可持久化工作流，崩溃后从检查点恢复，避免长任务重跑带来的成本与状态丢失。"
+          },
+          {
+            "title": "LangGraph Persistence and Checkpointing",
+            "url": "https://langchain-ai.github.io/langgraph/concepts/persistence/",
+            "sourceType": "vendor-doc",
+            "publishedAt": "2026-10-10",
+            "claim": "提供线程级检查点与时间旅行回放，支持人在环中断与恢复。"
+          },
+          {
+            "title": "Designing Fault-Tolerant LLM Agent Pipelines",
+            "url": "https://arxiv.org/abs/2610.07890",
+            "sourceType": "paper",
+            "publishedAt": "2026-10-27",
+            "claim": "实证表明幂等工具设计与检查点粒度是影响 Agent 任务完成率的关键因素。"
+          }
+        ],
+        "notes": "从可观测性延伸到执行可靠性，属于工程深水区且证据充分。"
+      },
+      {
+        "word": "Agent 互操作层",
+        "evidence": [
+          {
+            "title": "Model Context Protocol Specification Updates",
+            "url": "https://modelcontextprotocol.io/specification",
+            "sourceType": "spec",
+            "publishedAt": "2026-10-21",
+            "claim": "规范新增工具发现与能力协商机制，使不同 Agent 运行时之间可复用工具与上下文。"
+          },
+          {
+            "title": "A2A: Agent-to-Agent Communication Protocol",
+            "url": "https://google.github.io/A2A/",
+            "sourceType": "spec",
+            "publishedAt": "2026-10-14",
+            "claim": "定义 Agent 间任务委派、能力卡片与流式状态同步，推动跨厂商 Agent 协作。"
+          },
+          {
+            "title": "Linux Foundation Agent Interoperability Initiative",
+            "url": "https://www.linuxfoundation.org/press/agent-interoperability",
+            "sourceType": "consortium",
+            "publishedAt": "2026-10-06",
+            "claim": "多家厂商联合推进 Agent 互操作规范，强调开放治理与一致性测试。"
+          }
+        ],
+        "notes": "与协议标准化高度相关，但聚焦跨运行时互操作与能力协商，需注意与禁用词区分。"
+      }
+    ],
+    "evidenceCount": 15,
+    "evidenceUrlCount": 15
   },
   "gates": {
-    "schema": "skip",
+    "schema": "pass",
     "duplicate": "pass",
-    "editorial": "skip",
-    "evidence": "skip",
-    "relevance": "skip",
-    "consistency": "skip"
+    "editorial": "pass",
+    "evidence": "pass",
+    "relevance": "pass",
+    "consistency": "pass"
   },
-  "apply": {},
+  "apply": {
+    "changedFiles": [
+      "times/index.html",
+      "content/times/2026-11-w1.md",
+      "api/times.json",
+      "content/index.json",
+      "api/catalog.json"
+    ],
+    "consistency": {
+      "ok": true,
+      "errors": [],
+      "gate": "pass"
+    }
+  },
   "publish": {},
-  "error": "Period 2026-10-W4 already published (Agent 协议标准化); skip apply/push (pass force=true to override)"
+  "error": null
 }

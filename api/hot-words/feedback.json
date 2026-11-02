@@ -1,8 +1,8 @@
 {
   "name": "Hot Words feedback",
-  "generated": "2026-10-26T19:00:05Z",
-  "period": "2026-10-W4",
-  "word": "Agent 协议标准化",
+  "generated": "2026-11-02T07:20:43Z",
+  "period": "2026-11-W1",
+  "word": "Agent 评测基准",
   "signals": {
     "visits": {
       "site": null,
@@ -24,36 +24,65 @@
     }
   },
   "lastRun": {
-    "runId": "hot-words-2026-10-W4-20261026T190005Z",
-    "phase": "skipped",
+    "runId": "hot-words-2026-11-W1-20261102T072034Z",
+    "phase": "applied",
     "gates": {
-      "schema": "skip",
+      "schema": "pass",
       "duplicate": "pass",
-      "editorial": "skip",
-      "evidence": "skip",
-      "relevance": "skip",
-      "consistency": "skip"
+      "editorial": "pass",
+      "evidence": "pass",
+      "relevance": "pass",
+      "consistency": "pass"
     },
-    "evidenceCount": 0,
+    "evidenceCount": 15,
     "publish": {},
-    "error": "Period 2026-10-W4 already published (Agent 协议标准化); skip apply/push (pass force=true to override)"
+    "error": null
   },
   "learnHints": {
     "recentWords": [
+      "2026-11-W1: Agent 评测基准",
       "2026-10-W4: Agent 协议标准化",
       "2026-10-W3: Agent 工具调用可靠性",
       "2026-10-W2: Agent Sandboxing",
       "2026-10-W1: Agent Observability",
       "2026-09-W5: Agentic RAG",
       "2026-09-W4: Agent Memory Benchmark",
-      "2026-09-W3: Agent 长期记忆",
-      "2026-09-W2: Agent 记忆架构"
+      "2026-09-W3: Agent 长期记忆"
     ],
-    "rejectedCandidates": [],
-    "prefer": "下一轮务必补齐结构化证据（title/url/claim）；先有来源，再谈热度。",
-    "avoid": "回避与当前词重复、口号化、以及只有空泛描述没有来源的词。"
+    "rejectedCandidates": [
+      {
+        "word": "Agent 身份与授权",
+        "reason": "not_chosen",
+        "notes": "与协议标准化相邻但聚焦身份/授权层，有标准草案与厂商落地双证据。"
+      },
+      {
+        "word": "Agent 成本优化",
+        "reason": "not_chosen",
+        "notes": "工程落地痛点明确，论文与厂商文档均有量化证据。"
+      },
+      {
+        "word": "Agent 可恢复执行",
+        "reason": "not_chosen",
+        "notes": "从可观测性延伸到执行可靠性，属于工程深水区且证据充分。"
+      },
+      {
+        "word": "Agent 互操作层",
+        "reason": "not_chosen",
+        "notes": "与协议标准化高度相关，但聚焦跨运行时互操作与能力协商，需注意与禁用词区分。"
+      }
+    ],
+    "prefer": "优先选能落到本站软件 / 系统 / Agent 主线的词，并带至少一条可点开的 https 证据。",
+    "avoid": "回避与当前词重复、口号化、以及只有空泛描述没有来源的词。 最近未入选：Agent 身份与授权、Agent 成本优化、Agent 可恢复执行、Agent 互操作层。"
   },
   "recentRuns": [
+    {
+      "runId": "hot-words-2026-11-W1-20261102T072034Z",
+      "period": "2026-11-W1",
+      "phase": "applied",
+      "word": "Agent 评测基准",
+      "finishedAt": "2026-11-02T07:20:43Z",
+      "path": "/api/hot-words/runs/hot-words-2026-11-W1-20261102T072034Z.json"
+    },
     {
       "runId": "hot-words-2026-10-W4-20261026T190005Z",
       "period": "2026-10-W4",
@@ -125,14 +154,6 @@
       "word": "Agent Memory Benchmark",
       "finishedAt": "2026-09-28T06:21:37Z",
       "path": "/api/hot-words/runs/hot-words-2026-09-W4-20260928T062137Z.json"
-    },
-    {
-      "runId": "hot-words-2026-09-W4-20260921T182634Z",
-      "period": "2026-09-W4",
-      "phase": "published",
-      "word": "Agent Memory Benchmark",
-      "finishedAt": "2026-09-21T18:26:45Z",
-      "path": "/api/hot-words/runs/hot-words-2026-09-W4-20260921T182634Z.json"
     }
   ],
   "endpoints": {

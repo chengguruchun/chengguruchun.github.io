@@ -7,9 +7,20 @@
     "meaning": "Nth 7-day block of the calendar month in Asia/Shanghai (days 1–7 = W1, 8–14 = W2, …). Not an ISO 8601 week number.",
     "timezone": "Asia/Shanghai"
   },
-  "current": "2026-10-W4",
-  "updated": "2026-10-26",
+  "current": "2026-11-W1",
+  "updated": "2026-11-02",
   "issues": [
+    {
+      "id": "times-2026-11-w1",
+      "period": "2026-11-W1",
+      "cadence": "weekly",
+      "word": "Agent 评测基准",
+      "title": "2026-11 Week 1 · Agent 评测基准",
+      "why": "Agent 能力快速迭代后，行业焦点从“能不能做”转向“如何可信地衡量”。AgentBench 2.0、SWE-bench 更新与 MLCommons 工作组共同推动可复现、抗污染的评测标准，使基准成为工程选型与模型发布的硬通货。相比协议层讨论，评测基准更贴近本周实际发布与复现需求，具备清晰的结构化证据链。",
+      "date": "2026-11-02",
+      "url": "/times/",
+      "markdown": "/content/times/2026-11-w1.md"
+    },
     {
       "id": "times-2026-10-w4",
       "period": "2026-10-W4",
@@ -113,5 +124,5 @@
       "slug": "2026-09-w1"
     }
   ],
-  "currentProposalHash": "da5c3963f365802b"
+  "currentProposalHash": "fd73234d1431003f"
 }
