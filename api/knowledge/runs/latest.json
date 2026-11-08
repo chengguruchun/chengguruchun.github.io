@@ -1,13 +1,13 @@
 {
-  "runId": "knowledge-2026-11-W1-20261101T090949Z",
-  "period": "2026-11-W1",
+  "runId": "knowledge-2026-11-W2-20261108T085533Z",
+  "period": "2026-11-W2",
   "phase": "checked",
   "verdict": "ok",
-  "startedAt": "2026-11-01T09:09:49Z",
-  "finishedAt": "2026-11-01T09:09:49Z",
+  "startedAt": "2026-11-08T08:55:33Z",
+  "finishedAt": "2026-11-08T08:55:33Z",
   "input": {
     "periodScheme": "YYYY-MM-WN = Nth 7-day block of the calendar month (Asia/Shanghai), not ISO week",
-    "as_of": "2026-11-01"
+    "as_of": "2026-11-08"
   },
   "gates": {
     "surfaces": "pass",
@@ -53,7 +53,7 @@
   "changed": [],
   "contested": [],
   "summary": {
-    "items": 41,
+    "items": 42,
     "due": 0,
     "stale": 0,
     "changed": 0,
