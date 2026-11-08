@@ -1,6 +1,43 @@
 {
-  "generated": "2026-11-02T07:20:43Z",
+  "generated": "2026-11-08T05:12:00Z",
   "items": [
+    {
+      "id": "agent-capability-platform-from-middleware-to-agent-center",
+      "type": "Articles",
+      "title": "从基础服务中台到 Agent 能力中台：让 Agent 成为可声明式构建的能力",
+      "excerpt": "从传统基础服务中台出发，讨论 Agent 能力平台如何通过声明式 Definition、资源注册、动态装配与 Runtime 治理，让业务团队以配置和组合的方式构建不同类型的 Agent。",
+      "url": "/articles/agent-capability-platform-from-middleware-to-agent-center.html",
+      "date": "2026-11-08",
+      "tags": [
+        "Agent",
+        "Agent Platform",
+        "Agent Runtime",
+        "Control Plane",
+        "Developer Platform",
+        "Kubernetes",
+        "PaaS",
+        "Tool Registry",
+        "Policy"
+      ],
+      "thought_date": "2026-11-08",
+      "published_date": "2026-11-08",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/agent-capability-platform-from-middleware-to-agent-center.md",
+      "content": "/content/articles/agent-capability-platform-from-middleware-to-agent-center.md",
+      "name": "从基础服务中台到 Agent 能力中台：让 Agent 成为可声明式构建的能力",
+      "desc": "从传统基础服务中台出发，讨论 Agent 能力平台如何通过声明式 Definition、资源注册、动态装配与 Runtime 治理，让业务团队以配置和组合的方式构建不同类型的 Agent。",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-11-08",
+        "next_review": "2027-02-06",
+        "cadence_days": 90,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      }
+    },
     {
       "id": "multi-agent-runtime-topology-task-collaboration",
       "type": "Diverse Lab",
