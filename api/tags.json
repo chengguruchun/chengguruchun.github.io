@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-30",
+  "updated": "2026-11-08",
   "tags": {
     "AI Engineering": [
       "ai-era-design-principles-patterns-ddd"
@@ -14,6 +14,7 @@
       "agent-runtime-cognitive-actor"
     ],
     "Agent": [
+      "agent-capability-platform-from-middleware-to-agent-center",
       "multi-agent-runtime-topology-task-collaboration",
       "agent-engineering-laws-harness-architecture-feedback",
       "agent-oriented-architecture-decomposition",
@@ -55,6 +56,7 @@
       "times-2026-10-w1"
     ],
     "Agent Runtime": [
+      "agent-capability-platform-from-middleware-to-agent-center",
       "multi-agent-runtime-topology-task-collaboration",
       "agent-engineering-laws-harness-architecture-feedback",
       "agent-oriented-architecture-decomposition",
@@ -154,6 +156,7 @@
       "times-2026-09-w1"
     ],
     "Control Plane": [
+      "agent-capability-platform-from-middleware-to-agent-center",
       "from-mes-to-manufacturing-agent-runtime",
       "agent-engineering-from-workflow-to-control-plane",
       "iot-agent-reconstruction",
@@ -328,6 +331,7 @@
       "reasoning-scale-knowledge-external"
     ],
     "Kubernetes": [
+      "agent-capability-platform-from-middleware-to-agent-center",
       "agent-engineering-from-workflow-to-control-plane",
       "k8s-to-agent-control-plane"
     ],
@@ -392,6 +396,7 @@
       "agent-evaluation-proxy-vs-real-outcome"
     ],
     "PaaS": [
+      "agent-capability-platform-from-middleware-to-agent-center",
       "iot-agent-from-device-to-physical-world-runtime"
     ],
     "Philosophy": [
@@ -412,6 +417,7 @@
       "physics-ecology-llm"
     ],
     "Policy": [
+      "agent-capability-platform-from-middleware-to-agent-center",
       "agent-optimizer-experience-policy"
     ],
     "Procedural Memory": [
@@ -551,6 +557,15 @@
     ],
     "vLLM": [
       "llm-inference-serving-from-api-to-gpu"
+    ],
+    "Agent Platform": [
+      "agent-capability-platform-from-middleware-to-agent-center"
+    ],
+    "Developer Platform": [
+      "agent-capability-platform-from-middleware-to-agent-center"
+    ],
+    "Tool Registry": [
+      "agent-capability-platform-from-middleware-to-agent-center"
     ]
   }
 }
