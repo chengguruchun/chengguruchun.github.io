@@ -5,8 +5,16 @@
     <link>https://chengguruchun.github.io/</link>
     <description>chengguruchun · Blog for Agents · 知识博客（文章 / Diverse Lab 等有日期条目）</description>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 30 Oct 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 08 Nov 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://chengguruchun.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>从基础服务中台到 Agent 能力中台：让 Agent 成为可声明式构建的能力</title>
+      <link>https://chengguruchun.github.io/articles/agent-capability-platform-from-middleware-to-agent-center.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/articles/agent-capability-platform-from-middleware-to-agent-center.html</guid>
+      <pubDate>Sun, 08 Nov 2026 00:00:00 +0000</pubDate>
+      <category>Articles</category>
+      <description>从传统基础服务中台出发，讨论 Agent 能力平台如何通过声明式 Definition、资源注册、动态装配与 Runtime 治理，让业务团队以配置和组合的方式构建不同类型的 Agent。</description>
+    </item>
     <item>
       <title>从 Agent 拓扑到任务协作：重新设计 Multi-Agent Runtime</title>
       <link>https://chengguruchun.github.io/diverse/multi-agent-runtime-topology-task-collaboration.html</link>
