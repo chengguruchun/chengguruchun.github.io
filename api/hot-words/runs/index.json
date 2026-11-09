@@ -1,7 +1,15 @@
 {
   "name": "Hot Words run index",
-  "generated": "2026-11-09T07:42:01Z",
+  "generated": "2026-11-09T22:50:43Z",
   "items": [
+    {
+      "runId": "hot-words-2026-11-W2-20261109T225043Z",
+      "period": "2026-11-W2",
+      "phase": "skipped",
+      "word": "Agent 上下文工程",
+      "finishedAt": "2026-11-09T22:50:43Z",
+      "path": "/api/hot-words/runs/hot-words-2026-11-W2-20261109T225043Z.json"
+    },
     {
       "runId": "hot-words-2026-11-W2-20261109T074150Z",
       "period": "2026-11-W2",

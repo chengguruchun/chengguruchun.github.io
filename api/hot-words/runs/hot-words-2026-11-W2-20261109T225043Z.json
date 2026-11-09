@@ -1,0 +1,41 @@
+{
+  "runId": "hot-words-2026-11-W2-20261109T225043Z",
+  "period": "2026-11-W2",
+  "phase": "skipped",
+  "startedAt": "2026-11-09T22:50:43Z",
+  "finishedAt": "2026-11-09T22:50:43Z",
+  "input": {
+    "currentWord": "Agent 上下文工程",
+    "recentHistory": [
+      "2026-11-W2: Agent 上下文工程",
+      "2026-11-W1: Agent 评测基准",
+      "2026-10-W4: Agent 协议标准化",
+      "2026-10-W3: Agent 工具调用可靠性",
+      "2026-10-W2: Agent Sandboxing",
+      "2026-10-W1: Agent Observability",
+      "2026-09-W5: Agentic RAG",
+      "2026-09-W4: Agent Memory Benchmark"
+    ],
+    "force": false,
+    "mode": "autonomous",
+    "hasFeedback": true,
+    "periodScheme": "YYYY-MM-WN = Nth 7-day block of the calendar month (Asia/Shanghai), not ISO week"
+  },
+  "proposal": {
+    "word": "Agent 上下文工程",
+    "candidates": [],
+    "evidenceCount": 0,
+    "why": ""
+  },
+  "gates": {
+    "schema": "skip",
+    "duplicate": "pass",
+    "editorial": "skip",
+    "evidence": "skip",
+    "relevance": "skip",
+    "consistency": "skip"
+  },
+  "apply": {},
+  "publish": {},
+  "error": "Period 2026-11-W2 already published (Agent 上下文工程); skip apply/push (pass force=true to override)"
+}

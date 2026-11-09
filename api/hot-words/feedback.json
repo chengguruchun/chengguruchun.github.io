@@ -1,6 +1,6 @@
 {
   "name": "Hot Words feedback",
-  "generated": "2026-11-09T07:42:01Z",
+  "generated": "2026-11-09T22:50:43Z",
   "period": "2026-11-W2",
   "word": "Agent 上下文工程",
   "signals": {
@@ -24,24 +24,19 @@
     }
   },
   "lastRun": {
-    "runId": "hot-words-2026-11-W2-20261109T074150Z",
-    "phase": "published",
+    "runId": "hot-words-2026-11-W2-20261109T225043Z",
+    "phase": "skipped",
     "gates": {
-      "schema": "pass",
+      "schema": "skip",
       "duplicate": "pass",
-      "editorial": "pass",
-      "evidence": "pass",
-      "relevance": "pass",
-      "consistency": "pass"
+      "editorial": "skip",
+      "evidence": "skip",
+      "relevance": "skip",
+      "consistency": "skip"
     },
-    "evidenceCount": 10,
-    "publish": {
-      "commit": "a206dad106d0e24bbb63d0d90189e421d067cbc7",
-      "url": "https://chengguruchun.github.io/times/",
-      "mode": "autonomous",
-      "periodScheme": "YYYY-MM-WN month block, not ISO week"
-    },
-    "error": null
+    "evidenceCount": 0,
+    "publish": {},
+    "error": "Period 2026-11-W2 already published (Agent 上下文工程); skip apply/push (pass force=true to override)"
   },
   "learnHints": {
     "recentWords": [
@@ -54,27 +49,19 @@
       "2026-09-W5: Agentic RAG",
       "2026-09-W4: Agent Memory Benchmark"
     ],
-    "rejectedCandidates": [
-      {
-        "word": "Agent 成本工程",
-        "reason": "not_chosen",
-        "notes": "从可观测性延伸出的成本治理议题，有厂商文档与行业工作组支撑，非口号。"
-      },
-      {
-        "word": "Agent 失败恢复",
-        "reason": "not_chosen",
-        "notes": "与工具调用可靠性相关但聚焦恢复语义，需注意与 banned 词区分表述。"
-      },
-      {
-        "word": "Agent 评测基准",
-        "reason": "not_chosen",
-        "notes": "与 banned 词完全相同，仅作对照，不选。"
-      }
-    ],
-    "prefer": "优先选能落到本站软件 / 系统 / Agent 主线的词，并带至少一条可点开的 https 证据。",
-    "avoid": "回避与当前词重复、口号化、以及只有空泛描述没有来源的词。 最近未入选：Agent 成本工程、Agent 失败恢复、Agent 评测基准。"
+    "rejectedCandidates": [],
+    "prefer": "下一轮务必补齐结构化证据（title/url/claim）；先有来源，再谈热度。",
+    "avoid": "回避与当前词重复、口号化、以及只有空泛描述没有来源的词。"
   },
   "recentRuns": [
+    {
+      "runId": "hot-words-2026-11-W2-20261109T225043Z",
+      "period": "2026-11-W2",
+      "phase": "skipped",
+      "word": "Agent 上下文工程",
+      "finishedAt": "2026-11-09T22:50:43Z",
+      "path": "/api/hot-words/runs/hot-words-2026-11-W2-20261109T225043Z.json"
+    },
     {
       "runId": "hot-words-2026-11-W2-20261109T074150Z",
       "period": "2026-11-W2",
@@ -146,14 +133,6 @@
       "word": "Agent Sandboxing",
       "finishedAt": "2026-10-12T07:01:08Z",
       "path": "/api/hot-words/runs/hot-words-2026-10-W2-20261012T070053Z.json"
-    },
-    {
-      "runId": "hot-words-2026-10-W1-20261005T063534Z",
-      "period": "2026-10-W1",
-      "phase": "published",
-      "word": "Agent Observability",
-      "finishedAt": "2026-10-05T06:35:43Z",
-      "path": "/api/hot-words/runs/hot-words-2026-10-W1-20261005T063534Z.json"
     }
   ],
   "endpoints": {
