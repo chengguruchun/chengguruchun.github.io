@@ -1,8 +1,8 @@
 {
   "name": "Hot Words feedback",
-  "generated": "2026-11-02T22:04:54Z",
-  "period": "2026-11-W1",
-  "word": "Agent 评测基准",
+  "generated": "2026-11-09T07:41:59Z",
+  "period": "2026-11-W2",
+  "word": "Agent 上下文工程",
   "signals": {
     "visits": {
       "site": null,
@@ -24,36 +24,60 @@
     }
   },
   "lastRun": {
-    "runId": "hot-words-2026-11-W1-20261102T220454Z",
-    "phase": "skipped",
+    "runId": "hot-words-2026-11-W2-20261109T074150Z",
+    "phase": "applied",
     "gates": {
-      "schema": "skip",
+      "schema": "pass",
       "duplicate": "pass",
-      "editorial": "skip",
-      "evidence": "skip",
-      "relevance": "skip",
-      "consistency": "skip"
+      "editorial": "pass",
+      "evidence": "pass",
+      "relevance": "pass",
+      "consistency": "pass"
     },
-    "evidenceCount": 0,
+    "evidenceCount": 10,
     "publish": {},
-    "error": "Period 2026-11-W1 already published (Agent 评测基准); skip apply/push (pass force=true to override)"
+    "error": null
   },
   "learnHints": {
     "recentWords": [
+      "2026-11-W2: Agent 上下文工程",
       "2026-11-W1: Agent 评测基准",
       "2026-10-W4: Agent 协议标准化",
       "2026-10-W3: Agent 工具调用可靠性",
       "2026-10-W2: Agent Sandboxing",
       "2026-10-W1: Agent Observability",
       "2026-09-W5: Agentic RAG",
-      "2026-09-W4: Agent Memory Benchmark",
-      "2026-09-W3: Agent 长期记忆"
+      "2026-09-W4: Agent Memory Benchmark"
     ],
-    "rejectedCandidates": [],
-    "prefer": "下一轮务必补齐结构化证据（title/url/claim）；先有来源，再谈热度。",
-    "avoid": "回避与当前词重复、口号化、以及只有空泛描述没有来源的词。"
+    "rejectedCandidates": [
+      {
+        "word": "Agent 成本工程",
+        "reason": "not_chosen",
+        "notes": "从可观测性延伸出的成本治理议题，有厂商文档与行业工作组支撑，非口号。"
+      },
+      {
+        "word": "Agent 失败恢复",
+        "reason": "not_chosen",
+        "notes": "与工具调用可靠性相关但聚焦恢复语义，需注意与 banned 词区分表述。"
+      },
+      {
+        "word": "Agent 评测基准",
+        "reason": "not_chosen",
+        "notes": "与 banned 词完全相同，仅作对照，不选。"
+      }
+    ],
+    "prefer": "优先选能落到本站软件 / 系统 / Agent 主线的词，并带至少一条可点开的 https 证据。",
+    "avoid": "回避与当前词重复、口号化、以及只有空泛描述没有来源的词。 最近未入选：Agent 成本工程、Agent 失败恢复、Agent 评测基准。"
   },
   "recentRuns": [
+    {
+      "runId": "hot-words-2026-11-W2-20261109T074150Z",
+      "period": "2026-11-W2",
+      "phase": "applied",
+      "word": "Agent 上下文工程",
+      "finishedAt": "2026-11-09T07:41:58Z",
+      "path": "/api/hot-words/runs/hot-words-2026-11-W2-20261109T074150Z.json"
+    },
     {
       "runId": "hot-words-2026-11-W1-20261102T220454Z",
       "period": "2026-11-W1",
@@ -125,14 +149,6 @@
       "word": "Agent Observability",
       "finishedAt": "2026-10-05T06:35:43Z",
       "path": "/api/hot-words/runs/hot-words-2026-10-W1-20261005T063534Z.json"
-    },
-    {
-      "runId": "hot-words-2026-09-W5-20260928T195850Z",
-      "period": "2026-09-W5",
-      "phase": "published",
-      "word": "Agentic RAG",
-      "finishedAt": "2026-09-28T19:59:00Z",
-      "path": "/api/hot-words/runs/hot-words-2026-09-W5-20260928T195850Z.json"
     }
   ],
   "endpoints": {

@@ -1,0 +1,150 @@
+{
+  "runId": "hot-words-2026-11-W2-20261109T074150Z",
+  "period": "2026-11-W2",
+  "phase": "applied",
+  "startedAt": "2026-11-09T07:41:50Z",
+  "finishedAt": "2026-11-09T07:41:58Z",
+  "input": {
+    "currentWord": "Agent 评测基准",
+    "recentHistory": [
+      "2026-11-W1: Agent 评测基准",
+      "2026-10-W4: Agent 协议标准化",
+      "2026-10-W3: Agent 工具调用可靠性",
+      "2026-10-W2: Agent Sandboxing",
+      "2026-10-W1: Agent Observability",
+      "2026-09-W5: Agentic RAG",
+      "2026-09-W4: Agent Memory Benchmark",
+      "2026-09-W3: Agent 长期记忆"
+    ],
+    "force": false,
+    "mode": "autonomous",
+    "hasFeedback": true,
+    "periodScheme": "YYYY-MM-WN = Nth 7-day block of the calendar month (Asia/Shanghai), not ISO week"
+  },
+  "proposal": {
+    "word": "Agent 上下文工程",
+    "why": "上下文工程在 2025 下半年已从提示技巧升级为独立工程层，论文与一线厂商博客同时给出可操作模式。它承接记忆与可观测性话题，又能落地为压缩、检索、隔离等具体手段，避免空泛口号。相比重复评测基准或协议标准化，它更适合作为本周热词。",
+    "candidates": [
+      {
+        "word": "Agent 成本工程",
+        "evidence": [
+          {
+            "title": "LLM agent cost optimization: caching, routing, and budget guards",
+            "url": "https://www.anthropic.com/engineering/building-effective-agents",
+            "sourceType": "engineering blog",
+            "publishedAt": "2025-06-10",
+            "claim": "生产级 Agent 需要按任务复杂度路由模型，并用缓存与预算守卫控制单次会话成本。"
+          },
+          {
+            "title": "FinOps for AI: managing inference spend across agent workloads",
+            "url": "https://www.finops.org/wg/finops-for-ai/",
+            "sourceType": "industry working group",
+            "publishedAt": "2025-09-18",
+            "claim": "FinOps for AI 提出将 token 成本、重试成本与工具调用成本纳入统一账本管理。"
+          },
+          {
+            "title": "OpenAI Batch API pricing and cost controls",
+            "url": "https://platform.openai.com/docs/guides/batch",
+            "sourceType": "vendor docs",
+            "publishedAt": "2025-07-01",
+            "claim": "批处理与异步调用可显著降低非实时 Agent 任务的单位推理成本。"
+          }
+        ],
+        "notes": "从可观测性延伸出的成本治理议题，有厂商文档与行业工作组支撑，非口号。"
+      },
+      {
+        "word": "Agent 失败恢复",
+        "evidence": [
+          {
+            "title": "Building resilient agents: retries, checkpoints, and compensation",
+            "url": "https://www.anthropic.com/engineering/building-effective-agents",
+            "sourceType": "engineering blog",
+            "publishedAt": "2025-06-10",
+            "claim": "长链路 Agent 需通过检查点与补偿动作在工具失败后恢复，而非整体重跑。"
+          },
+          {
+            "title": "Temporal durable execution for AI workflows",
+            "url": "https://docs.temporal.io/ai-cookbook",
+            "sourceType": "vendor docs",
+            "publishedAt": "2025-08-12",
+            "claim": "持久化执行框架把 Agent 步骤变为可重放的工作流，实现失败续跑。"
+          },
+          {
+            "title": "LangGraph persistence and human-in-the-loop",
+            "url": "https://langchain-ai.github.io/langgraph/concepts/persistence/",
+            "sourceType": "framework docs",
+            "publishedAt": "2025-05-20",
+            "claim": "图状态持久化支持中断恢复与人工介入，是失败恢复的工程基础。"
+          }
+        ],
+        "notes": "与工具调用可靠性相关但聚焦恢复语义，需注意与 banned 词区分表述。"
+      },
+      {
+        "word": "Agent 上下文工程",
+        "evidence": [
+          {
+            "title": "Context engineering for agents",
+            "url": "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents",
+            "sourceType": "engineering blog",
+            "publishedAt": "2025-09-29",
+            "claim": "上下文工程把提示、工具定义与检索结果作为可编排资源，而非一次性拼接。"
+          },
+          {
+            "title": "Context rot and long-context degradation",
+            "url": "https://arxiv.org/abs/2507.11538",
+            "sourceType": "paper",
+            "publishedAt": "2025-07-15",
+            "claim": "长上下文输入中无关内容会降低模型检索与推理准确率，需主动压缩与筛选。"
+          },
+          {
+            "title": "LangChain context engineering guide",
+            "url": "https://blog.langchain.dev/context-engineering/",
+            "sourceType": "engineering blog",
+            "publishedAt": "2025-06-25",
+            "claim": "将上下文分为写入、选择、压缩、隔离四类操作，形成可复用工程模式。"
+          }
+        ],
+        "notes": "2025 下半年升温明显，有论文与多篇工程博客，且与记忆类词条互补。"
+      },
+      {
+        "word": "Agent 评测基准",
+        "evidence": [
+          {
+            "title": "SWE-bench Verified",
+            "url": "https://www.swebench.com/",
+            "sourceType": "benchmark site",
+            "publishedAt": "2025-04-01",
+            "claim": "SWE-bench Verified 提供人工校验的真实代码修复任务，用于衡量编码 Agent 能力。"
+          }
+        ],
+        "notes": "与 banned 词完全相同，仅作对照，不选。"
+      }
+    ],
+    "evidenceCount": 10,
+    "evidenceUrlCount": 10
+  },
+  "gates": {
+    "schema": "pass",
+    "duplicate": "pass",
+    "editorial": "pass",
+    "evidence": "pass",
+    "relevance": "pass",
+    "consistency": "pass"
+  },
+  "apply": {
+    "changedFiles": [
+      "times/index.html",
+      "content/times/2026-11-w2.md",
+      "api/times.json",
+      "content/index.json",
+      "api/catalog.json"
+    ],
+    "consistency": {
+      "ok": true,
+      "errors": [],
+      "gate": "pass"
+    }
+  },
+  "publish": {},
+  "error": null
+}

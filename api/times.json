@@ -7,9 +7,20 @@
     "meaning": "Nth 7-day block of the calendar month in Asia/Shanghai (days 1–7 = W1, 8–14 = W2, …). Not an ISO 8601 week number.",
     "timezone": "Asia/Shanghai"
   },
-  "current": "2026-11-W1",
-  "updated": "2026-11-02",
+  "current": "2026-11-W2",
+  "updated": "2026-11-09",
   "issues": [
+    {
+      "id": "times-2026-11-w2",
+      "period": "2026-11-W2",
+      "cadence": "weekly",
+      "word": "Agent 上下文工程",
+      "title": "2026-11 Week 2 · Agent 上下文工程",
+      "why": "上下文工程在 2025 下半年已从提示技巧升级为独立工程层，论文与一线厂商博客同时给出可操作模式。它承接记忆与可观测性话题，又能落地为压缩、检索、隔离等具体手段，避免空泛口号。相比重复评测基准或协议标准化，它更适合作为本周热词。",
+      "date": "2026-11-09",
+      "url": "/times/",
+      "markdown": "/content/times/2026-11-w2.md"
+    },
     {
       "id": "times-2026-11-w1",
       "period": "2026-11-W1",
@@ -124,5 +135,5 @@
       "slug": "2026-09-w1"
     }
   ],
-  "currentProposalHash": "fd73234d1431003f"
+  "currentProposalHash": "cd643609cffa37de"
 }
