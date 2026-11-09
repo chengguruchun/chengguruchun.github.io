@@ -1,9 +1,9 @@
 {
   "runId": "hot-words-2026-11-W2-20261109T074150Z",
   "period": "2026-11-W2",
-  "phase": "applied",
+  "phase": "published",
   "startedAt": "2026-11-09T07:41:50Z",
-  "finishedAt": "2026-11-09T07:41:58Z",
+  "finishedAt": "2026-11-09T07:42:01Z",
   "input": {
     "currentWord": "Agent 评测基准",
     "recentHistory": [
@@ -145,6 +145,11 @@
       "gate": "pass"
     }
   },
-  "publish": {},
+  "publish": {
+    "commit": "a206dad106d0e24bbb63d0d90189e421d067cbc7",
+    "url": "https://chengguruchun.github.io/times/",
+    "mode": "autonomous",
+    "periodScheme": "YYYY-MM-WN month block, not ISO week"
+  },
   "error": null
 }

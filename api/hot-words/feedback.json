@@ -1,6 +1,6 @@
 {
   "name": "Hot Words feedback",
-  "generated": "2026-11-09T07:41:59Z",
+  "generated": "2026-11-09T07:42:01Z",
   "period": "2026-11-W2",
   "word": "Agent 上下文工程",
   "signals": {
@@ -25,7 +25,7 @@
   },
   "lastRun": {
     "runId": "hot-words-2026-11-W2-20261109T074150Z",
-    "phase": "applied",
+    "phase": "published",
     "gates": {
       "schema": "pass",
       "duplicate": "pass",
@@ -35,7 +35,12 @@
       "consistency": "pass"
     },
     "evidenceCount": 10,
-    "publish": {},
+    "publish": {
+      "commit": "a206dad106d0e24bbb63d0d90189e421d067cbc7",
+      "url": "https://chengguruchun.github.io/times/",
+      "mode": "autonomous",
+      "periodScheme": "YYYY-MM-WN month block, not ISO week"
+    },
     "error": null
   },
   "learnHints": {
@@ -73,9 +78,9 @@
     {
       "runId": "hot-words-2026-11-W2-20261109T074150Z",
       "period": "2026-11-W2",
-      "phase": "applied",
+      "phase": "published",
       "word": "Agent 上下文工程",
-      "finishedAt": "2026-11-09T07:41:58Z",
+      "finishedAt": "2026-11-09T07:42:01Z",
       "path": "/api/hot-words/runs/hot-words-2026-11-W2-20261109T074150Z.json"
     },
     {
