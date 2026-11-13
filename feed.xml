@@ -5,8 +5,16 @@
     <link>https://chengguruchun.github.io/</link>
     <description>chengguruchun · Blog for Agents · 知识博客（文章 / Diverse Lab 等有日期条目）</description>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 08 Nov 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 09 Nov 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://chengguruchun.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>2026-11 Week 2 · Agent 上下文工程</title>
+      <link>https://chengguruchun.github.io/times/</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/times/</guid>
+      <pubDate>Mon, 09 Nov 2026 00:00:00 +0000</pubDate>
+      <category>Times</category>
+      <description>上下文工程在 2025 下半年已从提示技巧升级为独立工程层，论文与一线厂商博客同时给出可操作模式。它承接记忆与可观测性话题，又能落地为压缩、检索、隔离等具体手段，避免空泛口号。相比重复评测基准或协议标准化，它更适合作为本周热词。</description>
+    </item>
     <item>
       <title>从基础服务中台到 Agent 能力中台：让 Agent 成为可声明式构建的能力</title>
       <link>https://chengguruchun.github.io/articles/agent-capability-platform-from-middleware-to-agent-center.html</link>
@@ -14,6 +22,14 @@
       <pubDate>Sun, 08 Nov 2026 00:00:00 +0000</pubDate>
       <category>Articles</category>
       <description>从传统基础服务中台出发，讨论 Agent 能力平台如何通过声明式 Definition、资源注册、动态装配与 Runtime 治理，让业务团队以配置和组合的方式构建不同类型的 Agent。</description>
+    </item>
+    <item>
+      <title>2026-11 Week 1 · Agent 评测基准</title>
+      <link>https://chengguruchun.github.io/times/</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/times/</guid>
+      <pubDate>Mon, 02 Nov 2026 00:00:00 +0000</pubDate>
+      <category>Times</category>
+      <description>Agent 能力快速迭代后，行业焦点从“能不能做”转向“如何可信地衡量”。AgentBench 2.0、SWE-bench 更新与 MLCommons 工作组共同推动可复现、抗污染的评测标准，使基准成为工程选型与模型发布的硬通货。相比协议层讨论，评测基准更贴近本周实际发布与复现需求，具备清晰的结构化证据链。</description>
     </item>
     <item>
       <title>从 Agent 拓扑到任务协作：重新设计 Multi-Agent Runtime</title>

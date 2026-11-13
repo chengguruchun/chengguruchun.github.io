@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-08",
+  "updated": "2026-11-13",
   "tags": {
     "AI Engineering": [
       "ai-era-design-principles-patterns-ddd"
@@ -55,6 +55,9 @@
     "Agent Observability": [
       "times-2026-10-w1"
     ],
+    "Agent Platform": [
+      "agent-capability-platform-from-middleware-to-agent-center"
+    ],
     "Agent Runtime": [
       "agent-capability-platform-from-middleware-to-agent-center",
       "multi-agent-runtime-topology-task-collaboration",
@@ -72,6 +75,9 @@
     "Agent Skills": [
       "grill-me-superpowers-openspec-agent-development-workflow"
     ],
+    "Agent 上下文工程": [
+      "times-2026-11-w2"
+    ],
     "Agent 协议标准化": [
       "times-2026-10-w4"
     ],
@@ -80,6 +86,9 @@
     ],
     "Agent 记忆架构": [
       "times-2026-09-w2"
+    ],
+    "Agent 评测基准": [
+      "times-2026-11-w1"
     ],
     "Agent 长期记忆": [
       "times-2026-09-w3"
@@ -191,6 +200,9 @@
       "ai-era-design-principles-patterns-ddd",
       "software-design-universal-patterns"
     ],
+    "Developer Platform": [
+      "agent-capability-platform-from-middleware-to-agent-center"
+    ],
     "Developer Tools": [
       "event-driven-coding-agent-runtime"
     ],
@@ -290,6 +302,8 @@
       "agent-engineering-from-workflow-to-control-plane"
     ],
     "Hot Words": [
+      "times-2026-11-w2",
+      "times-2026-11-w1",
       "times-2026-10-w4",
       "times-2026-10-w3",
       "times-2026-10-w2",
@@ -523,6 +537,8 @@
       "llm-inference-serving-from-api-to-gpu"
     ],
     "Times": [
+      "times-2026-11-w2",
+      "times-2026-11-w1",
       "times-2026-10-w4",
       "times-2026-10-w3",
       "times-2026-10-w2",
@@ -535,6 +551,9 @@
     ],
     "Tool Design": [
       "domain-driven-agent-tool-design"
+    ],
+    "Tool Registry": [
+      "agent-capability-platform-from-middleware-to-agent-center"
     ],
     "Transformer": [
       "transformer-from-attention-to-decoder-only"
@@ -557,15 +576,6 @@
     ],
     "vLLM": [
       "llm-inference-serving-from-api-to-gpu"
-    ],
-    "Agent Platform": [
-      "agent-capability-platform-from-middleware-to-agent-center"
-    ],
-    "Developer Platform": [
-      "agent-capability-platform-from-middleware-to-agent-center"
-    ],
-    "Tool Registry": [
-      "agent-capability-platform-from-middleware-to-agent-center"
     ]
   }
 }
