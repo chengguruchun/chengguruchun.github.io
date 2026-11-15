@@ -208,6 +208,7 @@ def main() -> int:
             "schema": "/api/thought-topic.schema.json",
             "template": "/docs/templates/thought-topic.template.json",
             "sections": ["context", "thesis", "evolution", "progress_log"],
+            "index_fields": ["context_summary", "thesis_summary", "evolution_preview", "open_questions_preview", "next_step", "progress_count", "last_progress"],
             "progress_policy": "Append a dated progress_log entry when a discussion changes the understanding, evidence, or next action; preserve prior entries.",
             "continuation_protocol": "Read the canonical detail first; merge context/evolution patches; append one dated progress entry; preserve stage, route, gates, and prior history; rebuild this index.",
         },
