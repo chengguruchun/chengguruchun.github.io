@@ -67,7 +67,7 @@
 3. schema 在 [`/mcp/tools.json`](./mcp/tools.json)，再 `lab_execute`
 4. 知识索引 [`/api/catalog.json`](./api/catalog.json) → `/content/**/*.md`
 5. 站点地图 [`llms.txt`](./llms.txt)
-6. 入境是 [`topic`](./THOUGHT_LOOP.md)：聊天和初步想法先蒸馏成一句，再看 [`/api/thoughts.json`](./api/thoughts.json) 的字段 `gates[]` 和模型 `model_gates[]`。标准在 [`/api/thoughts-criteria.json`](./api/thoughts-criteria.json)。未 `published` 的当实验，不当结论，也不另开 Bench 长文索引。
+6. Agent Bench 入境是 [`topic`](./THOUGHT_LOOP.md)：先蒸馏一句，再按 [`Topic Schema`](./api/thought-topic.schema.json) 记录背景、当前认知、演进方向和追加式进展。继续已有 Topic 使用 `lab_get_thought` + `lab_continue_thought`，不要重复建档。索引 [`/api/thoughts.json`](./api/thoughts.json) 由 `scripts/build_thoughts.py` 生成，包含字段 `gates[]`、模型 `model_gates[]` 和摘要字段。标准在 [`/api/thoughts-criteria.json`](./api/thoughts-criteria.json)。未 `published` 的当实验，不当结论，也不进入文章 catalog。
 7. 已发表知识另走 [`KNOWLEDGE_LOOP.md`](./KNOWLEDGE_LOOP.md)：读 [`/api/knowledge.json`](./api/knowledge.json)。`stale` 是过期，不是错误。Agent 只写报告。
 
 元工具：`lab_discover`、`lab_execute`。
