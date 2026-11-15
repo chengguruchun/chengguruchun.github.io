@@ -1,7 +1,15 @@
 {
   "name": "Agent-native run index",
-  "generated": "2026-11-08T08:25:47Z",
+  "generated": "2026-11-15T08:41:40Z",
   "items": [
+    {
+      "runId": "agent-native-2026-11-W3-20261115T084138Z",
+      "period": "2026-11-W3",
+      "phase": "checked",
+      "verdict": "agent-native",
+      "finishedAt": "2026-11-15T08:41:40Z",
+      "path": "/api/agent-native/runs/agent-native-2026-11-W3-20261115T084138Z.json"
+    },
     {
       "runId": "agent-native-2026-11-W2-20261108T082545Z",
       "period": "2026-11-W2",

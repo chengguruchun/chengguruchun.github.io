@@ -1,10 +1,10 @@
 {
-  "runId": "agent-native-2026-11-W2-20261108T082545Z",
-  "period": "2026-11-W2",
+  "runId": "agent-native-2026-11-W3-20261115T084138Z",
+  "period": "2026-11-W3",
   "phase": "checked",
   "verdict": "agent-native",
-  "startedAt": "2026-11-08T08:25:46Z",
-  "finishedAt": "2026-11-08T08:25:47Z",
+  "startedAt": "2026-11-15T08:41:38Z",
+  "finishedAt": "2026-11-15T08:41:40Z",
   "input": {
     "live": true,
     "periodScheme": "YYYY-MM-WN = Nth 7-day block of the calendar month (Asia/Shanghai), not ISO week"
@@ -39,7 +39,7 @@
       "gate": "tool_parity",
       "ok": true,
       "hard": true,
-      "detail": "46 tools"
+      "detail": "47 tools"
     },
     {
       "gate": "canonical_md",
