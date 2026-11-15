@@ -3,7 +3,7 @@
   "protocol": "discover-then-execute",
   "skill": "/SKILL.md",
   "registry": "/mcp/tools.json",
-  "updated": "2026-09-21T06:40:05Z",
+  "updated": "2026-11-15",
   "meta": [
     "lab_discover",
     "lab_execute"
@@ -397,7 +397,7 @@
     {
       "name": "lab_list_thoughts",
       "kind": "read",
-      "description": "List thought-loop items. Inbound from any Skill-loading agent is stage=topic (distilled chat, not a conclusion). Filter by stage, origin, or route. Only published items are conclusions. Hot Words is a separate weekly loop.",
+      "description": "List thought-loop items. Topic records may expose context_summary, evolution_preview, and next_step; fetch the canonical JSON for full research context/history. Inbound ideas remain stage=topic, not conclusions.",
       "invoke": {
         "method": "GET",
         "path": "/api/thoughts.json"
@@ -406,7 +406,7 @@
     {
       "name": "lab_get_thought",
       "kind": "read",
-      "description": "Fetch one thought JSON by id (canonical source under /content/thoughts/). Topics are inbound experiments, not articles.",
+      "description": "Fetch the full canonical thought/topic notebook JSON by id, including context, thesis, evolution directions, open questions, and progress_log when present. Canonical file: /content/thoughts/{id}.json.",
       "invoke": {
         "method": "GET",
         "path_template": "/content/thoughts/{id}.json"
@@ -415,7 +415,17 @@
     {
       "name": "lab_propose_topic",
       "kind": "contribute",
-      "description": "File an inbound idea as stage=topic: one distilled sentence, origin, no transcript. Does not write catalog or Articles. Human review promotes it through gates.",
+      "description": "Create an inbound topic with one distilled thought and, when available, context, thesis, evolution roadmap, and initial progress_log. Use /api/thought-topic.schema.json and its template. No transcript; no catalog or Articles write.",
+      "invoke": {
+        "method": "ACTION",
+        "action": "pr",
+        "path": "/content/thoughts/"
+      }
+    },
+    {
+      "name": "lab_continue_thought",
+      "kind": "contribute",
+      "description": "Continue an existing Agent Bench topic. Read the canonical JSON first, preserve prior context/evolution, merge only new findings, and append one dated progress_log entry. Do not change stage, route, gates, or published content.",
       "invoke": {
         "method": "ACTION",
         "action": "pr",
@@ -425,7 +435,7 @@
     {
       "name": "lab_thought_validate",
       "kind": "read",
-      "description": "Read field gates[] and model_gates[] on /api/thoughts.json. Field = script. Model = criteria prompt. Pending/stale is not a ship. Do not treat topic or candidate as conclusions.",
+      "description": "Read field gates[] and model_gates[] on /api/thoughts.json. Field = script. Model = criteria prompt. Topic notebook context/evolution do not imply validation. Pending/stale is not a ship.",
       "invoke": {
         "method": "GET",
         "path": "/api/thoughts.json"
@@ -434,7 +444,7 @@
     {
       "name": "lab_thought_criteria",
       "kind": "read",
-      "description": "Read the living model-gate standard (prompt + axes + changelog). Improve by editing content/thoughts/criteria.json and bumping version.",
+      "description": "Read the living model-gate standard: prompt + axes + changelog. Topic context/evolution fields are separate from evidence and do not satisfy model gates.",
       "invoke": {
         "method": "GET",
         "path": "/api/thoughts-criteria.json"
