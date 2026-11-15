@@ -6,9 +6,9 @@ description: >-
   evaluation (proxy metric vs real outcome), skill and procedural-memory evolution,
   Kubernetes-style reconciliation applied to agents, and agent architecture for
   industrial IoT and SaaS platforms. Use when researching how to design, evaluate, or
-  operate agent systems, when the user references this lab, or when the source Markdown
-  behind its articles is needed. Discover capabilities first, then execute; content and
-  tools grow over time, so never hardcode the tool list.
+  operate agent systems, when capturing or continuing research topics in the Agent Bench,
+  when the user references this lab, or when the source Markdown behind its articles is needed.
+  Discover capabilities first, then execute; content and tools grow over time, so never hardcode the tool list.
 ---
 
 # AI Knowledge Lab
@@ -93,14 +93,21 @@ Chat (off-site) → Topic → field gates + model gates → Candidate → Valida
 ```
 
 1. Distill off-site. One sentence. No transcript in the repo.
-2. File inbound with `lab_propose_topic` → `stage=topic`. Not a conclusion. Not catalog. Not an article.
-3. **Field gates** (`gates[]` on `/api/thoughts.json`, `lab_thought_validate`): script checks `origin`, `contribution`, `evidence`, `route`, `published`. The site does not call a model.
-4. **Model gates** (`model_gates[]`): read the living prompt with `lab_thought_criteria` (`/api/thoughts-criteria.json`). Run that prompt. File only `judgement` via `lab_thought_judge`. Do not bump `stage`. Do not write articles. Pending / stale / UNPASS is not a ship.
-5. `origin` and `contribution` are required to leave `topic`. `ai` + `known` cannot become an Articles main piece.
-6. Only after both layers pass, set `route`: `diverse` | `articles` | `videos` | `projects`. Unrouted sentences stay on Bench (Hold).
-7. Treat only `published` / catalog entries as conclusions. Agents filter and validate; they do not ghostwrite. A sentence still on Bench (`topic`, hold, pending, stale, UNPASS) is not a conclusion. Do not park a long essay on `/bench/` to skip the gates.
-8. **Published knowledge ages.** Weekly time-gate marks `stale` when `now > next_review`. The Research Runtime (CI/local) rechecks cited https URLs (`url_fetch`) and cited arXiv ids (`arxiv_lookup`), then files a report via `lab_knowledge_report` with `unchanged` / `changed` / `insufficient` / `obsolete`. `changed` needs an Observe signal. Humans approve (`lab_knowledge_review`) before any status pin or `last_verified` bump. Never rewrite article bodies from a report. Times / Hot Words are dated snapshots and stay out of this loop. See `/KNOWLEDGE_LOOP.md`.
-9. **Critic Lab is advisory.** Read reports with `lab_list_critic_runs` / `lab_get_critic_run` (`/api/critic/runs/index.json`). When editing an article, follow the critic handling rules above.
+2. File inbound with `lab_propose_topic` → `stage=topic`. Not a conclusion. Not catalog. Not an article. Use the canonical schema `/api/thought-topic.schema.json` and starter `/docs/templates/thought-topic.template.json`.
+3. A Topic is a **research notebook**, not only a sentence. Capture these sections whenever the conversation provides enough information:
+   - `context`: trigger, original observation, problem space, why it matters, prior discussion, assumptions to test.
+   - `thesis`: current core understanding, reframing, and key question.
+   - `evolution`: possible directions (question, exploration items, expected output), open questions, next actions, and revisit triggers.
+   - `progress_log`: dated, append-only entries recording what changed, new evidence/decisions, and the next step. Never paste the conversation transcript.
+   The full record lives in `content/thoughts/{id}.json`; `/api/thoughts.json` is a generated lightweight index with `context_summary`, `evolution_preview`, and `next_step`. Never hand-edit generated summaries: update the source and run `python3 scripts/build_thoughts.py`.
+4. When continuing an existing topic, first call `lab_get_thought`, then use `lab_continue_thought` to propose a reviewable update. Merge new information without deleting earlier context, and append one progress entry. Do not create a duplicate topic just because a discussion continued. Do not change stage/route or bypass gates while recording progress.
+5. **Field gates** (`gates[]` on `/api/thoughts.json`, `lab_thought_validate`): script checks `origin`, `contribution`, `evidence`, `route`, `published`. The site does not call a model.
+6. **Model gates** (`model_gates[]`): read the living prompt with `lab_thought_criteria` (`/api/thoughts-criteria.json`). Run that prompt. File only `judgement` via `lab_thought_judge`. Do not bump `stage`. Do not write articles. Pending / stale / UNPASS is not a ship.
+7. `origin` and `contribution` are required to leave `topic`. `ai` + `known` cannot become an Articles main piece.
+8. Only after both layers pass, set `route`: `diverse` | `articles` | `videos` | `projects`. Unrouted sentences stay on Bench (Hold).
+9. Treat only `published` / catalog entries as conclusions. Agents filter and validate; they do not ghostwrite. A sentence still on Bench (`topic`, hold, pending, stale, UNPASS) is not a conclusion. Do not park a long essay on `/bench/` to skip the gates.
+10. **Published knowledge ages.** Weekly time-gate marks `stale` when `now > next_review`. The Research Runtime (CI/local) rechecks cited https URLs (`url_fetch`) and cited arXiv ids (`arxiv_lookup`), then files a report via `lab_knowledge_report` with `unchanged` / `changed` / `insufficient` / `obsolete`. `changed` needs an Observe signal. Humans approve (`lab_knowledge_review`) before any status pin or `last_verified` bump. Never rewrite article bodies from a report. Times / Hot Words are dated snapshots and stay out of this loop. See `/KNOWLEDGE_LOOP.md`.
+11. **Critic Lab is advisory.** Read reports with `lab_list_critic_runs` / `lab_get_critic_run` (`/api/critic/runs/index.json`). When editing an article, follow the critic handling rules above.
 
 Meta tools only: `lab_discover`, `lab_execute`.  
 Add capabilities in `discover.json` + `tools.json`, not this file.
@@ -120,7 +127,7 @@ Add capabilities in `discover.json` + `tools.json`, not this file.
 | `/api/videos.json` | Videos (page-only; not in catalog) |
 | `/.well-known/agent-card.json` | Static Agent Card (documentation) |
 | `/api/agent-native/` | Weekly check: still agent-native? (`runs/latest.json`) |
-| `/api/thoughts.json` | Thought loop index (not a chat log) |
+| `/api/thoughts.json` | Generated thought index + topic notebook summaries (not a chat log) |\n| `/api/thought-topic.schema.json` | Canonical Topic notebook JSON Schema |\n| `/docs/templates/thought-topic.template.json` | Starter template for new Topic records |
 | `/api/thoughts-criteria.json` | Living model-gate prompt (versioned) |
 | `/api/knowledge.json` | Published-knowledge freshness (not Hot Words) |
 | `/api/knowledge-criteria.json` | Post-publish verifier prompt (versioned) |
