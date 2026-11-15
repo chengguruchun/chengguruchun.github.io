@@ -1,6 +1,6 @@
 # AI Knowledge Lab Roadmap
 
-> Last updated: 2026-10-24  
+> Last updated: 2026-11-15  
 > Positioning: an Agent-native knowledge system that provides Skills and traceable knowledge, and improves through an evidence-based feedback loop.
 
 ## Product thesis
