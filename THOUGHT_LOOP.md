@@ -19,7 +19,7 @@ Chat (off-site, 只蒸馏) → Topic（入境）→ 门禁 → Candidate → Val
 | 人 | 标 `origin` / `contribution`，决定 `route` | 过门后才分流 |
 | 任何人 | 把 `topic` 当成 Articles / Diverse 正文 | **禁止** |
 
-`lab_propose_topic`：只允许写入 `content/thoughts/*.json` 且 `stage=topic`。不写 catalog，不写 Articles。
+`lab_propose_topic`：只允许写入 `content/thoughts/*.json` 且 `stage=topic`。新条目按 `/api/thought-topic.schema.json` 与 `/docs/templates/thought-topic.template.json` 记录背景、当前认知、演进路线和初始进展。不写 catalog，不写 Articles。\n\nTopic 是研究档案，不只是 thought 一句话：`context` 保存触发背景、原始观察、问题范围、既有讨论和待验证假设；`thesis` 保存当前判断；`evolution` 保存方向、开放问题、下一步和重新审视条件；`progress_log` 追加式记录每次讨论带来的变化。聊天原文仍留在站外。\n\n继续已有 Topic：先 `lab_get_thought` 读取完整 JSON，再通过 `lab_continue_thought` 提交 reviewable PR；合并新信息，不覆盖已有历史，并追加一条带日期的 `progress_log`。不要因为继续讨论就新建重复 Topic，也不要借记录进展改变 stage / route 或绕过 gates。
 
 ## Stages
 
