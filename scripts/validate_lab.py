@@ -67,6 +67,8 @@ def check_agent_surfaces() -> None:
         "api/agent-native/runs/latest.json",
         "api/thoughts.json",
         "api/thoughts-criteria.json",
+        "api/thought-topic.schema.json",
+        "docs/templates/thought-topic.template.json",
         "content/thoughts/criteria.json",
         "THOUGHT_LOOP.md",
         "KNOWLEDGE_LOOP.md",
@@ -109,6 +111,7 @@ def check_agent_surfaces() -> None:
             "lab_list_thoughts",
             "lab_get_thought",
             "lab_propose_topic",
+            "lab_continue_thought",
             "lab_thought_validate",
             "lab_thought_criteria",
             "lab_thought_judge",
@@ -144,6 +147,12 @@ def check_agent_surfaces() -> None:
                 fail(f"{label} lab_list_entries should document type filter / Projects dedicated APIs")
             else:
                 ok(f"{label} lab_list_entries docs")
+            continuation = by.get("lab_continue_thought", {})
+            cd = continuation.get("description") or ""
+            if "progress_log" not in cd or "stage" not in cd:
+                fail(f"{label} lab_continue_thought must document append-only progress and stage preservation")
+            else:
+                ok(f"{label} lab_continue_thought docs")
 
 
 def check_scrub() -> None:
