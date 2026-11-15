@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>从问题空间到解决空间：大模型时代的认知闭环与自我进化 · Articles</title>
+<meta name="description" content="从真实问题到模型理解、方案生成与执行结果，分析 Agent 如何通过结构化问题表示、语义保持、证据验证与反馈闭环减少信息损耗，并逐步进化解决问题的能力。">
+<meta name="theme-color" content="#f7f5f0"><link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="../assets/css/site.css">
+<link rel="canonical" href="https://chengguruchun.github.io/articles/problem-space-to-solution-space-agent-cognitive-loop.html">
+<meta property="og:type" content="article"><meta property="og:site_name" content="AI Knowledge Lab"><meta property="og:locale" content="zh_CN">
+<meta property="og:title" content="从问题空间到解决空间：大模型时代的认知闭环与自我进化"><meta property="og:description" content="从真实问题到模型理解、方案生成与执行结果，分析 Agent 如何通过结构化问题表示、语义保持、证据验证与反馈闭环减少信息损耗，并逐步进化解决问题的能力。"><meta property="og:url" content="https://chengguruchun.github.io/articles/problem-space-to-solution-space-agent-cognitive-loop.html"><meta property="og:image" content="https://chengguruchun.github.io/assets/img/og-cover.png"><meta property="article:published_time" content="2026-11-15"><meta property="article:author" content="chengguruchun">
+<meta property="article:tag" content="Agent"><meta property="article:tag" content="Cognitive Loop"><meta property="article:tag" content="Evaluation"><meta property="article:tag" content="Self-Evolving Agent"><meta property="article:tag" content="Information Theory">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="从问题空间到解决空间：大模型时代的认知闭环与自我进化"><meta name="twitter:description" content="从真实问题到模型理解、方案生成与执行结果，分析 Agent 如何通过结构化问题表示、语义保持、证据验证与反馈闭环减少信息损耗，并逐步进化解决问题的能力。"><meta name="twitter:image" content="https://chengguruchun.github.io/assets/img/og-cover.png"><meta name="author" content="chengguruchun">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","headline":"从问题空间到解决空间：大模型时代的认知闭环与自我进化","description":"从真实问题到模型理解、方案生成与执行结果，分析 Agent 如何通过结构化问题表示、语义保持、证据验证与反馈闭环减少信息损耗，并逐步进化解决问题的能力。","url":"https://chengguruchun.github.io/articles/problem-space-to-solution-space-agent-cognitive-loop.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://chengguruchun.github.io/articles/problem-space-to-solution-space-agent-cognitive-loop.html"},"inLanguage":"zh-CN","articleSection":"Articles","author":{"@type":"Person","name":"chengguruchun","url":"https://github.com/chengguruchun"},"publisher":{"@type":"Organization","name":"AI Knowledge Lab","url":"https://chengguruchun.github.io/"},"datePublished":"2026-11-15","dateModified":"2026-11-15","keywords":"Agent, Cognitive Loop, Evaluation, Self-Evolving Agent, Information Theory"}
+</script>
+</head>
+<body>
+<header class="site-header"><div class="wrap site-header__inner"><a class="brand" href="../index.html"><img class="brand__logo" src="../assets/img/brand-mark.svg" alt="AI Knowledge Lab" width="44" height="44"><span class="brand__tag"><span class="brand__rotate"><span class="brand__item is-active">Independent Thinker</span><span class="brand__item">AI Agents</span><span class="brand__item">Complex Systems</span><span class="brand__item">Diverse Thinking</span></span></span></a><button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">菜单</button><nav class="nav" id="site-nav" aria-label="主导航"><a href="../index.html">Home</a><a href="../bench/">Agent Bench</a><a href="../diverse/">Diverse Lab</a><a href="../articles/" aria-current="page">Articles</a><a href="../projects/">Projects</a><a href="../videos/">Videos</a><a href="../times/">Hot Words</a><a href="../about/">About Me</a><a class="nav__search" href="../tags/">Tags / Search</a></nav></div></header>
+<main><article class="article-body"><header class="page-hero"><div class="prose-wrap"><p class="page-hero__kicker">Articles · Agent Architecture</p><h1>从问题空间到解决空间：大模型时代的认知闭环与自我进化</h1><p class="page-hero__desc">从真实问题到模型理解、方案生成与执行结果，分析 Agent 如何通过结构化问题表示、语义保持、证据验证与反馈闭环减少信息损耗，并逐步进化解决问题的能力。</p><p class="article-meta"><span>思路 2026-11-15</span><span>发表 2026-11-15</span><span>作者 chengguruchun</span><a class="tag" href="../tags/?tag=Agent">Agent</a><a class="tag" href="../tags/?tag=Cognitive%20Loop">Cognitive Loop</a><a class="tag" href="../tags/?tag=Evaluation">Evaluation</a><a class="tag" href="../tags/?tag=Self-Evolving%20Agent">Self-Evolving Agent</a></p></div></header>
+<div class="prose-wrap">
+<p class="lede">我们常说，大模型能够把自然语言需求转化为代码、方案或行动。但从真实世界的问题，到用户说出来的话，再到模型内部形成的理解、最终生成的方案，中间并不是一条无损的信息通道。很多时候，Agent 失败并不是因为它不会执行，而是因为它从一开始就没有准确理解“究竟要解决什么”。</p>
+<p>我想把 Agent 的核心问题重新表述为：<strong>如何在信息不完整、目标存在歧义、环境持续变化的情况下，持续逼近真实问题，并通过可验证的行动结果修正自己的认知与策略？</strong></p>
+<p>这意味着 Agent 不应只是一个解决方案生成器，而应该是一个持续理解问题、采取行动、观察结果、验证假设并更新策略的求解系统。</p>
+
+<h2>一、问题空间与解决空间之间，存在一条有损通道</h2>
+<p>传统软件工程往往从相对明确的需求开始：产品或业务人员完成需求定义，工程师再把需求转化为领域模型、架构和代码。需求本身当然也可能有问题，但工程流程通常默认问题已经被描述清楚。</p>
+<p>Agent 面对的情况不同。用户可能只说“帮我优化订单模块”，但真实目标可能是降低支付失败率、解决库存超卖、减少重复履约，或者改善某条业务链路的可观测性。相同的一句话，背后可能对应完全不同的问题模型和解决路径。</p>
+<p>可以把这条信息通道拆成五个空间：</p>
+<pre>真实问题空间 P0
+    │  表达损耗：用户只说出了部分现象和诉求
+    ▼
+用户描述空间 P1
+    │  理解损耗：模型可能误解术语、意图与上下文
+    ▼
+模型认知空间 P2
+    │  建模损耗：问题被过早简化成某种熟悉的方案
+    ▼
+解决方案空间 P3
+    │  执行损耗：环境、权限、依赖和现实状态带来偏差
+    ▼
+真实结果空间 P4
+    │
+    └──── 结果反馈也可能丢失、延迟或被错误归因 ────► P0/P2</pre>
+<p>这里至少有五类损耗：用户表达不完整、模型理解偏差、领域建模失真、执行环境偏差，以及结果反馈不充分。若 Agent 只优化“生成答案的质量”，它至多改善其中一段，却无法保证最终结果符合真实目标。</p>
+<blockquote><strong>真正需要优化的，不是从 Prompt 到 Answer 的文本转换，而是从真实问题到真实结果的端到端语义保持。</strong></blockquote>
+
+<h2>二、不要让模型从自然语言直接跳到解决方案</h2>
+<p>一个常见设计是：用户提出需求，模型理解后直接输出计划或代码。这条路径短，但它把多个关键判断压缩进了一次生成：目标是什么、哪些事实已知、有哪些约束、哪些是假设、还缺什么信息。</p>
+<p>我更倾向于在问题与方案之间增加一个中间层：<strong>Intermediate Problem Representation（中间问题表示）</strong>。它不是为了把自然语言变成更多 JSON，而是让问题的关键语义显式化、可追踪、可校验。</p>
+<pre>Problem Representation
+├── Goal          要达到什么结果
+├── Entities      涉及哪些领域对象
+├── State         当前已知的环境与业务状态
+├── Constraints   时间、成本、权限、技术等约束
+├── Invariants    无论如何都不能破坏的业务不变量
+└── Unknown       尚未确认的信息、假设与风险</pre>
+<p>其中 <code>Unknown</code> 尤其重要。模型很擅长补全模式，但工程系统不能把“看起来合理”当成“已经确认”。例如，订单支付是否采用本地事务、支付成功事件是否通过 Outbox 发布、库存是否允许预占，这些都应该来自代码、Schema、架构文档或用户确认，而不是由模型按常见实践自行补齐。</p>
+<p>结构化表示还需要版本化。随着工具查询、用户澄清和执行反馈不断到来，问题模型会变化；每次变化都应能追溯其证据与原因，而不是悄悄覆盖最初的理解。</p>
+
+<h2>三、语义锚点：领域模型与主动信息获取</h2>
+<p>中间问题表示解决了“如何表达”，但它本身不保证表达正确。要减少模型理解与真实业务之间的距离，需要引入稳定的语义锚点。</p>
+<p>在企业系统中，DDD 的领域模型、聚合边界、领域事件和业务不变量可以成为这样的锚点。它们把业务概念从自然语言中固定下来，并连接到数据库 Schema、API、规则引擎、代码实现、架构文档和运行日志。</p>
+<p>例如，“完成订单”不能只被理解为把 <code>status</code> 更新成 <code>completed</code>。它可能意味着支付状态、库存扣减、履约状态、退款窗口和事件发布都满足一组业务条件。领域模型让 Agent 知道，哪些状态转换合法，哪些约束不能被一次局部代码修改破坏。</p>
+<p>但语义锚点仍然不够。Agent 还需要主动寻找缺失信息，而不是被动等待用户把所有背景一次性说清楚：</p>
+<pre>识别信息缺口
+    ↓
+判断它是否影响当前决策
+    ↓
+选择信息源：代码 / Schema / API / 文档 / 日志 / 用户
+    ↓
+获取证据并更新 Problem Representation
+    ↓
+仍有关键未知？继续查询或向用户澄清</pre>
+<p>这就是 <strong>Active Information Gathering</strong>。信息获取应按决策价值排序：优先查询那些可能改变方案选择、风险判断或验收标准的信息，而不是把所有文档和历史对话无差别塞进上下文。</p>
+
+<h2>四、从数据处理不等式看：模型不能凭空恢复已经丢失的信息</h2>
+<p>信息论提供了一个有用的提醒。若真实问题记为 X，用户表达为 Y，模型内部表示为 Z，那么在单纯的串行处理链路中，数据处理不等式告诉我们：后续变换不会凭空增加关于原始 X 的信息。</p>
+<p>直观地说，如果用户没有说出某个关键约束，模型仅仅把已有文本总结得更流畅、更长或更结构化，并不能保证把这个约束恢复出来。更强的模型可能凭借先验知识提出合理猜测，但猜测仍然不是来自当前问题的证据。</p>
+<p>Agent 与普通单轮生成的关键差别，在于它可以主动扩展观测：读取仓库、查询数据库 Schema、调用业务 API、运行测试、观察真实环境，或者向用户提出澄清问题。它不是在原有信息上无限推理，而是通过行动获得新的观测，再更新问题模型。</p>
+<pre>已有描述 ──► 当前认知 ──► 待验证假设
+                  ▲             │
+                  │             ▼
+             更新问题模型 ◄── 新观测
+                              ▲
+                              │
+                    工具 / 环境 / 用户</pre>
+<p>因此，Agent 的价值不只是更聪明地推理，而是知道自己缺少什么信息、如何获得信息，以及新证据是否足以改变当前决策。降低模型内部的不确定性，不等于真实世界中的正确性提高；只有与目标相关的证据和结果，才能支持这种判断。</p>
+
+<h2>五、把执行变成可验证的闭环</h2>
+<p>有了问题表示和证据，Agent 才能生成可执行方案。但计划完成不等于目标达成。Agent 必须把每一步行动转化为可检查的结果，并由相对独立的验证机制判断它是否满足预期。</p>
+<pre>       ┌──────────────────────────────┐
+       │ Problem Representation      │
+       │ Goal / Constraint / Unknown │
+       └──────────────┬───────────────┘
+                      ▼
+                 Planner
+                      ▼
+          Action + Expected Output
+                      ▼
+                  Executor
+                      ▼
+              Real Environment
+                      ▼
+                 Observation
+                      ▼
+                  Verifier
+                      ▼
+              Feedback Processor
+                      ▼
+             Reflection / Memory
+                      ▼
+          Controller：继续 / 重试 / 重规划
+                      └───────────────↺</pre>
+<p>这个闭环可以拆成五个职责：</p>
+<h3>1. Action：输出可验证的行动</h3>
+<p>模型不只输出“修改支付逻辑”，而应明确要修改什么、预期产生什么结果、如何验收，以及有哪些副作用和风险。执行者和验收者尽量解耦，避免模型用自己的解释证明自己的方案正确。</p>
+<h3>2. Tiered Verifier：分层验证</h3>
+<ul>
+<li><strong>L1 · 结构与策略：</strong>语法、Schema、参数、权限、工具调用策略是否合规。</li>
+<li><strong>L2 · 确定性执行：</strong>单元测试、集成测试、静态检查、沙箱运行、API 返回和 Dry-run。</li>
+<li><strong>L3 · 领域语义：</strong>领域不变量、业务规则、状态机约束，以及必要时的独立 Judge 评估。</li>
+<li><strong>L4 · 结果验收：</strong>E2E、真实环境观测、业务指标变化或人工验收。</li>
+</ul>
+<p>验证结果应该附带证据、来源、时间和适用范围。工具返回成功，不代表业务目标已经实现；Judge 给出高分，也不代表真实环境中的结果正确。</p>
+<h3>3. Feedback Processor：把反馈变成可用信号</h3>
+<p>原始日志、Traceback、API 响应和测试报告需要先结构化、去噪，再归类为执行错误、验证错误、目标偏离或约束违反。错误信息不应只是一个字符串，还可以记录 Error Fingerprint、Strategy Fingerprint 和 State Fingerprint，以识别相同错误是否反复出现、是否只是换了表达方式重试。</p>
+<h3>4. Reflection &amp; Memory：从失败中提炼经验</h3>
+<p>反思不应停留在“下次要更仔细”。它必须回答：失败发生在哪个假设或决策上？证据说明了什么？下一次应该改变哪项行动？经验可以分为 Working、Episodic、Semantic 和 Procedural：当前工作状态、单次任务轨迹、经过验证的领域知识，以及可复用的技能或策略。</p>
+<p>一次失败不能未经验证就升级成通用知识。记忆应保留来源、置信度、适用范围和反例，并允许后续证据修正。</p>
+<h3>5. Controller：管理状态转移与预算</h3>
+<p>Runtime 应显式管理 <code>PLANNING</code>、<code>EXECUTING</code>、<code>VERIFYING</code>、<code>REFLECTING</code>、<code>REPLANNING</code>、<code>COMPLETED</code> 和 <code>BLOCKED</code> 等状态。局部实现错误可以 <code>RETRY</code>；如果目标理解或策略本身有问题，就应该 <code>REPLAN</code>，而不是无限重试。</p>
+<p>迭代次数、Token、时间、工具调用、并发和风险都应有预算。相同错误反复出现、策略没有变化、长期没有进展或风险超限时，Controller 应熔断、暂停或请求人工介入。模型可以提出状态转移，但最终应由 Runtime 的 State Transition Guard 审批。</p>
+
+<h2>六、从一次纠错到持续进化：CRITIC 与 Reflexion 的启发</h2>
+<p>即时纠错和跨任务学习是两个不同尺度的问题。CRITIC 所代表的思路强调通过外部工具和反馈检查模型生成内容；Reflexion 则强调把语言化反馈写入经验，让后续尝试能够利用过去的成败。</p>
+<p>在工程系统里，可以把它们理解为两个相互衔接、但职责不同的循环：</p>
+<pre>Task-level Loop
+Action → Tool / Test → Verify → Correct
+        当前任务的即时纠偏
+
+Experience-level Loop
+Trajectory → Evaluate → Reflect → Memory
+            跨任务的经验积累</pre>
+<p>前者回答“这一步是否做对了”，后者回答“这次经历能否让下一次做得更好”。两者并不意味着模型参数一定发生了训练更新。经验可以先沉淀为可检索的记忆、经过评估的 Skill 或策略配置；只有在有明确训练数据、评估和发布流程时，才进一步讨论模型层面的学习。</p>
+<p>需要强调的是，把反思文本写进 Memory 并不自动产生可靠进化。Verifier 的独立性、Judge 的能力、记忆污染、上下文成本和经验适用范围，都会决定系统究竟是在学习，还是在重复强化自己的偏见。</p>
+
+<h2>七、自进化不是盲目变复杂，而是有证据地改变解决方法</h2>
+<p>我理解的自进化 Agent，不是从单 Agent 不断堆叠成 Multi-Agent，也不是让模型自由修改自己的 Prompt、工具和代码。它真正需要进化的是<strong>解决问题的方法</strong>：什么时候单 Agent 足够，什么时候需要拆分任务，什么时候应该并行委派，什么时候应该调用专业工具或升级人工审批。</p>
+<p>一个可控的自进化系统可以分成三层：</p>
+<pre>┌──────────────────────────────────────────┐
+│ Evolution &amp; Memory                       │
+│ Episodic / Semantic Memory               │
+│ Skill Evolution / Policy Evolution       │
+├──────────────────────────────────────────┤
+│ Evaluation &amp; Simulation                  │
+│ Trajectory Evaluator                     │
+│ Strategy Simulator / Reward / Benchmark  │
+│ Regression &amp; Shadow Evaluation           │
+├──────────────────────────────────────────┤
+│ Execution Runtime                        │
+│ Planner / Executor / Verifier / Controller│
+│ Tool / Model / Sandbox / Checkpoint      │
+└──────────────────────────────────────────┘</pre>
+<p>执行层负责完成任务并留下轨迹；评估与模拟层比较不同策略在相似任务上的表现；进化层再把经过验证的经验沉淀为 Skill、Policy 或记忆。系统可以探索新的路径，但新策略必须经过离线评估、回归测试、影子运行或灰度发布，不能因为一次成功就覆盖稳定策略。</p>
+<p>这里还需要 Checkpoint、Resume、Rollback 和 Human-in-the-loop。对有副作用的行动，要考虑幂等键、事务边界、补偿机制和人工审批。进化过程本身也必须可观测、可比较、可回滚。</p>
+
+<h2>八、如何判断系统真的在进步？</h2>
+<p>如果只看任务成功率，Agent 可能通过增加重试、消耗更多 Token 或绕开约束来“提高”成功率。评估体系需要同时覆盖理解质量、过程质量和结果质量。</p>
+<ul>
+<li><strong>Requirement Coverage：</strong>原始需求中的目标与条件有多少被结构化表示覆盖？</li>
+<li><strong>Constraint Preservation：</strong>关键约束和业务不变量在计划、执行与结果中是否持续保留？</li>
+<li><strong>Assumption Accuracy：</strong>模型提出的假设有多少被证据证实，多少最终被推翻？</li>
+<li><strong>Traceability Coverage：</strong>目标、领域约束、架构决策、Action、代码变更和验证结果之间是否可追踪？</li>
+<li><strong>Outcome Alignment：</strong>真实结果与用户目标是否一致，而不只是步骤执行成功？</li>
+<li><strong>Late Discovery Rate：</strong>有多少关键约束直到实现后期才被发现？这个比例是否持续下降？</li>
+</ul>
+<p>还应把成功率与成本、时延、风险、人工介入率一起观察，并用固定 Benchmark 和真实任务回放比较新旧策略。只有在相近任务分布和相同验收标准下持续改善，才有理由说系统获得了更强的能力。</p>
+
+<h2>九、从生成答案，到持续逼近真实问题</h2>
+<p>回到最初的问题：大模型如何减少从问题域到解决域的熵增和信息损耗？答案不是单纯扩大上下文，也不是让模型写出更长的思维链。关键在于建立一套能够保留语义、主动获取证据、验证真实结果并修正问题模型的工程机制。</p>
+<p>这也改变了我们对 Agent 的理解：</p>
+<ul>
+<li>它不只是把自然语言翻译成工具调用，而是维护一个持续更新的问题模型。</li>
+<li>它不只执行计划，而是通过观察和验证判断计划是否仍然成立。</li>
+<li>它不只记住历史对话，而是把有证据、有边界的经验沉淀为可复用能力。</li>
+<li>它不以增加 Agent 数量为进化目标，而以更有效、更可靠、更经济地解决问题为目标。</li>
+</ul>
+<blockquote><strong>Agent 的进化，不是让模型越来越会给出答案，而是让系统越来越善于发现自己不知道什么、获得新的证据、修正错误的理解，并找到更可靠的解决路径。</strong></blockquote>
+<p>当问题表示、领域语义、执行反馈、验证体系、记忆与策略评估形成闭环，Agent 才有机会从一次性的生成工具，演化为能够在真实环境中持续学习和改进的求解系统。</p>
+
+<h2>延伸阅读</h2>
+<p>这篇文章讨论的是 Agent 如何理解问题、保持语义并通过反馈实现能力进化。下面两篇分别从 Runtime 的认知执行实体，以及 AI-native 软件语言的结构化表达与执行角度，延伸同一条架构主线：</p>
+<ul>
+<li><a href="https://chengguruchun.github.io/articles/agent-runtime-cognitive-actor.html">从 Actor Model 到 Cognitive Actor：Claude Agent Teams 给 Agent Runtime 的启发</a> —— 从 Actor、状态、生命周期与协作机制理解 Agent Runtime，补充本文中执行主体与运行时治理的视角。</li>
+<li><a href="https://chengguruchun.github.io/diverse/ai-native-software-language-aosl.html">AI-native Software Language（AOSL）</a> —— 从结构化 DSL、编译与 Runtime 的角度，讨论如何让业务意图成为可表达、可检查、可执行的工程对象，与本文的问题表示和语义保持形成呼应。</li>
+</ul>
+<h2>参考与相关研究</h2>
+<ul>
+<li><a href="https://arxiv.org/abs/2305.11738">CRITIC: Large Language Models Can Self-Correct with Tool-Interactive Critiquing</a></li>
+<li><a href="https://arxiv.org/abs/2303.11366">Reflexion: Language Agents with Verbal Reinforcement Learning</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Data_processing_inequality">Data Processing Inequality</a>（信息论背景；本文将其作为“单纯变换不能恢复未观测信息”的直观解释，而非直接的 Agent 正确性证明。）</li>
+</ul>
+</div></article></main>
+<footer class="site-footer"><div class="wrap site-footer__inner"><div><p>© <span id="year"></span> chengguruchun · Hangzhou</p><p>Blog for Agents · 知识博客</p><p class="footer-visits" aria-label="访问统计"><span>本站 <strong data-visits-site>-</strong></span><span class="footer-visits__sep" aria-hidden="true">·</span><span>本页 <strong data-visits-page>-</strong></span></p></div></div></footer>
+<script src="../assets/js/site.js"></script><script src="../assets/js/visits.js"></script><script src="../assets/js/article-actions.js?v=20261023-4" defer></script>
+</body></html>
