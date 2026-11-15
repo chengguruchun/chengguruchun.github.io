@@ -30,6 +30,9 @@ on:
       - "scripts/build_knowledge.py"
       - ".github/workflows/build-feed.yml"
       - "**/*.html"
+  # GitHub Actions cron uses UTC: Sunday 02:00 UTC = Sunday 10:00 Asia/Shanghai.
+  schedule:
+    - cron: "0 2 * * 0"
   workflow_dispatch:
 
 permissions:
@@ -55,7 +58,7 @@ jobs:
         env:
           HEAD_COMMIT_MESSAGE: ${{ github.event.head_commit.message || '' }}
         run: |
-          if [[ "$GITHUB_EVENT_NAME" != "workflow_dispatch" && "$HEAD_COMMIT_MESSAGE" == "chore: regenerate feeds, Articles index and page metadata" ]]; then
+          if [[ "$GITHUB_EVENT_NAME" == "push" && "$HEAD_COMMIT_MESSAGE" == "chore: regenerate feeds, Articles index and page metadata" ]]; then
             echo "Generated-state commit; no regeneration needed."
             exit 0
           fi
