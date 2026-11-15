@@ -41,5 +41,5 @@
 - [Knowledge registry](/api/knowledge.json)
 - [Knowledge criteria](/api/knowledge-criteria.json)
 - [Knowledge Loop](/KNOWLEDGE_LOOP.md)
-- [Bench](/bench/) (Thought Loop sentences and gates; not a long-essay index)
+- [Bench](/bench/) (evolving Topic notebooks: context, thesis, research directions, progress history, and validation gates)
 - [Thought Loop](/THOUGHT_LOOP.md)
