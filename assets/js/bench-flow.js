@@ -50,6 +50,93 @@
   }
   function go(want) { if (!item) return; if (want > liveAt) { setToken(want); el.classList.remove("is-shake"); void el.offsetWidth; el.classList.add("is-shake"); window.setTimeout(function () { el.classList.remove("is-shake"); setToken(liveAt); }, reduce ? 0 : 720); return; } setToken(want); }
   function playIn() { if (reduce) { setToken(liveAt); return; } setToken(0); window.setTimeout(function () { setToken(liveAt); }, 520); }
+  var detailCache = {};
+  var detailRequest = 0;
+  function listHtml(values) {
+    if (!Array.isArray(values) || !values.length) return '<p class="bench-detail__empty">暂未记录</p>';
+    return '<ul>' + values.map(function (v) {
+      var value = typeof v === "string" ? v : (v && (v.detail || v.name || v.title || v.question || v.summary)) || JSON.stringify(v);
+      return '<li>' + esc(value) + '</li>';
+    }).join("") + '</ul>';
+  }
+  function detailSection(title, body, extra) {
+    if (!body) return "";
+    return '<section class="bench-detail__section' + (extra ? " " + extra : "") + '"><h4>' + esc(title) + '</h4>' + body + '</section>';
+  }
+  function renderTopicDetails(data) {
+    var context = data.context || {};
+    var thesis = data.thesis || {};
+    var evolution = data.evolution || {};
+    var directions = Array.isArray(evolution.directions) ? evolution.directions : [];
+    var progress = Array.isArray(data.progress_log) ? data.progress_log : [];
+    var directionHtml = directions.length ? '<div class="bench-detail__directions">' + directions.map(function (d) {
+      return '<article class="bench-detail__direction"><h5>' + esc(d.title || d.id) + '</h5>' +
+        (d.question ? '<p><strong>研究问题：</strong>' + esc(d.question) + '</p>' : '') +
+        (d.explore && d.explore.length ? '<div><strong>可以继续：</strong>' + listHtml(d.explore) + '</div>' : '') +
+        (d.expected_output ? '<p class="bench-detail__output"><strong>预期产物：</strong>' + esc(d.expected_output) + '</p>' : '') +
+      '</article>';
+    }).join("") + '</div>' : '<p class="bench-detail__empty">尚未规划演进方向</p>';
+    var progressHtml = progress.length ? '<ol class="bench-detail__history">' + progress.slice().reverse().map(function (p) {
+      return '<li><time>' + esc(p.date || "") + '</time><strong>' + esc(p.summary || p.type || "推进记录") + '</strong>' +
+        (p.changes && p.changes.length ? listHtml(p.changes) : '') +
+        (p.next ? '<p><strong>下一步：</strong>' + esc(p.next) + '</p>' : '') +
+      '</li>';
+    }).join("") + '</ol>' : '<p class="bench-detail__empty">还没有推进记录；后续每次讨论可以追加到这里。</p>';
+    var html = '<section class="bench-detail" aria-label="Topic 研究档案">' +
+      '<div class="bench-detail__head"><div><p class="bench-detail__eyebrow">TOPIC NOTEBOOK</p><h3>研究档案</h3></div><span class="bench-detail__status">' + esc(data.status || item.status || "hold") + ' · ' + esc((data.knowledge && data.knowledge.confidence) || "LOW") + '</span></div>' +
+      '<div class="bench-detail__grid">' +
+        detailSection("01 · 背景与来源", (context.trigger ? '<p>' + esc(context.trigger) + '</p>' : '') +
+          (context.original_observation ? '<p>' + esc(context.original_observation) + '</p>' : '') +
+          (context.problem_space ? '<p><strong>研究范围：</strong>' + esc(context.problem_space) + '</p>' : '') +
+          (context.why_it_matters ? '<div><strong>为什么值得研究</strong>' + listHtml(context.why_it_matters) + '</div>' : '') +
+          (context.prior_discussion ? '<div><strong>已有讨论</strong>' + listHtml(context.prior_discussion) + '</div>' : '') +
+          (context.assumptions_to_test ? '<div><strong>待验证假设</strong>' + listHtml(context.assumptions_to_test) + '</div>' : '') +
+          (!context.trigger && !context.original_observation && !context.problem_space ? '<p class="bench-detail__empty">尚无背景记录</p>' : '')) +
+        detailSection("02 · 当前认知", (thesis.core ? '<p>' + esc(thesis.core) + '</p>' : '') +
+          (thesis.reframing ? '<p><strong>重新表述：</strong>' + esc(thesis.reframing) + '</p>' : '') +
+          (thesis.key_question ? '<p class="bench-detail__question"><strong>核心问题：</strong>' + esc(thesis.key_question) + '</p>' : '') +
+          (data.mechanisms && data.mechanisms.length ? '<div><strong>作用机制</strong>' + listHtml(data.mechanisms) + '</div>' : '') +
+          (data.critiques && data.critiques.length ? '<div><strong>反例与风险</strong>' + listHtml(data.critiques) + '</div>' : '') +
+          (!thesis.core && !thesis.reframing && !thesis.key_question ? '<p class="bench-detail__empty">尚无当前认知记录</p>' : '')) +
+      '</div>' +
+      detailSection("03 · 后续演进方向", directionHtml) +
+      '<div class="bench-detail__grid">' +
+        detailSection("04 · 开放问题", listHtml(evolution.open_questions || [])) +
+        detailSection("05 · 下一步行动", listHtml(evolution.next_actions || [])) +
+        detailSection("06 · 重新审视的触发条件", listHtml(evolution.revisit_triggers || [])) +
+      '</div>' +
+      (data.experiments && data.experiments.length ? detailSection("可验证的实验", listHtml(data.experiments)) : '') +
+      (data.evidence && data.evidence.length ? detailSection("证据记录", listHtml(data.evidence)) : '') +
+      detailSection("07 · 推进历史", progressHtml) +
+      '</section>';
+    return html;
+  }
+  function loadTopicDetails(target) {
+    if (!target) return;
+    var id = target.id || "";
+    var panel = el.querySelector("[data-topic-details]");
+    if (!panel) return;
+    if (detailCache[id]) { panel.innerHTML = renderTopicDetails(detailCache[id]); return; }
+    if (!target.content) {
+      panel.innerHTML = '<section class="bench-detail"><p class="bench-detail__empty">该条目尚未关联独立研究档案。</p></section>';
+      return;
+    }
+    var requestId = ++detailRequest;
+    panel.innerHTML = '<section class="bench-detail"><p class="bench-detail__loading">正在载入研究档案…</p></section>';
+    fetch(target.content, { headers: { Accept: "application/json" } })
+      .then(function (response) { if (!response.ok) throw new Error(String(response.status)); return response.json(); })
+      .then(function (data) {
+        if (requestId !== detailRequest || !item || item.id !== id) return;
+        detailCache[id] = data;
+        panel.innerHTML = renderTopicDetails(data);
+      })
+      .catch(function () {
+        if (requestId !== detailRequest || !item || item.id !== id) return;
+        panel.innerHTML = '<section class="bench-detail"><p class="bench-detail__empty">研究档案暂时无法载入。请稍后重试。</p><button type="button" class="bench-detail__retry" data-retry-detail>重新载入</button></section>';
+        var retry = panel.querySelector("[data-retry-detail]");
+        if (retry) retry.addEventListener("click", function () { loadTopicDetails(target); });
+      });
+  }
   function render() {
     if (!item) { el.innerHTML = '<p class="bench-stage__empty">Bench 上空着。先蒸馏一句，再入境。</p>'; return; }
     liveAt = stageAt(item.stage); var v = meta.criteria_version || "—"; var k = knowledgeOf(item); var quality = qualityOf(item);
@@ -64,10 +151,10 @@
       '<p class="bench-stage__why" data-why></p>' +
       '<div class="bench-lamps"><div><span class="bench-lamps__k">字段</span>' + lamp(fieldOf(item, "origin")) + lamp(fieldOf(item, "contribution")) + lamp(fieldOf(item, "evidence")) + lamp(fieldOf(item, "route")) + '</div><div><span class="bench-lamps__k">模型 v' + esc(v) + '</span>' + lamp(modelOf(item, "sharp")) + lamp(modelOf(item, "evidence_real")) + lamp(modelOf(item, "route_fit")) + '</div><div><span class="bench-lamps__k">知识质量</span>' + quality.map(qualityPill).join("") + '</div></div>' +
       '<div class="bench-doors" aria-label="过门之后">' + doors + '<span class="bench-door bench-door--hold is-locked"><strong>Hold</strong><span>没过门，停在这里</span></span></div>' +
-      '<div class="bench-stage__acts"><button type="button" class="bench-replay" data-replay>再走一遍</button><a href="../api/thoughts-criteria.json">标准提示词</a><a href="../THOUGHT_LOOP.md">过程说明</a></div>';
+      '<div class="bench-stage__acts"><button type="button" class="bench-replay" data-replay>再走一遍</button><a href="../api/thoughts-criteria.json">标准提示词</a><a href="../THOUGHT_LOOP.md">过程说明</a></div>' + '<div data-topic-details></div>';
     el.querySelectorAll("[data-pick]").forEach(function (btn) { btn.addEventListener("click", function () { item = items[Number(btn.getAttribute("data-pick"))] || item; render(); }); });
     el.querySelectorAll("[data-stop]").forEach(function (btn) { btn.addEventListener("click", function () { go(Number(btn.getAttribute("data-stop"))); }); });
-    var replay = el.querySelector("[data-replay]"); if (replay) replay.addEventListener("click", function () { playIn(); }); playIn();
+    var replay = el.querySelector("[data-replay]"); if (replay) replay.addEventListener("click", function () { playIn(); }); loadTopicDetails(item); playIn();
   }
   document.addEventListener("thoughts:loaded", function (ev) { items = (ev.detail && ev.detail.items) || []; meta = ev.detail || {}; item = items[0] || null; render(); });
 })();
