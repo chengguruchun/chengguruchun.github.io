@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - "content/**"
+      - "content/thoughts/**"
       - "docs/templates/**"
       - "api/thoughts.json"
       - "api/thoughts-criteria.json"
