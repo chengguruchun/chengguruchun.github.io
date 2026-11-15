@@ -465,6 +465,7 @@
       "evolution",
       "progress_log"
     ],
-    "progress_policy": "Append a dated progress_log entry when a discussion changes the understanding, evidence, or next action; preserve prior entries."
+    "progress_policy": "Append a dated progress_log entry when a discussion changes the understanding, evidence, or next action; preserve prior entries.",
+    "continuation_protocol": "Read the canonical detail first; merge context/evolution patches; append one dated progress entry; preserve stage, route, gates, and prior history; rebuild this index."
   }
 }
