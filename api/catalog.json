@@ -37,7 +37,10 @@
           "frontmatter": false,
           "override": null
         }
-      }
+      },
+      "content": "/content/articles/agent-self-evolution-simulation-replay-evaluation-lab.md",
+      "markdown": "/content/articles/agent-self-evolution-simulation-replay-evaluation-lab.md",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/agent-self-evolution-simulation-replay-evaluation-lab.md"
     },
     {
       "id": "agent-capability-platform-from-middleware-to-agent-center",
