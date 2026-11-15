@@ -6,9 +6,9 @@ description: >-
   evaluation (proxy metric vs real outcome), skill and procedural-memory evolution,
   Kubernetes-style reconciliation applied to agents, and agent architecture for
   industrial IoT and SaaS platforms. Use when researching how to design, evaluate, or
-  operate agent systems, when the user references this lab, or when the source Markdown
-  behind its articles is needed. Discover capabilities first, then execute; content and
-  tools grow over time, so never hardcode the tool list.
+  operate agent systems, when capturing or continuing research topics in the Agent Bench,
+  when the user references this lab, or when the source Markdown behind its articles is needed.
+  Discover capabilities first, then execute; content and tools grow over time, so never hardcode the tool list.
 ---
 
 # AI Knowledge Lab (distributable loader)
@@ -28,5 +28,6 @@ This file is the **installable skill entrypoint**. The full protocol lives at:
 
 6. Discover published articles through `https://chengguruchun.github.io/api/catalog.json`: filter on `name`, `desc`, `tags`, and `type` (`Diverse Lab` / `Articles`).
 7. Read only relevant originals, preferring each selected record's `content` / `markdown` path under `/content/`. Metadata is for discovery, not evidence; verify claims in Markdown before citing them.
+8. For Agent Bench topics, read `/THOUGHT_LOOP.md`, the schema `/api/thought-topic.schema.json`, and template `/docs/templates/thought-topic.template.json`. Continue existing records through `lab_get_thought` + `lab_continue_thought`; append dated progress rather than creating duplicate topics.
 
 Do not hardcode the tool list — discover first, then execute.
