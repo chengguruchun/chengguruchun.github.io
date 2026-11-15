@@ -2,6 +2,7 @@
 """Build /api/thoughts.json from content/thoughts/*.json."""
 from __future__ import annotations
 
+import argparse
 import json
 from datetime import datetime, timezone
 from pathlib import Path
@@ -130,6 +131,9 @@ def topic_index_fields(data: dict) -> dict:
 
 
 def main() -> int:
+    parser = argparse.ArgumentParser(description="Build the generated Thought Loop indexes.")
+    parser.add_argument("--check", action="store_true", help="fail when generated indexes are out of date")
+    args = parser.parse_args()
     criteria = load_criteria()
     items = []
     for path in sorted(SRC.glob("*.json")):
@@ -169,43 +173,59 @@ def main() -> int:
     criteria_pub = dict(criteria)
     criteria_pub["content"] = "/content/thoughts/criteria.json"
     criteria_pub["generated"] = generated
-    CRITERIA_OUT.write_text(
-        json.dumps(criteria_pub, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
-    )
-    OUT.write_text(
-        json.dumps(
-            {
-                "type": "Thoughts",
-                "loop": "Chat(off-site, distill) → Topic (inbound) → Candidate → Validated → Route → Published",
-                "intake": {
-                    "inbound": "topic",
-                    "from": "Any agent that loaded /SKILL.md. Chat and rough ideas distill to one sentence.",
-                    "transcripts": "off-site",
-                    "publish_only_after_gates": True,
-                },
-                "criteria": "/api/thoughts-criteria.json",
-                "topic_notebook": {
-                    "schema": "/api/thought-topic.schema.json",
-                    "template": "/docs/templates/thought-topic.template.json",
-                    "sections": ["context", "thesis", "evolution", "progress_log"],
-                    "progress_policy": "Append a dated progress_log entry when a discussion changes the understanding, evidence, or next action; preserve prior entries.",
-                },
-                "criteria_version": criteria["version"],
-                "gates_layers": {
-                    "field": "build_thoughts.py checks fields. No model is called on the site.",
-                    "model": "An agent runs the criteria prompt and files thought.judgement.",
-                },
-                "note": "Inbound is topic, not a conclusion. Agents filter and validate. They do not ghostwrite. Field PASS is not enough to publish.",
-                "generated": generated,
-                "items": items,
-            },
-            ensure_ascii=False,
-            indent=2,
-        )
-        + "\n",
-        encoding="utf-8",
-    )
+    thoughts_pub = {
+        "type": "Thoughts",
+        "loop": "Chat(off-site, distill) → Topic (inbound) → Candidate → Validated → Route → Published",
+        "intake": {
+            "inbound": "topic",
+            "from": "Any agent that loaded /SKILL.md. Chat and rough ideas distill to one sentence.",
+            "transcripts": "off-site",
+            "publish_only_after_gates": True,
+        },
+        "topic_notebook": {
+            "schema": "/api/thought-topic.schema.json",
+            "template": "/docs/templates/thought-topic.template.json",
+            "sections": ["context", "thesis", "evolution", "progress_log"],
+            "progress_policy": "Append a dated progress_log entry when a discussion changes the understanding, evidence, or next action; preserve prior entries.",
+            "continuation_protocol": "Read the canonical detail first; merge context/evolution patches; append one dated progress entry; preserve stage, route, gates, and prior history; rebuild this index.",
+        },
+        "criteria": "/api/thoughts-criteria.json",
+        "criteria_version": criteria["version"],
+        "gates_layers": {
+            "field": "build_thoughts.py checks fields. No model is called on the site.",
+            "model": "An agent runs the criteria prompt and files thought.judgement.",
+        },
+        "note": "Inbound is topic, not a conclusion. Agents filter and validate. They do not ghostwrite. Field PASS is not enough to publish.",
+        "generated": generated,
+        "items": items,
+    }
+    criteria_text = json.dumps(criteria_pub, ensure_ascii=False, indent=2) + "\n"
+    thoughts_text = json.dumps(thoughts_pub, ensure_ascii=False, indent=2) + "\n"
+
+    if args.check:
+        stale = []
+        for path, rendered in ((CRITERIA_OUT, criteria_text), (OUT, thoughts_text)):
+            if not path.exists():
+                stale.append(str(path.relative_to(ROOT)))
+                continue
+            try:
+                current = json.loads(path.read_text(encoding="utf-8"))
+                expected = json.loads(rendered)
+                current.pop("generated", None)
+                expected.pop("generated", None)
+                if current != expected:
+                    stale.append(str(path.relative_to(ROOT)))
+            except (json.JSONDecodeError, OSError):
+                stale.append(str(path.relative_to(ROOT)))
+        if stale:
+            print("stale generated thought indexes: " + ", ".join(stale))
+            print("run: python3 scripts/build_thoughts.py")
+            return 1
+        print("thought indexes are up to date")
+        return 0
+
+    CRITERIA_OUT.write_text(criteria_text, encoding="utf-8")
+    OUT.write_text(thoughts_text, encoding="utf-8")
     print(f"wrote {OUT.relative_to(ROOT)} ({len(items)} thoughts) + {CRITERIA_OUT.relative_to(ROOT)} v{criteria['version']}")
     return 0
 
