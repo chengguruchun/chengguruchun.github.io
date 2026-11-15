@@ -132,7 +132,21 @@
         "如何验证真实生产率变化",
         "企业级治理如何适配"
       ],
-      "next_step": "先建立任务复杂度 × 风险等级 × 跨团队依赖的组织形态适用性矩阵。"
+      "next_step": "先建立任务复杂度 × 风险等级 × 跨团队依赖的组织形态适用性矩阵。",
+      "thesis_summary": "软件生产的组织方式正在从职能导向转向目标交付导向。AI 降低了跨技术栈执行与角色交接的成本，使更小的团队能够承担更完整的交付链路；但商业判断、系统级权衡、独立验证和最终责任并不会因此自动消失。",
+      "open_questions_preview": [
+        "角色融合的主要瓶颈究竟是模型能力、上下文、工具权限，还是组织责任与验证机制？",
+        "什么类型的工作最先从职能分工转向目标交付？是否存在明确的复杂度阈值？",
+        "独立 QA 应该是独立人员、独立 Agent、独立测试环境，还是多种机制组合？",
+        "多 Agent 协作的协调成本在什么条件下会超过专业分工带来的收益？"
+      ],
+      "progress_count": 1,
+      "last_progress": {
+        "date": "2026-11-15",
+        "type": "initial_distillation",
+        "summary": "将关于 AI 时代软件团队角色融合的讨论沉淀为 Topic。",
+        "next": "从组织形态、职责边界、Agent 协作、生产率证据和企业治理五个方向继续研究。"
+      }
     },
     {
       "id": "thought-agent-project-management-loop",
@@ -241,7 +255,11 @@
       "content": "/content/thoughts/thought-agent-project-management-loop.json",
       "context_summary": "由用户关于 Agent 与项目管理过程组映射、以及 Validator 平台设计的讨论合并蒸馏而来。当前仅作为 Agent Bench 的待验证思想，不代表成熟结论。",
       "evolution_preview": [],
-      "next_step": ""
+      "next_step": "",
+      "thesis_summary": "",
+      "open_questions_preview": [],
+      "progress_count": 0,
+      "last_progress": {}
     },
     {
       "id": "thought-agent-runtime-model",
@@ -347,7 +365,11 @@
       "content": "/content/thoughts/thought-agent-runtime-model.json",
       "context_summary": "Distilled from the Runtime Model draft. Filed as topic. Not a catalog entry and not a Bench long page.",
       "evolution_preview": [],
-      "next_step": ""
+      "next_step": "",
+      "thesis_summary": "",
+      "open_questions_preview": [],
+      "progress_count": 0,
+      "last_progress": {}
     },
     {
       "id": "thought-rl-vs-finetune",
@@ -453,7 +475,11 @@
       "content": "/content/thoughts/thought-rl-vs-finetune.json",
       "context_summary": "User intake. Filed contribution as synthesis (manus is not in the schema).",
       "evolution_preview": [],
-      "next_step": ""
+      "next_step": "",
+      "thesis_summary": "",
+      "open_questions_preview": [],
+      "progress_count": 0,
+      "last_progress": {}
     }
   ],
   "topic_notebook": {
@@ -466,6 +492,15 @@
       "progress_log"
     ],
     "progress_policy": "Append a dated progress_log entry when a discussion changes the understanding, evidence, or next action; preserve prior entries.",
-    "continuation_protocol": "Read the canonical detail first; merge context/evolution patches; append one dated progress entry; preserve stage, route, gates, and prior history; rebuild this index."
+    "continuation_protocol": "Read the canonical detail first; merge context/evolution patches; append one dated progress entry; preserve stage, route, gates, and prior history; rebuild this index.",
+    "index_fields": [
+      "context_summary",
+      "thesis_summary",
+      "evolution_preview",
+      "open_questions_preview",
+      "next_step",
+      "progress_count",
+      "last_progress"
+    ]
   }
 }
