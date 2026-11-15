@@ -28,7 +28,7 @@ This file is the **installable skill entrypoint**. The full protocol lives at:
 
 6. Discover published articles through `https://chengguruchun.github.io/api/catalog.json`: filter on `name`, `desc`, `tags`, and `type` (`Diverse Lab` / `Articles`).
 7. Read only relevant originals, preferring each selected record's `content` / `markdown` path under `/content/`. Metadata is for discovery, not evidence; verify claims in Markdown before citing them.
-8. For Agent Bench topics, read `/THOUGHT_LOOP.md`, schema `/api/thought-topic.schema.json`, and template `/docs/templates/thought-topic.template.json`. The full record in `/content/thoughts/{id}.json` is canonical; `/api/thoughts.json` is a generated discovery index.
+8. For Agent Bench topics, read `/THOUGHT_LOOP.md`, schema `/api/thought-topic.schema.json`, and template `/docs/templates/thought-topic.template.json`. The full record in `/content/thoughts/{id}.json` is canonical; `/api/thoughts.json` is a generated discovery index with context/thesis summaries, direction and open-question previews, next action, and progress metadata. Use index metadata to shortlist, then fetch the full record before making detailed claims or continuing a topic.
 9. To continue a topic, read it with `lab_get_thought` first. Merge new context/evolution without dropping earlier material, append one dated `progress_log` entry for material progress, and preserve stage/status/route/gates. Do not create a duplicate topic for a continued discussion.
 10. After editing source topic JSON, regenerate the index with `python3 scripts/build_thoughts.py`; CI checks it with `python3 scripts/build_thoughts.py --check`. Never hand-edit generated summaries.
 
