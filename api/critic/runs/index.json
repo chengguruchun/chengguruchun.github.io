@@ -1,9 +1,20 @@
 {
   "name": "Critic Lab runs",
   "kind": "read",
-  "updated": "2026-11-15T05:09:57Z",
-  "count": 27,
+  "updated": "2026-11-15T05:38:22Z",
+  "count": 28,
   "runs": [
+    {
+      "id": "agent-self-evolution-simulation-replay-evaluation-lab-cd0c6d543652",
+      "article": "agent-self-evolution-simulation-replay-evaluation-lab",
+      "article_slug": "agent-self-evolution-simulation-replay-evaluation-lab",
+      "status": "needs_review",
+      "summary": "The article presents a coherent, well-structured engineering vision: an 'Evolution Lab' where self-improvement is gated by reproducible comparison (same task set, same budget, independent evaluation, promotion/rollbac...",
+      "commit": "cd0c6d543652753a0bda02caa5dd6667f6308d68",
+      "generated_at": "2026-11-15T05:38:22.424730+00:00",
+      "json": "/api/critic/runs/agent-self-evolution-simulation-replay-evaluation-lab-cd0c6d543652.json",
+      "markdown": "/api/critic/runs/agent-self-evolution-simulation-replay-evaluation-lab-cd0c6d543652.md"
+    },
     {
       "id": "problem-space-to-solution-space-agent-cognitive-loop-c7fcec89fe74",
       "article": "problem-space-to-solution-space-agent-cognitive-loop",
