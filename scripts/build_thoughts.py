@@ -123,10 +123,32 @@ def topic_index_fields(data: dict) -> dict:
     next_step = actions[0] if actions else ""
     if isinstance(next_step, dict):
         next_step = next_step.get("action") or next_step.get("title") or next_step.get("description") or ""
+    thesis = data.get("thesis") if isinstance(data.get("thesis"), dict) else {}
+    thesis_summary = (
+        thesis.get("core")
+        or thesis.get("reframing")
+        or thesis.get("key_question")
+        or ""
+    )
+    thesis_summary = " ".join(str(thesis_summary).split())
+    if len(thesis_summary) > 220:
+        thesis_summary = thesis_summary[:217].rstrip() + "..."
+    questions = evolution.get("open_questions") if isinstance(evolution.get("open_questions"), list) else []
+    progress = data.get("progress_log") if isinstance(data.get("progress_log"), list) else []
+    last = progress[-1] if progress and isinstance(progress[-1], dict) else {}
+    last_progress = {
+        key: str(last.get(key) or "").strip()
+        for key in ("date", "type", "summary", "next")
+        if last.get(key)
+    }
     return {
         "context_summary": summary,
+        "thesis_summary": thesis_summary,
         "evolution_preview": preview,
+        "open_questions_preview": [str(q).strip() for q in questions[:4] if str(q).strip()],
         "next_step": str(next_step).strip(),
+        "progress_count": len(progress),
+        "last_progress": last_progress,
     }
 
 
