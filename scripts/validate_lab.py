@@ -374,10 +374,77 @@ def check_thoughts() -> None:
         src = ROOT / str((it.get("content") or "")).lstrip("/")
         if it.get("content") and not src.exists():
             fail(f"missing thought source {it.get('content')}")
+        elif it.get("content") and src.exists():
+            detail = load_json(src)
+            if not isinstance(detail, dict):
+                fail(f"thought source is not a JSON object: {it.get('content')}")
+                detail = {}
+            context = detail.get("context")
+            evolution = detail.get("evolution")
+            progress_log = detail.get("progress_log")
+            if context is not None and not isinstance(context, dict):
+                fail(f"thought {it.get('id')} context must be an object")
+                context = {}
+            if evolution is not None and not isinstance(evolution, dict):
+                fail(f"thought {it.get('id')} evolution must be an object")
+                evolution = {}
+            if progress_log is not None and not isinstance(progress_log, list):
+                fail(f"thought {it.get('id')} progress_log must be an array")
+                progress_log = []
+            context = context if isinstance(context, dict) else {}
+            evolution = evolution if isinstance(evolution, dict) else {}
+            progress_log = progress_log if isinstance(progress_log, list) else []
+            directions = evolution.get("directions") or []
+            if not isinstance(directions, list) or any(not isinstance(x, dict) for x in directions):
+                fail(f"thought {it.get('id')} evolution.directions must be an array of objects")
+                directions = []
+            for entry in progress_log:
+                if not isinstance(entry, dict) or not entry.get("date") or not (entry.get("summary") or entry.get("type")):
+                    fail(f"thought {it.get('id')} progress_log entries need date and summary/type")
+                    break
+            summary = (
+                context.get("problem_space")
+                or context.get("original_observation")
+                or context.get("trigger")
+                or (detail.get("source") or {}).get("note")
+                or detail.get("thought")
+                or ""
+            )
+            summary = " ".join(str(summary).split())
+            if len(summary) > 220:
+                summary = summary[:217].rstrip() + "..."
+            preview = [
+                str(x.get("title") or x.get("id") or "").strip()
+                for x in directions
+                if x.get("title") or x.get("id")
+            ][:6]
+            actions = evolution.get("next_actions") or []
+            next_step = actions[0] if isinstance(actions, list) and actions else ""
+            if isinstance(next_step, dict):
+                next_step = next_step.get("action") or next_step.get("title") or next_step.get("description") or ""
+            if it.get("context_summary") != summary:
+                fail(f"thought {it.get('id')} context_summary is out of sync with source")
+            if it.get("evolution_preview") != preview:
+                fail(f"thought {it.get('id')} evolution_preview is out of sync with source")
+            if it.get("next_step") != str(next_step).strip():
+                fail(f"thought {it.get('id')} next_step is out of sync with source")
     if thoughts.get("criteria") != "/api/thoughts-criteria.json":
         fail("thoughts.json should point at thoughts-criteria.json")
     else:
         ok("thoughts.json has criteria pointer")
+    notebook = thoughts.get("topic_notebook") or {}
+    if notebook.get("schema") != "/api/thought-topic.schema.json" or notebook.get("template") != "/docs/templates/thought-topic.template.json":
+        fail("thoughts.json topic_notebook schema/template pointers are missing or stale")
+    else:
+        ok("thoughts.json topic notebook schema/template pointers")
+    schema = load_json(ROOT / "api" / "thought-topic.schema.json")
+    template = load_json(ROOT / "docs" / "templates" / "thought-topic.template.json")
+    if not schema or not template:
+        fail("thought topic schema/template missing")
+    elif not isinstance(template.get("context"), dict) or not isinstance(template.get("evolution"), dict) or not isinstance(template.get("progress_log"), list):
+        fail("thought topic template must include context, evolution, progress_log")
+    else:
+        ok("thought topic schema and template")
     criteria = load_json(ROOT / "api" / "thoughts-criteria.json")
     src_criteria = load_json(ROOT / "content" / "thoughts" / "criteria.json")
     if not criteria or not src_criteria:
