@@ -397,7 +397,7 @@
     {
       "name": "lab_list_thoughts",
       "kind": "read",
-      "description": "List thought-loop items. Topic records may expose context_summary, evolution_preview, and next_step; fetch the canonical JSON for full research context/history. Inbound ideas remain stage=topic, not conclusions.",
+      "description": "List thought-loop items. Topic records expose compact context_summary, thesis_summary, evolution_preview, open_questions_preview, next_step, progress_count, and last_progress metadata when available; fetch the canonical JSON for full research context/history. Inbound ideas remain stage=topic, not conclusions.",
       "invoke": {
         "method": "GET",
         "path": "/api/thoughts.json"
