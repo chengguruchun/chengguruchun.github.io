@@ -96,6 +96,39 @@ def compute_gates(data: dict) -> list[dict]:
     ]
 
 
+
+def topic_index_fields(data: dict) -> dict:
+    """Keep the lightweight index useful without duplicating the full research notebook."""
+    context = data.get("context") if isinstance(data.get("context"), dict) else {}
+    evolution = data.get("evolution") if isinstance(data.get("evolution"), dict) else {}
+    summary = (
+        context.get("problem_space")
+        or context.get("original_observation")
+        or context.get("trigger")
+        or (data.get("source") or {}).get("note")
+        or data.get("thought")
+        or ""
+    )
+    summary = " ".join(str(summary).split())
+    if len(summary) > 220:
+        summary = summary[:217].rstrip() + "..."
+    directions = evolution.get("directions") if isinstance(evolution.get("directions"), list) else []
+    preview = [
+        str(item.get("title") or item.get("id") or "").strip()
+        for item in directions
+        if isinstance(item, dict) and (item.get("title") or item.get("id"))
+    ][:6]
+    actions = evolution.get("next_actions") if isinstance(evolution.get("next_actions"), list) else []
+    next_step = actions[0] if actions else ""
+    if isinstance(next_step, dict):
+        next_step = next_step.get("action") or next_step.get("title") or next_step.get("description") or ""
+    return {
+        "context_summary": summary,
+        "evolution_preview": preview,
+        "next_step": str(next_step).strip(),
+    }
+
+
 def main() -> int:
     criteria = load_criteria()
     items = []
@@ -129,6 +162,7 @@ def main() -> int:
         data["gates"] = compute_gates(data)
         data["model_gates"] = compute_model_gates(data, criteria)
         data["content"] = f"/content/thoughts/{path.name}"
+        data.update(topic_index_fields(data))
         items.append(data)
     items.sort(key=lambda x: (x.get("updated") or "", x["id"]), reverse=True)
     generated = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
@@ -151,6 +185,12 @@ def main() -> int:
                     "publish_only_after_gates": True,
                 },
                 "criteria": "/api/thoughts-criteria.json",
+                "topic_notebook": {
+                    "schema": "/api/thought-topic.schema.json",
+                    "template": "/docs/templates/thought-topic.template.json",
+                    "sections": ["context", "thesis", "evolution", "progress_log"],
+                    "progress_policy": "Append a dated progress_log entry when a discussion changes the understanding, evidence, or next action; preserve prior entries.",
+                },
                 "criteria_version": criteria["version"],
                 "gates_layers": {
                     "field": "build_thoughts.py checks fields. No model is called on the site.",
