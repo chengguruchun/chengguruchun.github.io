@@ -435,8 +435,24 @@ def check_thoughts() -> None:
                 fail(f"thought {it.get('id')} context_summary is out of sync with source")
             if it.get("evolution_preview") != preview:
                 fail(f"thought {it.get('id')} evolution_preview is out of sync with source")
+            thesis = detail.get("thesis") if isinstance(detail.get("thesis"), dict) else {}
+            thesis_summary = thesis.get("core") or thesis.get("reframing") or thesis.get("key_question") or ""
+            thesis_summary = " ".join(str(thesis_summary).split())
+            if len(thesis_summary) > 220:
+                thesis_summary = thesis_summary[:217].rstrip() + "..."
+            questions = evolution.get("open_questions") or []
+            questions_preview = [str(q).strip() for q in questions[:4] if str(q).strip()] if isinstance(questions, list) else []
+            progress_count = len(progress_log)
+            last = progress_log[-1] if progress_log and isinstance(progress_log[-1], dict) else {}
+            last_progress = {key: str(last.get(key) or "").strip() for key in ("date", "type", "summary", "next") if last.get(key)}
             if it.get("next_step") != str(next_step).strip():
                 fail(f"thought {it.get('id')} next_step is out of sync with source")
+            if it.get("thesis_summary") != thesis_summary:
+                fail(f"thought {it.get('id')} thesis_summary is out of sync with source")
+            if it.get("open_questions_preview") != questions_preview:
+                fail(f"thought {it.get('id')} open_questions_preview is out of sync with source")
+            if it.get("progress_count") != progress_count or it.get("last_progress") != last_progress:
+                fail(f"thought {it.get('id')} progress metadata is out of sync with source")
     if thoughts.get("criteria") != "/api/thoughts-criteria.json":
         fail("thoughts.json should point at thoughts-criteria.json")
     else:
@@ -446,8 +462,10 @@ def check_thoughts() -> None:
         fail("thoughts.json topic_notebook schema/template pointers are missing or stale")
     elif notebook.get("sections") != ["context", "thesis", "evolution", "progress_log"] or not notebook.get("progress_policy") or not notebook.get("continuation_protocol"):
         fail("thoughts.json topic_notebook lifecycle contract is incomplete")
+    elif notebook.get("index_fields") != ["context_summary", "thesis_summary", "evolution_preview", "open_questions_preview", "next_step", "progress_count", "last_progress"]:
+        fail("thoughts.json topic_notebook index_fields contract is incomplete")
     else:
-        ok("thoughts.json topic notebook schema/template/lifecycle contract")
+        ok("thoughts.json topic notebook schema/template/lifecycle/index contract")
     schema = load_json(ROOT / "api" / "thought-topic.schema.json")
     template = load_json(ROOT / "docs" / "templates" / "thought-topic.template.json")
     if not schema or not template:
@@ -455,7 +473,18 @@ def check_thoughts() -> None:
     elif not isinstance(template.get("context"), dict) or not isinstance(template.get("evolution"), dict) or not isinstance(template.get("progress_log"), list):
         fail("thought topic template must include context, evolution, progress_log")
     else:
-        ok("thought topic schema and template")
+        for key in ("role_shift", "possible_org_forms", "boundary_conditions"):
+            if not isinstance(template.get(key), list):
+                fail(f"thought topic template must include {key} as an array")
+        if not isinstance(template.get("proposed_model"), dict):
+            fail("thought topic template must include proposed_model as an object")
+        ok("thought topic schema and complete template")
+    bench_js = (ROOT / "assets" / "js" / "bench-flow.js").read_text(encoding="utf-8")
+    for field in ("role_shift", "possible_org_forms", "boundary_conditions", "proposed_model", "comparisons", "experiments", "evidence", "progress_log"):
+        if field not in bench_js:
+            fail(f"Bench renderer missing Topic field {field}")
+    else:
+        ok("Bench renderer covers canonical Topic research fields")
     criteria = load_json(ROOT / "api" / "thoughts-criteria.json")
     src_criteria = load_json(ROOT / "content" / "thoughts" / "criteria.json")
     if not criteria or not src_criteria:
