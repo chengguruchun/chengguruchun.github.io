@@ -480,9 +480,9 @@ def check_thoughts() -> None:
             fail("thought topic template must include proposed_model as an object")
         ok("thought topic schema and complete template")
     bench_js = (ROOT / "assets" / "js" / "bench-flow.js").read_text(encoding="utf-8")
-    for field in ("role_shift", "possible_org_forms", "boundary_conditions", "proposed_model", "comparisons", "experiments", "evidence", "progress_log"):
-        if field not in bench_js:
-            fail(f"Bench renderer missing Topic field {field}")
+    missing_renderer_fields = [field for field in ("role_shift", "possible_org_forms", "boundary_conditions", "proposed_model", "comparisons", "experiments", "evidence", "progress_log") if field not in bench_js]
+    if missing_renderer_fields:
+        fail("Bench renderer missing Topic fields: " + ", ".join(missing_renderer_fields))
     else:
         ok("Bench renderer covers canonical Topic research fields")
     criteria = load_json(ROOT / "api" / "thoughts-criteria.json")
