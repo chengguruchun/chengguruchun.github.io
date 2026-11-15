@@ -444,8 +444,10 @@ def check_thoughts() -> None:
     notebook = thoughts.get("topic_notebook") or {}
     if notebook.get("schema") != "/api/thought-topic.schema.json" or notebook.get("template") != "/docs/templates/thought-topic.template.json":
         fail("thoughts.json topic_notebook schema/template pointers are missing or stale")
+    elif notebook.get("sections") != ["context", "thesis", "evolution", "progress_log"] or not notebook.get("progress_policy") or not notebook.get("continuation_protocol"):
+        fail("thoughts.json topic_notebook lifecycle contract is incomplete")
     else:
-        ok("thoughts.json topic notebook schema/template pointers")
+        ok("thoughts.json topic notebook schema/template/lifecycle contract")
     schema = load_json(ROOT / "api" / "thought-topic.schema.json")
     template = load_json(ROOT / "docs" / "templates" / "thought-topic.template.json")
     if not schema or not template:
