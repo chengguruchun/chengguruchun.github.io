@@ -23,6 +23,8 @@ The public GitHub Pages site is currently a static knowledge/capability surface.
 - [x] Agent entry protocol: `SKILL.md`, `api/discover.json`, `mcp/tools.json`.
 - [x] Article discovery and source retrieval through `api/catalog.json` and canonical Markdown under `content/`.
 - [x] Thought intake and gates through Thought Loop / Agent Bench.
+- [x] Topic research notebooks with a shared schema/template, generated context/evolution index summaries, and append-only progress history.
+- [x] Agent-facing topic continuation contract (`lab_continue_thought`) and CI checks for source/index/schema consistency.
 - [x] Published-knowledge status and review workflow through `api/knowledge.json` and `KNOWLEDGE_LOOP.md`.
 - [x] Knowledge graph seed and CI structural/provenance validator.
 - [x] Git-based revision history and pull-request review.
