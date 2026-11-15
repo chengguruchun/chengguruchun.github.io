@@ -22,6 +22,7 @@ on:
       - "api/catalog.json"
       - "api/articles.json"
       - "scripts/build_feeds.py"
+      - "scripts/ingest_published_html.py"
       - "scripts/build_thoughts.py"
       - "scripts/build_seo.py"
       - "scripts/sync_articles_index.py"
@@ -59,6 +60,9 @@ jobs:
             exit 0
           fi
 
+          # HTML publication is the source event. Ingest first so every published page
+          # receives Markdown + catalog/API registry records before derived indexes build.
+          python3 scripts/ingest_published_html.py
           python3 scripts/sync_articles_index.py
           python3 scripts/build_thoughts.py
           python3 scripts/build_feeds.py
