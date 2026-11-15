@@ -14,7 +14,7 @@
     "model": "An agent runs the criteria prompt and files thought.judgement."
   },
   "note": "Inbound is topic, not a conclusion. Agents filter and validate. They do not ghostwrite. Field PASS is not enough to publish.",
-  "generated": "2026-11-15T17:30:00Z",
+  "generated": "2026-11-15T18:00:00Z",
   "items": [
     {
       "id": "thought-ai-native-product-engineering",
@@ -123,7 +123,16 @@
           "criteria_version": null
         }
       ],
-      "content": "/content/thoughts/thought-ai-native-product-engineering.json"
+      "content": "/content/thoughts/thought-ai-native-product-engineering.json",
+      "context_summary": "由 AI 时代产品工程角色融合的讨论产生，研究软件生产从职能分工转向目标交付的条件、边界与组织影响。",
+      "evolution_preview": [
+        "组织形态如何演进",
+        "岗位职责如何重新划分",
+        "多 Agent 团队是否真的优于单 Agent",
+        "如何验证真实生产率变化",
+        "企业级治理如何适配"
+      ],
+      "next_step": "先建立任务复杂度 × 风险等级 × 跨团队依赖的组织形态适用性矩阵。"
     },
     {
       "id": "thought-agent-project-management-loop",
