@@ -3,7 +3,7 @@
   "protocol": "discover-then-execute",
   "skill": "/SKILL.md",
   "registry": "/mcp/tools.json",
-  "updated": "2026-11-15",
+  "updated": "2026-11-15T18:40:00Z",
   "meta": [
     "lab_discover",
     "lab_execute"
