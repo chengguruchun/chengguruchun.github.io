@@ -2,6 +2,39 @@
   "type": "Articles",
   "items": [
     {
+      "id": "problem-space-to-solution-space-agent-cognitive-loop",
+      "type": "Articles",
+      "title": "从问题空间到解决空间：大模型时代的认知闭环与自我进化",
+      "excerpt": "从真实问题到模型理解、方案生成与执行结果，分析 Agent 如何通过结构化问题表示、语义保持、证据验证与反馈闭环减少信息损耗，并逐步进化解决问题的能力。",
+      "url": "/articles/problem-space-to-solution-space-agent-cognitive-loop.html",
+      "date": "2026-11-15",
+      "tags": [
+        "Agent",
+        "Cognitive Loop",
+        "Evaluation",
+        "Self-Evolving Agent",
+        "Information Theory"
+      ],
+      "thought_date": "2026-11-15",
+      "published_date": "2026-11-15",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/problem-space-to-solution-space-agent-cognitive-loop.md",
+      "content": "/content/articles/problem-space-to-solution-space-agent-cognitive-loop.md",
+      "name": "从问题空间到解决空间：大模型时代的认知闭环与自我进化",
+      "desc": "从真实问题到模型理解、方案生成与执行结果，分析 Agent 如何通过结构化问题表示、语义保持、证据验证与反馈闭环减少信息损耗，并逐步进化解决问题的能力。",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-11-15",
+        "next_review": "2027-02-13",
+        "cadence_days": 90,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      }
+    },
+    {
       "id": "agent-self-evolution-simulation-replay-evaluation-lab",
       "type": "Articles",
       "title": "让 Agent 真正自我进化：用 Simulation、Replay 与 Evaluation 构建进化实验室",
@@ -19,9 +52,6 @@
       ],
       "thought_date": "2026-11-15",
       "published_date": "2026-11-15",
-      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/agent-self-evolution-simulation-replay-evaluation-lab.md",
-      "content": "/content/articles/agent-self-evolution-simulation-replay-evaluation-lab.md",
-      "markdown": "/content/articles/agent-self-evolution-simulation-replay-evaluation-lab.md",
       "name": "让 Agent 真正自我进化：用 Simulation、Replay 与 Evaluation 构建进化实验室",
       "desc": "自进化不是不断增加 Agent、Skill 或 Prompt，而是在相同任务集与资源预算下证明能力提升。通过真实轨迹采集、模拟探索、流量回放、独立评估、版本晋级与回滚，形成可复现、可比较、可治理的 Agent 进化闭环。",
       "knowledge": {
@@ -32,10 +62,13 @@
         "due": false,
         "sticky": false,
         "source": {
-          "frontmatter": true,
+          "frontmatter": false,
           "override": null
         }
-      }
+      },
+      "content": "/content/articles/agent-self-evolution-simulation-replay-evaluation-lab.md",
+      "markdown": "/content/articles/agent-self-evolution-simulation-replay-evaluation-lab.md",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/agent-self-evolution-simulation-replay-evaluation-lab.md"
     },
     {
       "id": "agent-capability-platform-from-middleware-to-agent-center",

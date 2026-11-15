@@ -8,6 +8,14 @@
     <lastBuildDate>Sun, 15 Nov 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://chengguruchun.github.io/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
+      <title>从问题空间到解决空间：大模型时代的认知闭环与自我进化</title>
+      <link>https://chengguruchun.github.io/articles/problem-space-to-solution-space-agent-cognitive-loop.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/articles/problem-space-to-solution-space-agent-cognitive-loop.html</guid>
+      <pubDate>Sun, 15 Nov 2026 00:00:00 +0000</pubDate>
+      <category>Articles</category>
+      <description>从真实问题到模型理解、方案生成与执行结果，分析 Agent 如何通过结构化问题表示、语义保持、证据验证与反馈闭环减少信息损耗，并逐步进化解决问题的能力。</description>
+    </item>
+    <item>
       <title>让 Agent 真正自我进化：用 Simulation、Replay 与 Evaluation 构建进化实验室</title>
       <link>https://chengguruchun.github.io/articles/agent-self-evolution-simulation-replay-evaluation-lab.html</link>
       <guid isPermaLink="true">https://chengguruchun.github.io/articles/agent-self-evolution-simulation-replay-evaluation-lab.html</guid>
@@ -94,6 +102,14 @@
       <pubDate>Thu, 22 Oct 2026 00:00:00 +0000</pubDate>
       <category>Diverse Lab</category>
       <description>当 Agent 成为重要的软件生产者，架构设计是否需要从面向人的组织协作，进一步走向面向任务的协作？本文讨论软件结构与任务结构的映射、可执行契约、并行开发边界、架构感知的 Agent Runtime，以及如何衡量多 Agent 研发效率。</description>
+    </item>
+    <item>
+      <title>从掌握火到智能体进化：Agent 如何突破能力边界</title>
+      <link>https://chengguruchun.github.io/diverse/from-fire-to-agent-evolution.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/diverse/from-fire-to-agent-evolution.html</guid>
+      <pubDate>Wed, 21 Oct 2026 00:00:00 +0000</pubDate>
+      <category>Diverse Lab</category>
+      <description>从人类掌握火的历史隐喻出发，思考 Agent 如何通过基础能力、经验积累、能力组合与反馈学习，逐步突破任务边界，并在必要时从单体执行者演化为多智能体协作组织。</description>
     </item>
     <item>
       <title>2026-10 Week 3 · Agent 工具调用可靠性</title>

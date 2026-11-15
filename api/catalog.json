@@ -3,9 +3,71 @@
   "skill": "/SKILL.md",
   "product": "/PRODUCT.md",
   "llms": "/llms.txt",
-  "generated": "2026-11-13T04:16:34Z",
+  "generated": "2026-11-15T06:40:21Z",
   "base_url": "https://chengguruchun.github.io",
   "items": [
+    {
+      "id": "from-fire-to-agent-evolution",
+      "type": "Diverse Lab",
+      "title": "从掌握火到智能体进化：Agent 如何突破能力边界",
+      "excerpt": "从人类掌握火的历史隐喻出发，思考 Agent 如何通过基础能力、经验积累、能力组合与反馈学习，逐步突破任务边界，并在必要时从单体执行者演化为多智能体协作组织。",
+      "url": "/diverse/from-fire-to-agent-evolution.html",
+      "date": "2026-10-21",
+      "tags": [
+        "Agent"
+      ],
+      "thought_date": "2026-10-21",
+      "published_date": "2026-10-21",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/from-fire-to-agent-evolution.md",
+      "content": "/content/diverse/from-fire-to-agent-evolution.md",
+      "name": "从掌握火到智能体进化：Agent 如何突破能力边界",
+      "desc": "从人类掌握火的历史隐喻出发，思考 Agent 如何通过基础能力、经验积累、能力组合与反馈学习，逐步突破任务边界，并在必要时从单体执行者演化为多智能体协作组织。",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-11-13",
+        "next_review": "2027-05-12",
+        "cadence_days": 180,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      }
+    },
+    {
+      "id": "problem-space-to-solution-space-agent-cognitive-loop",
+      "type": "Articles",
+      "title": "从问题空间到解决空间：大模型时代的认知闭环与自我进化",
+      "excerpt": "从真实问题到模型理解、方案生成与执行结果，分析 Agent 如何通过结构化问题表示、语义保持、证据验证与反馈闭环减少信息损耗，并逐步进化解决问题的能力。",
+      "url": "/articles/problem-space-to-solution-space-agent-cognitive-loop.html",
+      "date": "2026-11-15",
+      "tags": [
+        "Agent",
+        "Cognitive Loop",
+        "Evaluation",
+        "Self-Evolving Agent",
+        "Information Theory"
+      ],
+      "thought_date": "2026-11-15",
+      "published_date": "2026-11-15",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/problem-space-to-solution-space-agent-cognitive-loop.md",
+      "content": "/content/articles/problem-space-to-solution-space-agent-cognitive-loop.md",
+      "name": "从问题空间到解决空间：大模型时代的认知闭环与自我进化",
+      "desc": "从真实问题到模型理解、方案生成与执行结果，分析 Agent 如何通过结构化问题表示、语义保持、证据验证与反馈闭环减少信息损耗，并逐步进化解决问题的能力。",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-11-15",
+        "next_review": "2027-02-13",
+        "cadence_days": 90,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      }
+    },
     {
       "id": "agent-self-evolution-simulation-replay-evaluation-lab",
       "type": "Articles",

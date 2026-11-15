@@ -2,6 +2,35 @@
   "type": "Diverse Lab",
   "items": [
     {
+      "id": "from-fire-to-agent-evolution",
+      "type": "Diverse Lab",
+      "title": "从掌握火到智能体进化：Agent 如何突破能力边界",
+      "excerpt": "从人类掌握火的历史隐喻出发，思考 Agent 如何通过基础能力、经验积累、能力组合与反馈学习，逐步突破任务边界，并在必要时从单体执行者演化为多智能体协作组织。",
+      "url": "/diverse/from-fire-to-agent-evolution.html",
+      "date": "2026-10-21",
+      "tags": [
+        "Agent"
+      ],
+      "thought_date": "2026-10-21",
+      "published_date": "2026-10-21",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/from-fire-to-agent-evolution.md",
+      "content": "/content/diverse/from-fire-to-agent-evolution.md",
+      "name": "从掌握火到智能体进化：Agent 如何突破能力边界",
+      "desc": "从人类掌握火的历史隐喻出发，思考 Agent 如何通过基础能力、经验积累、能力组合与反馈学习，逐步突破任务边界，并在必要时从单体执行者演化为多智能体协作组织。",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-11-13",
+        "next_review": "2027-05-12",
+        "cadence_days": 180,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      }
+    },
+    {
       "id": "multi-agent-runtime-topology-task-collaboration",
       "type": "Diverse Lab",
       "title": "从 Agent 拓扑到任务协作：重新设计 Multi-Agent Runtime",

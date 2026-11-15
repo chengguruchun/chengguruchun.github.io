@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-13",
+  "updated": "2026-11-15",
   "tags": {
     "AI Engineering": [
       "ai-era-design-principles-patterns-ddd"
@@ -14,6 +14,9 @@
       "agent-runtime-cognitive-actor"
     ],
     "Agent": [
+      "from-fire-to-agent-evolution",
+      "problem-space-to-solution-space-agent-cognitive-loop",
+      "agent-self-evolution-simulation-replay-evaluation-lab",
       "agent-capability-platform-from-middleware-to-agent-center",
       "multi-agent-runtime-topology-task-collaboration",
       "agent-engineering-laws-harness-architecture-feedback",
@@ -59,6 +62,7 @@
       "agent-capability-platform-from-middleware-to-agent-center"
     ],
     "Agent Runtime": [
+      "agent-self-evolution-simulation-replay-evaluation-lab",
       "agent-capability-platform-from-middleware-to-agent-center",
       "multi-agent-runtime-topology-task-collaboration",
       "agent-engineering-laws-harness-architecture-feedback",
@@ -143,6 +147,9 @@
       "grill-me-superpowers-openspec-agent-development-workflow",
       "ai-era-design-principles-patterns-ddd",
       "event-driven-coding-agent-runtime"
+    ],
+    "Cognitive Loop": [
+      "problem-space-to-solution-space-agent-cognitive-loop"
     ],
     "Compiler": [
       "ai-native-software-language-aosl"
@@ -234,12 +241,17 @@
       "iot-agent-reconstruction"
     ],
     "Evaluation": [
+      "problem-space-to-solution-space-agent-cognitive-loop",
+      "agent-self-evolution-simulation-replay-evaluation-lab",
       "agent-evaluation-proxy-vs-real-outcome",
       "agent-optimizer-experience-policy",
       "agent-skill-evolution-pruning"
     ],
     "Event-driven": [
       "event-driven-coding-agent-runtime"
+    ],
+    "Evolution Lab": [
+      "agent-self-evolution-simulation-replay-evaluation-lab"
     ],
     "Experience Memory": [
       "agent-optimizer-experience-policy"
@@ -320,6 +332,9 @@
     "Inference": [
       "llm-inference-serving-from-api-to-gpu",
       "from-llm-to-agent-runtime"
+    ],
+    "Information Theory": [
+      "problem-space-to-solution-space-agent-cognitive-loop"
     ],
     "Interpretability": [
       "h-neurons-paper-reading",
@@ -457,6 +472,9 @@
       "reinforcement-learning-game-theory-complex-systems",
       "agent-optimizer-experience-policy"
     ],
+    "Replay": [
+      "agent-self-evolution-simulation-replay-evaluation-lab"
+    ],
     "Runtime": [
       "gossip-evidence-consensus-multi-agent",
       "react-is-the-inner-loop-long-running-agent-harness-runtime",
@@ -478,6 +496,10 @@
       "iot-agent-from-device-to-physical-world-runtime",
       "saas-ecommerce-agent-thinking"
     ],
+    "Self-Evolving Agent": [
+      "problem-space-to-solution-space-agent-cognitive-loop",
+      "agent-self-evolution-simulation-replay-evaluation-lab"
+    ],
     "Semantic IR": [
       "ai-native-software-language-aosl"
     ],
@@ -486,6 +508,9 @@
     ],
     "Shared State": [
       "multi-agent-runtime-topology-task-collaboration"
+    ],
+    "Simulation": [
+      "agent-self-evolution-simulation-replay-evaluation-lab"
     ],
     "Skill": [
       "agent-skill-evolution-pruning"
