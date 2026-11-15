@@ -32,8 +32,10 @@
 - lab_agent_native_status
 - [Agent-native latest](/api/agent-native/runs/latest.json)
 - [Agent-native criteria](/api/agent-native/criteria.json)
-- lab_list_thoughts / lab_get_thought / lab_propose_topic / lab_thought_validate / lab_thought_criteria / lab_thought_judge
+- lab_list_thoughts / lab_get_thought / lab_propose_topic / lab_continue_thought / lab_thought_validate / lab_thought_criteria / lab_thought_judge
 - [Thoughts](/api/thoughts.json)
+- [Thought Topic Schema](/api/thought-topic.schema.json)
+- [Thought Topic Template](/docs/templates/thought-topic.template.json)
 - [Thought criteria](/api/thoughts-criteria.json)
 - lab_knowledge_status / lab_knowledge_due / lab_knowledge_criteria / lab_knowledge_report / lab_knowledge_review
 - [Knowledge registry](/api/knowledge.json)
