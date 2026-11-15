@@ -63,6 +63,16 @@
     if (!body) return "";
     return '<section class="bench-detail__section' + (extra ? " " + extra : "") + '"><h4>' + esc(title) + '</h4>' + body + '</section>';
   }
+  function objectHtml(value) {
+    if (!value || typeof value !== "object" || Array.isArray(value)) return '<p class="bench-detail__empty">暂未记录</p>';
+    var rows = Object.keys(value).map(function (key) {
+      var raw = value[key];
+      var rendered = typeof raw === "string" ? raw : JSON.stringify(raw);
+      if (!rendered || rendered === "[]" || rendered === "{}") return "";
+      return '<p><strong>' + esc(key) + '：</strong>' + esc(rendered) + '</p>';
+    }).filter(Boolean).join("");
+    return rows || '<p class="bench-detail__empty">暂未记录</p>';
+  }
   function renderTopicDetails(data) {
     var context = data.context || {};
     var thesis = data.thesis || {};
@@ -101,10 +111,18 @@
       '</div>' +
       detailSection("03 · 后续演进方向", directionHtml) +
       '<div class="bench-detail__grid">' +
+        detailSection("角色与职责变化", listHtml(data.role_shift || [])) +
+        detailSection("可能的组织形态", listHtml(data.possible_org_forms || [])) +
+        detailSection("适用边界与约束", listHtml(data.boundary_conditions || [])) +
+        detailSection("建议模型", objectHtml(data.proposed_model)) +
+        detailSection("对比与关联", listHtml(data.comparisons || [])) +
+      '</div>' +
+      '<div class="bench-detail__grid">' +
         detailSection("04 · 开放问题", listHtml(evolution.open_questions || [])) +
         detailSection("05 · 下一步行动", listHtml(evolution.next_actions || [])) +
         detailSection("06 · 重新审视的触发条件", listHtml(evolution.revisit_triggers || [])) +
       '</div>' +
+      (data.source ? detailSection("来源记录", objectHtml(data.source)) : '') +
       (data.experiments && data.experiments.length ? detailSection("可验证的实验", listHtml(data.experiments)) : '') +
       (data.evidence && data.evidence.length ? detailSection("证据记录", listHtml(data.evidence)) : '') +
       detailSection("07 · 推进历史", progressHtml) +
