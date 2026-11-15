@@ -49,5 +49,7 @@ jobs:
         run: python3 scripts/build_knowledge.py --check
       - name: Validate knowledge graph structure and provenance
         run: python3 scripts/validate_knowledge_graph.py
+      - name: Check Thought Loop indexes are regenerated
+        run: python3 scripts/build_thoughts.py --check
       - name: Run validate_lab (no --live)
         run: python3 scripts/validate_lab.py
