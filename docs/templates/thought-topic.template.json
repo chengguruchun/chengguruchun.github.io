@@ -82,5 +82,9 @@
   "also": [],
   "promotes_to": null,
   "published_url": null,
-  "updated": "2026-11-15"
+  "updated": "2026-11-15",
+  "role_shift": [],
+  "possible_org_forms": [],
+  "boundary_conditions": [],
+  "proposed_model": {}
 }
