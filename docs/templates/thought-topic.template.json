@@ -1,0 +1,86 @@
+{
+  "id": "thought-topic-short-slug",
+  "thought": "用一句话表达可讨论、可反驳的核心想法；不要复制聊天记录。",
+  "stage": "topic",
+  "status": "hold",
+  "origin": "user",
+  "contribution": "synthesis",
+  "knowledge": {
+    "type": "HYPOTHESIS",
+    "confidence": "LOW",
+    "evidence_level": "L1"
+  },
+  "quality": {
+    "fact_check": "pending",
+    "inference_check": "pending",
+    "evidence_check": "pending",
+    "counterexample_check": "pending"
+  },
+  "source": {
+    "agent": "none",
+    "note": "记录思想来源和触发背景，不粘贴对话原文。"
+  },
+  "context": {
+    "trigger": "这条想法由什么问题、观察或讨论触发？",
+    "original_observation": "最初观察到的现象是什么？",
+    "problem_space": "准备研究的范围，以及明确不研究什么。",
+    "why_it_matters": [
+      "为什么值得继续研究？"
+    ],
+    "prior_discussion": [
+      "此前已经形成的关键讨论或判断。"
+    ],
+    "assumptions_to_test": [
+      "目前仍需验证的假设。"
+    ]
+  },
+  "thesis": {
+    "core": "当前最重要的判断。",
+    "reframing": "对问题更准确的重新表述。",
+    "key_question": "当前最值得回答的问题。"
+  },
+  "mechanisms": [],
+  "critiques": [],
+  "comparisons": [],
+  "evidence": [],
+  "evolution": {
+    "directions": [
+      {
+        "id": "research-branch",
+        "title": "一个可能的演进方向",
+        "question": "这一方向需要回答什么问题？",
+        "explore": [
+          "可以继续研究的子问题或机制。"
+        ],
+        "expected_output": "预期形成的模型、实验、文章或设计产物。"
+      }
+    ],
+    "open_questions": [
+      "当前还没有答案的问题。"
+    ],
+    "next_actions": [
+      "下一步最具体、可执行的动作。"
+    ],
+    "revisit_triggers": [
+      "出现什么证据或事件时应该重新审视当前判断。"
+    ]
+  },
+  "progress_log": [
+    {
+      "date": "2026-11-15",
+      "type": "initial_distillation",
+      "summary": "记录本次新增或整理了什么。",
+      "changes": [
+        "新增的认知、边界或反例。"
+      ],
+      "evidence_added": [],
+      "decisions": [],
+      "next": "下一步从哪里继续。"
+    }
+  ],
+  "route": null,
+  "also": [],
+  "promotes_to": null,
+  "published_url": null,
+  "updated": "2026-11-15"
+}
