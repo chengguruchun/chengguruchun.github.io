@@ -726,7 +726,7 @@
     {
       "name": "lab_list_thoughts",
       "kind": "read",
-      "description": "List thought-loop items. Inbound from any Skill-loading agent is stage=topic (distilled chat, not a conclusion). Filter by stage, origin, or route. Only published items are conclusions. Hot Words is a separate weekly loop.",
+      "description": "List thought-loop items. Topic records may expose context_summary, evolution_preview, and next_step; fetch the canonical JSON for full research context/history. Inbound ideas remain stage=topic, not conclusions.",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -754,7 +754,7 @@
     {
       "name": "lab_get_thought",
       "kind": "read",
-      "description": "Fetch one thought JSON by id. Canonical file is /content/thoughts/{id}.json. Topics are inbound experiments, not articles.",
+      "description": "Fetch the full canonical thought/topic notebook JSON by id, including context, thesis, evolution directions, open questions, and progress_log when present. Canonical file: /content/thoughts/{id}.json.",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -776,7 +776,7 @@
     {
       "name": "lab_propose_topic",
       "kind": "contribute",
-      "description": "File an inbound idea as stage=topic: one distilled sentence plus origin. No transcript. Does not write catalog or Articles. Promote only after gates in /api/thoughts.json.",
+      "description": "Create an inbound topic with one distilled thought and, when available, context, thesis, evolution roadmap, and initial progress_log. Use /api/thought-topic.schema.json and its template. No transcript; no catalog or Articles write.",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -795,6 +795,62 @@
           "source_note": {
             "type": "string",
             "description": "Why this is a topic. Do not paste the transcript."
+          },
+          "context": {
+            "type": "object",
+            "description": "Optional background: trigger, original_observation, problem_space, why_it_matters[], prior_discussion[], assumptions_to_test[]."
+          },
+          "thesis": {
+            "type": "object",
+            "description": "Optional current understanding: core, reframing, key_question."
+          },
+          "evolution": {
+            "type": "object",
+            "description": "Optional roadmap: directions[], open_questions[], next_actions[], revisit_triggers[]."
+          },
+          "progress_log": {
+            "type": "array",
+            "description": "Optional initial dated progress entries. Never include a raw conversation transcript.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "date": {
+                  "type": "string",
+                  "description": "YYYY-MM-DD"
+                },
+                "type": {
+                  "type": "string"
+                },
+                "summary": {
+                  "type": "string"
+                },
+                "changes": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "evidence_added": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "decisions": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "next": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "date"
+              ],
+              "additionalProperties": true
+            }
           }
         },
         "required": [
@@ -816,13 +872,96 @@
         "method": "ACTION",
         "action": "pr",
         "path": "/content/thoughts/",
-        "note": "Open a PR with stage=topic JSON. Human review. Never write Articles from this tool."
+        "note": "Open a PR with a stage=topic JSON following /api/thought-topic.schema.json and /docs/templates/thought-topic.template.json. Include context/evolution/progress_log when known. Human review; never write Articles from this tool."
+      }
+    },
+    {
+      "name": "lab_continue_thought",
+      "kind": "contribute",
+      "description": "Continue an existing Agent Bench topic. Read the canonical JSON first, preserve prior context/evolution, merge only new findings, and append one dated progress_log entry. Do not change stage, route, gates, or published content.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Existing thought id, e.g. thought-ai-native-product-engineering"
+          },
+          "context_patch": {
+            "type": "object",
+            "description": "New background, prior discussion, or assumptions to add/update. Preserve existing fields not mentioned."
+          },
+          "evolution_patch": {
+            "type": "object",
+            "description": "New or revised directions, open questions, next actions, or revisit triggers. Preserve existing items unless explicitly superseded."
+          },
+          "progress_entry": {
+            "type": "object",
+            "properties": {
+              "date": {
+                "type": "string",
+                "description": "YYYY-MM-DD"
+              },
+              "type": {
+                "type": "string"
+              },
+              "summary": {
+                "type": "string"
+              },
+              "changes": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "evidence_added": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "decisions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "next": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "date",
+              "summary"
+            ],
+            "additionalProperties": true
+          }
+        },
+        "required": [
+          "id",
+          "progress_entry"
+        ],
+        "additionalProperties": false
+      },
+      "contract": {
+        "sideEffects": [
+          "content/thoughts/{id}.json context/evolution/progress_log"
+        ],
+        "requiresApproval": true,
+        "idempotencyKey": "thought id + progress_entry.date + progress_entry.summary",
+        "rollback": "revert the generated topic-file commit",
+        "timeoutSeconds": 60
+      },
+      "static": {
+        "method": "ACTION",
+        "action": "pr",
+        "path": "/content/thoughts/",
+        "note": "Open a PR updating the existing topic JSON. Append progress_entry to progress_log; merge context_patch/evolution_patch without dropping existing content. Never change stage, route, gates, catalog, or article bodies."
       }
     },
     {
       "name": "lab_thought_validate",
       "kind": "read",
-      "description": "Read field gates[] and model_gates[] on /api/thoughts.json. Field = script. Model = criteria prompt. Pending/stale is not a ship. Do not treat topic or candidate as conclusions.",
+      "description": "Read field gates[] and model_gates[] on /api/thoughts.json. Field = script. Model = criteria prompt. Topic notebook context/evolution do not imply validation. Pending/stale is not a ship.",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -842,7 +981,7 @@
     {
       "name": "lab_thought_criteria",
       "kind": "read",
-      "description": "Read the living model-gate standard: prompt + axes + changelog. Improve by editing /content/thoughts/criteria.json and bumping version. Old judgements become stale.",
+      "description": "Read the living model-gate standard: prompt + axes + changelog. Topic context/evolution fields are separate from evidence and do not satisfy model gates.",
       "inputSchema": {
         "type": "object",
         "properties": {},
@@ -1139,5 +1278,5 @@
       }
     }
   ],
-  "updated": "2026-09-21"
+  "updated": "2026-11-15"
 }
