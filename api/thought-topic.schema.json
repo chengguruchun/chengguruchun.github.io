@@ -1,0 +1,286 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chengguruchun.github.io/api/thought-topic.schema.json",
+  "title": "AI Knowledge Lab Thought / Topic Notebook",
+  "description": "Canonical shape for a thought record. context, evolution and progress_log are optional for backward compatibility; new topics should include them.",
+  "type": "object",
+  "required": [
+    "id",
+    "thought",
+    "stage",
+    "status",
+    "origin",
+    "contribution"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^thought-[a-z0-9-]+$"
+    },
+    "thought": {
+      "type": "string",
+      "minLength": 1,
+      "description": "One distilled, falsifiable thought. Never paste a conversation transcript."
+    },
+    "stage": {
+      "enum": [
+        "topic",
+        "candidate",
+        "validated",
+        "article_candidate",
+        "published"
+      ]
+    },
+    "status": {
+      "type": "string"
+    },
+    "origin": {
+      "enum": [
+        "user",
+        "ai",
+        "joint",
+        "external"
+      ]
+    },
+    "contribution": {
+      "enum": [
+        "known",
+        "synthesis",
+        "extension",
+        "original_candidate"
+      ]
+    },
+    "knowledge": {
+      "type": "object"
+    },
+    "quality": {
+      "type": "object"
+    },
+    "source": {
+      "type": "object"
+    },
+    "context": {
+      "type": "object",
+      "description": "Why this topic exists and what prior discussion it continues.",
+      "properties": {
+        "trigger": {
+          "type": "string"
+        },
+        "original_observation": {
+          "type": "string"
+        },
+        "problem_space": {
+          "type": "string"
+        },
+        "why_it_matters": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "prior_discussion": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "assumptions_to_test": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "thesis": {
+      "type": "object",
+      "description": "Current understanding and central question."
+    },
+    "mechanisms": {
+      "type": "array"
+    },
+    "role_shift": {
+      "type": "array"
+    },
+    "possible_org_forms": {
+      "type": "array"
+    },
+    "boundary_conditions": {
+      "type": "array"
+    },
+    "proposed_model": {
+      "type": "object"
+    },
+    "experiments": {
+      "type": "array"
+    },
+    "critiques": {
+      "type": "array"
+    },
+    "comparisons": {
+      "type": "array"
+    },
+    "evidence": {
+      "type": "array"
+    },
+    "evolution": {
+      "type": "object",
+      "description": "Possible research branches and concrete next steps.",
+      "properties": {
+        "directions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "title"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "question": {
+                "type": "string"
+              },
+              "explore": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "expected_output": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        "open_questions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "next_actions": {
+          "type": "array",
+          "items": {
+            "type": [
+              "string",
+              "object"
+            ]
+          }
+        },
+        "revisit_triggers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "progress_log": {
+      "type": "array",
+      "description": "Append-only dated history of material changes in understanding.",
+      "items": {
+        "type": "object",
+        "required": [
+          "date"
+        ],
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "type": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          },
+          "changes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "evidence_added": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "decisions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "next": {
+            "type": "string"
+          }
+        },
+        "anyOf": [
+          {
+            "required": [
+              "summary"
+            ]
+          },
+          {
+            "required": [
+              "type"
+            ]
+          }
+        ],
+        "additionalProperties": true
+      }
+    },
+    "route": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        "diverse",
+        "articles",
+        "videos",
+        "projects",
+        null
+      ]
+    },
+    "also": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "diverse",
+          "articles",
+          "videos",
+          "projects"
+        ]
+      }
+    },
+    "promotes_to": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "published_url": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "updated": {
+      "type": "string",
+      "format": "date"
+    },
+    "judgement": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": true
+}
