@@ -468,6 +468,24 @@ def discover_pages() -> list[dict]:
     return discovered
 
 
+def sync_catalog_index(path: Path, only_type: str | None = None) -> None:
+    """Rebuild derived index item order from the canonical catalog.
+
+    Incremental upserts alone leave older omissions untouched. The catalog is
+    the source of truth, so every derived index must have the same ordered
+    item set after ingestion.
+    """
+    catalog = load_json(CATALOG)
+    source = [x for x in (catalog.get("items") or []) if isinstance(x, dict)]
+    if only_type:
+        source = [x for x in source if x.get("type") == only_type]
+    data = load_json(path) if path.exists() else {}
+    data["items"] = source
+    if only_type:
+        data.setdefault("type", only_type)
+    write_json(path, data)
+
+
 def main() -> int:
     created = 0
     pages_by_id = {str(meta['id']): meta for meta in PAGES}
@@ -490,6 +508,12 @@ def main() -> int:
             upsert(ARTICLES, row)
         else:
             upsert(DIVERSE, row)
+
+    # Reconcile every Agent-facing index, not just rows discovered in this run.
+    # This repairs historical omissions and keeps item ordering canonical.
+    sync_catalog_index(INDEX)
+    sync_catalog_index(ARTICLES, "Articles")
+    sync_catalog_index(DIVERSE, "Diverse Lab")
     print(f"ingested {len(pages)} catalog rows; created {created} markdown files")
     return 0
 
