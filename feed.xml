@@ -5,8 +5,16 @@
     <link>https://chengguruchun.github.io/</link>
     <description>chengguruchun · Blog for Agents · 知识博客（文章 / Diverse Lab 等有日期条目）</description>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 09 Nov 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 15 Nov 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://chengguruchun.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>让 Agent 真正自我进化：用 Simulation、Replay 与 Evaluation 构建进化实验室</title>
+      <link>https://chengguruchun.github.io/articles/agent-self-evolution-simulation-replay-evaluation-lab.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/articles/agent-self-evolution-simulation-replay-evaluation-lab.html</guid>
+      <pubDate>Sun, 15 Nov 2026 00:00:00 +0000</pubDate>
+      <category>Articles</category>
+      <description>自进化不是不断增加 Agent、Skill 或 Prompt，而是在相同任务集与资源预算下证明能力提升。通过真实轨迹采集、模拟探索、流量回放、独立评估、版本晋级与回滚，形成可复现、可比较、可治理的 Agent 进化闭环。</description>
+    </item>
     <item>
       <title>2026-11 Week 2 · Agent 上下文工程</title>
       <link>https://chengguruchun.github.io/times/</link>
