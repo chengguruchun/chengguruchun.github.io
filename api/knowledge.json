@@ -1,6 +1,6 @@
 {
   "name": "AI Knowledge Lab · Knowledge registry",
-  "generated": "2026-11-16T02:01:09Z",
+  "generated": "2026-11-16T05:58:53Z",
   "as_of": "2026-11-16",
   "criteria": "/api/knowledge-criteria.json",
   "criteria_version": "2026-09-16.2",
@@ -9,7 +9,7 @@
     "Times"
   ],
   "counts": {
-    "fresh": 45,
+    "fresh": 46,
     "stale": 0,
     "changed": 0,
     "contested": 0,
@@ -17,6 +17,35 @@
   },
   "due": [],
   "items": [
+    {
+      "id": "agent-as-digital-project-manager",
+      "type": "Diverse Lab",
+      "title": "把 Agent 看作数字项目经理：从项目管理框架理解智能体运行机制",
+      "excerpt": "把复杂 Agent 任务视为一个微型项目，借助项目管理五大过程组与十大知识领域，拆解目标对齐、规划、执行、监控、治理和交付，并辨析两者的边界。",
+      "url": "/diverse/agent-as-digital-project-manager.html",
+      "content": "/content/diverse/agent-as-digital-project-manager.md",
+      "tags": [
+        "Agent",
+        "Project Management",
+        "Agent Runtime",
+        "Workflow",
+        "Governance"
+      ],
+      "published_date": "2026-11-16",
+      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/diverse/agent-as-digital-project-manager.md",
+      "knowledge": {
+        "status": "fresh",
+        "last_verified": "2026-11-16",
+        "next_review": "2027-05-15",
+        "cadence_days": 180,
+        "due": false,
+        "sticky": false,
+        "source": {
+          "frontmatter": true,
+          "override": null
+        }
+      }
+    },
     {
       "id": "from-fire-to-agent-evolution",
       "type": "Diverse Lab",

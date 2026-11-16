@@ -14,6 +14,7 @@
       "agent-runtime-cognitive-actor"
     ],
     "Agent": [
+      "agent-as-digital-project-manager",
       "from-fire-to-agent-evolution",
       "problem-space-to-solution-space-agent-cognitive-loop",
       "agent-self-evolution-simulation-replay-evaluation-lab",
@@ -62,6 +63,7 @@
       "agent-capability-platform-from-middleware-to-agent-center"
     ],
     "Agent Runtime": [
+      "agent-as-digital-project-manager",
       "agent-self-evolution-simulation-replay-evaluation-lab",
       "agent-capability-platform-from-middleware-to-agent-center",
       "multi-agent-runtime-topology-task-collaboration",
@@ -291,6 +293,9 @@
     "Gossip": [
       "multi-agent-runtime-topology-task-collaboration"
     ],
+    "Governance": [
+      "agent-as-digital-project-manager"
+    ],
     "Graph": [
       "agent-engineering-from-workflow-to-control-plane"
     ],
@@ -455,6 +460,9 @@
     "Production": [
       "ai-era-production-consumption-balance"
     ],
+    "Project Management": [
+      "agent-as-digital-project-manager"
+    ],
     "Prompt Engineering": [
       "frontend-language-for-ai-assisted-development"
     ],
@@ -597,6 +605,7 @@
       "event-driven-coding-agent-runtime"
     ],
     "Workflow": [
+      "agent-as-digital-project-manager",
       "agent-engineering-from-workflow-to-control-plane"
     ],
     "vLLM": [

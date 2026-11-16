@@ -5,8 +5,16 @@
     <link>https://chengguruchun.github.io/</link>
     <description>chengguruchun · Blog for Agents · 知识博客（文章 / Diverse Lab 等有日期条目）</description>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 15 Nov 2026 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 16 Nov 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://chengguruchun.github.io/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>把 Agent 看作数字项目经理：从项目管理框架理解智能体运行机制</title>
+      <link>https://chengguruchun.github.io/diverse/agent-as-digital-project-manager.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/diverse/agent-as-digital-project-manager.html</guid>
+      <pubDate>Mon, 16 Nov 2026 00:00:00 +0000</pubDate>
+      <category>Diverse Lab</category>
+      <description>把复杂 Agent 任务视为一个微型项目，借助项目管理五大过程组与十大知识领域，拆解目标对齐、规划、执行、监控、治理和交付，并辨析两者的边界。</description>
+    </item>
     <item>
       <title>从问题空间到解决空间：大模型时代的认知闭环与自我进化</title>
       <link>https://chengguruchun.github.io/articles/problem-space-to-solution-space-agent-cognitive-loop.html</link>
