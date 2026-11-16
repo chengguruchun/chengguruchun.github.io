@@ -1,6 +1,6 @@
 {
   "name": "Hot Words feedback",
-  "generated": "2026-11-16T07:41:52Z",
+  "generated": "2026-11-16T07:41:55Z",
   "period": "2026-11-W3",
   "word": "Agent 长程任务",
   "signals": {
@@ -25,7 +25,7 @@
   },
   "lastRun": {
     "runId": "hot-words-2026-11-W3-20261116T074144Z",
-    "phase": "applied",
+    "phase": "published",
     "gates": {
       "schema": "pass",
       "duplicate": "pass",
@@ -35,7 +35,12 @@
       "consistency": "pass"
     },
     "evidenceCount": 10,
-    "publish": {},
+    "publish": {
+      "commit": "b75dcb9f18cb200510a6c89636bc0cf4cf664c60",
+      "url": "https://chengguruchun.github.io/times/",
+      "mode": "autonomous",
+      "periodScheme": "YYYY-MM-WN month block, not ISO week"
+    },
     "error": null
   },
   "learnHints": {
@@ -78,9 +83,9 @@
     {
       "runId": "hot-words-2026-11-W3-20261116T074144Z",
       "period": "2026-11-W3",
-      "phase": "applied",
+      "phase": "published",
       "word": "Agent 长程任务",
-      "finishedAt": "2026-11-16T07:41:52Z",
+      "finishedAt": "2026-11-16T07:41:55Z",
       "path": "/api/hot-words/runs/hot-words-2026-11-W3-20261116T074144Z.json"
     },
     {
