@@ -1,8 +1,8 @@
 {
   "name": "Hot Words feedback",
-  "generated": "2026-11-09T22:50:43Z",
-  "period": "2026-11-W2",
-  "word": "Agent 上下文工程",
+  "generated": "2026-11-16T07:41:52Z",
+  "period": "2026-11-W3",
+  "word": "Agent 长程任务",
   "signals": {
     "visits": {
       "site": null,
@@ -24,36 +24,65 @@
     }
   },
   "lastRun": {
-    "runId": "hot-words-2026-11-W2-20261109T225043Z",
-    "phase": "skipped",
+    "runId": "hot-words-2026-11-W3-20261116T074144Z",
+    "phase": "applied",
     "gates": {
-      "schema": "skip",
+      "schema": "pass",
       "duplicate": "pass",
-      "editorial": "skip",
-      "evidence": "skip",
-      "relevance": "skip",
-      "consistency": "skip"
+      "editorial": "pass",
+      "evidence": "pass",
+      "relevance": "pass",
+      "consistency": "pass"
     },
-    "evidenceCount": 0,
+    "evidenceCount": 10,
     "publish": {},
-    "error": "Period 2026-11-W2 already published (Agent 上下文工程); skip apply/push (pass force=true to override)"
+    "error": null
   },
   "learnHints": {
     "recentWords": [
+      "2026-11-W3: Agent 长程任务",
       "2026-11-W2: Agent 上下文工程",
       "2026-11-W1: Agent 评测基准",
       "2026-10-W4: Agent 协议标准化",
       "2026-10-W3: Agent 工具调用可靠性",
       "2026-10-W2: Agent Sandboxing",
       "2026-10-W1: Agent Observability",
-      "2026-09-W5: Agentic RAG",
-      "2026-09-W4: Agent Memory Benchmark"
+      "2026-09-W5: Agentic RAG"
     ],
-    "rejectedCandidates": [],
-    "prefer": "下一轮务必补齐结构化证据（title/url/claim）；先有来源，再谈热度。",
-    "avoid": "回避与当前词重复、口号化、以及只有空泛描述没有来源的词。"
+    "rejectedCandidates": [
+      {
+        "word": "Agent 轨迹压缩",
+        "reason": "not_chosen",
+        "notes": "聚焦长程 agent 的轨迹/历史压缩，与上下文工程相邻但更具体，可延展到 token 成本与召回质量。"
+      },
+      {
+        "word": "Agent 成本优化",
+        "reason": "not_chosen",
+        "notes": "成本是 agent 落地的核心约束，可结合缓存、模型路由、步骤预算等具体手段。"
+      },
+      {
+        "word": "Agent 人机协作",
+        "reason": "not_chosen",
+        "notes": "人机协作覆盖审批、监督与信任，是 agent 产品化绕不开的工程议题。"
+      },
+      {
+        "word": "Agent 工具检索",
+        "reason": "not_chosen",
+        "notes": "当工具数量膨胀时，检索成为关键工程问题，与工具调用可靠性互补而非重复。"
+      }
+    ],
+    "prefer": "优先选能落到本站软件 / 系统 / Agent 主线的词，并带至少一条可点开的 https 证据。",
+    "avoid": "回避与当前词重复、口号化、以及只有空泛描述没有来源的词。 最近未入选：Agent 轨迹压缩、Agent 成本优化、Agent 人机协作、Agent 工具检索。"
   },
   "recentRuns": [
+    {
+      "runId": "hot-words-2026-11-W3-20261116T074144Z",
+      "period": "2026-11-W3",
+      "phase": "applied",
+      "word": "Agent 长程任务",
+      "finishedAt": "2026-11-16T07:41:52Z",
+      "path": "/api/hot-words/runs/hot-words-2026-11-W3-20261116T074144Z.json"
+    },
     {
       "runId": "hot-words-2026-11-W2-20261109T225043Z",
       "period": "2026-11-W2",
@@ -125,14 +154,6 @@
       "word": "Agent Sandboxing",
       "finishedAt": "2026-10-12T21:31:43Z",
       "path": "/api/hot-words/runs/hot-words-2026-10-W2-20261012T213143Z.json"
-    },
-    {
-      "runId": "hot-words-2026-10-W2-20261012T070053Z",
-      "period": "2026-10-W2",
-      "phase": "published",
-      "word": "Agent Sandboxing",
-      "finishedAt": "2026-10-12T07:01:08Z",
-      "path": "/api/hot-words/runs/hot-words-2026-10-W2-20261012T070053Z.json"
     }
   ],
   "endpoints": {

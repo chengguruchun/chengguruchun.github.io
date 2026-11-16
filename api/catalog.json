@@ -3,7 +3,7 @@
   "skill": "/SKILL.md",
   "product": "/PRODUCT.md",
   "llms": "/llms.txt",
-  "generated": "2026-11-16T05:59:15Z",
+  "generated": "2026-11-16T07:41:52Z",
   "base_url": "https://chengguruchun.github.io",
   "items": [
     {
@@ -1577,6 +1577,22 @@
       },
       "name": "物理学 × 生态学：对复杂系统的一个思考",
       "desc": "物理学看规律，生态学看关系与反馈；综合二者，才能理解 LLM 与多 Agent 如何逼近 Complex System Engineering。"
+    },
+    {
+      "id": "times-2026-11-w3",
+      "type": "Times",
+      "title": "2026-11 Week 3 · Agent 长程任务",
+      "excerpt": "长程任务是当前 agent 能力跃迁最清晰的度量轴，METR 的时长翻倍曲线与 SWE-bench 等真实仓库评测提供了可引用的硬证据。它天然承接上下文工程与记忆话题，又指向预算、检查点、恢复等具体工程问题，比泛泛的可靠性口号更可落地。",
+      "url": "/times/",
+      "date": "2026-11-16",
+      "tags": [
+        "Times",
+        "Hot Words",
+        "Agent 长程任务"
+      ],
+      "markdown": "/content/times/2026-11-w3.md",
+      "period": "2026-11-W3",
+      "word": "Agent 长程任务"
     },
     {
       "id": "times-2026-11-w2",

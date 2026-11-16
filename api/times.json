@@ -7,9 +7,20 @@
     "meaning": "Nth 7-day block of the calendar month in Asia/Shanghai (days 1–7 = W1, 8–14 = W2, …). Not an ISO 8601 week number.",
     "timezone": "Asia/Shanghai"
   },
-  "current": "2026-11-W2",
-  "updated": "2026-11-09",
+  "current": "2026-11-W3",
+  "updated": "2026-11-16",
   "issues": [
+    {
+      "id": "times-2026-11-w3",
+      "period": "2026-11-W3",
+      "cadence": "weekly",
+      "word": "Agent 长程任务",
+      "title": "2026-11 Week 3 · Agent 长程任务",
+      "why": "长程任务是当前 agent 能力跃迁最清晰的度量轴，METR 的时长翻倍曲线与 SWE-bench 等真实仓库评测提供了可引用的硬证据。它天然承接上下文工程与记忆话题，又指向预算、检查点、恢复等具体工程问题，比泛泛的可靠性口号更可落地。",
+      "date": "2026-11-16",
+      "url": "/times/",
+      "markdown": "/content/times/2026-11-w3.md"
+    },
     {
       "id": "times-2026-11-w2",
       "period": "2026-11-W2",
@@ -135,5 +146,5 @@
       "slug": "2026-09-w1"
     }
   ],
-  "currentProposalHash": "cd643609cffa37de"
+  "currentProposalHash": "9c58f608d811a37b"
 }
