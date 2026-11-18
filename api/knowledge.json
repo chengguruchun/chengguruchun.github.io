@@ -1,6 +1,6 @@
 {
   "name": "AI Knowledge Lab · Knowledge registry",
-  "generated": "2026-11-18T01:59:01Z",
+  "generated": "2026-11-18T02:01:11Z",
   "as_of": "2026-11-18",
   "criteria": "/api/knowledge-criteria.json",
   "criteria_version": "2026-09-16.2",
@@ -9,7 +9,7 @@
     "Times"
   ],
   "counts": {
-    "fresh": 46,
+    "fresh": 45,
     "stale": 0,
     "changed": 0,
     "contested": 0,
@@ -1174,38 +1174,6 @@
         "last_verified": "2026-09-08",
         "next_review": "2027-03-07",
         "cadence_days": 180,
-        "due": false,
-        "sticky": false,
-        "source": {
-          "frontmatter": true,
-          "override": null
-        }
-      }
-    },
-    {
-      "id": "agent-engineering-from-workflow-to-control-plane",
-      "type": "Articles",
-      "title": "Agent Engineering：从 Workflow 到 Loop，再到 Control Plane",
-      "excerpt": "Workflow、Graph、Loop、Harness 与 Control Plane 并不是互相替代，而是 Agent 系统在不同不确定性和治理尺度上的不同工程层。",
-      "url": "/articles/agent-engineering-from-workflow-to-control-plane.html",
-      "content": "/content/articles/agent-engineering-from-workflow-to-control-plane.md",
-      "tags": [
-        "Agent",
-        "Workflow",
-        "Graph",
-        "Loop Engineering",
-        "Harness",
-        "Control Plane",
-        "Kubernetes",
-        "Runtime"
-      ],
-      "published_date": "2026-09-08",
-      "history_url": "https://github.com/chengguruchun/chengguruchun.github.io/commits/main/content/articles/agent-engineering-from-workflow-to-control-plane.md",
-      "knowledge": {
-        "status": "fresh",
-        "last_verified": "2026-09-08",
-        "next_review": "2026-12-07",
-        "cadence_days": 90,
         "due": false,
         "sticky": false,
         "source": {

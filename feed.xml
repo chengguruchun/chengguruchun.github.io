@@ -8,6 +8,406 @@
     <lastBuildDate>Mon, 16 Nov 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://chengguruchun.github.io/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
+      <title>把 Agent 看作数字项目经理：从项目管理框架理解智能体运行机制</title>
+      <link>https://chengguruchun.github.io/diverse/agent-as-digital-project-manager.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/diverse/agent-as-digital-project-manager.html</guid>
+      <pubDate>Mon, 16 Nov 2026 00:00:00 +0000</pubDate>
+      <category>Diverse Lab</category>
+      <description>把复杂 Agent 任务视为一个微型项目，借助项目管理五大过程组与十大知识领域，拆解目标对齐、规划、执行、监控、治理和交付，并辨析两者的边界。</description>
+    </item>
+    <item>
+      <title>2026-11 Week 3 · Agent 长程任务</title>
+      <link>https://chengguruchun.github.io/times/</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/times/</guid>
+      <pubDate>Mon, 16 Nov 2026 00:00:00 +0000</pubDate>
+      <category>Times</category>
+      <description>长程任务是当前 agent 能力跃迁最清晰的度量轴，METR 的时长翻倍曲线与 SWE-bench 等真实仓库评测提供了可引用的硬证据。它天然承接上下文工程与记忆话题，又指向预算、检查点、恢复等具体工程问题，比泛泛的可靠性口号更可落地。</description>
+    </item>
+    <item>
+      <title>从问题空间到解决空间：大模型时代的认知闭环与自我进化</title>
+      <link>https://chengguruchun.github.io/articles/problem-space-to-solution-space-agent-cognitive-loop.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/articles/problem-space-to-solution-space-agent-cognitive-loop.html</guid>
+      <pubDate>Sun, 15 Nov 2026 00:00:00 +0000</pubDate>
+      <category>Articles</category>
+      <description>从真实问题到模型理解、方案生成与执行结果，分析 Agent 如何通过结构化问题表示、语义保持、证据验证与反馈闭环减少信息损耗，并逐步进化解决问题的能力。</description>
+    </item>
+    <item>
+      <title>让 Agent 真正自我进化：用 Simulation、Replay 与 Evaluation 构建进化实验室</title>
+      <link>https://chengguruchun.github.io/articles/agent-self-evolution-simulation-replay-evaluation-lab.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/articles/agent-self-evolution-simulation-replay-evaluation-lab.html</guid>
+      <pubDate>Sun, 15 Nov 2026 00:00:00 +0000</pubDate>
+      <category>Articles</category>
+      <description>自进化不是不断增加 Agent、Skill 或 Prompt，而是在相同任务集与资源预算下证明能力提升。通过真实轨迹采集、模拟探索、流量回放、独立评估、版本晋级与回滚，形成可复现、可比较、可治理的 Agent 进化闭环。</description>
+    </item>
+    <item>
+      <title>2026-11 Week 2 · Agent 上下文工程</title>
+      <link>https://chengguruchun.github.io/times/</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/times/</guid>
+      <pubDate>Mon, 09 Nov 2026 00:00:00 +0000</pubDate>
+      <category>Times</category>
+      <description>上下文工程在 2025 下半年已从提示技巧升级为独立工程层，论文与一线厂商博客同时给出可操作模式。它承接记忆与可观测性话题，又能落地为压缩、检索、隔离等具体手段，避免空泛口号。相比重复评测基准或协议标准化，它更适合作为本周热词。</description>
+    </item>
+    <item>
+      <title>从基础服务中台到 Agent 能力中台：让 Agent 成为可声明式构建的能力</title>
+      <link>https://chengguruchun.github.io/articles/agent-capability-platform-from-middleware-to-agent-center.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/articles/agent-capability-platform-from-middleware-to-agent-center.html</guid>
+      <pubDate>Sun, 08 Nov 2026 00:00:00 +0000</pubDate>
+      <category>Articles</category>
+      <description>从传统基础服务中台出发，讨论 Agent 能力平台如何通过声明式 Definition、资源注册、动态装配与 Runtime 治理，让业务团队以配置和组合的方式构建不同类型的 Agent。</description>
+    </item>
+    <item>
+      <title>2026-11 Week 1 · Agent 评测基准</title>
+      <link>https://chengguruchun.github.io/times/</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/times/</guid>
+      <pubDate>Mon, 02 Nov 2026 00:00:00 +0000</pubDate>
+      <category>Times</category>
+      <description>Agent 能力快速迭代后，行业焦点从“能不能做”转向“如何可信地衡量”。AgentBench 2.0、SWE-bench 更新与 MLCommons 工作组共同推动可复现、抗污染的评测标准，使基准成为工程选型与模型发布的硬通货。相比协议层讨论，评测基准更贴近本周实际发布与复现需求，具备清晰的结构化证据链。</description>
+    </item>
+    <item>
+      <title>从 Agent 拓扑到任务协作：重新设计 Multi-Agent Runtime</title>
+      <link>https://chengguruchun.github.io/diverse/multi-agent-runtime-topology-task-collaboration.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/diverse/multi-agent-runtime-topology-task-collaboration.html</guid>
+      <pubDate>Fri, 30 Oct 2026 00:00:00 +0000</pubDate>
+      <category>Diverse Lab</category>
+      <description>多 Agent 架构不应只比较 Swarm、Orchestrator 或 Gossip。本文把拓扑、通信、协调与治理拆成正交维度，并提出以 Task 与 Shared State 为中心、Agent 为可替换执行单元的企业级 Runtime 设计。</description>
+    </item>
+    <item>
+      <title>从 API 请求到 GPU 执行：拆解大模型推理服务架构</title>
+      <link>https://chengguruchun.github.io/articles/llm-inference-serving-from-api-to-gpu.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/articles/llm-inference-serving-from-api-to-gpu.html</guid>
+      <pubDate>Fri, 30 Oct 2026 00:00:00 +0000</pubDate>
+      <category>Articles</category>
+      <description>从云端接入、API Gateway、模型路由，到 vLLM/SGLang 的请求队列、连续批处理、KV Cache 管理，再到 Tensor Parallel、CUDA、NCCL 与 GPU 执行，串起一次流式推理请求的完整链路。</description>
+    </item>
+    <item>
+      <title>Grill Me、Superpowers 与 OpenSpec：把 AI 编程从“会写代码”变成可控的工程流程</title>
+      <link>https://chengguruchun.github.io/diverse/grill-me-superpowers-openspec-agent-development-workflow.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/diverse/grill-me-superpowers-openspec-agent-development-workflow.html</guid>
+      <pubDate>Thu, 29 Oct 2026 00:00:00 +0000</pubDate>
+      <category>Diverse Lab</category>
+      <description>从需求追问、工程执行方法到可追踪的规格变更，深入比较 Grill Me、Superpowers 与 OpenSpec 的职责边界、重叠部分和组合方式，并以本地 Coding Agent CLI 为例设计需求到发布的闭环。</description>
+    </item>
+    <item>
+      <title>2026-10 Week 4 · Agent 协议标准化</title>
+      <link>https://chengguruchun.github.io/times/</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/times/</guid>
+      <pubDate>Mon, 26 Oct 2026 00:00:00 +0000</pubDate>
+      <category>Times</category>
+      <description>本周选 Agent 协议标准化，因为它把近期分散的工具、记忆、可观测性议题收束到可互操作的接口层：MCP 定义模型与工具/资源的连接，A2A 定义跨 Agent 协作，二者都有公开规范可核验。相比继续讨论可靠性口号，协议标准化给出可落地的工程抓手，也便于后续用真实仓库与文档补齐结构化证据。</description>
+    </item>
+    <item>
+      <title>AI 时代，为什么设计原则、设计模式与 DDD 仍然重要</title>
+      <link>https://chengguruchun.github.io/articles/ai-era-design-principles-patterns-ddd.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/articles/ai-era-design-principles-patterns-ddd.html</guid>
+      <pubDate>Fri, 23 Oct 2026 00:00:00 +0000</pubDate>
+      <category>Articles</category>
+      <description>AI 降低了代码生产成本，却没有消除软件设计的复杂性。本文从 SOLID、设计模式与 DDD 出发，讨论如何把领域语义、模块边界和业务不变量转化为 Coding Agent 可以遵循并验证的工程约束。</description>
+    </item>
+    <item>
+      <title>Agent 化会改变哪些软件工程定律？从 Harness 到架构反馈闭环</title>
+      <link>https://chengguruchun.github.io/diverse/agent-engineering-laws-harness-architecture-feedback.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/diverse/agent-engineering-laws-harness-architecture-feedback.html</guid>
+      <pubDate>Thu, 22 Oct 2026 00:00:00 +0000</pubDate>
+      <category>Diverse Lab</category>
+      <description>Agent 化不一定打破康威定律、布鲁克斯定律或阿姆达尔定律，而是改变它们成立的条件。本文从 Harness 出发，梳理 Architecture、Agent Runtime 与 Optimization 的边界，并提出架构感知 Harness、反馈驱动架构与自优化 Runtime 的研究方向。</description>
+    </item>
+    <item>
+      <title>面向 Agent 的架构拆解：从组织协作到任务协作</title>
+      <link>https://chengguruchun.github.io/diverse/agent-oriented-architecture-decomposition.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/diverse/agent-oriented-architecture-decomposition.html</guid>
+      <pubDate>Thu, 22 Oct 2026 00:00:00 +0000</pubDate>
+      <category>Diverse Lab</category>
+      <description>当 Agent 成为重要的软件生产者，架构设计是否需要从面向人的组织协作，进一步走向面向任务的协作？本文讨论软件结构与任务结构的映射、可执行契约、并行开发边界、架构感知的 Agent Runtime，以及如何衡量多 Agent 研发效率。</description>
+    </item>
+    <item>
+      <title>从掌握火到智能体进化：Agent 如何突破能力边界</title>
+      <link>https://chengguruchun.github.io/diverse/from-fire-to-agent-evolution.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/diverse/from-fire-to-agent-evolution.html</guid>
+      <pubDate>Wed, 21 Oct 2026 00:00:00 +0000</pubDate>
+      <category>Diverse Lab</category>
+      <description>从人类掌握火的历史隐喻出发，思考 Agent 如何通过基础能力、经验积累、能力组合与反馈学习，逐步突破任务边界，并在必要时从单体执行者演化为多智能体协作组织。</description>
+    </item>
+    <item>
+      <title>2026-10 Week 3 · Agent 工具调用可靠性</title>
+      <link>https://chengguruchun.github.io/times/</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/times/</guid>
+      <pubDate>Mon, 19 Oct 2026 00:00:00 +0000</pubDate>
+      <category>Times</category>
+      <description>沙箱与可观测性解决隔离与追踪，但生产 Agent 最常翻车的是工具调用本身：参数幻觉、错误重试与并行调用冲突。该词有 Function Calling Leaderboard 等可量化榜单与厂商规范支撑，能承接前几周从记忆、上下文到执行可靠性的工程主线。</description>
+    </item>
+    <item>
+      <title>2026-10 Week 2 · Agent Sandboxing</title>
+      <link>https://chengguruchun.github.io/times/</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/times/</guid>
+      <pubDate>Mon, 12 Oct 2026 00:00:00 +0000</pubDate>
+      <category>Times</category>
+      <description>Agent Sandboxing 直接回应 Agent 从对话走向执行后的核心工程问题：如何约束文件系统、网络与命令权限。它承接本站 Agent 主线，与近期 Agent Observability 形成“观测—约束”互补，且能落到工具调用权限、最小权限与运行时隔离的具体实现。相比偏评测的候选，它更贴近系统与安全主线，证据链完整且可操作。</description>
+    </item>
+    <item>
+      <title>AOSL：面向 AI-native 软件工程的语言与构建系统</title>
+      <link>https://chengguruchun.github.io/diverse/ai-native-software-language-aosl.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/diverse/ai-native-software-language-aosl.html</guid>
+      <pubDate>Fri, 09 Oct 2026 00:00:00 +0000</pubDate>
+      <category>Diverse Lab</category>
+      <description>从“教 AI 写传统代码”进一步走向“为 AI 重新设计软件描述方式”：提出结构化 DSL、统一语义 IR、编译与 Runtime 混合执行、全栈生成、验证闭环与可验证原型方案。</description>
+    </item>
+    <item>
+      <title>AI 全栈开发的前端语言：把页面需求说清楚的术语手册</title>
+      <link>https://chengguruchun.github.io/articles/frontend-language-for-ai-assisted-development.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/articles/frontend-language-for-ai-assisted-development.html</guid>
+      <pubDate>Fri, 09 Oct 2026 00:00:00 +0000</pubDate>
+      <category>Articles</category>
+      <description>从 DOM、组件、布局、交互和 API 延伸到包管理、依赖锁定、构建流水线、环境配置、部署验证与回滚，建立一套可执行、可验证的 AI 全栈开发语言。</description>
+    </item>
+    <item>
+      <title>从需求事件到代码变更：构建 Event-driven Coding Agent Runtime</title>
+      <link>https://chengguruchun.github.io/diverse/event-driven-coding-agent-runtime.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/diverse/event-driven-coding-agent-runtime.html</guid>
+      <pubDate>Fri, 09 Oct 2026 00:00:00 +0000</pubDate>
+      <category>Diverse Lab</category>
+      <description>当飞书或企业微信出现验收 Bug、PRD 发生变化，Agent 如何可靠地发现事件、分析影响、修改代码、验证结果并创建 PR？从 MCP、Webhook 到任务状态机与安全闭环的架构设计。</description>
+    </item>
+    <item>
+      <title>2026-10 Week 1 · Agent Observability</title>
+      <link>https://chengguruchun.github.io/times/</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/times/</guid>
+      <pubDate>Mon, 05 Oct 2026 00:00:00 +0000</pubDate>
+      <category>Times</category>
+      <description>Agent 从 demo 走向可用系统后，最大的工程瓶颈不再是模型能力，而是多步工具调用与检索链路出错时无法定位。可观测性把 trace、span、token 与工具调用标准化，直接决定本站 Agent 主线能否稳定迭代。OpenTelemetry 的 GenAI 语义约定与 LangSmith 已给出可点开的落地路径，与近期记忆主题互补而不重复。</description>
+    </item>
+    <item>
+      <title>从 Gossip 到 Consensus：Multi-Agent 如何形成可信的集体认知</title>
+      <link>https://chengguruchun.github.io/articles/gossip-evidence-consensus-multi-agent.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/articles/gossip-evidence-consensus-multi-agent.html</guid>
+      <pubDate>Wed, 30 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Articles</category>
+      <description>Gossip 负责传播，Evidence/Trust 负责判断，Consensus 负责必要的全局一致：从分布式系统重新思考 Multi-Agent 协作与 Agent Runtime。</description>
+    </item>
+    <item>
+      <title>IoT Agent 化：从设备能力到 Physical World Runtime</title>
+      <link>https://chengguruchun.github.io/articles/iot-agent-from-device-to-physical-world-runtime.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/articles/iot-agent-from-device-to-physical-world-runtime.html</guid>
+      <pubDate>Tue, 29 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Articles</category>
+      <description>从设备能力标准化、Agent 模组、IoT Core 到 SaaS/PaaS，重新思考 IoT Agent 化：设备如何进入 Agent 世界，IoT 平台如何成为 Physical World Runtime。</description>
+    </item>
+    <item>
+      <title>2026-09 Week 5 · Agentic RAG</title>
+      <link>https://chengguruchun.github.io/times/</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/times/</guid>
+      <pubDate>Tue, 29 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Times</category>
+      <description>Agentic RAG 是本周最值得展开的工程热词：它把 RAG 从静态检索升级为 Agent 自主规划、工具调用与自我纠错的知识获取流程，与近期记忆架构讨论形成互补而非重复。多篇论文与厂商文档在近月集中出现，证据链完整，适合作为 AI Agent 知识博客的下一周主线。</description>
+    </item>
+    <item>
+      <title>ReAct 只是内循环：长周期 Agent 为什么开始需要 Harness 与 Runtime</title>
+      <link>https://chengguruchun.github.io/articles/react-is-the-inner-loop-long-running-agent-harness-runtime.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/articles/react-is-the-inner-loop-long-running-agent-harness-runtime.html</guid>
+      <pubDate>Mon, 28 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Articles</category>
+      <description>从 ReAct 出发，区分 Action Loop、Task Loop 与 System Loop，理解 2025 年以后长周期 Agent 为什么越来越依赖 Harness、Durable Execution、Checkpoint、Verification 与 Runtime。</description>
+    </item>
+    <item>
+      <title>从 ReAct 到 Long-Running Agent：Harness 为什么开始成为 Agent 的第二增长曲线</title>
+      <link>https://chengguruchun.github.io/articles/react-to-long-running-agent.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/articles/react-to-long-running-agent.html</guid>
+      <pubDate>Mon, 28 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Articles</category>
+      <description>ReAct 解决一步怎么走，Harness 让 Agent 能走很远，Runtime 让 Agent 能活很久。重新理解 2025 年以后长周期 Agent 的能力演进。</description>
+    </item>
+    <item>
+      <title>软件工程的隐形语法：从“加一层”到“广进严出”</title>
+      <link>https://chengguruchun.github.io/diverse/software-design-universal-patterns.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/diverse/software-design-universal-patterns.html</guid>
+      <pubDate>Wed, 23 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Diverse Lab</category>
+      <description>把软件工程里反复出现的设计思想放在一起：间接层、分而治之、粗到精、缓存、批处理、异步、隔离、一致性、反馈与控制，以及它们背后的共同结构。</description>
+    </item>
+    <item>
+      <title>2026-09 Week 4 · Agent Memory Benchmark</title>
+      <link>https://chengguruchun.github.io/times/</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/times/</guid>
+      <pubDate>Tue, 22 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Times</category>
+      <description>长期记忆的讨论已从架构设计转向可度量：没有统一评测，记忆模块的取舍只能靠直觉。LOCOMO、LongMemEval、MemBench 等基准把超长对话、时间推理与知识更新变成可复现的分数，直接决定本站 Agent 记忆主线该保留哪些模块、砍掉哪些开销。选它，是把上周的架构讨论落到可回归的工程验收上。</description>
+    </item>
+    <item>
+      <title>从 Transformer 到 Decoder-only：我重新理解大语言模型是怎么“学会”的</title>
+      <link>https://chengguruchun.github.io/articles/transformer-from-attention-to-decoder-only.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/articles/transformer-from-attention-to-decoder-only.html</guid>
+      <pubDate>Mon, 21 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Articles</category>
+      <description>从一次关于 Transformer 的追问出发，重新理解 Self-Attention、Encoder-Decoder、Decoder-only，以及训练与推理到底有什么不同。</description>
+    </item>
+    <item>
+      <title>从强化学习到博弈论：Agent Runtime 正在走向复杂系统</title>
+      <link>https://chengguruchun.github.io/diverse/reinforcement-learning-game-theory-complex-systems.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/diverse/reinforcement-learning-game-theory-complex-systems.html</guid>
+      <pubDate>Mon, 21 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Diverse Lab</category>
+      <description>从强化学习、博弈论与多智能体出发，重新思考 Agent Runtime：当 Agent 拥有目标、策略和反馈，Runtime 管理的可能不再只是执行，而是一个动态的智能生态。</description>
+    </item>
+    <item>
+      <title>从 Spring、Dubbo 到 DeepSeek Harness：运行时架构为什么正在趋同</title>
+      <link>https://chengguruchun.github.io/articles/spring-dubbo-deepseek-harness-runtime.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/articles/spring-dubbo-deepseek-harness-runtime.html</guid>
+      <pubDate>Mon, 21 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Articles</category>
+      <description>从 Spring、Dubbo Service 到 DeepSeek Harness，观察依赖注入、Context、Event Bus、生命周期与运行时治理这些工程思想如何在 Agent 时代重新组合。</description>
+    </item>
+    <item>
+      <title>从 LLM 到 Agent Runtime：当“预测下一个 Token”开始进入真实世界</title>
+      <link>https://chengguruchun.github.io/articles/from-llm-to-agent-runtime.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/articles/from-llm-to-agent-runtime.html</guid>
+      <pubDate>Mon, 21 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Articles</category>
+      <description>从模型推理、KV Cache、Inference Runtime、Tool、Environment 和 Feedback 出发，思考为什么 Agent Runtime 是模型能力进入真实世界之后的新一层。</description>
+    </item>
+    <item>
+      <title>2026-09 Week 3 · Agent 长期记忆</title>
+      <link>https://chengguruchun.github.io/times/</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/times/</guid>
+      <pubDate>Mon, 21 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Times</category>
+      <description>长期记忆是 Agent 从单次对话走向持续协作的分水岭，直接决定跨会话任务能否可靠延续。它既承接了上周的记忆架构讨论，又落到可实现的存储、检索与遗忘机制，工程团队能立刻在系统里验证。相比口号化的能力词，长期记忆有论文与官方文档双重证据，适合本站软件与 Agent 主线。</description>
+    </item>
+    <item>
+      <title>从 Actor Model 到 Cognitive Actor：Claude Agent Teams 给 Agent Runtime 的启发</title>
+      <link>https://chengguruchun.github.io/articles/agent-runtime-cognitive-actor.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/articles/agent-runtime-cognitive-actor.html</guid>
+      <pubDate>Sun, 20 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Articles</category>
+      <description>从 Akka Actor、Mailbox、Supervisor、Sharding 出发，分析 Claude Agent Teams、多 Agent 通信与 Agent Runtime 的演化。</description>
+    </item>
+    <item>
+      <title>领域驱动设计 Agent 工具：从「动作推导」到「领域对象 × 动作」</title>
+      <link>https://chengguruchun.github.io/articles/domain-driven-agent-tool-design.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/articles/domain-driven-agent-tool-design.html</guid>
+      <pubDate>Sat, 19 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Articles</category>
+      <description>设计 agent tool 的正确起点不是先枚举动作，而是先建领域模型。一句话坐标：领域对象 × 动作 = 工具；动作推导降级为完备性校验。</description>
+    </item>
+    <item>
+      <title>FDE 的新价值：识别业务复杂度，而不是简单交付 Agent</title>
+      <link>https://chengguruchun.github.io/articles/fde-agent-opportunity-discovery.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/articles/fde-agent-opportunity-discovery.html</guid>
+      <pubDate>Thu, 17 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Articles</category>
+      <description>从 Business Reality 到 Decision Unit，再到 Agent Suitability：重新理解 FDE 在 Agent 项目中的价值。</description>
+    </item>
+    <item>
+      <title>从 MES 到 Manufacturing Agent Runtime：当生产系统开始自己做决策</title>
+      <link>https://chengguruchun.github.io/articles/from-mes-to-manufacturing-agent-runtime.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/articles/from-mes-to-manufacturing-agent-runtime.html</guid>
+      <pubDate>Wed, 16 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Articles</category>
+      <description>SHEIN 式制造的关键不是把 MES 加上一个 Copilot，而是把高频、动态、组合复杂的生产决策变成 Agent Runtime 的持续闭环。核心观点：不要替代岗位，要替代决策单元。</description>
+    </item>
+    <item>
+      <title>SimuHome：从“调用设备”到“与环境闭环”</title>
+      <link>https://chengguruchun.github.io/diverse/simuhome-paper-reading.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/diverse/simuhome-paper-reading.html</guid>
+      <pubDate>Wed, 16 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Diverse Lab</category>
+      <description>智能家居 Agent benchmark 的一个重要转变：从判断 API 是否调用正确，到观察环境、行动、等待状态变化并验证目标状态。</description>
+    </item>
+    <item>
+      <title>H-Neurons：幻觉可能藏在模型内部的稀疏神经元中</title>
+      <link>https://chengguruchun.github.io/diverse/h-neurons-paper-reading.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/diverse/h-neurons-paper-reading.html</guid>
+      <pubDate>Wed, 16 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Diverse Lab</category>
+      <description>从神经元层面理解 hallucination、over-compliance 与预训练起源，并思考内部风险信号如何进入 Agent Runtime。</description>
+    </item>
+    <item>
+      <title>AI 时代，企业真正需要解决的不是流程，而是生产与消费的平衡</title>
+      <link>https://chengguruchun.github.io/articles/ai-era-production-consumption-balance.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/articles/ai-era-production-consumption-balance.html</guid>
+      <pubDate>Wed, 16 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Articles</category>
+      <description>当 AI 让生产、执行和运营越来越便宜，企业真正需要关注的可能不再只是流程效率，而是如何缩短需求、生产、消费与反馈之间的距离。</description>
+    </item>
+    <item>
+      <title>IoT Agent 化：从自动化平台到 Physical Infrastructure（二）</title>
+      <link>https://chengguruchun.github.io/articles/iot-agent-from-automation-to-physical-infrastructure-part-ii.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/articles/iot-agent-from-automation-to-physical-infrastructure-part-ii.html</guid>
+      <pubDate>Wed, 16 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Articles</category>
+      <description>第一篇讨论“契约留下，打包物被解包到运行时”。这一篇继续往下追：当 Agent 真正进入物理世界，IoT 平台究竟应该提供什么？</description>
+    </item>
+    <item>
+      <title>IoT Agent 化：从自动化平台到 Physical Infrastructure</title>
+      <link>https://chengguruchun.github.io/articles/iot-agent-from-automation-to-physical-infrastructure.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/articles/iot-agent-from-automation-to-physical-infrastructure.html</guid>
+      <pubDate>Wed, 16 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Articles</category>
+      <description>Agent 不会消灭 IoT 的基础设施，而会解构过去为了服务人类而预先打包好的应用层确定性。契约留下，打包物被解包到运行时。</description>
+    </item>
+    <item>
+      <title>2026-09 Week 2 · Agent 记忆架构</title>
+      <link>https://chengguruchun.github.io/times/</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/times/</guid>
+      <pubDate>Mon, 14 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Times</category>
+      <description>上下文窗口优化解决的是单次能装多少，而记忆架构决定跨会话该留下什么、遗忘什么，二者构成同一条工程主线。近期 arXiv 综述、LangGraph 官方文档与 Anthropic 工程博客密集讨论分层记忆、冲突消解与遗忘策略，社区热度与落地需求同步上升。把它作为本周热词，既延续上周主题，又把讨论从窗口容量推进到长期状态管理这一更难的工程问题。</description>
+    </item>
+    <item>
+      <title>推理是规模红利，知识是外挂红利</title>
+      <link>https://chengguruchun.github.io/articles/reasoning-scale-knowledge-external.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/articles/reasoning-scale-knowledge-external.html</guid>
+      <pubDate>Tue, 08 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Articles</category>
+      <description>企业为什么不全用小模型？因为「知识」和「推理」是两回事：知识天天变，该外挂；推理难压缩，才吃规模。真正的决策变量是任务链长度——单步 95% 正确，十步只剩 60%。</description>
+    </item>
+    <item>
+      <title>AI Agent 改造工业互联网：壁垒是数据闭环，不是模型</title>
+      <link>https://chengguruchun.github.io/articles/agent-industrial-internet.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/articles/agent-industrial-internet.html</guid>
+      <pubDate>Tue, 08 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Articles</category>
+      <description>工业互联网的核心壁垒是「数据闭环 + 行业 know-how」。AI Agent 能加速数据→决策→执行的闭环，但行业知识门槛不会被轻易跨越；组织能力（技术 + 文化）仍是决定性变量。</description>
+    </item>
+    <item>
+      <title>符号主义 vs 联结主义：意义如何接地</title>
+      <link>https://chengguruchun.github.io/diverse/symbolicism-vs-connectionism.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/diverse/symbolicism-vs-connectionism.html</guid>
+      <pubDate>Tue, 08 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Diverse Lab</category>
+      <description>符号主义说意义在符号的位置，联结主义说意义在向量的位置；两派都没解决「符号接地」。现实是大模型底层分布式、表层符号化，缺的都是把意义接到真实经验的那块「地」。</description>
+    </item>
+    <item>
+      <title>Agent 的评价：Proxy Metric ≠ Real Outcome</title>
+      <link>https://chengguruchun.github.io/articles/agent-evaluation-proxy-vs-real-outcome.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/articles/agent-evaluation-proxy-vs-real-outcome.html</guid>
+      <pubDate>Tue, 08 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Articles</category>
+      <description>测试、API 状态和 outcome.ok 都可能 PASS，但用户仍然认为问题没有解决。Agent 的评价最终必须回到真实 Outcome。</description>
+    </item>
+    <item>
+      <title>Agent Optimizer：不训练模型，而是优化经验与策略</title>
+      <link>https://chengguruchun.github.io/articles/agent-optimizer-experience-policy.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/articles/agent-optimizer-experience-policy.html</guid>
+      <pubDate>Tue, 08 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Articles</category>
+      <description>Agent 变强不一定首先意味着修改模型权重，也可以通过经验记忆、策略调整和工具调用方式的优化实现。</description>
+    </item>
+    <item>
+      <title>Agent 技能演化：从轨迹回流到可剪枝的程序性记忆</title>
+      <link>https://chengguruchun.github.io/articles/agent-skill-evolution-pruning.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/articles/agent-skill-evolution-pruning.html</guid>
+      <pubDate>Tue, 08 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Articles</category>
+      <description>把执行轨迹蒸馏成技能已被两代工作证明有效，但「技能如何停止增长」被留给了未来工作。剪枝的关键转换：不追踪模型为什么用一节，只测量删掉之后效果变不变。</description>
+    </item>
+    <item>
+      <title>可解释性 × 强化学习：让「强」和「真」对得上账</title>
+      <link>https://chengguruchun.github.io/diverse/interpretability-rl-faithfulness.html</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/diverse/interpretability-rl-faithfulness.html</guid>
+      <pubDate>Tue, 08 Sep 2026 00:00:00 +0000</pubDate>
+      <category>Diverse Lab</category>
+      <description>RL 让模型变强、变会说谎；可解释性负责让强和真对账。SAE 与 GRPO 本质都是用对比替代绝对，共同指向 faithfulness。</description>
+    </item>
+    <item>
       <title>从函数到生态系统：重新理解大模型与 Agent</title>
       <link>https://chengguruchun.github.io/diverse/from-function-to-ecosystem.html</link>
       <guid isPermaLink="true">https://chengguruchun.github.io/diverse/from-function-to-ecosystem.html</guid>

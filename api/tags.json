@@ -42,7 +42,6 @@
       "agent-evaluation-proxy-vs-real-outcome",
       "agent-optimizer-experience-policy",
       "agent-skill-evolution-pruning",
-      "agent-engineering-from-workflow-to-control-plane",
       "from-function-to-ecosystem",
       "saas-ecommerce-agent-thinking",
       "iot-agent-reconstruction",
@@ -179,7 +178,6 @@
     "Control Plane": [
       "agent-capability-platform-from-middleware-to-agent-center",
       "from-mes-to-manufacturing-agent-runtime",
-      "agent-engineering-from-workflow-to-control-plane",
       "iot-agent-reconstruction",
       "k8s-to-agent-control-plane"
     ],
@@ -299,9 +297,6 @@
     "Governance": [
       "agent-as-digital-project-manager"
     ],
-    "Graph": [
-      "agent-engineering-from-workflow-to-control-plane"
-    ],
     "Grill Me": [
       "grill-me-superpowers-openspec-agent-development-workflow"
     ],
@@ -318,8 +313,7 @@
       "agent-engineering-laws-harness-architecture-feedback",
       "react-is-the-inner-loop-long-running-agent-harness-runtime",
       "react-to-long-running-agent",
-      "spring-dubbo-deepseek-harness-runtime",
-      "agent-engineering-from-workflow-to-control-plane"
+      "spring-dubbo-deepseek-harness-runtime"
     ],
     "Hot Words": [
       "times-2026-11-w3",
@@ -370,7 +364,6 @@
     ],
     "Kubernetes": [
       "agent-capability-platform-from-middleware-to-agent-center",
-      "agent-engineering-from-workflow-to-control-plane",
       "k8s-to-agent-control-plane"
     ],
     "LLM": [
@@ -392,7 +385,6 @@
       "react-is-the-inner-loop-long-running-agent-harness-runtime",
       "agent-evaluation-proxy-vs-real-outcome",
       "agent-skill-evolution-pruning",
-      "agent-engineering-from-workflow-to-control-plane",
       "saas-ecommerce-agent-thinking",
       "k8s-to-agent-control-plane",
       "llm-scientific-experiment"
@@ -495,7 +487,6 @@
       "from-llm-to-agent-runtime",
       "agent-runtime-cognitive-actor",
       "agent-skill-evolution-pruning",
-      "agent-engineering-from-workflow-to-control-plane",
       "k8s-to-agent-control-plane"
     ],
     "SGLang": [
@@ -610,8 +601,7 @@
       "event-driven-coding-agent-runtime"
     ],
     "Workflow": [
-      "agent-as-digital-project-manager",
-      "agent-engineering-from-workflow-to-control-plane"
+      "agent-as-digital-project-manager"
     ],
     "vLLM": [
       "llm-inference-serving-from-api-to-gpu"
