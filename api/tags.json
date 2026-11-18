@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-16",
+  "updated": "2026-11-18",
   "tags": {
     "AI Engineering": [
       "ai-era-design-principles-patterns-ddd"
@@ -98,6 +98,9 @@
     ],
     "Agent 长期记忆": [
       "times-2026-09-w3"
+    ],
+    "Agent 长程任务": [
+      "times-2026-11-w3"
     ],
     "Agent-Architecture": [
       "fde-agent-opportunity-discovery"
@@ -319,6 +322,7 @@
       "agent-engineering-from-workflow-to-control-plane"
     ],
     "Hot Words": [
+      "times-2026-11-w3",
       "times-2026-11-w2",
       "times-2026-11-w1",
       "times-2026-10-w4",
@@ -570,6 +574,7 @@
       "llm-inference-serving-from-api-to-gpu"
     ],
     "Times": [
+      "times-2026-11-w3",
       "times-2026-11-w2",
       "times-2026-11-w1",
       "times-2026-10-w4",

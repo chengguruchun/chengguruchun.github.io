@@ -16,6 +16,14 @@
       <description>把复杂 Agent 任务视为一个微型项目，借助项目管理五大过程组与十大知识领域，拆解目标对齐、规划、执行、监控、治理和交付，并辨析两者的边界。</description>
     </item>
     <item>
+      <title>2026-11 Week 3 · Agent 长程任务</title>
+      <link>https://chengguruchun.github.io/times/</link>
+      <guid isPermaLink="true">https://chengguruchun.github.io/times/</guid>
+      <pubDate>Mon, 16 Nov 2026 00:00:00 +0000</pubDate>
+      <category>Times</category>
+      <description>长程任务是当前 agent 能力跃迁最清晰的度量轴，METR 的时长翻倍曲线与 SWE-bench 等真实仓库评测提供了可引用的硬证据。它天然承接上下文工程与记忆话题，又指向预算、检查点、恢复等具体工程问题，比泛泛的可靠性口号更可落地。</description>
+    </item>
+    <item>
       <title>从问题空间到解决空间：大模型时代的认知闭环与自我进化</title>
       <link>https://chengguruchun.github.io/articles/problem-space-to-solution-space-agent-cognitive-loop.html</link>
       <guid isPermaLink="true">https://chengguruchun.github.io/articles/problem-space-to-solution-space-agent-cognitive-loop.html</guid>
