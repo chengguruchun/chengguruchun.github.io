@@ -20,11 +20,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://chengguruchun.github.io/articles/agent-engineering-from-workflow-to-control-plane.html</loc>
-    <lastmod>2026-09-08</lastmod>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://chengguruchun.github.io/articles/agent-evaluation-proxy-vs-real-outcome.html</loc>
     <lastmod>2026-09-08</lastmod>
     <priority>0.7</priority>
