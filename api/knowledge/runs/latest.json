@@ -1,13 +1,13 @@
 {
-  "runId": "knowledge-2026-11-W3-20261115T091623Z",
-  "period": "2026-11-W3",
+  "runId": "knowledge-2026-11-W4-20261122T094129Z",
+  "period": "2026-11-W4",
   "phase": "checked",
   "verdict": "ok",
-  "startedAt": "2026-11-15T09:16:24Z",
-  "finishedAt": "2026-11-15T09:16:24Z",
+  "startedAt": "2026-11-22T09:41:30Z",
+  "finishedAt": "2026-11-22T09:41:30Z",
   "input": {
     "periodScheme": "YYYY-MM-WN = Nth 7-day block of the calendar month (Asia/Shanghai), not ISO week",
-    "as_of": "2026-11-15"
+    "as_of": "2026-11-22"
   },
   "gates": {
     "surfaces": "pass",
