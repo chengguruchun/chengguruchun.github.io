@@ -1,10 +1,10 @@
 {
-  "runId": "agent-native-2026-11-W3-20261115T084138Z",
-  "period": "2026-11-W3",
+  "runId": "agent-native-2026-11-W4-20261122T091027Z",
+  "period": "2026-11-W4",
   "phase": "checked",
   "verdict": "agent-native",
-  "startedAt": "2026-11-15T08:41:38Z",
-  "finishedAt": "2026-11-15T08:41:40Z",
+  "startedAt": "2026-11-22T09:10:27Z",
+  "finishedAt": "2026-11-22T09:10:29Z",
   "input": {
     "live": true,
     "periodScheme": "YYYY-MM-WN = Nth 7-day block of the calendar month (Asia/Shanghai), not ISO week"
