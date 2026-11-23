@@ -1,9 +1,9 @@
 {
   "runId": "hot-words-2026-11-W4-20261123T083808Z",
   "period": "2026-11-W4",
-  "phase": "applied",
+  "phase": "published",
   "startedAt": "2026-11-23T08:38:08Z",
-  "finishedAt": "2026-11-23T08:38:18Z",
+  "finishedAt": "2026-11-23T08:38:20Z",
   "input": {
     "currentWord": "Agent 长程任务",
     "recentHistory": [
@@ -131,6 +131,11 @@
       "gate": "pass"
     }
   },
-  "publish": {},
+  "publish": {
+    "commit": "9e53eb073ee08e81b844ee501022f54dc87606cd",
+    "url": "https://chengguruchun.github.io/times/",
+    "mode": "autonomous",
+    "periodScheme": "YYYY-MM-WN month block, not ISO week"
+  },
   "error": null
 }
