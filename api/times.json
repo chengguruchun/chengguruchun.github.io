@@ -7,9 +7,20 @@
     "meaning": "Nth 7-day block of the calendar month in Asia/Shanghai (days 1–7 = W1, 8–14 = W2, …). Not an ISO 8601 week number.",
     "timezone": "Asia/Shanghai"
   },
-  "current": "2026-11-W3",
-  "updated": "2026-11-16",
+  "current": "2026-11-W4",
+  "updated": "2026-11-23",
   "issues": [
+    {
+      "id": "times-2026-11-w4",
+      "period": "2026-11-W4",
+      "cadence": "weekly",
+      "word": "Agent 记忆架构",
+      "title": "2026-11 Week 4 · Agent 记忆架构",
+      "why": "长程任务的核心瓶颈从上下文窗口转向记忆的持久化与检索，记忆架构直接决定跨会话任务能否闭环。近期工程实践（如 LangGraph 的检查点与长期存储）与学术综述同步升温，且与已禁的上下文工程、评测基准形成清晰区分，具备独立热词价值。",
+      "date": "2026-11-23",
+      "url": "/times/",
+      "markdown": "/content/times/2026-11-w4.md"
+    },
     {
       "id": "times-2026-11-w3",
       "period": "2026-11-W3",
@@ -146,5 +157,5 @@
       "slug": "2026-09-w1"
     }
   ],
-  "currentProposalHash": "9c58f608d811a37b"
+  "currentProposalHash": "60b2ba94d9251289"
 }

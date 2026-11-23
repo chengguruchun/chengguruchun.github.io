@@ -1,7 +1,15 @@
 {
   "name": "Hot Words run index",
-  "generated": "2026-11-16T22:42:38Z",
+  "generated": "2026-11-23T08:38:18Z",
   "items": [
+    {
+      "runId": "hot-words-2026-11-W4-20261123T083808Z",
+      "period": "2026-11-W4",
+      "phase": "applied",
+      "word": "Agent 记忆架构",
+      "finishedAt": "2026-11-23T08:38:18Z",
+      "path": "/api/hot-words/runs/hot-words-2026-11-W4-20261123T083808Z.json"
+    },
     {
       "runId": "hot-words-2026-11-W3-20261116T224238Z",
       "period": "2026-11-W3",

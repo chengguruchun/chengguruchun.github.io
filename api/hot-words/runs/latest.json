@@ -1,9 +1,9 @@
 {
-  "runId": "hot-words-2026-11-W3-20261116T224238Z",
-  "period": "2026-11-W3",
-  "phase": "skipped",
-  "startedAt": "2026-11-16T22:42:38Z",
-  "finishedAt": "2026-11-16T22:42:38Z",
+  "runId": "hot-words-2026-11-W4-20261123T083808Z",
+  "period": "2026-11-W4",
+  "phase": "applied",
+  "startedAt": "2026-11-23T08:38:08Z",
+  "finishedAt": "2026-11-23T08:38:18Z",
   "input": {
     "currentWord": "Agent 长程任务",
     "recentHistory": [
@@ -22,20 +22,115 @@
     "periodScheme": "YYYY-MM-WN = Nth 7-day block of the calendar month (Asia/Shanghai), not ISO week"
   },
   "proposal": {
-    "word": "Agent 长程任务",
-    "candidates": [],
-    "evidenceCount": 0,
-    "why": ""
+    "word": "Agent 记忆架构",
+    "why": "长程任务的核心瓶颈从上下文窗口转向记忆的持久化与检索，记忆架构直接决定跨会话任务能否闭环。近期工程实践（如 LangGraph 的检查点与长期存储）与学术综述同步升温，且与已禁的上下文工程、评测基准形成清晰区分，具备独立热词价值。",
+    "candidates": [
+      {
+        "word": "Agent 记忆架构",
+        "evidence": [
+          {
+            "title": "Memory in AI Agents: A Survey",
+            "url": "https://arxiv.org/abs/2404.13501",
+            "sourceType": "paper",
+            "publishedAt": "2024-04-21",
+            "claim": "系统梳理了智能体记忆的层次（短期/长期）、存储与检索机制，指出记忆架构是长程任务的关键瓶颈。"
+          },
+          {
+            "title": "LangGraph Memory: Building Agents with Persistent State",
+            "url": "https://langchain-ai.github.io/langgraph/concepts/memory/",
+            "sourceType": "documentation",
+            "publishedAt": "2025-06-10",
+            "claim": "LangGraph 将记忆分为短期（线程内）与长期（跨线程）两类，并提供检查点与存储抽象，成为工程实践参考。"
+          }
+        ],
+        "notes": "记忆架构是长程任务落地的直接支撑，近期工程讨论多，但需避免与上下文工程混淆。"
+      },
+      {
+        "word": "Agent 反思循环",
+        "evidence": [
+          {
+            "title": "Reflexion: Language Agents with Verbal Reinforcement Learning",
+            "url": "https://arxiv.org/abs/2303.11366",
+            "sourceType": "paper",
+            "publishedAt": "2023-03-20",
+            "claim": "提出通过语言化反思与情节记忆提升智能体在长程任务中的试错效率，是反思循环的代表工作。"
+          },
+          {
+            "title": "Self-Refine: Iterative Refinement with Self-Feedback",
+            "url": "https://arxiv.org/abs/2303.17651",
+            "sourceType": "paper",
+            "publishedAt": "2023-03-30",
+            "claim": "展示模型通过自我反馈循环迭代改进输出，为智能体反思机制提供基础范式。"
+          }
+        ],
+        "notes": "反思循环是长程任务中自我纠正的核心模式，但需与评测基准区分，避免空泛。"
+      },
+      {
+        "word": "Agent 任务分解",
+        "evidence": [
+          {
+            "title": "LLM+P: Empowering Large Language Models with Optimal Planning Proficiency",
+            "url": "https://arxiv.org/abs/2304.11477",
+            "sourceType": "paper",
+            "publishedAt": "2023-04-24",
+            "claim": "将自然语言任务转化为 PDDL 规划问题，强调分解与规划对长程任务可执行性的作用。"
+          },
+          {
+            "title": "Plan-and-Solve Prompting",
+            "url": "https://arxiv.org/abs/2305.04091",
+            "sourceType": "paper",
+            "publishedAt": "2023-05-06",
+            "claim": "先规划再执行的分解策略显著提升多步推理任务表现，是任务分解的典型方法。"
+          }
+        ],
+        "notes": "任务分解是长程任务的基础能力，但近期热度更多体现在规划与执行分离的工程模式。"
+      },
+      {
+        "word": "Agent 状态机",
+        "evidence": [
+          {
+            "title": "Building effective agents",
+            "url": "https://www.anthropic.com/research/building-effective-agents",
+            "sourceType": "blog",
+            "publishedAt": "2024-12-19",
+            "claim": "Anthropic 提出将智能体工作流建模为可组合模式，强调状态与路由的显式管理，状态机是其中一种可靠实现。"
+          },
+          {
+            "title": "State Machines for AI Agents",
+            "url": "https://blog.langchain.dev/state-machines-for-ai-agents/",
+            "sourceType": "blog",
+            "publishedAt": "2024-09-12",
+            "claim": "讨论用显式状态机约束智能体行为，提升长程任务的可控性与可观测性。"
+          }
+        ],
+        "notes": "状态机是长程任务可控性的工程手段，与协议标准化、可观测性有延续但不同，需提供结构化证据。"
+      }
+    ],
+    "evidenceCount": 8,
+    "evidenceUrlCount": 8
   },
   "gates": {
-    "schema": "skip",
+    "schema": "pass",
     "duplicate": "pass",
-    "editorial": "skip",
-    "evidence": "skip",
-    "relevance": "skip",
-    "consistency": "skip"
+    "editorial": "pass",
+    "evidence": "pass",
+    "relevance": "pass",
+    "consistency": "pass"
   },
-  "apply": {},
+  "apply": {
+    "changedFiles": [
+      "times/index.html",
+      "content/times/2026-11-w4.md",
+      "api/times.json",
+      "content/index.json",
+      "api/catalog.json"
+    ],
+    "consistency": {
+      "ok": true,
+      "errors": [],
+      "gate": "pass"
+    }
+  },
   "publish": {},
-  "error": "Period 2026-11-W3 already published (Agent 长程任务); skip apply/push (pass force=true to override)"
+  "error": null
 }

@@ -1,8 +1,8 @@
 {
   "name": "Hot Words feedback",
-  "generated": "2026-11-16T22:42:38Z",
-  "period": "2026-11-W3",
-  "word": "Agent 长程任务",
+  "generated": "2026-11-23T08:38:18Z",
+  "period": "2026-11-W4",
+  "word": "Agent 记忆架构",
   "signals": {
     "visits": {
       "site": null,
@@ -19,41 +19,65 @@
       "note": "可后续接入 GitHub Issues 留言。"
     },
     "citations": {
-      "count": 2,
+      "count": 4,
       "note": "根据 catalog/index 中标题、摘要、标签是否出现该词估算。"
     }
   },
   "lastRun": {
-    "runId": "hot-words-2026-11-W3-20261116T224238Z",
-    "phase": "skipped",
+    "runId": "hot-words-2026-11-W4-20261123T083808Z",
+    "phase": "applied",
     "gates": {
-      "schema": "skip",
+      "schema": "pass",
       "duplicate": "pass",
-      "editorial": "skip",
-      "evidence": "skip",
-      "relevance": "skip",
-      "consistency": "skip"
+      "editorial": "pass",
+      "evidence": "pass",
+      "relevance": "pass",
+      "consistency": "pass"
     },
-    "evidenceCount": 0,
+    "evidenceCount": 8,
     "publish": {},
-    "error": "Period 2026-11-W3 already published (Agent 长程任务); skip apply/push (pass force=true to override)"
+    "error": null
   },
   "learnHints": {
     "recentWords": [
+      "2026-11-W4: Agent 记忆架构",
       "2026-11-W3: Agent 长程任务",
       "2026-11-W2: Agent 上下文工程",
       "2026-11-W1: Agent 评测基准",
       "2026-10-W4: Agent 协议标准化",
       "2026-10-W3: Agent 工具调用可靠性",
       "2026-10-W2: Agent Sandboxing",
-      "2026-10-W1: Agent Observability",
-      "2026-09-W5: Agentic RAG"
+      "2026-10-W1: Agent Observability"
     ],
-    "rejectedCandidates": [],
-    "prefer": "下一轮务必补齐结构化证据（title/url/claim）；先有来源，再谈热度。",
-    "avoid": "回避与当前词重复、口号化、以及只有空泛描述没有来源的词。"
+    "rejectedCandidates": [
+      {
+        "word": "Agent 反思循环",
+        "reason": "not_chosen",
+        "notes": "反思循环是长程任务中自我纠正的核心模式，但需与评测基准区分，避免空泛。"
+      },
+      {
+        "word": "Agent 任务分解",
+        "reason": "not_chosen",
+        "notes": "任务分解是长程任务的基础能力，但近期热度更多体现在规划与执行分离的工程模式。"
+      },
+      {
+        "word": "Agent 状态机",
+        "reason": "not_chosen",
+        "notes": "状态机是长程任务可控性的工程手段，与协议标准化、可观测性有延续但不同，需提供结构化证据。"
+      }
+    ],
+    "prefer": "优先选能落到本站软件 / 系统 / Agent 主线的词，并带至少一条可点开的 https 证据。",
+    "avoid": "回避与当前词重复、口号化、以及只有空泛描述没有来源的词。 最近未入选：Agent 反思循环、Agent 任务分解、Agent 状态机。"
   },
   "recentRuns": [
+    {
+      "runId": "hot-words-2026-11-W4-20261123T083808Z",
+      "period": "2026-11-W4",
+      "phase": "applied",
+      "word": "Agent 记忆架构",
+      "finishedAt": "2026-11-23T08:38:18Z",
+      "path": "/api/hot-words/runs/hot-words-2026-11-W4-20261123T083808Z.json"
+    },
     {
       "runId": "hot-words-2026-11-W3-20261116T224238Z",
       "period": "2026-11-W3",
@@ -125,14 +149,6 @@
       "word": "Agent 工具调用可靠性",
       "finishedAt": "2026-10-19T18:57:36Z",
       "path": "/api/hot-words/runs/hot-words-2026-10-W3-20261019T185735Z.json"
-    },
-    {
-      "runId": "hot-words-2026-10-W3-20261019T054814Z",
-      "period": "2026-10-W3",
-      "phase": "published",
-      "word": "Agent 工具调用可靠性",
-      "finishedAt": "2026-10-19T05:48:23Z",
-      "path": "/api/hot-words/runs/hot-words-2026-10-W3-20261019T054814Z.json"
     }
   ],
   "endpoints": {
