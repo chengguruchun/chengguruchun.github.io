@@ -1,6 +1,6 @@
 {
   "name": "Hot Words feedback",
-  "generated": "2026-11-23T08:38:21Z",
+  "generated": "2026-11-24T00:33:25Z",
   "period": "2026-11-W4",
   "word": "Agent 记忆架构",
   "signals": {
@@ -24,24 +24,19 @@
     }
   },
   "lastRun": {
-    "runId": "hot-words-2026-11-W4-20261123T083808Z",
-    "phase": "published",
+    "runId": "hot-words-2026-11-W4-20261124T003325Z",
+    "phase": "skipped",
     "gates": {
-      "schema": "pass",
+      "schema": "skip",
       "duplicate": "pass",
-      "editorial": "pass",
-      "evidence": "pass",
-      "relevance": "pass",
-      "consistency": "pass"
+      "editorial": "skip",
+      "evidence": "skip",
+      "relevance": "skip",
+      "consistency": "skip"
     },
-    "evidenceCount": 8,
-    "publish": {
-      "commit": "9e53eb073ee08e81b844ee501022f54dc87606cd",
-      "url": "https://chengguruchun.github.io/times/",
-      "mode": "autonomous",
-      "periodScheme": "YYYY-MM-WN month block, not ISO week"
-    },
-    "error": null
+    "evidenceCount": 0,
+    "publish": {},
+    "error": "Period 2026-11-W4 already published (Agent 记忆架构); skip apply/push (pass force=true to override)"
   },
   "learnHints": {
     "recentWords": [
@@ -54,27 +49,19 @@
       "2026-10-W2: Agent Sandboxing",
       "2026-10-W1: Agent Observability"
     ],
-    "rejectedCandidates": [
-      {
-        "word": "Agent 反思循环",
-        "reason": "not_chosen",
-        "notes": "反思循环是长程任务中自我纠正的核心模式，但需与评测基准区分，避免空泛。"
-      },
-      {
-        "word": "Agent 任务分解",
-        "reason": "not_chosen",
-        "notes": "任务分解是长程任务的基础能力，但近期热度更多体现在规划与执行分离的工程模式。"
-      },
-      {
-        "word": "Agent 状态机",
-        "reason": "not_chosen",
-        "notes": "状态机是长程任务可控性的工程手段，与协议标准化、可观测性有延续但不同，需提供结构化证据。"
-      }
-    ],
-    "prefer": "优先选能落到本站软件 / 系统 / Agent 主线的词，并带至少一条可点开的 https 证据。",
-    "avoid": "回避与当前词重复、口号化、以及只有空泛描述没有来源的词。 最近未入选：Agent 反思循环、Agent 任务分解、Agent 状态机。"
+    "rejectedCandidates": [],
+    "prefer": "下一轮务必补齐结构化证据（title/url/claim）；先有来源，再谈热度。",
+    "avoid": "回避与当前词重复、口号化、以及只有空泛描述没有来源的词。"
   },
   "recentRuns": [
+    {
+      "runId": "hot-words-2026-11-W4-20261124T003325Z",
+      "period": "2026-11-W4",
+      "phase": "skipped",
+      "word": "Agent 记忆架构",
+      "finishedAt": "2026-11-24T00:33:25Z",
+      "path": "/api/hot-words/runs/hot-words-2026-11-W4-20261124T003325Z.json"
+    },
     {
       "runId": "hot-words-2026-11-W4-20261123T083808Z",
       "period": "2026-11-W4",
@@ -146,14 +133,6 @@
       "word": "Agent 协议标准化",
       "finishedAt": "2026-10-26T05:48:56Z",
       "path": "/api/hot-words/runs/hot-words-2026-10-W4-20261026T054844Z.json"
-    },
-    {
-      "runId": "hot-words-2026-10-W3-20261019T185735Z",
-      "period": "2026-10-W3",
-      "phase": "skipped",
-      "word": "Agent 工具调用可靠性",
-      "finishedAt": "2026-10-19T18:57:36Z",
-      "path": "/api/hot-words/runs/hot-words-2026-10-W3-20261019T185735Z.json"
     }
   ],
   "endpoints": {
